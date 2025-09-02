@@ -1,0 +1,24 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Smoke Shares Suite" verbose="1" preserve-order="true" data-provider-thread-count="1" parallel="false" >
+    <!--    <parameter name="browser" value="edge"/>-->
+
+    <test name="Shares Suite" >
+        <parameter name="browser" value="headless"/>
+        <classes>
+
+            <class name="org.dxc.copa.automation.runners.TestRunnerShares" />
+<!--            <class name="org.dxc.copa.automation.runners.TestRunnerFailed" />-->
+
+        </classes>
+
+    </test>
+    <!-- Listeners implemented in below location -->
+    <listeners>
+        <listener class-name="org.dxc.copa.automation.common.ITestListenerImpl"></listener>
+        <listener class-name="org.dxc.copa.automation.common.ExcelReportListener"></listener>
+    </listeners>
+
+</suite>
+
+        <!--command to run the suite - mvn clean compile test-->

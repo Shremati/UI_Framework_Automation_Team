@@ -1,0 +1,16 @@
+[
+    {
+        "FrequentFlyer":{
+            "firstName":"ZARZYCKI",
+            "surName":"MICHAELEMR",
+            "FFNumber": "BX161976-UA"
+        }
+    },
+    {
+        "FrequentFlyer":{
+            "firstName":"CHACIN",
+            "surName":"CARLOSMR",
+            "FFNumber": "DM789627-UA"
+        }
+    }
+]
