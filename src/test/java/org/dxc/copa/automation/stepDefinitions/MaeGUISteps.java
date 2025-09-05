@@ -1374,7 +1374,6 @@ public class MaeGUISteps extends StepManager
             Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
         }
-
     }
 
     @And("I select the Split Booking option from the DropDown for the required passenger {string}")

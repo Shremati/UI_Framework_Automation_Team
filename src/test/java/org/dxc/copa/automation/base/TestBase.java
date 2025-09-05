@@ -269,6 +269,7 @@ public class TestBase extends AbstractTestNGCucumberTests {
     public static void quitDriver() {
         WebDriver webDriver = driver.get();
         if (webDriver != null) {
+            webDriver.close();
             webDriver.quit(); // This is usually sufficient
             driver.remove();  // Clean up the ThreadLocal reference
         }
