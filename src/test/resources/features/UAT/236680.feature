@@ -25,8 +25,7 @@ Feature: 236680 - Display Final List
     And Select from and to City "<OriginCity>" and "<Destination>"
     And I enter Start Date "<StartDate>" for one way booking
     And I select Adult passengers and search for flights
-#    And I select class "<originClass>" for Origin flight
-    And I select class "<originClass>" for Origin flight with departure time within "<hours>" from current time
+    And I select class "<originClass>" for the first segment on current day
     And I select pricing option Price as Booked
     And I select the Quote Options and click on Next
     And I validate the Price Quote and click on Next
@@ -50,17 +49,14 @@ Feature: 236680 - Display Final List
     And I search the flight for the segment "<SegmentIndex>" in Gate section
     And I select the flight actions as "<ActionType>"
     And I try to assign an agent "<ActionType>"
-#    And I RECONCILE a passenger in GATE module and validate the passenger in reconciled section
     And I initiate boarding if boarding not initiated
-#    And I validate that the list of passengers is displayed in GATE module
     And I select "<passengerListType>" from the passenger list options
     And I try to retrieve the ticket number by selecting "<PNRText>" option
-
     And I logout from COPA GUI application
 
 
     Examples:
       |salesOffice            |currency |OriginCity |Destination |StartDate |Adult |Child |INF |INS |originClass |SegmentIndex |PaymentType|hours|ActionType                    |PNRText|passengerListType|
-      |PTY CTO COSTA DEL ESTE |USD      |PTY        |GYE         |00 days   |1     |0     |0   |0   |Economy     |0            |CASH       |5    |View/Assign Controlling Agents|PNR    |Final Pax List   |
+      |PTY CTO COSTA DEL ESTE |USD      |PTY        |MEX         |00 days   |1     |0     |0   |0   |Economy     |0            |CASH       |5    |View/Assign Controlling Agents|PNR    |Final Pax List   |
 
 

@@ -25,7 +25,7 @@ Feature: 236683 - Verify boarding of single passenger is happening successfully 
     And Select from and to City "<OriginCity>" and "<Destination>"
     And I enter Start Date "<StartDate>" for one way booking
     And I select Adult passengers and search for flights
-    And I select class "<originClass>" for Origin flight
+    And I select class "<originClass>" for the first segment on current day
     And I select pricing option Price as Booked
     And I select the Quote Options and click on Next
     And I validate the Price Quote and click on Next

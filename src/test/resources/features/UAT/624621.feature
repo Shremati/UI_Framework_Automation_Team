@@ -6,7 +6,7 @@
 #  Expected:
 #TRR must calculate No Show penalty ($ 250 USD)
 
-@UAT
+@Reissue
 Feature: 624621 - Verify Voluntary Reissue of a No Show booking is happening correctly
 
   Background:
@@ -44,7 +44,7 @@ Feature: 624621 - Verify Voluntary Reissue of a No Show booking is happening cor
     And I click the EMD subtab and view the EMD details
 
     #shares
-    And I navigate to Shares Application
+    And I navigate to iShares Page from COPA GUI Application
     And I enter valid shares credentials
     And I click on the shares Login Button
     And I click on terminal emulation
@@ -70,14 +70,14 @@ Feature: 624621 - Verify Voluntary Reissue of a No Show booking is happening cor
     And I perform Voluntary Reissue
     And I click on pay button by selecting the required payment type "<PaymentType>"
     And I enter the details in the email recipients page
-    And I validate if the payment is successful
+    And I store the updated emd and ticket details and validate if payment is successful
     And I navigate to home screen
     And I try to retrieve the pnr from Order Screen to check the "<TicketStatus2>" status in ticket tab
     And I navigate to Order tab
     And I click the Tickets tab and store the ticket number
     And I click the EMD subtab and view the EMD details
     And I select sales report and select Agent sales report
-    And I validate Ticket and EMD values in Agent sales report
+    And I validate the Tax Details in Agent Sales Report after changes
     And I logout from COPA GUI application
 
 

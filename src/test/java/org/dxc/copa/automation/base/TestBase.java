@@ -80,7 +80,8 @@ public class TestBase extends AbstractTestNGCucumberTests {
     public static HashMap<Long,ArrayList<Passenger>> mPassengersPNR2 = new HashMap<>();
 
     public static HashMap<Long,Integer> mGeneralQuoteCount = new HashMap<>();
-
+    public static HashMap<Long, String> residualmEmd = new HashMap<>();
+    public static HashMap<Long, String> compensationmEmd = new HashMap<>();
     public static int x = 0;
 
     public String[] FName = null;
@@ -156,10 +157,14 @@ public class TestBase extends AbstractTestNGCucumberTests {
     public boolean isRefund = false;
     public static HashMap<Long, Boolean> mWantEmd = new HashMap<>();
 
-    public static HashMap<Long,List<String>> mAdultTaxes=new HashMap<>();
-    public static HashMap<Long,List<String>> mChildTaxes=new HashMap<>();
-    public static HashMap<Long,List<String>> mINSTaxes=new HashMap<>();
-    public static HashMap<Long,List<String>> mINFTaxes=new HashMap<>();
+    //    public static HashMap<Long,List<String>> mAdultTaxes=new HashMap<>();
+//    public static HashMap<Long,List<String>> mChildTaxes=new HashMap<>();
+//    public static HashMap<Long,List<String>> mINSTaxes=new HashMap<>();
+//    public static HashMap<Long,List<String>> mINFTaxes=new HashMap<>();
+    public static ConcurrentHashMap<Long,List<String>> mAdultTaxes=new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<Long,List<String>> mChildTaxes=new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<Long,List<String>> mINSTaxes=new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<Long,List<String>> mINFTaxes=new ConcurrentHashMap<>();
 
 
     @BeforeMethod
@@ -232,7 +237,7 @@ public class TestBase extends AbstractTestNGCucumberTests {
 
 
         getDriver().manage().window().maximize();
-       // getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(TIMEOUT));
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(TIMEOUT));
         getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(PAGE_LOAD_TIMEOUT));
     }
 
@@ -307,6 +312,8 @@ public class TestBase extends AbstractTestNGCucumberTests {
         checkBusinessClass = "false";
         mEmd.put(getDriverID(), null);
         mCheckBusinessClass.put(getDriverID(), "false");
+        residualmEmd.put(getDriverID(), null);
+        compensationmEmd.put(getDriverID(), null);
     }
 
 }

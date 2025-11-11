@@ -25,7 +25,7 @@ Feature: 622937 - 145066-REGATO-Scenario #051.1 Change the Passenger Type from A
   Scenario Outline: 622937 - 145066-REGATO-Scenario #051.1 Change the Passenger Type from Adult to Child and display the passenger in the CSS GUI
 
     #iShares
-    And I navigate to Shares Application
+    And I navigate to iShares Page from COPA GUI Application
     And I enter valid shares credentials
     And I click on the shares Login Button
     And I click on terminal emulation

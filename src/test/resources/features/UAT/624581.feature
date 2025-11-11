@@ -33,7 +33,7 @@
 #10. Print ETKT from payment screen:
 #- Validate that the ETKT replace "ITINERARY BASIC ECONOMY" by "ITINERARY PROMO BUSINESS"
 
-@UAT
+@Reissue
 Feature: 624581 - 148111 - Validate ETKT when make a manual reissue
 
   Background:

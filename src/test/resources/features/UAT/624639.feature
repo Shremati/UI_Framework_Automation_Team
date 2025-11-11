@@ -4,7 +4,7 @@
 #Change the itinerary to a new date, same O&D
 #Voluntary Reissue priced as Economy Classic
 
-@UAT
+@Reissue
 Feature: 624639 - Verify Voluntary Reissue - Original ticket in PYG currency (Paraguay currency) is happening correctly
 
   Background:
@@ -40,6 +40,9 @@ Feature: 624639 - Verify Voluntary Reissue - Original ticket in PYG currency (Pa
     And I validate if the payment is successful
     And I click the Tickets tab
     And I click the EMD subtab and view the EMD details
+    And I navigate to home screen
+    And I click the order tab
+    And I navigate to home screen
     And I change the Sales Office and Currency "<salesOffice1>" and "<currency1>"
     And I navigate to home screen
     And I click the order tab

@@ -1,5 +1,30 @@
 #Description:
 #POS: POS: BOG-ATO / COP
+#PNR: 1 ADT / MDZ-SJO / Any date / OW / Business Full
+#Enter the "Check-In" module
+#Enter flight number, date and click "Search"
+#Perform a search by name, select the passenger and click "Proceed to Check In"
+#Complete ADC/APIS, click "Submit" and then "Done"
+#Select the passenger and click on "Check In"
+#In the confirmation pop-up window, click "Return to Check In"
+#Click on the baggage icon
+#Add baggage in the following order:
+#1. Standard 32kg
+#2. Standard 32kg
+#3. Standard 32kg
+#4. Standard 35kg + Oversized (Select the Oversized baggage box)
+#Proceed to pay (FOP: Cash) and complete Check in
+#Verify that all EMDs have been generated correctly.
+#
+#Expected:
+#After clicking "Done", the system should return to the Check-In screen.
+#-Check that the "Doc Check" icon is green
+#-Check that the passenger data and PNR are correct
+#The system should display:
+#1. Free
+#2. Free
+#3. 200 usd (additional bag) + 100 usd (overweight) + tax
+#4. 200 usd (additional bag) + 200 usd (overweight) + 150 usd (oversize) + tax
 
 
 @UAT
@@ -70,7 +95,7 @@ Feature: 630726 - EQP-006 Validation of baggage calculation according to "withou
 
 
     Examples:
-      |salesOffice     |currency |OriginCity   |Destination |StartDate  |Adult|Child|INF|INS|BaggageNo |BaggageNo1|BaggageNo2|BaggageNo3|ticketStatus|BaggageWeight|BaggageWeight1|PaymentType|originClass|searchType|segmentIndex|PricingOption|printer      |printerStatus|
-      |MDZ ATO         |USD      |SCL          |MEX         |01 days    |1    |0    |0  |0  |1         |2         |3         |4         |CHECKED-IN  |32           |35            |CASH       |Business   |Name      |0           |Business Full|US-5CD4377SFF|PrintReady   |
+      | salesOffice | currency | OriginCity | Destination | StartDate | Adult | Child | INF | INS | BaggageNo | BaggageNo1 | BaggageNo2 | BaggageNo3 | ticketStatus | BaggageWeight | BaggageWeight1 | PaymentType | originClass | searchType | segmentIndex | PricingOption | printer  | printerStatus |
+      | MDZ ATO     | USD      | SCL        | MEX         | 01 days   | 1     | 0     | 0   | 0   | 1         | 2          | 3          | 4          | CHECKED-IN   | 32            | 35             | CASH        | Business    | Name       | 0            | Business Full | MAHAC-NB | PrintReady    |
 
 

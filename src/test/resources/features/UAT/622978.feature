@@ -7,7 +7,7 @@
 #Expected:
 #It must display an error message showing it does not have the iCoupon role
 
-@UAT
+@IcouponUnAssign
 Feature: 622978 - Validate that the GUI cannot compensate without the iCoupon role
 
   Background:
@@ -25,11 +25,11 @@ Feature: 622978 - Validate that the GUI cannot compensate without the iCoupon ro
     And I add "<INF>" infant without seat passengers
     And I want to display all the passengers
     And I change the Sales Office and Currency "<salesOffice>" and "<currency>"
-    And I select the printer "<printer>" and "<printerStatus>"
-
-    And I navigate to the User provisioning Tool page
-    And I enter User Id and click on search in user provisioning page
-    And I select POS and set status of the iCoupon in User Provisioning tool page "<iCouponStatus>"
+#    And I select the printer "<printer>" and "<printerStatus>"
+#
+#    And I navigate to the User provisioning Tool page
+#    And I enter User Id and click on search in user provisioning page
+#    And I select POS and set status of the iCoupon in User Provisioning tool page "<iCouponStatus>"
 
     And I navigate to home screen
     And I click on the Reservation section
@@ -70,5 +70,5 @@ Feature: 622978 - Validate that the GUI cannot compensate without the iCoupon ro
 
 
     Examples:
-      |salesOffice|currency|OriginCity   |Destination |StartDate |compensationReason        |Adult|Child|INS|INF|PassengerType     |printer      |printerStatus|originClass|PaymentType|PaxCount|PassengerType1|iCouponStatus|
-      |PTY ATO    |USD     |PTY          |BOG         |00 days   |Delay between 2 to 3:59hrs|2    |0    |0  |0  |All Passenger List|US-5CD4377SFF|PrintReady   |Economy    |Cash       |2       |Print List    |UnAssign     |
+      |salesOffice|currency|OriginCity   |Destination |StartDate |compensationReason        |Adult|Child|INS|INF|PassengerType     |printer      |printerStatus|originClass|PaymentType|PaxCount|PassengerType1|iCouponStatus|OriginCity1|Destination1|OriginCity2|Destination2|StartDate1|StartDate2|OriginCity3|OriginCity4|Destination3|Destination4|StartDate3|StartDate4|
+      |PTY ATO    |USD     |PTY          |SCL         |05 days   |Delay between 2 to 3:59hrs|2    |0    |0  |0  |All Passenger List|US-5CD4377SFF|PrintReady   |Economy    |Cash       |2       |Print List    |UnAssign     |SCL        |PTY         |PTY        |BOG         |10 days   |15 days   |BOG        |PTY        |PTY         |MEX         |20 days   |25 days   |

@@ -1,7 +1,28 @@
-
-
-  #Description:
-#POS: POS: BOG-ATO / COP
+  #| Step Name       | Description                                                                                                                                                             | Expected Result
+  #| 1               | POS: SJO-ATO  /  CRC                                                                                                                                                    |
+  #|                 |                                                                                                                                                                         |
+  #| 2               | PNR: 1 ADT  /  Prefer Platinum  /   SJO-CUC  /  Any date  /  OW   /  Economy Full                                                                                       |
+  #|                 |                                                                                                                                                                         |
+  #| 3               | Enter the "Check-In" module                                                                                                                                             |
+  #|                 |                                                                                                                                                                         |
+  #| 4               | Enter flight number, date and click "Search"                                                                                                                            |
+  #|                 |                                                                                                                                                                         |
+  #| 5               | Perform a search by name, select the passenger and click "Proceed to Check In"                                                                                          |
+  #|                 |                                                                                                                                                                         |
+  #| 6               | Complete ADC/APIS, click "Submit" and then "Done"                                                                                                                       | After clicking "Done", the system should return to the Check-In screen. -Check that the "Doc Check" icon is green -Check that the passenger data and PNR are correct
+  #|                 |                                                                                                                                                                         |
+  #| 7               | Select the passenger and click on "Check In"                                                                                                                            |
+  #|                 |                                                                                                                                                                         |
+  #| 8               | In the confirmation pop-up window, click "Return to Check In"                                                                                                           |
+  #|                 |                                                                                                                                                                         |
+  #| 9               | Click on the baggage icon                                                                                                                                               |
+  #|                 |                                                                                                                                                                         |
+  #| 10              | Add baggage in the following order: 1. Standard 32kg 2. Standard 32kg 3. Standard 32kg 4. Standard 32kg 5. Standard 35kg + Oversized (Select the Oversized baggage box) | The system should display: 1. Free 2. Free 3. Free 4. 150 USD (additional bag) + 100 USD (overweight) + tax 5. 150 USD (additional bag) + 200 USD (overweight) + 150 USD (oversize) + tax
+  #|                 |                                                                                                                                                                         |
+  #| 11              | Proceed to pay (FOP: Cash) and complete Check in                                                                                                                        |
+  #|                 |                                                                                                                                                                         |
+  #| 12              | Verify that all EMDs have been generated correctly.                                                                                                                     |
+  #|                 |                                                                                                                                                                         |
 
 
   @UAT

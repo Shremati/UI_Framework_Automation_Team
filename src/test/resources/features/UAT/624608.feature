@@ -9,7 +9,7 @@
 #The system should process the change correctly, and the EMD should be emited.
 
 
-@UAT
+@Reissue
 Feature: 624608 - Verify the system should process the change correctly by performing Involuntary Reissue
 
   Background:
@@ -44,8 +44,12 @@ Feature: 624608 - Verify the system should process the change correctly by perfo
     And I make the first payment by selecting the payment type as "<PaymentType>"
     And I enter the details in the email recipients page
     And I validate if the payment is successful
-    And I click the Tickets tab
+    And I click the Tickets tab and try to click the Coupon number and verify the details
     And I click the EMD subtab present in Tickets tab
+    And I select sales report and select Agent sales report
+    And I validate Ticket and EMD values in Agent sales report and view tax details
+
+    And I navigate to home screen
     And I change the Sales Office and Currency "<salesOffice1>" and "<currency>"
     And I navigate to home screen
     And I click the order tab
@@ -60,14 +64,15 @@ Feature: 624608 - Verify the system should process the change correctly by perfo
     And I select and delete the segment "<SegmentDelete>"
     And I perform Involuntary Reissue for specific segment "<Segment>" with Reason Code as "<ReasonCode>" and Reissue Reason Code as "<ReissueReasonCode>"
     And I enter the details in the email recipients page
-    And I validate if the payment is successful
+    And I store the updated emd and ticket details and validate if payment is successful
     And I navigate to home screen
     And I try to retrieve the pnr from Order Screen to check the "<TicketStatus>" status in ticket tab
     And I navigate to Order tab
     And I click the Tickets tab and store the ticket number
     And I click the EMD subtab and view the EMD details
     And I select sales report and select Agent sales report
-    And I validate Ticket and EMD values in Agent sales report
+#    And I validate the Tax Details in Agent Sales Report after changes
+    And I validate Ticket and EMD values in Agent sales report and view tax details
     And I logout from COPA GUI application
 
 

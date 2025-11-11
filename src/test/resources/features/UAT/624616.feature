@@ -11,7 +11,7 @@
 #  Expected:
 #The system must process the change correctly, and the seats should be taken.
 
-@UAT
+@Reissue
 Feature: 624616 - Verify Involuntary reissue downgrade by business to economy is processing correctly
 
   Background:
@@ -47,6 +47,14 @@ Feature: 624616 - Verify Involuntary reissue downgrade by business to economy is
     And I make the first payment by selecting the payment type as "<PaymentType>"
     And I enter the details in the email recipients page
     And I validate if the payment is successful
+#    And I click the Tickets tab
+    And I click the Tickets tab and try to click the Coupon number and verify the details
+    And I click the EMD subtab and view the EMD details
+    And I select sales report and select Agent sales report
+    And I validate Ticket and EMD values in Agent sales report and view tax details
+    And I navigate to home screen
+    And I click the order tab
+#    And I navigate to Order tab
     And I click on Order Availability
     And Select from and to City "<OriginCity>" and "<Destination>"
     And I enter Start Date "<StartDate2>" and Return Date "<StartDate3>" for two way booking
@@ -58,14 +66,16 @@ Feature: 624616 - Verify Involuntary reissue downgrade by business to economy is
     And I select and delete the segment "<SegmentDelete>"
     And I perform Involuntary Reissue for specific segment "<Segment>" with Reason Code as "<ReasonCode>" and Reissue Reason Code as "<ReissueReasonCode>"
     And I enter the details in the email recipients page
-    And I validate if the payment is successful
+#    And I validate if the payment is successful
+    And I store the updated emd and ticket details and validate if payment is successful
     And I navigate to home screen
     And I try to retrieve the pnr from Order Screen to check the "<TicketStatus>" status in ticket tab
     And I navigate to Order tab
     And I click the Tickets tab and store the ticket number
     And I click the EMD subtab and view the EMD details
     And I select sales report and select Agent sales report
-    And I validate Ticket and EMD values in Agent sales report
+#    And I validate Ticket and EMD values in Agent sales report
+    And I validate Ticket and EMD values in Agent sales report and view tax details
     And I navigate to home screen
     And I click the order tab
     And I click the services Tab

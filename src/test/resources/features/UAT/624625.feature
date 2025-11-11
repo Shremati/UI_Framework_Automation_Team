@@ -10,7 +10,7 @@
 #  Expected:
 #  TRR must auto populatethe account code during reissue code
 
-@UAT
+@Reissue
 Feature: 624625 - Verify TRR must auto populate the account code during reissue code
 
   Background:

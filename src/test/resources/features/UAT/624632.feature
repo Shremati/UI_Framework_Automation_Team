@@ -7,7 +7,7 @@
 #  Expected:
 #The system should request a Manual Reissue.
 
-@UAT
+@Reissue
 Feature: 624632 - Voluntary Reissue with Sales Restriction
 
   Background:
@@ -44,6 +44,7 @@ Feature: 624632 - Voluntary Reissue with Sales Restriction
     And I click the Tickets tab and verify the Ticket Status as "<TicketStatus>" and verify the EMD Coupon control status as "<EMDStatus>"
     And I navigate to Order tab
     And I change the date of travel for the first segment "<NewDate>"
+    And I navigate to home screen
     And I change the Sales Office and Currency "<salesOffice1>" and "<currency1>"
     And I navigate to home screen
     And I click the order tab

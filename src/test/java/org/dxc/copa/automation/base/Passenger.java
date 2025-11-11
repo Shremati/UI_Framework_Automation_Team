@@ -61,10 +61,13 @@ public final class Passenger
     private int ArrivalFlightTimeAfterChanging;
     private int DepartureFlightTimeAfterChanging;
 
+    private final ArrayList<Integer> ConnectingSegmentDate;
     private final ArrayList<String> Airline;  //done
-    private final ArrayList<Integer> SegmentDate;  //done
+    private final ArrayList<Integer> SegmentDate;//done
+    private final ArrayList<Integer> SystemDate;
     private final ArrayList<String> SegmentFlight;  //done
     private final ArrayList<String> segmentOriginCity; //done
+    private final ArrayList<String> segmentCOS;
     private final ArrayList<String> segmentDestinationCity; //done
     private final ArrayList<String> segmentArrivalTime; //done
     private final ArrayList<String> segmentDepartureTime;  //done
@@ -104,6 +107,7 @@ public final class Passenger
     private String newCOS;
     private String updatedTicketNumber;
     private String updatedEMDNumber;
+    private String residualEMDNumber;
     private String CHDTicketNumber;
     private String ADTTicketNumber;
     private String INSTicketNumber;
@@ -124,7 +128,8 @@ public final class Passenger
     private final ArrayList<String> oldFlightOrigin;
     private final ArrayList<String> oldFlightDestination;
     private final ArrayList<String> ThruFlightDestinations;
-
+    private String firstSegDateOrderPage;
+    private String firstConnectingSegDateOrderPage;
 
     public Passenger() {
         fName = null;
@@ -144,6 +149,7 @@ public final class Passenger
         ticketDocumentNumber=null;
         documentType="";
         SegmentDate = new ArrayList<>();
+        SystemDate = new ArrayList<>();
         SegmentFlight = new ArrayList<>();
         Airline  = new ArrayList<>();
         isNRSA = false;
@@ -152,6 +158,7 @@ public final class Passenger
         surchargeValue=null;
         BagtagNumber=null;
         segmentOriginCity = new ArrayList<>();
+        segmentCOS = new ArrayList<>();
         segmentDestinationCity = new ArrayList<>();
         segmentArrivalTime=new ArrayList<>();
         segmentDepartureTime=new ArrayList<>();
@@ -236,6 +243,9 @@ public final class Passenger
         SecondSegDate=0;
         ThirdSegDate=0;
         FourthSegDate=0;
+        ConnectingSegmentDate = new ArrayList<>();
+        firstSegDateOrderPage="";
+        firstConnectingSegDateOrderPage="";
     }
 
     public void setSsr(String ssr) {
@@ -310,6 +320,14 @@ public final class Passenger
            this.SegmentDate.add(i,SegmentsDate);
     }
 
+    public void setSystemDate(int i, int SystemDate)
+    {
+        if(this.SystemDate.size()>= (i+1))
+            this.SystemDate.set(i,SystemDate);
+        else
+            this.SystemDate.add(i,SystemDate);
+    }
+
     public void setSegmentFlight(int i,String SegmentFlight)
     {
         if(this.SegmentFlight.size()>= (i+1))
@@ -335,6 +353,16 @@ public final class Passenger
     }
 
     public void setCOS(String COS) { this.COS = COS; }
+
+
+    public void setSegmentCOS(int i, String segmentCOS)
+    {
+        if(this.segmentCOS.size()>= (i+1))
+            this.segmentCOS.set(i,segmentCOS);
+        else
+            this.segmentCOS.add(i,segmentCOS);
+    }
+
 
     public void setSegmentOriginCity(int i,String segmentOriginCity)
     {
@@ -623,6 +651,9 @@ public final class Passenger
     public void setUpdatedEMDNumber(String updatedEMDNumber) {
         this.updatedEMDNumber = updatedEMDNumber;
     }
+    public void setResidualEMDNumber(String residualEMDNumber) {
+        this.residualEMDNumber = residualEMDNumber;
+    }
 
     public void setADTTicketNumber(String tickets) {
         this.ADTTicketNumber = tickets;
@@ -666,9 +697,25 @@ public final class Passenger
 
     public void setFourthSegDate(int FourthSegDate){this.FourthSegDate=FourthSegDate;}
 
-
+    public void setConnectingSegmentDate(int i, int ConnectingSegmentDate)
+    {
+        if(this.ConnectingSegmentDate.size()>= (i+1))
+            this.ConnectingSegmentDate.set(i,ConnectingSegmentDate);
+        else
+            this.ConnectingSegmentDate.add(i,ConnectingSegmentDate);
+    }
+    public void setfirstSegDateOrderPage(String firstSegDateOrderPage){this.firstSegDateOrderPage=firstSegDateOrderPage;}
+    public void setfirstConnectingSegDateOrderPage(String firstConnectingSegDateOrderPage){this.firstConnectingSegDateOrderPage=firstConnectingSegDateOrderPage;}
 //    ########## GETTERS ##########
 
+
+    public String getfirstSegDateOrderPage() {
+        return firstSegDateOrderPage;
+    }
+
+    public String getfirstConnectingSegDateOrderPage() {
+        return firstConnectingSegDateOrderPage;
+    }
     public int getSecondSegDate() {
         return SecondSegDate;
     }
@@ -754,6 +801,10 @@ public final class Passenger
         return this.SegmentDate.get(i);
     }
 
+    public int getSystemDate(int i) {
+        return this.SystemDate.get(i);
+    }
+
     public String getSegmentFlight(int i) {
         return this.SegmentFlight.get(i);
     }
@@ -780,6 +831,10 @@ public final class Passenger
 
     public String getSegmentOriginCity(int i) {
         return this.segmentOriginCity.get(i);
+    }
+
+    public String getSegmentCOS(int i) {
+        return this.segmentCOS.get(i);
     }
 
     public String getSegmentDestinationCity(int i) {
@@ -985,6 +1040,9 @@ public final class Passenger
     public String getUpdatedEMDNumber() {
         return updatedEMDNumber;
     }
+    public String getResidualEMDNumber() {
+        return residualEMDNumber;
+    }
     public String getUpdatedTicketNumber() {
         return updatedTicketNumber;
     }
@@ -1004,7 +1062,7 @@ public final class Passenger
     public String getIssuedCurrency() {
         return this.IssuedCurrency;
     }
-
+    public int getConnectingSegmentDate(int i) { return this.ConnectingSegmentDate.get(i); }
 
     public void diaplayPassenger()
     {

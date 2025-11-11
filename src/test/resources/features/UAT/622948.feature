@@ -44,7 +44,6 @@ Feature: 622948 - Mass Transfer: Passenger THRU GUA-SJO with Current Option and 
     And I choose one mode of payment
     And I make the first payment by selecting the payment type as "<PaymentType>"
     And I enter the FOID details for the passengers with document type as "<documentType>"
-#    And I enter the FOID details of the passengers
     And I enter the details in the email recipients page
     And I validate if the payment is successful
 
@@ -88,5 +87,5 @@ Feature: 622948 - Mass Transfer: Passenger THRU GUA-SJO with Current Option and 
 
 
     Examples:
-    |salesOffice1|currency1|POS  |OriginCity   |Destination |OriginCity1|Destination1|StartDate |StartDate1|Adult|Child|INF|INS|originClass |Pax|PaymentType|ActionType   |SegmentIndex|PNRText|transferType|Reason     |buttonName|SegmentIndex1|documentType                |ticketStatus|ticketStatus1|searchType|bagCount|BaggageWeight|printer      |printerStatus|type           |
-    |GUA ATO     |GTQ      |PTY  |GUA          |SJO         |SJO        |PTY         |01 days   |02 Days   |1    |0    |0  |0  |Economy     |1  |Cash       |Mass Transfer|0           |PNR    |Current     |CANCELATION|accept    |0            |National Identification Card|ADJUSTED    |CHECKED-IN   |Name      |2       |23           |IN-PF2ST1T4|PrintReady   |baggageTransfer|
+      | salesOffice1 | currency1 | OriginCity | Destination | OriginCity1 | Destination1 | StartDate | StartDate1 | Adult | Child | INF | INS | originClass | PaymentType | ActionType    | SegmentIndex | transferType | Reason      | buttonName | SegmentIndex1 | documentType                 | ticketStatus | ticketStatus1 | searchType | bagCount | BaggageWeight | printer     | printerStatus | type            |
+      | GUA ATO      | GTQ       | GUA        | SJO         | SJO         | PTY          | 01 days   | 02 Days    | 1     | 0     | 0   | 0   | Economy     | Cash        | Mass Transfer | 0            | Current      | CANCELATION | accept     | 0             | National Identification Card | ADJUSTED     | CHECKED-IN    | Name       | 2        | 23            | IN-PF2ST1T4 | PrintReady    | baggageTransfer |

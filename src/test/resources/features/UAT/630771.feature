@@ -78,8 +78,8 @@ Feature: 630771 - EQP-018 Validation of baggage calculation according to "Connec
 
 
     Examples:
-      |salesOffice     |currency |OriginCity   |Destination |OriginCity1   |Destination1 |StartDate  |StartDate1  |SegmentIndex|Adult|Child|INF|INS|BaggageNo |BaggageNo1|BaggageNo2|BaggageNo3|BaggageNo4|BaggageWeight|BaggageWeight1|BaggageWeight2|PaymentType|originClass|searchType    |SegmentIndex1|ticketStatus|Printer      |PrinterStatus|searchType1    |PricingOption|FQTV|
-      |MDE ATO         |COP      |MDE          |PTY         |PTY           |SJO          |01 days    |02 days     |0           |0    |0    |0  |0  |1         |2         |3         |4         |5         |32           |35            |35            |CASH       |Economy    |Name          |1            |CHECKED-IN  |IN-5CD4316MPJ|PrintReady   |Name&PNR       |Business Full|1   |
+      |salesOffice     |currency |OriginCity   |Destination1 |StartDate  |SegmentIndex|Adult|Child|INF|INS|BaggageNo |BaggageNo1|BaggageNo2|BaggageNo3|BaggageNo4|BaggageWeight|BaggageWeight1|PaymentType|originClass|searchType    |SegmentIndex1|ticketStatus|Printer      |PrinterStatus|PricingOption|FQTV|
+      |MDE ATO         |COP      |MDE          |SJO          |01 days    |0           |0    |0    |0  |0  |1         |2         |3         |4         |5         |32           |35            |CASH       |Economy    |Name          |1            |CHECKED-IN  |IN-5CD4316MPJ|PrintReady   |Business Full|1   |
 
 
 

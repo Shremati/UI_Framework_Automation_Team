@@ -1,4 +1,32 @@
-#Description:
+##Description:
+#POS: BOS-ATO / USD
+#PNR: 1 ADT / Prefer Silver / BOS-SCL / Any date / OW / Economy Full
+#Enter the "Check-In" module
+#Enter flight number, date and click "Search"
+#Perform a search by name, select the passenger and click "Proceed to Check In"
+#Complete ADC/APIS, click "Submit" and then "Done"
+#Select the passenger and click on "Check In"
+#In the confirmation pop-up window, click "Return to Check In"
+#Click on the baggage icon
+#Add baggage in the following order:
+#1. Standard 32kg
+#2. Standard 32kg
+#3. Standard 32kg
+#4. Standard 35kg + Oversized (Select the Oversized baggage box)
+#Proceed to pay (FOP: Cash) and complete Check in
+#Verify that all EMDs have been generated correctly.
+#
+#
+#  Expected:
+#After clicking "Done", the system should return to the Check-In screen.
+#-Check that the "Doc Check" icon is green
+#-Check that the passenger data and PNR are correct
+#
+#The system should display:
+#1. Free
+#2. Free
+#3. 200 usd (additional bag) + 100 usd (overweight) + tax
+#4. 200 usd (additional bag) + 200 usd (overweight) + 150 usd (oversize) + tax
 
 
 @UAT
@@ -72,5 +100,5 @@ Feature: 630729 - EQP-009 Validation of baggage calculation according to "Connec
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice              |currency |OriginCity   |Destination |StartDate |Adult|Child|INF|INS|FQTV|originClass |PaymentType|SegmentIndex1|SegmentIndex2|BaggageNo |BaggageNo1|BaggageNo2|BaggageWeight|BaggageWeight1|BaggageWeight2|BaggageNo3|BaggageWeight3|searchType|ticketStatus|printer      |printerStatus|
-      |BOS ATO                  |USD      |BOS          |SCL         |01 days   |0    |0    |0  |0  |1   |Economy     |Cash       |0            |1            |1         |2         |3         |32           |32            |32            |4         |35            |Name      |CHECKED-IN  |IN-PF2ST1T4  |PrintReady   |
+      |salesOffice              |currency |OriginCity   |Destination |StartDate |Adult|Child|INF|INS|FQTV|originClass |PaymentType|SegmentIndex1|BaggageNo |BaggageNo1|BaggageNo2|BaggageWeight|BaggageWeight1|BaggageWeight2|BaggageNo3|BaggageWeight3|searchType|ticketStatus|printer      |printerStatus|
+      |BOS ATO                  |USD      |BOS          |SCL         |01 days   |0    |0    |0  |0  |1   |Economy     |Cash       |0            |1         |2         |3         |32           |32            |32            |4         |35            |Name      |CHECKED-IN  |IN-PF2ST1T4  |PrintReady   |

@@ -10,7 +10,7 @@
 #Expected:
 #Selected passengers for iCoupon generation should display the green IC icon.
 
-@UAT
+@IcouponAssign
 Feature: 622969 - Create an iCoupon for a reservation of 4ADT
 
   Background:
@@ -76,5 +76,5 @@ Feature: 622969 - Create an iCoupon for a reservation of 4ADT
 
 
     Examples:
-      |salesOffice|currency|OriginCity   |Destination |StartDate |compensationReason        |Adult|Child|INS|INF|PassengerType     |printer   |printerStatus|flightIndex|originClass|PaymentType|PaxCount|PassengerType1|iCouponStatus|
-      |PTY ATO    |USD     |PTY          |MEX         |00 days   |Delay between 4 to 7:59hrs|4    |0    |0  |0  |All Passenger List|US-5CD4377SFF|PrintReady   |0          |Economy    |Cash       |4       |Print List    |Assign    |
+      |salesOffice|currency|OriginCity   |Destination |StartDate |compensationReason        |Adult|Child|INS|INF|PassengerType     |printer      |printerStatus|flightIndex|originClass|PaymentType|PaxCount|PassengerType1|iCouponStatus|
+      |PTY ATO    |USD     |PTY          |MEX         |01 days   |Delay between 4 to 7:59hrs|4    |0    |0  |0  |All Passenger List|US-5CD4377SFF|PrintReady   |0          |Economy    |Cash       |4       |Print List    |Assign       |

@@ -45,7 +45,7 @@
 #10. Pay seats : AMEX
 
 
-@UAT
+@Reissue
 Feature: 624673 - 145952:ISSUE/REISSUE-Create reservation for 1ADT in BRAZIL ATO GRU (BRL), Issue in BRAZIL CTO GRU (BRL), pay with EMD RESIDUAL and perform voluntary Reissue in BRAZIL CTO GRU (BRL), pay reissue with MASTER CARD
 
   Background:
@@ -71,7 +71,8 @@ Feature: 624673 - 145952:ISSUE/REISSUE-Create reservation for 1ADT in BRAZIL ATO
     And I select class "<originClass>" for Origin flight
     And I select pricing option Price as Booked
     And I select the Quote Options and click on Next
-    And I validate the Price Quote and click on Next
+#    And I validate the Price Quote and click on Next
+    And I click the Price Quote button and click on Next
     And I enter required passenger details for COPA GUI
     And I Click on Book and FileFare button
     And I Click on CheckOut button for payment
@@ -101,7 +102,10 @@ Feature: 624673 - 145952:ISSUE/REISSUE-Create reservation for 1ADT in BRAZIL ATO
     And I validate the Price Quote and click on Next
     Then I enter required passenger details for COPA GUI
     And I click on Book and FileFare button or File Fare button
+    And I navigate to home screen
     And I change the Sales Office and Currency "<salesOffice2>" and "<currency2>"
+    And I navigate to home screen
+    And I click the order tab
     And I Click on CheckOut button for payment
     And I choose two mode of payments
     And I make the first payment by selecting the payment type as "<PaymentType>"
@@ -111,8 +115,6 @@ Feature: 624673 - 145952:ISSUE/REISSUE-Create reservation for 1ADT in BRAZIL ATO
     And I validate if the payment is successful
     And I click the Tickets tab and try to click the Coupon number and verify the details
     And I click the EMD subtab and view the EMD details
-#    And I select sales report and select Agent sales report
-#    And I validate EMD values in Agent Sales Report
 
     And I navigate to home screen
     And I click the order tab
@@ -157,8 +159,9 @@ Feature: 624673 - 145952:ISSUE/REISSUE-Create reservation for 1ADT in BRAZIL ATO
     And I click on Seat Icon from Services tab
     And I select Seat for all passengers
     And I Click on CheckOut button for payment
-    And I choose one mode of payment
-    And I make the first payment by selecting the payment type as "<PaymentType1>"
+#    And I choose one mode of payment
+#    And I make the first payment by selecting the payment type as "<PaymentType1>"
+    And I click on pay button by selecting the required payment type "<PaymentType1>"
     And I enter the details in the email recipients page
     And I validate if the payment is successful
     And I click the services Tab to validate the seats

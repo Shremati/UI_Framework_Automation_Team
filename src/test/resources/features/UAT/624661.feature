@@ -10,7 +10,7 @@
 #Expected:
 #The system should process the change correctly, and the EMD should be emited.
 
-@UAT
+@Reissue
 Feature: 624661 - Voluntary Reissue of a End on End ticket
 
   Background:
@@ -75,8 +75,8 @@ Feature: 624661 - Voluntary Reissue of a End on End ticket
 
     Examples:
 
-      | salesOffice                          | currency | OriginCity | Destination | StartDate | StartDate1 | StartDate2 | StartDate3 | PaymentType       | PaymentType1 | Adult | Child | INF | INS | originClass | originClass1 | PricingOption  | PricingOption1  | TicketStatus1 | SegmentDelete |DocumentType|Class|Class1|Class2|
-      | MDE CTO CENTRO COMERCIAL MOLINOS     | COP      | MDE        | GUA         | 10 days   | 12 days    | 15 days    | 17 days    | MISC_BANK_TRANSFER| MISC_SST     | 0     | 2     | 0   | 0   | Economy     | Business     | Economy Classic| Price as Booked | EXCHANGED     | 1             |Passport    |A    |T     |Y     |
+      | salesOffice                          | currency | OriginCity | Destination | StartDate | StartDate1 | StartDate2 | StartDate3 | PaymentType       | PaymentType1 | Adult | Child | INF | INS |  PricingOption  | PricingOption1  | TicketStatus1 | SegmentDelete |DocumentType|Class|Class1|Class2|
+      | MDE CTO CENTRO COMERCIAL MOLINOS     | COP      | MDE        | GUA         | 10 days   | 12 days    | 15 days    | 17 days    | MISC_BANK_TRANSFER| MISC_SST     | 0     | 2     | 0   | 0   |  Economy Classic| Price as Booked | EXCHANGED     | 1             |Passport    |A    |T     |Y     |
 
 
 

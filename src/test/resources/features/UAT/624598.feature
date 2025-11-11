@@ -13,7 +13,7 @@
 
 
 
-@UAT
+@Reissue
 Feature: 624598 - Verify Involuntary Reissue of a double open jaw ticket is happening correctly
 
   Background:

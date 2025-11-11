@@ -19,6 +19,7 @@ Feature: 629048 - Added SSR should be displayed in the final report of the selec
     Then I enter valid credentials to log into COPA GUI application
     Then I validate successful login
     And I change the Sales Office and Currency "<salesOffice>" and "<currency>"
+    And I select the printer "<Printer>" and "<PrinterStatus>"
     And I click on the Reservation section
     And I click on New Order for creating new PNR in GUI
     And Select from and to City "<OriginCity>" and "<Destination>"
@@ -58,5 +59,5 @@ Feature: 629048 - Added SSR should be displayed in the final report of the selec
 
 
     Examples:
-      |salesOffice |currency |OriginCity |Destination |StartDate |Adult |Child |INF |INS |originClass |SegmentIndex |PaymentType |SSRType |SSRKeyword |
-      |PTY ATO     |USD      |PTY        |SCL         |01 days   |1     |0     |0   |0   |Economy     |0            |Cash        |WCHS    |Disabled   |
+      |salesOffice |currency |OriginCity |Destination |StartDate |Adult |Child |INF |INS |originClass |SegmentIndex |PaymentType |SSRType |SSRKeyword |Printer      |PrinterStatus|
+      |PTY ATO     |USD      |PTY        |SCL         |01 days   |1     |0     |0   |0   |Economy     |0            |Cash        |WCHS    |Disabled   |IN-5CD4316MPJ|PrintReady   |

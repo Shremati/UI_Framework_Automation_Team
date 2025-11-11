@@ -740,11 +740,11 @@ public class IsharesSteps1 extends StepManager {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on Cancel button in native shares");
             isharesPage1.cancelNativeShares(logInfo);
-            
+            logInfo.pass("I click on Cancel button in native shares");
 
         } catch (AssertionError | Exception e) {
+            logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
-             logInfo.fail("This step failed.. so stopping...");
         }
 
     }

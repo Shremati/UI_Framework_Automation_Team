@@ -1,3 +1,26 @@
+#| Step Name       | Description                                                                                                                                                             | Expected Result
+#| 2               | PNR: 1 ADT  /  Prefer Platinum  /   GIG-SJO   /  Any date  /  RT   /  Economy Classic Flex                                                                              |
+#|                 |                                                                                                                                                                         |
+#| 3               | Enter the "Check-In" module                                                                                                                                             |
+#|                 |                                                                                                                                                                         |
+#| 4               | Enter flight number, date and click "Search"                                                                                                                            |
+#|                 |                                                                                                                                                                         |
+#| 5               | Perform a search by name, select the passenger and click "Proceed to Check In"                                                                                          |
+#|                 |                                                                                                                                                                         |
+#| 6               | Complete ADC/APIS, click "Submit" and then "Done"                                                                                                                       | After clicking "Done", the system should return to the Check-In screen. -Check that the "Doc Check" icon is green -Check that the passenger data and PNR are correct
+#|                 |                                                                                                                                                                         |
+#| 7               | Select the passenger and click on "Check In"                                                                                                                            |
+#|                 |                                                                                                                                                                         |
+#| 8               | In the confirmation pop-up window, click "Return to Check In"                                                                                                           |
+#|                 |                                                                                                                                                                         |
+#| 9               | Click on the baggage icon                                                                                                                                               |
+#|                 |                                                                                                                                                                         |
+#| 10              | Add baggage in the following order: 1. Standard 23kg 2. Standard 32kg 3. Standard 35kg + Oversized (Select the Oversized baggage box) 4. Standard 23kg 5. Standard 23kg | The system should display: 1. Free 2. 200 USD (additional bag) + 100 USD (overweight) + tax 3. 200 USD (additional bag) + 200 USD (overweight) + 150 USD (oversize) + tax 4. 200 USD (additional bag) 5. 200 USD (additional bag)
+#|                 |                                                                                                                                                                         |
+#| 11              | Proceed to pay (FOP: Cash) and complete Check in                                                                                                                        |
+#|                 |                                                                                                                                                                         |
+#| 12              | Verify that all EMDs have been generated correctly.                                                                                                                     |
+#|                 |                                                                                                                                                                         |
 
 @UAT
 Feature: 630787 - EQP-022 Validation of baggage calculation according to "ConnectMiles Platinum" status and "Economy Classic Flex" fare
@@ -36,7 +59,7 @@ Feature: 630787 - EQP-022 Validation of baggage calculation according to "Connec
     And I make the first payment by selecting the payment type as "<PaymentType>"
     And I enter Passport FOID details
     And I enter the details in the email recipients page
-    And I validate if the payment is successful
+    And I store the updated emd and ticket details and validate if payment is successful
     And I click the Tickets tab and try to click the Coupon number and verify the details
     And I click the EMD subtab and view the EMD details
     And I select sales report and select Agent sales report

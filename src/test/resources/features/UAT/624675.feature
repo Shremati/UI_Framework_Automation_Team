@@ -25,7 +25,7 @@
 #- Verify sales report display the same form of payment selected and amount.
 #9. Send a etkt receipt for penalty fee.
 
-@UAT
+@Reissue
 Feature: 624675 - Reissue ticket with new date and flights for bulk ticket (BT)
 
   Background:
@@ -44,7 +44,6 @@ Feature: 624675 - Reissue ticket with new date and flights for bulk ticket (BT)
     And I add "<INF>" infant without seat passengers
     And I want to display all the passengers
     And I change the Sales Office and Currency "<salesOffice>" and "<currency>"
-    #And I select the printer "<printer>" and "<printerStatus>"
     And I click on the Reservation section
     And I click on New Order for creating new PNR in GUI
     And Select from and to City "<OriginCity>" and "<Destination>"
@@ -66,8 +65,6 @@ Feature: 624675 - Reissue ticket with new date and flights for bulk ticket (BT)
     And I click the Tickets tab
     And I click the EMD subtab and view the EMD details
     And I navigate to Order tab
-#    And I change the date of travel for the first segment "<NewDate1>"
-#    And I change the date of travel for the second segment "<ReturnDate1>"
     And I click on Order Availability
     And Select from and to City "<OriginCity>" and "<Destination2>"
     And I enter Start Date "<NewDate1>" and Return Date "<ReturnDate1>" for two way booking
@@ -79,10 +76,8 @@ Feature: 624675 - Reissue ticket with new date and flights for bulk ticket (BT)
     And I select and delete the segment "<SegmentDelete>"
     And I perform Voluntary reissue with penalty and pricing option as "<PricingOption1>" and "<penalty>" and "<taxCode>"
     And I click on pay button by selecting the required payment type "<PaymentType2>"
-    #And I make the second payment by selecting the required payment type "<PaymentType2>"
     And I enter the details in the email recipients page
     And I validate if the payment is successful
-   # And I navigate to Order tab
 
     And I add OSI remarks in order tab "<OSIRemark>"
     And I add OSI remarks in order tab "<OSIRemark1>"
@@ -98,8 +93,8 @@ Feature: 624675 - Reissue ticket with new date and flights for bulk ticket (BT)
     And I click on seat icon from services tab
     And I select Seat for all passengers
     And I Click on CheckOut button for payment
-    And I assign seats to the passengers in Services tab
-    And I Click on CheckOut button for payment
+#    And I assign seats to the passengers in Services tab
+#    And I Click on CheckOut button for payment
     And I click on pay button by selecting the required payment type "<PaymentType>"
     And I enter the details in the email recipients page
     And I validate if the payment is successful
@@ -110,7 +105,7 @@ Feature: 624675 - Reissue ticket with new date and flights for bulk ticket (BT)
 
 
     Examples:
-      |salesOffice|currency|OriginCity   |Destination |Destination2|penalty|taxCode|StartDate|ReturnDate|NewDate1|ReturnDate1|Adult|Child|INS|INF|segments      |printerStatus|originClass|ReturnClass|PaymentType1|PaymentType|PaymentType2|SegmentDelete|OSIRemark                               |OSIRemark1              |ticketStatus |NameStatus            |segmentIndex|searchType|BaggageWeight|PricingOption  |PricingOption1|Segment|class|Index|
-      |JFK ATO    |USD     |PTY          |BOG         |GYE         |125    |D98    |10 days  |20 days   |13 days |18 days    |1    |0    |0  |0  |34            |PrintReady   |Economy    |Economy    |MASTERCARD  |Cash       |VISA        |1            |Passenger request change date and flight|Adv pax pnlty 125.00 usd|EXCHANGED   |DOCUMENT AMENDMENT FEE|0           |PNR       |23           |Price as Booked|Business Promo|1      |V    |1    |
+      | salesOffice | currency | OriginCity | Destination | Destination2 | penalty | taxCode | StartDate | ReturnDate | NewDate1 | ReturnDate1 | Adult | Child | INS | INF | segments | originClass | ReturnClass | PaymentType | PaymentType2 | SegmentDelete | OSIRemark                                | OSIRemark1               | ticketStatus | NameStatus             | PricingOption   | PricingOption1 |
+      | JFK ATO     | USD      | PTY        | BOG         | GYE          | 125     | D98     | 10 days   | 20 days    | 13 days  | 18 days     | 1     | 0     | 0   | 0   | 34       | Economy     | Economy     | Cash        | VISA         | 1             | Passenger request change date and flight | Adv pax pnlty 125.00 usd | EXCHANGED    | DOCUMENT AMENDMENT FEE | Price as Booked | Business Promo |
 
 

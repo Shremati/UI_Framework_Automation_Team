@@ -6,7 +6,7 @@
 #Select class J
 #Voluntary Reissue priced as Business Full
 
-@UAT
+@Reissue
 Feature: 624648 - Verify Voluntary Reissue - Dual RBD is happening correctly
 
   Background:

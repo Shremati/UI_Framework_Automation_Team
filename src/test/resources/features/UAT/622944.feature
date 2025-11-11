@@ -45,8 +45,8 @@ Feature: 622944 - Perform Mass Transfer to Heald Seats of Flights with CANCELLED
     And I click the Tickets tab
     And I click the EMD subtab present in Tickets tab
     And I click the services Tab
+    And I navigate to home screen
     And I open flight for the segment "<SegmentIndex>" in native shares
-    And I open flight for the segment "<SegmentIndex1>" in native shares
 
     And I navigate to home screen
     And I navigate to Check-In page
@@ -87,5 +87,5 @@ Feature: 622944 - Perform Mass Transfer to Heald Seats of Flights with CANCELLED
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice              |POS|currency |OriginCity   |Destination |OriginCity1|Destination1|StartDate |ReturnDate|Adult|Child|INF|INS|originClass |Pax|PaymentType|ActionType   |SegmentIndex|PNRText|transferType|Reason            |buttonName|SegmentIndex1|searchType|ticketStatus|passengerListType|ticketStatus1|
-      |PTY ATO                  |PTY|USD      |PTY          |SFO         |SJO        |PTY         |01 days   |02 Days   |5    |0    |0  |0  |Economy     |1  |Cash       |Mass Transfer|0           |PNR    |Outbound     |CANCELATION     |accept    |1            |PNR       |ADJUSTED    |Held Seat Pax    |Open          |
+      | salesOffice | currency | OriginCity | Destination | StartDate | ReturnDate | Adult | Child | INF | INS | originClass | PaymentType | ActionType    | SegmentIndex | PNRText | transferType | Reason      | buttonName | SegmentIndex1 | searchType | ticketStatus | passengerListType | ticketStatus1 |
+      | PTY ATO     | USD      | PTY        | SFO         | 01 days   | 02 Days    | 5     | 0     | 0   | 0   | Economy     | Cash        | Mass Transfer | 0            | PNR     | Outbound     | CANCELATION | accept     | 1             | PNR        | ADJUSTED     | Held Seat Pax     | Open          |

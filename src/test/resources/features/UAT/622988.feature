@@ -31,12 +31,12 @@
 
 
 @UAT
-Feature: 144832 - Verify the GUI and SHARES matched the PNR details
+Feature: 622988 - 144832-Verify the GUI and SHARES matched the PNR details
 
   Background:
     Given COPA GUI Application is launched in the browser
 
-  Scenario Outline: 144832 - Validate charges for additional 3 suitcases
+  Scenario Outline: 622988 - 144832-Validate charges for additional 3 suitcases
 
 #GUI
     And I create the passengers data
@@ -48,6 +48,7 @@ Feature: 144832 - Verify the GUI and SHARES matched the PNR details
     Then I enter valid credentials to log into COPA GUI application
     Then I validate successful login
     And I change the Sales Office and Currency "<salesOffice>" and "<currency>"
+    And I select the printer "<Printer>" and "<PrinterStatus>"
     And I click on the Reservation section
     And I click on New Order for creating new PNR in GUI
     And Select from and to City "<OriginCity>" and "<Destination>"
@@ -85,21 +86,22 @@ Feature: 144832 - Verify the GUI and SHARES matched the PNR details
     And I add standard baggage "<BaggageNo3>" and  "<BaggageWeight3>"
     And I click on Submit and Proceed to Pay
     And I click on check-in for the passenger
-    Then I validate the confirmation dialog that passenger is Checked-in
+    And I click on Return to Check-In
     And I click add Baggage icon
     And I delete the standard baggage "<BaggageNo2>"
     And I delete the standard baggage "<BaggageNo3>"
     And I click on Submit and Continue
-    And I click the Tickets tab
-    And I click the EMD subtab present in Tickets tab
+    And I navigate to home screen
+    And I try to retrieve the pnr from Order Screen to check the "<ticketStatus>" status in ticket tab
+    And I click the EMD subtab and view the baggage details in tickets tab
     And I select Sales Report and Agent Sales Report
     And I validate EMD values in Agent Sales Report
     And I logout from COPA GUI application
 
 
     Examples:
-      |salesOffice     |currency |OriginCity   |Destination |StartDate  |ReturnDate1|Adult|Child|INF|INS|BaggageNo |BaggageNo1|BaggageNo2|BaggageNo3|BaggageWeight|BaggageWeight3|PaymentType|originClass|returnClass|
-      |PTY ATO         |USD      |PTY          |MEX         |01 days    |05 days    |1    |0    |0  |0  |1         |2         |3         |4         |23           |  32          |CASH       |Economy    |Economy    |
+      |salesOffice     |currency |OriginCity   |Destination |StartDate  |ReturnDate1|Adult|Child|INF|INS|BaggageNo |BaggageNo1|BaggageNo2|BaggageNo3|BaggageWeight|BaggageWeight3|PaymentType|originClass|returnClass| Printer       | PrinterStatus |ticketStatus|
+      |PTY ATO         |USD      |PTY          |MEX         |01 days    |05 days    |1    |0    |0  |0  |1         |2         |3         |4         |23           |  32          |CASH       |Economy    |Economy    | IN-5CD4316MPJ | PrintReady    |CHECKED-IN  |
 
 
 

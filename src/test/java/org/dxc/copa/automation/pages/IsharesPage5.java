@@ -44,7 +44,7 @@ public class IsharesPage5 extends TestBase {
 
     GlobalConstants globalConstants;
     GenericLib gl;
-    IsharesPage5.IsharesPageObjects5 isharesPageObjects5;
+    IsharesPageObjects5 isharesPageObjects5;
 
     IsharesPage1 isharesPage1;
     IsharesPage2 isharesPage2;
@@ -65,7 +65,7 @@ public class IsharesPage5 extends TestBase {
     public IsharesPage5() {
         globalConstants = new GlobalConstants();
         gl = new GenericLib(getDriver());
-        isharesPageObjects5 = new IsharesPage5.IsharesPageObjects5();
+        isharesPageObjects5 = new IsharesPageObjects5();
         isharesPage1 = new IsharesPage1();
         isharesPage2 = new IsharesPage2();
         isharesPage3 = new IsharesPage3();
@@ -254,7 +254,7 @@ public class IsharesPage5 extends TestBase {
             String startDate = gl.sharesFormatDateFromGUI(pax.getSegmentDate(0));
             String originCity = pax.getSegmentOriginCity(0);
 
-            String checkQueueList = "2P" + flightNo + " / " + startDate + " RR " + originCity + " " + pax.getDepartureFlightTimeAfterChanging() + "P";
+            String checkQueueList = "2P" + flightNo + "/" + startDate + " RR " + originCity + " " + pax.getDepartureFlightTimeAfterChanging() + "P";
             sendCmdToNativeSharesValidateResponsetoGetDetailsOfFlight(checkQueueList, "*", logInfo);
             Thread.sleep(5000);
             logInfo.info("And i enter "+checkQueueList+" command");
@@ -273,40 +273,121 @@ public class IsharesPage5 extends TestBase {
     }
 
 
+//    public void toGetDetailsOfFlightInNativeShares(ExtentTest logInfo) {
+//        try{
+//
+//            Passenger pax = mPassengers.get(getDriverID()).get(0);
+//            String startDate = gl.sharesFormatDateFromGUI(pax.getSegmentDate(0));
+//            String checkQueueList = "2" + pax.getSegmentFlight(0) +"/"+ startDate;
+//            String expectedText="GTD  "+pax.getGateNumber();
+//            logInfo.info("And I enter "+checkQueueList+" command");
+//            sendCmdToNativeSharesValidateResponsetoGetDetailsOfFlight(checkQueueList,expectedText,"GTD", "CODESHARE", logInfo);
+//            String response = isharesPageObjects5.NATIVE_SHARES_RESPONSE_VALIDATE_FLIGHT_DETAILS_RESPONSE.getText();
+//            int time=0;
+//            String[] res=response.split("\n");
+//            for(String s1: res) {
+//                if(s1.contains("SKED")) {
+//                    String[] var = s1.split(" ");
+//                    for (String s : var) {
+//                        if (!s.isEmpty()) {
+//                            if (!(s.equals("ORIG") || s.equals("SKED") || s.equals(pax.getSegmentOriginCity(0)))) {
+//                                String segment = s.trim();
+//                                String value = segment.substring(0, segment.length() - 1);
+//                                time = Integer.parseInt(value) + 10;
+//                                String str = String.valueOf(time);
+//                                String x = str.substring(str.length() - 2);
+//                                int z = Integer.parseInt(x);
+//                                int y = 58;
+//                                if (z > y) {
+//                                    time = time - 42;
+//                                }
+//                                break;
+//                            }
+//                        }
+//                    }
+//                    break;
+//                }
+//            }
+//            pax.setDepartureFlightTimeAfterChanging(time);
+//            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//
+//        }catch (AssertionError | Exception e) {
+//
+//            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+//            Assert.fail("This step failed.. so stopping...");
+//        }
+//
+//    }
+
     public void toGetDetailsOfFlightInNativeShares(ExtentTest logInfo) {
         try{
 
             Passenger pax = mPassengers.get(getDriverID()).get(0);
-            String checkQueueList = "2" + pax.getSegmentFlight(0);
+            String startDate = gl.sharesFormatDateFromGUI(pax.getSegmentDate(0));
+            String checkQueueList = "2" + pax.getSegmentFlight(0) +"/"+ startDate;
             String expectedText="GTD  "+pax.getGateNumber();
             logInfo.info("And I enter "+checkQueueList+" command");
-            sendCmdToNativeSharesValidateResponsetoGetDetailsOfFlight(checkQueueList,expectedText,"GTD",logInfo);
+            sendCmdToNativeSharesValidateResponsetoGetDetailsOfFlight(checkQueueList,expectedText,"GTD","CODESHARE", logInfo);
             String response = isharesPageObjects5.NATIVE_SHARES_RESPONSE_VALIDATE_FLIGHT_DETAILS_RESPONSE.getText();
+
             int time=0;
-            String[] res=response.split("\n");
-            for(String s1: res) {
-                if(s1.contains("SKED")) {
-                    String[] var = s1.split(" ");
-                    for (String s : var) {
-                        if (!s.isEmpty()) {
-                            if (!(s.equals("ORIG") || s.equals("SKED") || s.equals(pax.getSegmentOriginCity(0)))) {
-                                String segment = s.trim();
-                                String value = segment.substring(0, segment.length() - 1);
-                                time = Integer.parseInt(value) + 10;
-                                String str = String.valueOf(time);
-                                String x = str.substring(str.length() - 2);
-                                int z = Integer.parseInt(x);
-                                int y = 58;
-                                if (z > y) {
-                                    time = time - 42;
+            if(response.contains("CODESHARE")){
+
+                logInfo.fail("We are not able to delay the Codeshare flights.");
+                Assert.fail("We are not able to delay the Codeshare flights.");
+
+//                String[] res=response.split("\n");
+//                for(String s1: res) {
+//                    if(s1.contains("SKED")) {
+//                        String[] var = s1.split(" ");
+//                        for (String s : var) {
+//                            if (!s.isEmpty()) {
+//                                if (!(s.equals("ORIG") || s.equals("SKED") || s.equals(pax.getSegmentOriginCity(0)))) {
+//                                    String segment = s.trim();
+//                                    String value = segment.substring(0, segment.length());
+//                                    time = Integer.parseInt(value) + 10; //1010
+//                                    String str = String.valueOf(time);
+//                                    String x = str.substring(str.length() - 2);
+//                                    int z = Integer.parseInt(x); //101
+//                                    int y = 58;
+//                                    if (z > y) {
+//                                        time = time - 42;
+//                                    }
+//                                    break;
+//                                }
+//                            }
+//                        }
+//                        break;
+//                    }
+//                }
+            } else{
+
+                String[] res=response.split("\n");
+                for(String s1: res) {
+                    if(s1.contains("SKED")) {
+                        String[] var = s1.split(" ");
+                        for (String s : var) {
+                            if (!s.isEmpty()) {
+                                if (!(s.equals("ORIG") || s.equals("SKED") || s.equals(pax.getSegmentOriginCity(0)))) {
+                                    String segment = s.trim();
+                                    String value = segment.substring(0, segment.length() - 1);
+                                    time = Integer.parseInt(value) + 10;
+                                    String str = String.valueOf(time);
+                                    String x = str.substring(str.length() - 2);
+                                    int z = Integer.parseInt(x);
+                                    int y = 58;
+                                    if (z > y) {
+                                        time = time - 42;
+                                    }
+                                    break;
                                 }
-                                break;
                             }
                         }
+                        break;
                     }
-                    break;
                 }
             }
+
             pax.setDepartureFlightTimeAfterChanging(time);
             logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
@@ -317,6 +398,7 @@ public class IsharesPage5 extends TestBase {
         }
 
     }
+
 
 
     public void deleteReverseCodeshareTable(ExtentTest logInfo, String carrier) {
@@ -340,7 +422,7 @@ public class IsharesPage5 extends TestBase {
             String startDate = gl.sharesFormatDateFromGUI(pax.getSegmentDate(0));
             String originCity = pax.getSegmentOriginCity(0);
 
-            String checkQueueList = "2P" + flightNo + "/" + startDate + " OUT " + originCity + " " + pax.getArrivalFlightTimeAfterChanging() + "P";
+            String checkQueueList = "2P" + flightNo + "/" + startDate + " OUT " + originCity + " " + pax.getDepartureFlightTimeAfterChanging() + "P";
             isharesPage2.sendCmdToNativeSharesValidateResponse(checkQueueList, "*", logInfo);
             Thread.sleep(5000);
             logInfo.info("And i enter "+checkQueueList+" command");
@@ -1613,13 +1695,31 @@ public class IsharesPage5 extends TestBase {
     public void cancelTheFlightInNativeShares(ExtentTest logInfo) {
         try {
             Passenger pax = mPassengers.get(getDriverID()).get(0);
-            String flightNo = pax.getSegmentFlight(0);
             String startDate = gl.sharesFormatDateFromGUI(pax.getSegmentDate(0));
             String originCity = pax.getSegmentOriginCity(0);
 
-            // 2N472/20MAR#PTY/FX
-            String checkQueueList = "2N" + flightNo + "/" + startDate + "|" + originCity + "/FX";
-            isharesPage2.sendCmdToNativeSharesValidateResponse(checkQueueList, "*", logInfo);
+            int flightcount= pax.getFlightCount();
+
+            for(int i=0; i<flightcount; i++){
+
+                String flightNo = pax.getSegmentFlight(i);
+
+                // 2N472/20MAR#PTY/FX
+                String checkQueueList = "2N" + flightNo + "/" + startDate + "|" + originCity + "/FX";
+                isharesPage2.sendCmdToNativeSharesValidateResponse(checkQueueList, "*", "FLT NOOP FOR FLT/DATE", logInfo);
+
+                String Response = isharesPageObjects5.NATIVE_SHARES_RESPONSE_VALIDATE_LINE3.getText();
+
+                if(Response.contains("*")){
+                    logInfo.info("The selected Flight is changed into Cancel Status");
+                    pax.setSegmentFlight(0,flightNo);
+                    break;
+                } else if (Response.contains("FLT NOOP FOR FLT/DATE")) {
+
+                    logInfo.info("The Flight is already in Schedule Change State");
+                }
+
+            }
 
         } catch (AssertionError | Exception e) {
 
@@ -1801,7 +1901,7 @@ public class IsharesPage5 extends TestBase {
 
     }
 
-    public void sendCmdToNativeSharesValidateResponsetoGetDetailsOfFlight(String command, String validateText,String validateText1,ExtentTest logInfo){
+    public void sendCmdToNativeSharesValidateResponsetoGetDetailsOfFlight(String command, String validateText,String validateText1,String validateText2,ExtentTest logInfo){
 
         isharesPageObjects5.COMMAND_TEXTAREA.click();
         isharesPageObjects5.COMMAND_TEXTAREA.sendKeys(command);
@@ -1812,7 +1912,7 @@ public class IsharesPage5 extends TestBase {
 
         String response = isharesPageObjects5.NATIVE_SHARES_RESPONSE_VALIDATE_FLIGHT_DETAILS_RESPONSE.getText();
         gl.logResponse(logInfo,response);
-        org.junit.Assert.assertTrue(response.contains(validateText)||response.contains(validateText1));
+        org.junit.Assert.assertTrue(response.contains(validateText)||response.contains(validateText1) ||response.contains(validateText2));
 
     }
 

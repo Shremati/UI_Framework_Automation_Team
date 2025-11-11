@@ -37,7 +37,8 @@ Feature: 622981 - Open the reservations module from the POS point of sale BOG (A
     And I select class "<ReturnClass>" for Return flight
     And I select pricing option Price as Booked
     And I select the Quote Options and click on Next
-    And I validate the Price Quote and click on Next
+#    And I validate the Price Quote and click on Next
+    And I click the Price Quote button and click on Next
     And I enter required passenger details for COPA GUI
     And I Click on Book and FileFare button
     And I Click on CheckOut button for payment

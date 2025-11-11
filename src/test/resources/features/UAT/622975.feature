@@ -15,7 +15,7 @@
 #| 7               | Verify that the Icoupon is correctly created                     | Display the Icoupon it must have the correct amount and the passenger names
 #|                 |                                                                  |
 
-@UAT
+@IcouponAssign
 Feature: 622975 - Validate compensation to passengers with prefer status
 
   Background:
@@ -33,7 +33,6 @@ Feature: 622975 - Validate compensation to passengers with prefer status
     And I add "<INS>" infant with seat passengers
     And I add "<INF>" infant without seat passengers
     And I add "<FQTV>" frequent flyer passengers
-#    And I add "<FQTV>" silver frequent flyer passengers
     And I want to display all the passengers
     And I change the Sales Office and Currency "<salesOffice>" and "<currency>"
     And I select the printer "<printer>" and "<printerStatus>"
@@ -92,7 +91,7 @@ Feature: 622975 - Validate compensation to passengers with prefer status
 
 
     Examples:
-      |salesOffice|currency|OriginCity   |Destination |StartDate|Adult|FQTV|Child|INS|INF|printer      |printerStatus|originClass|PaymentType|PassengerType     |PassengerType1|iCouponStatus|Amount|segmentIndex|searchType|PricingOption  |compensationReason        |
-      |PTY ATO    |USD     |PTY          |GYE         |02 days  |0    |2   |0    |0  |0  |IN-PF2ST1T4  |PrintReady   |Economy    |Cash       |All Passenger List|Print List    |Assign       |15    |0           |pnr       |Economy Classic|Delay between 4 to 7:59hrs|
+      |salesOffice|currency|OriginCity   |Destination |StartDate|Adult|FQTV|Child|INS|INF|printer      |printerStatus|originClass|PaymentType|PassengerType     |PassengerType1|iCouponStatus|Amount|PricingOption  |compensationReason        |
+      |PTY ATO    |USD     |PTY          |GYE         |02 days  |0    |2   |0    |0  |0  |IN-PF2ST1T4  |PrintReady   |Economy    |Cash       |All Passenger List|Print List    |Assign       |15    |Economy Classic|Delay between 4 to 7:59hrs|
 
 

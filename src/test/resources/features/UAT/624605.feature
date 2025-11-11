@@ -7,7 +7,7 @@
 #Expected:
 #The system should process the change correctly
 
-@UAT
+@Reissue
 Feature: 624605 - Verify Involuntary Reissue from a RT booking to a OW booking has happened correctly
 
   Background:
@@ -43,9 +43,15 @@ Feature: 624605 - Verify Involuntary Reissue from a RT booking to a OW booking h
     And I enter Passport FOID details
     And I enter the details in the email recipients page
     And I validate if the payment is successful
-    And I click the Tickets tab
-    And I click the EMD subtab present in Tickets tab
-    And I navigate to Order tab
+#    And I click the Tickets tab
+    And I click the Tickets tab and try to click the Coupon number and verify the details
+    And I click the EMD subtab and view the EMD details
+    And I select sales report and select Agent sales report
+    And I validate Ticket and EMD values in Agent sales report and view tax details
+
+    And I navigate to home screen
+    And I click the order tab
+#    And I navigate to Order tab
     And I click on Order Availability
     And Select from and to City "<OriginCity1>" and "<Destination1>"
     And I enter Start Date "<StartDate2>" for one way booking
@@ -57,14 +63,16 @@ Feature: 624605 - Verify Involuntary Reissue from a RT booking to a OW booking h
     And I perform Involuntary Reissue for specific segment "<Segment>" with Reason Code as "<ReasonCode>" and Reissue Reason Code as "<ReissueReasonCode>"
     And I enter Passport FOID details
     And I enter the details in the email recipients page
-    And I validate if the payment is successful
+#    And I validate if the payment is successful
+    And I store the updated emd and ticket details and validate if payment is successful
     And I navigate to home screen
     And I try to retrieve the pnr from Order Screen to check the "<TicketStatus>" status in ticket tab
     And I navigate to Order tab
     And I click the Tickets tab and store the ticket number
     And I click the EMD subtab and view the EMD details
     And I select sales report and select Agent sales report
-    And I validate Ticket and EMD values in Agent sales report
+#    And I validate Ticket and EMD values in Agent sales report
+    And I validate Ticket and EMD values in Agent sales report and view tax details
     And I logout from COPA GUI application
 
 

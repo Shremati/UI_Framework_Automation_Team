@@ -758,7 +758,7 @@ public class GenericLib extends TestBase
 
     protected String takeScreenShot(String methodName) {
 
-        Date date = new java.util.Date();
+        Date date = new Date();
         String[] date1 = date.toString().split(" ");
         String[] date2 = date1[3].split(":");
         String dateval = date2[0] + date2[1] + date2[2];
@@ -2829,7 +2829,7 @@ public void VerifyTextinImage(By by, String elementname,String data) throws Exce
             mFailureDescription.put(getDriverID(),exception);
             logInfo.fail(MarkupHelper.createLabel(exception, ExtentColor.PURPLE));
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
         catch (AssertionError e)
         {
@@ -2837,7 +2837,7 @@ public void VerifyTextinImage(By by, String elementname,String data) throws Exce
             mFailureDescription.put(getDriverID(),exception);
             logInfo.fail(MarkupHelper.createLabel(exception, ExtentColor.PURPLE));
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
         catch (WebDriverException e)
         {
@@ -2853,7 +2853,7 @@ public void VerifyTextinImage(By by, String elementname,String data) throws Exce
             mFailureDescription.put(getDriverID(),exception);
             logInfo.fail(MarkupHelper.createLabel(exception, ExtentColor.PURPLE));
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
     }
@@ -2883,7 +2883,7 @@ public void VerifyTextinImage(By by, String elementname,String data) throws Exce
             mFailureDescription.put(getDriverID(),exception);
             logInfo.fail(MarkupHelper.createLabel(exception, ExtentColor.PURPLE));
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
         catch (AssertionError e)
         {
@@ -2891,7 +2891,7 @@ public void VerifyTextinImage(By by, String elementname,String data) throws Exce
             mFailureDescription.put(getDriverID(),exception);
             logInfo.fail(MarkupHelper.createLabel(exception, ExtentColor.PURPLE));
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
         catch (WebDriverException e)
         {
@@ -2907,7 +2907,7 @@ public void VerifyTextinImage(By by, String elementname,String data) throws Exce
             mFailureDescription.put(getDriverID(),exception);
             logInfo.fail(MarkupHelper.createLabel(exception, ExtentColor.PURPLE));
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -2939,7 +2939,7 @@ public void VerifyTextinImage(By by, String elementname,String data) throws Exce
             mFailureDescription.put(getDriverID(),exception);
             logInfo.fail(MarkupHelper.createLabel(exception, ExtentColor.PURPLE));
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
         catch (AssertionError e)
         {
@@ -2947,7 +2947,7 @@ public void VerifyTextinImage(By by, String elementname,String data) throws Exce
             mFailureDescription.put(getDriverID(),exception);
             logInfo.fail(MarkupHelper.createLabel(exception, ExtentColor.PURPLE));
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
         catch (WebDriverException e)
         {
@@ -2963,7 +2963,7 @@ public void VerifyTextinImage(By by, String elementname,String data) throws Exce
             mFailureDescription.put(getDriverID(),exception);
             logInfo.fail(MarkupHelper.createLabel(exception, ExtentColor.PURPLE));
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -3583,7 +3583,209 @@ public void VerifyTextinImage(By by, String elementname,String data) throws Exce
         }
     }
 
+    public String plusDaysFromTodayWithFormat(int days) {
+        String DATEFORMATPATTERN = "ddMMM";
+        DateFormat dateFormat = new SimpleDateFormat("ddMMM");
+        LocalDate actualDateLD = LocalDate.now();
+        actualDateLD = actualDateLD.plusDays(days);
+        return actualDateLD.format(DateTimeFormatter.ofPattern(DATEFORMATPATTERN));
+    }
 
+    public static String getDOBFromAge(int age) {
+        LocalDate today = LocalDate.now();
+        LocalDate dob = today.minusYears(age);
+        return dob.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));  // Adjust format if needed
+    }
+
+    public void clickWebElement(WebElement element) {
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(LOAD_TIMEOUT));
+        wait.until(ExpectedConditions.visibilityOf(element));
+        if (element.isDisplayed()) {
+            js.executeScript("arguments[0].click();", element);
+        }
+
+    }
+
+    public void highLightErrorMessages(ExtentTest logInfo, String text1, String text2) {
+        try {
+
+            JavascriptExecutor js = (JavascriptExecutor) getDriver();
+            String errorText=null;
+            if(existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL) || existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL1)){
+
+                if (existElement(pageObjects.ERROR_MESSAGE_WARNING_DROPDOWNS)) {
+
+                    pageObjects.ERROR_MESSAGE_WARNING_DROPDOWN.click();
+                    waitProgress();
+                    List<WebElement> messages = pageObjects.WARNING_MESSAGES_1;
+
+                    for (int i = 0; i < messages.size(); i++) {
+                        String msgText = messages.get(i).getText();
+                        if (msgText.contains(text1)) {
+                            js.executeScript("arguments[0].style.border='3px solid blue'", messages.get(i));
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                            logInfo.fail(MarkupHelper.createLabel("Failed due to "+text1, ExtentColor.RED));
+                            Assert.fail("Failed due to "+text1);
+                        } else if (msgText.contains(text2)) {
+                            js.executeScript("arguments[0].style.border='3px solid blue'", messages.get(i));
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                            logInfo.fail(MarkupHelper.createLabel("Failed due to "+text2, ExtentColor.RED));
+                            Assert.fail("Failed due to "+text2);
+                        }
+
+                    }
+                    waitProgress();
+                    clickElement(pageObjects.ERROR_MESSAGE_WARNING_DROPDOWN);
+                } else if (existElement(pageObjects.ERROR_MESSGAES) && existElement(pageObjects.ERROR_MESSGAE_TRIANGLE_SYMBOL)) {
+                    List<WebElement> errorList= pageObjects.ERROR_MESSGAES;
+                    for(int i=0; i<errorList.size(); i++){
+                         errorText = errorList.get(i).getText();
+                        js.executeScript("arguments[0].style.border='3px solid blue'", errorList.get(i));
+                    }
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                    logInfo.fail(MarkupHelper.createLabel("Failed due to " + errorText, ExtentColor.RED));
+                    Assert.fail("Failed due to " + errorText);
+                }
+
+            }
+        } catch (AssertionError | Exception e) {
+
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
+        }
+
+    }
+
+    public void highLightErrorMessages(ExtentTest logInfo, String text1) {
+        try {
+
+            JavascriptExecutor js = (JavascriptExecutor) getDriver();
+            String errorText= null;
+            if(existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL) || existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL1)){
+
+                if (existElement(pageObjects.ERROR_MESSAGE_WARNING_DROPDOWNS)) {
+
+                    pageObjects.ERROR_MESSAGE_WARNING_DROPDOWN.click();
+                    waitProgress();
+                    List<WebElement> messages = pageObjects.WARNING_MESSAGES_1;
+
+                    for (int i = 0; i < messages.size(); i++) {
+                        String msgText = messages.get(i).getText();
+                        if (msgText.contains(text1)) {
+                            js.executeScript("arguments[0].style.border='3px solid blue'", messages.get(i));
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                            logInfo.fail(MarkupHelper.createLabel("Failed due to "+text1, ExtentColor.RED));
+                            Assert.fail("Failed due to "+text1);
+                        }
+                    }
+                    waitProgress();
+                    clickElement(pageObjects.ERROR_MESSAGE_WARNING_DROPDOWN);
+                } else if (existElement(pageObjects.ERROR_MESSGAES)) {
+                    List<WebElement> errorList= pageObjects.ERROR_MESSGAES;
+                    for(int i=0; i<errorList.size(); i++){
+                        errorText = errorList.get(i).getText();
+                        js.executeScript("arguments[0].style.border='3px solid blue'", errorList.get(i));
+                    }
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                    logInfo.fail(MarkupHelper.createLabel("Failed due to " + errorText, ExtentColor.RED));
+                    Assert.fail("Failed due to " + errorText);
+                }
+
+            }
+        } catch (AssertionError | Exception e) {
+
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
+        }
+
+    }
+
+    public void highLightErrorMessages(ExtentTest logInfo, String text1, String text2, String text3) {
+        try {
+
+            JavascriptExecutor js = (JavascriptExecutor) getDriver();
+            String errorText= null;
+            if(existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL) || existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL1)){
+
+                if (existElement(pageObjects.ERROR_MESSAGE_WARNING_DROPDOWNS)) {
+
+                    pageObjects.ERROR_MESSAGE_WARNING_DROPDOWN.click();
+                    waitProgress();
+                    List<WebElement> messages = pageObjects.WARNING_MESSAGES_1;
+
+                    for (int i = 0; i < messages.size(); i++) {
+                        String msgText = messages.get(i).getText();
+                        if (msgText.contains(text1)) {
+                            js.executeScript("arguments[0].style.border='3px solid blue'", messages.get(i));
+                            waitProgress();
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                            logInfo.fail(MarkupHelper.createLabel("Failed due to "+text1, ExtentColor.RED));
+                            Assert.fail("Failed due to "+text1);
+                        } else if (msgText.contains(text2)) {
+                            js.executeScript("arguments[0].style.border='3px solid blue'", messages.get(i));
+                            waitProgress();
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                            logInfo.fail(MarkupHelper.createLabel("Failed due to "+text2, ExtentColor.RED));
+                            Assert.fail("Failed due to "+text2);
+                        } else if (msgText.contains(text3)) {
+                            js.executeScript("arguments[0].style.border='3px solid blue'", messages.get(i));
+                            waitProgress();
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                            logInfo.fail(MarkupHelper.createLabel("Failed due to "+text3, ExtentColor.RED));
+                            Assert.fail("Failed due to "+text3);
+                        }
+                    }
+                    waitProgress();
+                    clickElement(pageObjects.ERROR_MESSAGE_WARNING_DROPDOWN);
+                } else if (existElement(pageObjects.ERROR_MESSGAES) && existElement(pageObjects.ERROR_MESSGAE_TRIANGLE_SYMBOL)) {
+                    List<WebElement> errorList= pageObjects.ERROR_MESSGAES;
+                    for(int i=0; i<errorList.size(); i++){
+                        errorText = errorList.get(i).getText();
+                        js.executeScript("arguments[0].style.border='3px solid blue'", errorList.get(i));
+                    }
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                    logInfo.fail(MarkupHelper.createLabel("Failed due to " + errorText, ExtentColor.RED));
+                    Assert.fail("Failed due to " + errorText);
+                }
+
+            }
+        } catch (AssertionError | Exception e) {
+
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
+        }
+
+    }
+
+    public void ignoreBoardingPassErrorMessage(ExtentTest logInfo, String text1) {
+        try {
+
+            JavascriptExecutor js = (JavascriptExecutor) getDriver();
+            String errorText= null;
+            if(existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL) || existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL1)){
+
+                if (existElement(pageObjects.ERROR_MESSGAES)) {
+                    List<WebElement> errorList= pageObjects.ERROR_MESSGAES;
+                    for(int i=0; i<errorList.size(); i++){
+                        errorText = errorList.get(i).getText();
+                        if(errorText.contains(text1)){
+                            pageObjects.ERROR_MESSAGE_CROSS_SYMBOL1.get(0).click();
+                            waitProgress();
+                        }
+
+                    }
+                }
+
+            }
+        } catch (AssertionError | Exception e) {
+
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
+        }
+
+    }
 
 
 // ##########################################################################
@@ -3845,6 +4047,30 @@ public void VerifyTextinImage(By by, String elementname,String data) throws Exce
 
        @FindBy(xpath = "//input[@name='submit']")
        public WebElement GUI_SUBMIT;
+
+       @FindBy(xpath = "(//i[@ng-if='errorPanel.pssguiConstants.messageLogs[0].messageType'])[2]")
+       public List<WebElement> ERROR_MESSAGE_CROSS_SYMBOL;
+
+       @FindBy(xpath = "(//i[@ng-if='errorPanel.pssguiConstants.messageLogs[0].messageType'])[1]")
+       public List<WebElement> ERROR_MESSAGE_CROSS_SYMBOL1;
+
+       @FindBy(xpath = "(//i[@class='icon-arrow-down ng-scope'])[2]")
+       public WebElement ERROR_MESSAGE_WARNING_DROPDOWN;
+
+       @FindBy(xpath = "(//i[@class='icon-arrow-down ng-scope'])[2]")
+       public List<WebElement> ERROR_MESSAGE_WARNING_DROPDOWNS;
+
+       @FindBy(xpath = "//i[@class='icon-warning']//following-sibling::div")
+       public List<WebElement> WARNING_MESSAGES_1;
+
+       @FindBy(xpath = "(//span[@class='ng-binding msg-error'])[2]")
+       public WebElement ERROR_MESSGAE;
+
+       @FindBy(xpath = "//span[@class='ng-binding msg-error']")
+       public List<WebElement> ERROR_MESSGAES;
+
+       @FindBy(xpath = "(//span[@class='ng-binding msg-error']//preceding-sibling::i[@class='icon-warning'])[2]")
+       public List<WebElement> ERROR_MESSGAE_TRIANGLE_SYMBOL;
 
    }
 

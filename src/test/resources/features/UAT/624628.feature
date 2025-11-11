@@ -10,7 +10,7 @@
 #Expected:
 #The system should process the change correctly, and the EMD should be emited.
 
-@UAT
+@Reissue
 Feature: 624628 - Verify Voluntary Reissue Economy Classic Flex to Business Promo is happening correctly
 
   Background:
@@ -47,6 +47,7 @@ Feature: 624628 - Verify Voluntary Reissue Economy Classic Flex to Business Prom
     And I validate if the payment is successful
     And I click the Tickets tab
     And I click the EMD subtab and verify administrative fees
+    And I navigate to home screen
     And I change the Sales Office and Currency "<salesOffice1>" and "<currency>"
     And I navigate to home screen
     And I click the order tab
@@ -76,7 +77,7 @@ Feature: 624628 - Verify Voluntary Reissue Economy Classic Flex to Business Prom
     Examples:
 
       | salesOffice | salesOffice1 | currency | OriginCity | Destination | StartDate | StartDate1 | StartDate2 | StartDate3 | PaymentType | PaymentType1 | Adult | Child | INF | INS | originClass | originClass1 | PricingOption        | PricinOption1  | TicketStatus1 | SegmentDelete |
-      | JFK CTO     | JFK ATO      | USD      | SJO        | EZE         | 07 days   | 14 days    | 20 days    | 27 days    | UATP        | CASH         | 2     | 0     | 0   | 0   | Economy     | Business     | Economy Classic Flex | Business Promo | EXCHANGED     | 1             |
+      | JFK CTO     | JFK ATO      | USD      | MEX        | MCO         | 07 days   | 14 days    | 20 days    | 27 days    | UATP        | CASH         | 2     | 0     | 0   | 0   | Economy     | Business     | Economy Classic Flex | Business Promo | EXCHANGED     | 1             |
 
 
 

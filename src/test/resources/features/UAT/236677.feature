@@ -43,17 +43,14 @@ Feature: 236677 - Display list- Thru Pax
     And I enter the details in the email recipients page
     And I validate if the payment is successful
 
-
-
     And I navigate to home screen
     And I navigate to Gate section
     And I search the flight for the segment "<SegmentIndex>" in Gate section with thru flight as origin
-#    And I search the flight for the segment "<SegmentIndex>" in Gate section
     And I select "<passengerListType>" from the passenger list options
     And I try to retrieve the ticket number by selecting "<PNRText>" option
     And I logout from COPA GUI application
 
 
     Examples:
-      |salesOffice|currency |OriginCity   |Destination |POS|StartDate |Adult|Child|INF|INS|Airline|COS|SegmentIndex|SegmentIndex|PaymentType|passengerListType|originClass|PNRText|
-      |PTY ATO    |USD      |GUA          |PTY         |PTY|01 days   |1    |0    |0  |0  |CM     |Y  |0           |1           |Cash       |Thru Pax         |Economy    |PNR    |
+      |salesOffice|currency |OriginCity   |Destination |StartDate |Adult|Child|INF|INS|SegmentIndex|SegmentIndex|PaymentType|passengerListType|originClass|PNRText|
+      |PTY ATO    |USD      |GUA          |PTY         |01 days   |1    |0    |0  |0  |0           |1           |Cash       |Thru Pax         |Economy    |PNR    |

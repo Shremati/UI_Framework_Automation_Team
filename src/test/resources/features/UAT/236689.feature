@@ -63,5 +63,5 @@ Feature: 236689 - Display List- Display List- passenger by sequence number
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice|currency |OriginCity   |Destination |POS|StartDate |Adult|Child|INF|INS|Airline|COS|SegmentIndex|SegmentIndex|PaymentType|ticketStatus1|originClass|SSRType|
-      |PTY ATO    |USD      |PTY          |LAX         |PTY|01 days   |1    |0    |0  |0  |CM     |Y  |0           |1           |Cash       |CHECKED-IN |Economy    |BULK   |
+      | salesOffice | currency | OriginCity | Destination | StartDate | Adult | Child | INF | INS | SegmentIndex | SegmentIndex | PaymentType | ticketStatus1 | originClass |
+      | PTY ATO     | USD      | PTY        | LAX         | 01 days   | 1     | 0     | 0   | 0   | 0            | 1            | Cash        | CHECKED-IN    | Economy     |

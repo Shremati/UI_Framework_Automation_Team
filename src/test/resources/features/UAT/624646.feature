@@ -5,7 +5,7 @@
 #Change the flight dates after 31DEC24
 #Make a Voluntary Reissue
 
-@UAT
+@Reissue
 Feature: 624646 - Verify Voluntary Reissue with Travel Restrictions is happening correctly
 
   Background:

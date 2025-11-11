@@ -1,16 +1,52 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
+#| Step Name       | Description                                                                                                                                                             | Expected Result
+#| 1               | POS: GIG-ATO  /  USD                                                                                                                                                    |
+#|                 |                                                                                                                                                                         |
+#| 2               | PNR: 1 ADT  /  Prefer Presidential  /   GIG-GYE  /  Any date  /  OW   /  Business Full                                                                                  |
+#|                 |                                                                                                                                                                         |
+#| 3               | Enter the "Check-In" module                                                                                                                                             |
+#|                 |                                                                                                                                                                         |
+#| 4               | Enter flight number, date and click "Search"                                                                                                                            |
+#|                 |                                                                                                                                                                         |
+#| 5               | Perform a search by name, select the passenger and click "Proceed to Check In"                                                                                          |
+#|                 |                                                                                                                                                                         |
+#| 6               | Complete ADC/APIS, click "Submit" and then "Done"                                                                                                                       | After clicking "Done", the system should return to the Check-In screen. -Check that the "Doc Check" icon is green -Check that the passenger data and PNR are correct
+#|                 |                                                                                                                                                                         |
+#| 7               | Select the passenger and click on "Check In"                                                                                                                            |
+#|                 |                                                                                                                                                                         |
+#| 8               | In the confirmation pop-up window, click "Return to Check In"                                                                                                           |
+#|                 |                                                                                                                                                                         |
+#| 9               | Click on the baggage icon                                                                                                                                               |
+#|                 |                                                                                                                                                                         |
+#| 10              | Add baggage in the following order: 1. Standard 32kg 2. Standard 32kg 3. Standard 32kg 4. Standard 32kg 5. Standard 35kg + Oversized (Select the Oversized baggage box) | The system should display: 1. Free 2. Free 3. Free 4. 200 usd (additional bag) + 100 usd (overweight) + tax 5. 200 usd (additional bag) + 200 usd (overweight) + 150 usd (oversize) + tax
+#|                 |                                                                                                                                                                         |
+#| 11              | Proceed to pay (FOP: Cash) and complete Check in                                                                                                                        |
+#|                 |                                                                                                                                                                         |
+#| 1               | POS: GIG-ATO  /  BRL                                                                                                                                                    |
+#|                 |                                                                                                                                                                         |
+#| 2               | PNR: 1 ADT  /  Prefer Presidential  /   MAO-SJO  /  Any date  /  RT   /  Economy Classic Flex                                                                           |
+#|                 |                                                                                                                                                                         |
+#| 3               | Enter the "Check-In" module                                                                                                                                             |
+#|                 |                                                                                                                                                                         |
+#| 4               | Enter flight number, date and click "Search"                                                                                                                            |
+#|                 |                                                                                                                                                                         |
+#| 5               | Perform a search by name, select the passenger and click "Proceed to Check In"                                                                                          |
+#|                 |                                                                                                                                                                         |
+#| 6               | Complete ADC/APIS, click "Submit" and then "Done"                                                                                                                       | After clicking "Done", the system should return to the Check-In screen. -Check that the "Doc Check" icon is green -Check that the passenger data and PNR are correct
+#|                 |                                                                                                                                                                         |
+#| 7               | Select the passenger and click on "Check In"                                                                                                                            |
+#|                 |                                                                                                                                                                         |
+#| 8               | In the confirmation pop-up window, click "Return to Check In"                                                                                                           |
+#|                 |                                                                                                                                                                         |
+#| 9               | Click on the baggage icon                                                                                                                                               |
+#|                 |                                                                                                                                                                         |
+#| 10              | Add baggage in the following order: 1. Standard 23kg 2. Standard 32kg 3. Standard 35kg + Oversized (Select the Oversized baggage box) 4. Standard 23kg                  | The system should display: 1. Free 2. 150 usd (additional bag) + 100 usd (overweight) + tax 3. 150 usd (additional bag) + 200 usd (overweight) + 150 usd (oversize) + tax 4. 150 usd (additional bag)
+#|                 |                                                                                                                                                                         |
+#| 11              | Proceed to pay (FOP: Cash) and complete Check in                                                                                                                        |
+#|                 |                                                                                                                                                                         |
+#| 12              | Verify that all EMDs have been generated correctly.                                                                                                                     |
+#|                 |                                                                                                                                                                         |
+#| 12              | Verify that all EMDs have been generated correctly.                                                                                                                     |
+#|                 |                                                                                                                                                                         |
 
 @UAT
 Feature: 630795 - EQP-030 Validation of baggage calculation according to "ConnectMiles Presidential" status and "Business Full" fare
@@ -84,7 +120,5 @@ Feature: 630795 - EQP-030 Validation of baggage calculation according to "Connec
 
 
     Examples:
-      |salesOffice|currency |OriginCity   |Destination |StartDate|Adult|Child|INF|INS|FQTV|BaggageNo |BaggageNo1|BaggageNo2|BaggageNo3|BaggageNo4|ticketStatus|BaggageWeight|BaggageWeight1|PaymentType|originClass|searchType|searchType1|segmentIndex|reason            |PricingOption |printer      |printerStatus|PaxType|
-      |GIG ATO    |BRL      |GIG          |GYE         |01 days  |0    |0    |0  |0  |1   |1         |2         |3         |4         |5         |CHECKED-IN  |32           |35            |CASH       |Business   |Name      |PNR        |0           |DOUBLE NATIONALITY|Business Full |US-5CD4377SFF|PrintReady   |FQTV   |
-
-
+      |salesOffice|currency |OriginCity   |Destination |StartDate|Adult|Child|INF|INS|FQTV|BaggageNo |BaggageNo1|BaggageNo2|BaggageNo3|BaggageNo4|ticketStatus|BaggageWeight|BaggageWeight1|PaymentType|originClass|searchType|searchType1|segmentIndex|reason            |PricingOption |printer      |printerStatus|
+      |GIG ATO    |BRL      |GIG          |GYE         |01 days  |0    |0    |0  |0  |1   |1         |2         |3         |4         |5         |CHECKED-IN  |32           |35            |CASH       |Business   |Name      |PNR        |0           |DOUBLE NATIONALITY|Business Full |US-5CD4377SFF|PrintReady   |

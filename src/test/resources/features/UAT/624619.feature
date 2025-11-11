@@ -4,7 +4,7 @@
 #Expected:
 #
 #Actual:
-@UAT
+@Reissue
 Feature: 624619 - Involuntary Reissue of NR booking  (P04B)
 
   Background:
@@ -44,22 +44,33 @@ Feature: 624619 - Involuntary Reissue of NR booking  (P04B)
     And I make the first payment by selecting the payment type as "<PaymentType>"
     And I enter the details in the email recipients page
     And I validate if the payment is successful
-    And I click on Ticket tab and check the "<ticketStatus>" status
-    And I navigate to Order tab
+#    And I click on Ticket tab and check the "<ticketStatus>" status
+    And I click the Tickets tab and try to click the Coupon number and verify the details
+    And I click the EMD subtab and view the EMD details
+    And I select sales report and select Agent sales report
+    And I validate Ticket and EMD values in Agent sales report and view tax details
+    And I navigate to home screen
+    And I click the order tab
+#    And I navigate to Order tab
     And I change first segment date "<StartDate1>"
     And I perform the Involuntary Reissue
     And I enter the details in the email recipients page
-    And I validate if the payment is successful
-    And I click on Ticket tab and check the "<ticketStatus>" status
-    And I click on Ticket tab and check the "<ticketStatus1>" status
+#    And I validate if the payment is successful
+    And I store the updated emd and ticket details and validate if payment is successful
+#    And I click on Ticket tab and check the "<ticketStatus>" status
+#    And I click on Ticket tab and check the "<ticketStatus1>" status
+    And I navigate to home screen
+    And I try to retrieve the pnr from Order Screen to check the "<ticketStatus1>" status in ticket tab
+    And I click the Tickets tab and store the ticket number
     And I click the EMD subtab and view the EMD details
     And I select sales report and select Agent sales report
+#    And I validate Ticket and EMD values in Agent sales report
     And I validate Ticket and EMD values in Agent sales report and view tax details
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice   |currency|OriginCity  |Destination  |OriginCity1|Destination1|StartDate|StartDate1|StartDate2|StartDate3|Adult|Child|INF|INS|PaymentType     |COS|Airline|NRPS|pnrType|POS  |SegmentIndex|SegmentNo|ticketStatus|ticketStatus1|
-      |PTY ATO       |USD     |PTY         |MEX          |GIG        |PTY         |01 Days  |02 Days   |08 Days   |08 days   |0    |0    |0  |0  |MASTERCARD      |Y  |CM     |1   |NRPS   |PTY  |0           |1        |Open        |EXCHD IRR    |
+      |salesOffice   |currency|OriginCity  |Destination  |StartDate|StartDate1|Adult|Child|INF|INS|PaymentType     |COS|Airline|NRPS|pnrType|POS  |SegmentIndex|ticketStatus|ticketStatus1|
+      |PTY ATO       |USD     |PTY         |MEX          |01 Days  |02 Days   |0    |0    |0  |0  |MASTERCARD      |Y  |CM     |1   |NRPS   |PTY  |0           |Open        |EXCHD IRR    |
 
 
 

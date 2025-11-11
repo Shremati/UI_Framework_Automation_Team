@@ -6,7 +6,7 @@
 #  Click on flight actions, choose mass transfer
 #
 
-@UAT
+@IcouponAssign
 Feature: 629068 - Mass Transfer flight status canceled and Icoupon compensation
   Background:
     Given COPA GUI Application is launched in the browser
@@ -116,5 +116,5 @@ Feature: 629068 - Mass Transfer flight status canceled and Icoupon compensation
 
 
     Examples:
-      |salesOffice              |currency |POS  |OriginCity   |Destination |Destination1|StartDate |ReturnDate1|Adult|Child|INF|INS|originClass |Pax|PaymentType|ActionType   |SegmentIndex|searchType|transferType|Reason     |buttonName|SegmentIndex1|BaggageNo1|BaggageWeight1|printer      |printerStatus|ticketStatus1|ticketStatus|type            |PassengerType     |compensationReason        |PassengerType1|
-      |PTY ATO                  |USD      |MEX  |SCL          |MDE         |PTY         |01 days   |02 Days    |1    |0    |0  |0  |Economy     |1  |Cash       |Mass Transfer|0           |PNR       |Outbound    |CANCELATION|accept    |1            |1         |30            |IN-PF2ST1T4  |PrintReady   |CHECKED-IN    |ADJUSTED    |baggageTransfer|All Passenger List|Delay between 4 to 7:59hrs|Print List    |
+      |salesOffice              |currency |OriginCity   |Destination |StartDate |Adult|Child|INF|INS|originClass |PaymentType|ActionType   |SegmentIndex|searchType|transferType|Reason     |buttonName|SegmentIndex1|BaggageNo1|BaggageWeight1|printer      |printerStatus|ticketStatus1|ticketStatus|type            |PassengerType     |compensationReason        |PassengerType1|
+      |PTY ATO                  |USD      |SCL          |MDE         |01 days   |1    |0    |0  |0  |Economy     |Cash       |Mass Transfer|0           |PNR       |Outbound    |CANCELATION|accept    |1            |1         |30            |IN-PF2ST1T4  |PrintReady   |CHECKED-IN    |ADJUSTED    |baggageTransfer|All Passenger List|Delay between 4 to 7:59hrs|Print List    |

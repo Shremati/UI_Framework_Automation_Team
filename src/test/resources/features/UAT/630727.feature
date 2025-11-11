@@ -1,5 +1,28 @@
-#Description:
-#POS: POS: VVI-ATO / BOB
+##Description:
+##POS: POS: VVI-ATO / BOB
+#PNR: 1 ADT / Prefer Silver / VVI-ORD / Any Date / RT / Economy Basic
+#Enter the "Check-In" module
+#Enter flight number, date and click "Search"
+#Perform a search by name, select the passenger and click "Proceed to Check In"
+#Complete ADC/APIS, click "Submit" and then "Done"
+#Select the passenger and click on "Check In"
+#In the confirmation pop-up window, click "Return to Check In"
+#Click on the baggage icon
+#Add baggage in the following order:
+#1. Standard 23kg
+#2. Standard 32kg
+#3. Standard 35kg + Oversized (Select the Oversized baggage box)
+#Proceed to pay (FOP: Cash) and complete Check in
+#Verify that all EMDs have been generated correctly.
+#
+#  Expected:
+#After clicking "Done", the system should return to the Check-In screen.
+#-Check that the "Doc Check" icon is green
+#-Check that the passenger data and PNR are correct
+#The system should display:
+#1. Free
+#2. 100 USD (additional bag) + 100 USD (overweight) + tax
+#3. 200 USD (additional bag) + 200 USD (overweight) + 150 USD (oversize) + tax
 
 
 @UAT
@@ -25,7 +48,6 @@ Feature: 630727 - EQP-007 Validation of baggage calculation according to "Connec
     And I click on the Reservation section
     And I click on New Order for creating new PNR in GUI
     And Select from and to City "<OriginCity>" and "<Destination>"
-    #And I enter Start Date "<StartDate>" and Return Date "<ReturnDate>" for two way booking
     And I add segment from and to City "<Destination>" and "<OriginCity>"
     And I enter Start Date "<StartDate>" for one way booking
     And I enter Start Date "<ReturnDate>" for 2nd Segment
@@ -51,7 +73,6 @@ Feature: 630727 - EQP-007 Validation of baggage calculation according to "Connec
     And I select the passengers in checkin page using "<searchType>"
     And I click on Proceed to Check-In button
     And I enter the details in Security Document Verification - ADC & APIS page
-    #And I enter the details in Security Document Verification page
     Then I Validate APIS Complete and click on Done button
     And I select value from the Short Checkin dropdown
     And I click on check-in for the passenger
@@ -78,8 +99,8 @@ Feature: 630727 - EQP-007 Validation of baggage calculation according to "Connec
 
 
     Examples:
-      |salesOffice     |currency |OriginCity   |Destination |OriginCity1   |Destination1 |StartDate  |ReturnDate  |SegmentIndex1|Adult|Child|INF|INS|BaggageNo |BaggageNo1|BaggageNo2|BaggageNo3|BaggageWeight|BaggageWeight1|BaggageWeight2|BaggageWeight3|PaymentType|originClass|searchType|FQTV|ticketStatus|PricingOption |Printer      |PrinterStatus|
-      |VVI ATO         |BOB      |VVI          |ORD         |PTY           |ORD          |01 days    |02 days     |0            |0    |0    |0  |0  |1         |2         |3         |4         |32           |32            |35            |35            |CASH       |Economy    |Name      |1   |CHECKED-IN  |Economy Basic |US-5CD4377SFF|PrintReady   |
+      |salesOffice     |currency |OriginCity   |Destination |StartDate  |ReturnDate  |SegmentIndex1|Adult|Child|INF|INS|BaggageNo |BaggageNo1|BaggageNo2|BaggageWeight|BaggageWeight1|BaggageWeight2|PaymentType|originClass|searchType|FQTV|ticketStatus|PricingOption |Printer      |PrinterStatus|
+      |VVI ATO         |BOB      |VVI          |ORD         |01 days    |02 days     |0            |0    |0    |0  |0  |1         |2         |3         |23           |32            |35            |CASH       |Economy    |Name      |1   |CHECKED-IN  |Economy Basic |IN-5CD4316MPJ|PrintReady   |
 
 
 

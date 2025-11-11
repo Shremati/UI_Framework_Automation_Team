@@ -82,5 +82,5 @@ Feature: 236661 - Display the list or show REAC / CHG passenger after the Massiv
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice1|currency1|POS  |OriginCity   |Destination |OriginCity1|Destination1|StartDate |StartDate1|Adult|Child|INF|INS|originClass |Pax|PaymentType|ActionType   |SegmentIndex|PNRText|transferType|Reason     |buttonName|SegmentIndex1|documentType                |ticketStatus|ticketStatus1|searchType|bagCount|BaggageWeight|printer      |printerStatus|type           |
-      |PTY ATO     |USD      |PTY  |PTY          |SJO         |SJO        |MIA         |01 days   |02 Days   |3    |0    |0  |0  |Economy     |1  |Cash       |Mass Transfer|0           |PNR    |Current     |STRIKE      |accept    |0            |National Identification Card|ADJUSTED    |CHECKED-IN   |Name      |2       |23           |IN-PF2ST1T4|PrintReady   |baggageTransfer|
+      | salesOffice1 | currency1 | OriginCity | Destination1 | StartDate | Adult | Child | INF | INS | originClass | PaymentType | ActionType    | SegmentIndex | PNRText | transferType | Reason | buttonName | SegmentIndex1 | ticketStatus | ticketStatus1 | searchType | printer     | printerStatus |
+      | PTY ATO      | USD       | PTY        | MIA          | 01 days   | 3     | 0     | 0   | 0   | Economy     | Cash        | Mass Transfer | 0            | PNR     | Current      | STRIKE | accept     | 0             | ADJUSTED     | CHECKED-IN    | Name       | IN-PF2ST1T4 | PrintReady    |

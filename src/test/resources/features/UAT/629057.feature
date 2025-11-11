@@ -1,8 +1,13 @@
+#Description:
+#Generate a new booking from another STATION flight with destination PTY
+#Make sure the passanger is checked-in
+#Compensate and apply the iCoupon by searching the flight from compensation module home page
+#Display the Results.
+#
+#Expected:
+#The Remaks will display the iCoupon generated
 
-
-
-
-@UAT
+@IcouponAssign
 Feature: 629057 - Generate a new booking from another STATION flight with destination PTY
 
   Background:

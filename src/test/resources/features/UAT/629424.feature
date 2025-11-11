@@ -56,5 +56,5 @@ Feature: 629424 - Calculate Overweight and Oversize Baggage Fees for a Domestic 
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice              |currency |OriginCity   |Destination |StartDate |StartDate1|Adult|Child|INF|INS|originClass |Pax|PaymentType|ActionType   |SegmentIndex|PNRText|transferType|Reason    |buttonName|SegmentIndex1|SegmentIndex2|BaggageNo |BaggageNo1|BaggageNo2|BaggageWeight|BaggageWeight1|BaggageWeight2|BaggageNo3|BaggageWeight3|searchType|ticketStatus|
-      |DAV ATO                  |USD      |DAV          |PTY         |01 days   |02 Days   |1    |0    |0  |0  |Economy     |1  |Cash       |Mass Transfer|0           |PNR    |Current     |DELAY     |accept    |0            |1            |1         |2         |3         |32           |32            |32            |4         |35            |Name      |CHECKED-IN  |
+      | salesOffice | currency | OriginCity | Destination | StartDate | Adult | Child | INF | INS | originClass | PaymentType | BaggageNo | BaggageWeight |
+      | DAV ATO     | USD      | DAV        | PTY         | 01 days   | 1     | 0     | 0   | 0   | Economy     | Cash        | 1         | 32            |

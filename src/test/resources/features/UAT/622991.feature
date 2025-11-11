@@ -26,11 +26,12 @@
 
 
 @UAT
-Feature: 144842 - Validate that the free luggage allowance of 23kg is free
+Feature: 622991 - Validate that the free luggage allowance of 23kg is free
+
   Background:
     Given COPA GUI Application is launched in the browser
 
-  Scenario Outline: 144842 - Validate that the free luggage allowance of 23kg is free
+  Scenario Outline: 622991 - Validate that the free luggage allowance of 23kg is free
 
 #GUI
     And I create the passengers data
@@ -86,8 +87,8 @@ Feature: 144842 - Validate that the free luggage allowance of 23kg is free
 
 
     Examples:
-      |salesOffice     |currency |OriginCity   |Destination |StartDate  |ReturnDate1|Adult|Child|INF|INS|BaggageNo |BaggageNo1|BaggageNo2|BaggageWeight|BaggageWeight1|SegmentIndex1|PaymentType|originClass|searchType|Printer      |PrinterStatus|ticketStatus    |COS      |COS1|
-      |PTY ATO         |USD      |PTY          |BOG         |01 days    |05 days    |1    |0    |0  |0  |1         |2         |3         |23            |25           |0            |Cash       |Economy    |Name      |IN-5CD4316MPJ|PrintReady   |CHECKED-IN       |V       |Y   |
+      | salesOffice | currency | OriginCity | Destination | StartDate | Adult | Child | INF | INS | BaggageNo | BaggageNo1 | BaggageWeight | BaggageWeight1 | SegmentIndex1 | PaymentType | searchType | Printer       | PrinterStatus | ticketStatus | COS |
+      | PTY ATO     | USD      | PTY        | BOG         | 01 days   | 1     | 0     | 0   | 0   | 1         | 2          | 23            | 25             | 0             | Cash        | Name       | IN-5CD4316MPJ | PrintReady    | CHECKED-IN   | V   |
 
 
 

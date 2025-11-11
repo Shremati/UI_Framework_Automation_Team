@@ -70,8 +70,8 @@ Feature: 623007- Validate baggage fees fare for BUSINESS PROMO on international 
 
 
     Examples:
-      |salesOffice     |currency |OriginCity   |Destination |StartDate  |SegmentIndex1|Adult|Child|INF|INS|BaggageNo |BaggageNo1|BaggageNo2|BaggageNo3|BaggageNo4|BaggageWeight|BaggageWeight1|BaggageWeight2|PaymentType|originClass|searchType|ticketStatus|FQTV|Printer      |PrinterStatus|
-      |PTY ATO         |USD      |PTY          |ORD         |02 days    |0            |0    |0    |0  |0  |1         |2         |3         |4         |5         |32           |23            |35            |CASH       |Business   |Name      |CHECKED-IN  |1   |IN-5CD4316MPJ|PrintReady   |
+      |salesOffice     |currency |OriginCity   |Destination |StartDate  |Adult|Child|INF|INS|BaggageNo |BaggageNo1|BaggageNo2|BaggageNo3|BaggageNo4|BaggageWeight|BaggageWeight1|PaymentType|originClass|ticketStatus|FQTV|Printer      |PrinterStatus|
+      |PTY ATO         |USD      |PTY          |ORD         |02 days    |0    |0    |0  |0  |1         |2         |3         |4         |5         |32           |23            |CASH       |Business   |CHECKED-IN  |1   |IN-5CD4316MPJ|PrintReady   |
 
 
 

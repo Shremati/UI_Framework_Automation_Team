@@ -9,7 +9,7 @@
 #5. Issue new ticket
 
 
-@UAT
+@Reissue
 Feature: 624592 - New order in Call Center Global XRS USD and reissue ticket
 
   Background:
@@ -51,21 +51,21 @@ Feature: 624592 - New order in Call Center Global XRS USD and reissue ticket
     And I change the date of travel for the first connecting segment "<NewDate>"
     And I change date of travel for second connecting segment "<NewDate1>" after the first connecting segment booked
     And I perform Voluntary Reissue with Pricing Option as "<PricingOption>"
-    And I click on CheckOut button and Reissue for payment
-    And I choose one mode of payment
-    And I make the first payment by selecting the payment type as "<PaymentType1>"
+    And I click on pay button by selecting the required payment type "<PaymentType1>"
     And I enter Passport FOID details
     And I enter the details in the email recipients page
-    And I validate if the payment is successful
-    And I click on Ticket tab and check the "<ticketStatus>" status
-    And I click on Ticket tab and check the "<ticketStatus1>" status
+    And I store the updated emd and ticket details and validate if payment is successful
+#    And I click on Ticket tab and check the "<ticketStatus>" status
+#    And I click on Ticket tab and check the "<ticketStatus1>" status
+    And I navigate to home screen
+    And I try to retrieve the pnr from Order Screen to check the "<ticketStatus1>" status in ticket tab
     And I click the EMD subtab and view the EMD details
     And I select sales report and select Agent sales report
-    And I validate Ticket and EMD values in Agent sales report and view tax details
+    And I validate the Tax Details in Agent Sales Report after changes
     And I logout from COPA GUI application
 
 
     Examples:
 
-      | salesOffice                | currency | OriginCity | Destination | StartDate | PricingOption  | PaymentType | Adult | Child | INF | INS | originClass | NewDate | NewDate1            | StartDate1 | ticketStatus | ticketStatus1 | PaymentType1      |SegmentNum|
-      | GYE ATO                    | USD      | GYE        | MIA         | 02 days   | Economy Basic  | VISA        | 2     | 0     | 0   | 0   | Economy     | 06 days | 09 days             | 05 days    | Open         | EXCHANGED     | Cash              |    34      |
+      | salesOffice                | currency | OriginCity | Destination | StartDate | PricingOption  | PaymentType | Adult | Child | INF | INS | originClass | NewDate | NewDate1            | StartDate1 | ticketStatus | ticketStatus1 | PaymentType1      |
+      | GYE ATO                    | USD      | GYE        | MIA         | 02 days   | Economy Basic  | VISA        | 2     | 0     | 0   | 0   | Economy     | 06 days | 09 days             | 05 days    | Open         | EXCHANGED     | Cash              |

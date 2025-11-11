@@ -8,7 +8,7 @@
 #Expected
 #Must display the GREEN CHECK MARK
 
-@UAT
+@IcouponAssign
 Feature: 629056 - Generate an iCoupon compensation for a ONE WAY flight with affectation in PTY
 
   Background:
@@ -97,14 +97,11 @@ Feature: 629056 - Generate an iCoupon compensation for a ONE WAY flight with aff
     And I select passengers using flight numbers in Compensation model "<PassengerType>" and "<Index>"
     And I enter Order Id and select compensation reason for the passenger "<compensationReason>" and "<PassengerType>"
     And I select required passengers and click the issue compensation button
-#    And I select passengers click print button and click digital voucher button
     And I navigate to home screen
     And I navigate to travel Compensation page
     And I select passengers using flight numbers in Compensation model "<PassengerType1>" and "<Index>"
     And I click the EMD Available for Print tab and click print button
     And I click on view icon and display the compensation additional details
-    #And I select passengers generate digital voucher and view compensation details
-
     And I navigate to home screen
     And I click the tickets tab and click ticket EMD tab verify the segment name status "<NameStatus>"
     And I select sales report and select Agent sales report
@@ -113,7 +110,7 @@ Feature: 629056 - Generate an iCoupon compensation for a ONE WAY flight with aff
 
 
     Examples:
-      |salesOffice|currency|OriginCity   |Destination |StartDate |compensationReason        |Adult|Child|INS|INF|PassengerType     |printer      |printerStatus|originClass|PaymentType|PaxCount|PassengerType1|iCouponStatus|segNumber|Tab|ticketStatus|segmentIndex|searchType|BaggageWeight|PricingOption  |NameStatus   |Segment|Tab1|Index|
-      |PTY ATO    |USD     |EZE          |MIA         |01 days   |Delay between 2 to 3:59hrs|3    |0    |0  |0  |All Passenger List|US-5CD4377SFF|PrintReady   |Economy    |Cash       |3       |Print List    |Assign       |1        |1  |CM USED     |1           |PNR       |23           |Economy Classic|MEAL DLY FLTS|1      |0   |1    |
+      |salesOffice|currency|OriginCity   |Destination |StartDate |compensationReason        |Adult|Child|INS|INF|PassengerType     |printer      |printerStatus|originClass|PaymentType|PaxCount|PassengerType1|iCouponStatus|segNumber|Tab|ticketStatus|segmentIndex|searchType|BaggageWeight|PricingOption  |NameStatus   |Segment|Index|
+      |PTY ATO    |USD     |EZE          |MIA         |02 days   |Delay between 2 to 3:59hrs|3    |0    |0  |0  |All Passenger List|US-5CD4377SFF|PrintReady   |Economy    |Cash       |3       |Print List    |Assign       |1        |1  |CM USED     |1           |PNR       |23           |Economy Classic|MEAL DLY FLTS|1      |1    |
 
 

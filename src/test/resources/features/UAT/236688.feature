@@ -49,5 +49,5 @@ Feature: 236688 - Display List- Special Service by specific SSR code
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice|currency |OriginCity   |Destination |POS|StartDate |Adult|Child|INF|INS|Airline|COS|SegmentIndex|SegmentIndex|PaymentType|passengerListType|originClass|SSRType|
-      |PTY ATO    |USD      |PTY          |LAX         |PTY|01 days   |1    |0    |0  |0  |CM     |Y  |0           |1           |Cash       |Thru Pax         |Economy    |BULK   |
+      |salesOffice|currency |OriginCity   |Destination |StartDate |Adult|Child|INF|INS|SegmentIndex|SegmentIndex|PaymentType|originClass|SSRType|
+      |PTY ATO    |USD      |PTY          |LAX         |01 days   |1    |0    |0  |0  |0           |1           |Cash       |Economy    |BULK   |

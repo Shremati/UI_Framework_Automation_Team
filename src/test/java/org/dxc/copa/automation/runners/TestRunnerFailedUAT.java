@@ -5,12 +5,13 @@ import io.cucumber.testng.CucumberOptions;
 import org.dxc.copa.automation.base.TestBase;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import static io.cucumber.testng.CucumberOptions.SnippetType.CAMELCASE;
 
 @CucumberOptions(
         features = "@target1/failedrerun.txt",
         glue = {"org.dxc.copa.automation.stepDefinitions"},
-        tags = "@Checkinshares or @AppswitchGenres or @Ticketshares or @sharesCoreFunctional or @sharesCoreFunctionalBrowser or @GenresShares or @AppswitchTest or @3rdParty or  @sharesIntegration or @sharesIntegrationBrowser or @SampleGUI",
+        tags = "@UAT or @IcouponAssign or @AssignIcoupon or @Reissue or @IcouponUnAssign or @UnAssignIcoupon",
         monochrome = true,
         //for step definitions validation check
         dryRun = false,
@@ -26,7 +27,7 @@ import static io.cucumber.testng.CucumberOptions.SnippetType.CAMELCASE;
 )
 
 @Test
-public class TestRunnerFailed extends TestBase {
+public class TestRunnerFailedUAT extends TestBase {
 
     @Override
     @DataProvider(parallel = true)

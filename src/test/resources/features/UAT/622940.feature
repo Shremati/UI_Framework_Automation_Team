@@ -58,7 +58,6 @@ Feature: 622940 - 144996:Verify REGATO-Validate offload passenger after the flig
     And I enter Start Date "<StartDate>" for one way booking
     And I select Adult passengers and search for flights
     And I select class "<originClass>" for Origin flight with departure time within "<hours>" from current time
-#    And I select class "<originClass>" for Origin flight
     And I select pricing option Price as Booked
     And I select the Quote Options and click on Next
     And I validate the Price Quote and click on Next

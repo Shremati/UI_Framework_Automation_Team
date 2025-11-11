@@ -1,9 +1,12 @@
+#Description:
+#Select affected flight in compensation mask, by flight number and date
+#Them select one passengers for compensate list, add amount of compensation
+#Be able to emit and send by e-mail
+#
+#Expected Result:
+#Associate EMD and add auto load OSI in reservation with amount and reason (Cancellation)
 
-
-
-
-
-@UAT
+@IcouponUnAssign
 Feature: 236656 - Make a voucher of compensation for cancel flight for one passenger
 
   Background:
@@ -45,6 +48,6 @@ Feature: 236656 - Make a voucher of compensation for cancel flight for one passe
 
     Examples:
       |salesOffice|currency|OriginCity|departureDate|compensationReason|Adult|Child|INS|INF|PassengerType     |printer      |printerStatus|iCouponStatus|flightStatus|NameStatus      |
-      |PTY ATO    |USD     |PTY       |02 days      |Baggage Damage    |1    |0    |0  |0  |All Passenger List|US-5CD4377SFF|PrintReady   |UnAssign     |CANCELLED   |BGGE DAMAGE COMP|
+      |PTY ATO    |USD     |PTY       |01 days      |Baggage Damage    |1    |0    |0  |0  |All Passenger List|US-5CD4377SFF|PrintReady   |UnAssign     |CANCELLED   |BGGE DAMAGE COMP|
 
 

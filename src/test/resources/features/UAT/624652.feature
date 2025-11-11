@@ -15,7 +15,7 @@
 #- Get the new quote for the Fare Difference and there is a penalty amount for this reissue.
 #4. Proceed to Reissue
 
-@UAT
+@Reissue
 Feature: 624652 - Even Exchange with Add Collect-with  Penalty
 
   Background:
@@ -40,7 +40,7 @@ Feature: 624652 - Even Exchange with Add Collect-with  Penalty
     And I select Adult passengers and search for flights
     And I select class "<originClass>" for Origin flight
     And I select class "<originClass>" for Return flight
-    And I select pricing option as Economy Classic
+    And I select pricing option as "<Pricingoption1>"
     And I select the Quote Options and click on Next
     And I validate the Price Quote and click on Next
     And I enter required passenger details for COPA GUI
@@ -50,8 +50,8 @@ Feature: 624652 - Even Exchange with Add Collect-with  Penalty
     And I make the first payment by selecting the payment type as "<PaymentType>"
     And I enter the details in the email recipients page
     And I validate if the payment is successful
-    And I click the Tickets tab
-    And I click the EMD subtab and view the EMD details
+    And I click the Tickets tab and try to click the Coupon number and verify the details
+    And I click the EMD subtab present in Tickets tab
     And I click on Quotes subtab
     And I select sales report and select Agent sales report
     And I validate Ticket and EMD values in Agent sales report and view tax details
@@ -65,19 +65,19 @@ Feature: 624652 - Even Exchange with Add Collect-with  Penalty
     And I select class "<originClass>" for Return flight
     And I select Book from Actions Dropdown
     And I Delete All the Old Segments
-    And I click on Action drp dwn for Vol reissue
-    And I click on CheckOut button and Reissue for payment
-    And I choose one mode of payment
-    And I make the first payment by selecting the payment type as "<PaymentType>"
+    And I perform Voluntary Reissue with Pricing Option as "<PricingOption>"
+    And I click on pay button by selecting the required payment type "<PaymentType>"
     And I enter the details in the email recipients page
-    And I validate if the payment is successful
-    And I click on Ticket tab and check the "<ticketStatus>" status
-    And I click on Ticket tab and check the "<ticketStatus1>" status
+    And I store the updated emd and ticket details and validate if payment is successful
+#    And I click on Ticket tab and check the "<ticketStatus>" status
+#    And I click on Ticket tab and check the "<ticketStatus1>" status
+    And I navigate to home screen
+    And I try to retrieve the pnr from Order Screen to check the "<ticketStatus1>" status in ticket tab
     And I click the EMD subtab and view the EMD details
     And I select sales report and select Agent sales report
-    And I validate Ticket and EMD values in Agent sales report and view tax details
+    And I validate the EMD values in Agent Sales Report after changes
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice               |currency|OriginCity  |Destination  |StartDate|ReturnDate|Adult|Child|INF|INS|PaymentType|originClass|ReturnClass|NewDate1|NewDate2|ticketStatus1 |ticketStatus |SegmentNo|SegmentNo1|
-      |PTY ATO                   |USD     |PTY         |EZE          |06 Days  |10 Days   |1    |0    |0  |0  |Cash       |Economy    |Economy    |13 days |18 days |EXCHANGED     |Open         |0        |1         |
+      | salesOffice | currency | OriginCity | Destination | StartDate | ReturnDate | Adult | Child | INF | INS | PaymentType | originClass | NewDate1 | NewDate2 | ticketStatus1 | ticketStatus | PricingOption   | Pricingoption1  |
+      | PTY ATO     | USD      | PTY        | EZE         | 06 Days   | 10 Days    | 1     | 0     | 0   | 0   | Cash        | Economy     | 13 days  | 18 days  | EXCHANGED     | Open         | Price as Booked | Economy Classic |

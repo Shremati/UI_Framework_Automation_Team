@@ -6,7 +6,7 @@
 #Voluntary Reissue priced as Economy Classic
 
 
-@UAT
+@Reissue
 Feature: 624649 - Verify Voluntary Reissue - Dual RBD is happening correctly
 
   Background:

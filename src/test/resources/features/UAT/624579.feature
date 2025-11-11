@@ -22,7 +22,7 @@
 
 
 
-@UAT
+@Reissue
 Feature: 624579 - 144437-REISSUE-Retrieve CSS reservation departure from BOG with status No SHOW in Colombia ATO (BOG) and perform Voluntary Reissue.
 
   Background:
@@ -45,7 +45,9 @@ Feature: 624579 - 144437-REISSUE-Retrieve CSS reservation departure from BOG wit
     And Select from and to City "<OriginCity>" and "<Destination>"
     And I enter Start Date "<StartDate>" for one way booking
     And I select Adult passengers and search for flights
-    And I select class "<originClass>" for the first connecting segment flight
+#    And I select class "<originClass>" for the first connecting segment flight
+#    And I select class "<originClass>" for the first segment on current day
+    And I select class "<originClass>" for the first connecting segment on current day
     And I select pricing option as "<PricingOption>"
     And I select the Quote Options and click on Next
     And I validate the Price Quote and click on Next
@@ -128,8 +130,8 @@ Feature: 624579 - 144437-REISSUE-Retrieve CSS reservation departure from BOG wit
 
     Examples:
 
-      | salesOffice | salesOffice1 | currency | OriginCity | Destination | StartDate | StartDate1 | StartDate2 | SSRType | PaymentType | PaymentType1 | Adult | Child | INF | INS | originClass | DocumentType | PricingOption   | ticketStatus2  | TicketStatus1 | SegmentDelete |StatusType|TotalSegments|Tab|SSRDescription|
-      | BOG ATO     | JFK ATO      | COP      | BOG        | SJO         | 00 days   | 09 days    | 07 days    | PETC    | CASH        | VISA         | 1     | 0     | 0  | 0   | Economy      | Passport     | Price as Booked | NOSHOWED       | EXCHANGED     | 1             |NO_SHOWED |2            |1  |PET IN CABIN - 0BT|
+      | salesOffice | currency | OriginCity | Destination | StartDate |  StartDate2 | SSRType | PaymentType | PaymentType1 | Adult | Child | INF | INS | originClass | DocumentType | PricingOption   | ticketStatus2 | TicketStatus1 | SegmentDelete | StatusType | TotalSegments | Tab | SSRDescription     |
+      | BOG ATO     | COP      | BOG        | SJO         | 00 days   |  07 days    | PETC    | CASH        | VISA         | 1     | 0     | 0   | 0   | Economy     | Passport     | Price as Booked | NOSHOWED      | EXCHANGED     | 1             | NO_SHOWED  | 2             | 1   | PET IN CABIN - 0BT |
 
 
 

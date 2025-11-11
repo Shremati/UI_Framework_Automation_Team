@@ -1,4 +1,10 @@
-[
+[{
+  "FrequentFlyer": {
+    "firstName": "PLATINUM",
+    "surName": "PENELOPE",
+    "FFNumber": "230030896"
+  }
+},
   {
     "FrequentFlyer": {
       "firstName": "EMBROSS",
@@ -6,14 +12,6 @@
       "FFNumber": "230009642"
     }
   },
-  {
-    "FrequentFlyer": {
-      "firstName": "PENELOPE",
-      "surName": "PLATINUM",
-      "FFNumber": "230030896"
-    }
-  },
-
   {
     "FrequentFlyer": {
       "firstName": "GOLD",

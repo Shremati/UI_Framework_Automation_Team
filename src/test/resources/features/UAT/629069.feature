@@ -6,7 +6,7 @@
 #  Click on flight actions, choose mass transfer
 #
 
-@UAT
+@IcouponAssign
 Feature: 629069 - Mass Transfer flight infrequently every day and Icoupon compensation
   Background:
     Given COPA GUI Application is launched in the browser
@@ -94,7 +94,6 @@ Feature: 629069 - Mass Transfer flight infrequently every day and Icoupon compen
 
     And I navigate to home screen
     And I navigate to travel Compensation page
-#    And I select passengers using flight numbers in Compensation model "<PassengerType>"
     And I select passengers using flight numbers in Compensation model "<PassengerType>" for the segment "<SegmentIndex1>"
     And I enter Order Id and select compensation reason for the passenger "<compensationReason>" and "<PassengerType>"
     And I select required passengers and click the issue compensation button
@@ -105,7 +104,6 @@ Feature: 629069 - Mass Transfer flight infrequently every day and Icoupon compen
 
     And I navigate to home screen
     And I navigate to travel Compensation page
-#    And I select passengers using flight numbers in Compensation model "<PassengerType1>"
     And I select passengers using flight numbers in Compensation model "<PassengerType1>" for the segment "<SegmentIndex1>"
     And I click the EMD Available for Print tab and click print button
 
@@ -119,5 +117,5 @@ Feature: 629069 - Mass Transfer flight infrequently every day and Icoupon compen
 
 
     Examples:
-      |salesOffice              |currency |POS  |OriginCity   |Destination |Destination1|StartDate |ReturnDate1|Adult|Child|INF|INS|originClass |Pax|PaymentType|ActionType   |SegmentIndex|searchType|transferType|Reason     |buttonName|SegmentIndex1|BaggageNo1|BaggageWeight1|printer      |printerStatus|ticketStatus1|ticketStatus|type            |PassengerType     |compensationReason        |PassengerType1|
-      |PTY ATO                  |USD      |MEX  |SCL          |MDE         |PTY         |01 days   |02 Days    |1    |0    |0  |0  |Economy     |1  |Cash       |Mass Transfer|0           |PNR       |Outbound    |DIVERSION  |accept    |1            |1         |23            |IN-PF2ST1T4  |PrintReady   |CHECKED-IN    |ADJUSTED    |baggageTransfer|All Passenger List|Delay between 2 to 3:59hrs|Print List    |
+      |salesOffice              |currency |OriginCity   |Destination |StartDate |Adult|Child|INF|INS|originClass |PaymentType|ActionType   |SegmentIndex|searchType|transferType|Reason     |buttonName|SegmentIndex1|BaggageNo1|BaggageWeight1|printer      |printerStatus|ticketStatus1|ticketStatus|type            |PassengerType     |compensationReason        |PassengerType1|
+      |PTY ATO                  |USD      |SCL          |MDE         |01 days   |1    |0    |0  |0  |Economy     |Cash       |Mass Transfer|0           |PNR       |Outbound    |DIVERSION  |accept    |1            |1         |23            |IN-PF2ST1T4  |PrintReady   |CHECKED-IN    |ADJUSTED    |baggageTransfer|All Passenger List|Delay between 2 to 3:59hrs|Print List    |

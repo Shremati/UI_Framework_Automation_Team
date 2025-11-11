@@ -45,7 +45,7 @@ Feature: 630722 - EQP-002 Validation of baggage calculation according to "Withou
     And I navigate to home screen
     And I navigate to Check-In page
     And I search for the segment "<SegmentIndex>" in Check-In page
-    And I try to retrieve the ticket number by selecting "<searchType>" option
+    And I select the passengers in checkin page using "<searchType>"
     And I click on Proceed to Check-In button
     And I enter the details in Security Document Verification - ADC & APIS page
     Then I Validate APIS Complete and click on Done button
@@ -61,13 +61,6 @@ Feature: 630722 - EQP-002 Validation of baggage calculation according to "Withou
     And I click on check-in for the passenger
     Then I validate the confirmation dialog that passenger is Checked-in
     And I navigate to home screen
-    And I navigate to Check-In page
-    And I search for the segment "<SegmentIndex1>" in Check-In page
-    And I try to retrieve the ticket number by selecting "<searchType1>" option
-    #And I click on Proceed to Check-In button
-    #And I click on check-in for the passenger
-    #And I click on Return to Check-In
-    And I navigate to home screen
     And I try to retrieve the pnr from Order Screen to check the "<ticketStatus>" status in ticket tab
     And I click the EMD subtab and view the baggage details in tickets tab
     And I select Sales Report and Agent Sales Report
@@ -76,9 +69,8 @@ Feature: 630722 - EQP-002 Validation of baggage calculation according to "Withou
 
 
     Examples:
-      |salesOffice     |currency |OriginCity   |Destination |OriginCity1   |Destination1 |StartDate  |StartDate1  |SegmentIndex|Adult|Child|INF|INS|BaggageNo |BaggageNo1|BaggageNo2|BaggageWeight|BaggageWeight1|BaggageWeight2|PaymentType|originClass|searchType|SegmentIndex1|ticketStatus|Printer      |PrinterStatus|searchType1|COS|POS|Airline|
-      |EZE ATO         |USD      |EZE          |PTY         |PTY           |FLL          |01 days    |02 days     |0           |1    |0    |0  |0  |1         |2         |3         |23           |32            |35            |CASH       |Economy    |Name      |1            |CHECKED-IN  |IN-5CD4316MPJ|PrintReady   |Name        |Y  |EZE|CM       |
-
+      |salesOffice     |currency |OriginCity   |Destination1 |StartDate  |SegmentIndex|Adult|Child|INF|INS|BaggageNo |BaggageNo1|BaggageNo2|BaggageWeight|BaggageWeight1|BaggageWeight2|PaymentType|originClass|searchType|ticketStatus|Printer      |PrinterStatus|
+      |EZE ATO         |USD      |EZE          |FLL          |01 days    |0           |1    |0    |0  |0  |1         |2         |3         |23           |32            |35            |CASH       |Economy    |Name      |CHECKED-IN  |IN-5CD4316MPJ|PrintReady   |
 
 
 

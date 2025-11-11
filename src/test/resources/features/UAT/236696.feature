@@ -1,3 +1,13 @@
+#Description:
+#Open Gate Module
+#Select View/Assign Controlling Agents in Flight Actions dropdown
+#Press Standby tab
+#Click Initiate Standby
+#Select Cabin Class to Initiate (All/Business/Economy)
+#Click Clear
+#
+#  Expected:
+#Assign Seat to the SBY Passengers and Release UPG
 
 @UAT
 Feature: 236696 - Initialize Stand by Process

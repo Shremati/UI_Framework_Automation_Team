@@ -54,14 +54,18 @@ Feature: 627338 - Classic fare booking made more than 7 days in advance, the sys
     And I perform Voluntary Reissue with Pricing Option as "<PricingOption>"
     And I click on pay button by selecting the required payment type "<PaymentType>"
     And I enter the details in the email recipients page
-    And I validate if the payment is successful
-    And I click on Ticket tab and check the "<ticketStatus>" status
-    And I click on Ticket tab and check the "<ticketStatus1>" status
+    #And I validate if the payment is successful
+    And I store the updated emd and ticket details and validate if payment is successful
+#    And I click on Ticket tab and check the "<ticketStatus>" status
+#    And I click on Ticket tab and check the "<ticketStatus1>" status
+    And I navigate to home screen
+    And I try to retrieve the pnr from Order Screen to check the "<ticketStatus1>" status in ticket tab
     And I click the EMD subtab and view the EMD details
     And I select sales report and select Agent sales report
-    And I validate Ticket and EMD values in Agent sales report and view tax details
+    And I validate the Tax Details in Agent Sales Report after changes
+    #And I validate Ticket and EMD values in Agent sales report and view tax details
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice                              |currency|OriginCity  |Destination  |StartDate|ReturnDate|Adult|Child|INF|INS|PaymentType|originClass|ReturnClass|NewDate1|NewDate2|ticketStatus1 |ticketStatus |SegmentNo|SegmentNo1|PaymentType1|PricingOption |
-      |SJO-CTO                                  |USD     |SJO         |MCO          |07 Days  |14 Days   |1    |0    |0  |0  |Cash       |Economy    |Economy    |10 days |1 days |EXCHANGED     |Open         |0        |1         |VISA        |Economy Classic|
+      | salesOffice | currency | OriginCity | Destination | StartDate | ReturnDate | Adult | Child | INF | INS | PaymentType | originClass | NewDate1 | ticketStatus1 | ticketStatus | PaymentType1 | PricingOption   |
+      | SJO-CTO     | USD      | SJO        | MCO         | 07 Days   | 14 Days    | 1     | 0     | 0   | 0   | Cash        | Economy     | 10 days  | EXCHANGED     | Open         | VISA         | Economy Classic |

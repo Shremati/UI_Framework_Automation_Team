@@ -7,7 +7,7 @@
 #process check out
 #Assign seating for all passengers
 #The system should process the change correctly
-@UAT
+@Reissue
 Feature: 624662 - Voluntary Reissue with open jaw ticket
 
   Background:
@@ -29,15 +29,13 @@ Feature: 624662 - Voluntary Reissue with open jaw ticket
     And I click on New Order for creating new PNR in GUI
     And Select from and to City "<OriginCity>" and "<Destination1>"
     And I add segment from and to City "<OriginCity2>" and "<OriginCity>"
-    #And I add third segment from and to City "<OriginCity2>" and "<Destination2>"
-    #And I add fourth segment from and to City "<Destination2>" and "<OriginCity>"
     And I enter Start Date "<StartDate>" for one way booking
-    And I enter Start Date "<StartDate1>" for 2nd Segment
+    And I enter Start Date "<returnDate>" for 2nd Segment
     And I select child passengers
     And I select Adult passengers and search for flights
     And I select class "<originClass>" for the first connecting segment flight
     And I select class "<originClass>" for the second connecting segment flights
-    And I select pricing option as Economy Basic
+    And I select pricing option as "<PricingOption1>"
     And I select the Quote Options and click on Next
     And I validate the Price Quote and click on Next
     And I enter required passenger details for COPA GUI
@@ -50,16 +48,14 @@ Feature: 624662 - Voluntary Reissue with open jaw ticket
     And I click the Tickets tab
     And I navigate to Order tab
     And I change the date of travel for the first connecting segment "<NewDate1>"
-    And I change date of travel for second connecting segment "<NewDate2>" after the first connecting segment booked
+    And I change the date of travel for the second connecting segment "<NewDate2>"
     And I perform Voluntary Reissue with Pricing Option as "<PricingOption>"
-    #And I click on CheckOut button and Reissue for payment
     And I click on pay button by selecting the required payment type "<PaymentType1>"
-    #And I make the first payment by selecting the payment type as "<PaymentType1>"
     And I enter the details in the email recipients page
-    And I validate if the payment is successful
+    And I store the updated emd and ticket details and validate if payment is successful
+#    And I click on Ticket tab and check the "<TicketStatus>" status
     And I navigate to home screen
-    And I try to retrieve the pnr from Order Screen to check the "<TicketStatus>" status
-   # And I try to retrieve the pnr from Order Screen to check the "<TicketStatus>" status in ticket tab
+    And I try to retrieve the pnr from Order Screen to check the "<TicketStatus>" status in ticket tab
     And I navigate to Order tab
     And I click the services Tab
     And I click on seat icon from services tab
@@ -67,12 +63,13 @@ Feature: 624662 - Voluntary Reissue with open jaw ticket
     And I Click on CheckOut button for payment
     And I click on pay button by selecting the required payment type "<PaymentType1>"
     And I enter the details in the email recipients page
-    And I validate if the payment is successful
+    And I store the updated emd and ticket details and validate if payment is successful
     And I click the Tickets tab and store the ticket number
     And I click the EMD subtab and view the EMD details
-    #And I validate the booked ticket in Agent Sales Report
+    And I select sales report and select Agent sales report
+    And I validate the EMD values in Agent Sales Report after changes
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice               |currency|OriginCity  |Destination  |Destination1|OriginCity2|Destination2|StartDate|StartDate1|StartDate2|StartDate3|Adult|Child|INF|INS|PaymentType|originClass|ReturnClass|NewDate1|NewDate2|NewDate3|NewDate4|PaymentType1|PricingOption  |SegmentNo|TicketStatus|
-      |SJO CTO TORRE MERCEDES    |USD     |SJO         |PTY          |EZE         |MDZ        |PTY         |05 Days  |08 Days   |27 Days   |28 days   |1    |2    |0  |0  |AMEX       |Economy    |Economy    |22 days |24 days |64 days |65 days |Cash        |Economy Classic|34       |EXCHANGED   |
+      | salesOffice            | currency | OriginCity | Destination1 | OriginCity2 | StartDate | returnDate | Adult | Child | INF | INS | PaymentType | originClass | NewDate1 | NewDate2 | PaymentType1 | PricingOption   | TicketStatus |PricingOption1|
+      | SJO CTO TORRE MERCEDES | USD      | SJO        | EZE          | MDZ         | 03 Days   | 10 Days    | 1     | 2     | 0   | 0   | AMEX        | Economy     | 20 Days  | 25 Days  | Cash         | Economy Classic | EXCHANGED    |Economy Basic |

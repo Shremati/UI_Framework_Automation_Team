@@ -8,6 +8,7 @@
 
 @UAT
 Feature: 622943 - Mass Transfer for ADT
+
   Background:
     Given COPA GUI Application is launched in the browser
 
@@ -82,5 +83,5 @@ Feature: 622943 - Mass Transfer for ADT
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice              |currency |POS  |OriginCity   |Destination |Destination1|StartDate |ReturnDate1|Adult|Child|INF|INS|originClass |Pax|PaymentType|ActionType   |SegmentIndex|searchType|transferType|Reason    |buttonName|SegmentIndex1|BaggageNo1|BaggageWeight1|printer      |printerStatus|ticketStatus1|ticketStatus|type           |
-      |MEX ATO                  |USD      |MEX  |MEX          |SAL         |PTY         |01 days   |02 Days    |1    |0    |0  |0  |Economy     |1  |Cash       |Mass Transfer|0           |PNR       |Outbound    |DELAY     |accept    |1            |1         |30            |IN-PF2ST1T4|PrintReady   |CHECKED-IN    |ADJUSTED    |baggageTransfer|
+      | salesOffice | currency | OriginCity | Destination | StartDate | Adult | Child | INF | INS | originClass | PaymentType | ActionType    | SegmentIndex | transferType | Reason | buttonName | SegmentIndex1 | BaggageNo1 | BaggageWeight1 | printer     | printerStatus | ticketStatus1 | ticketStatus | type            |
+      | MEX ATO     | USD      | MEX        | SAL         | 01 days   | 1     | 0     | 0   | 0   | Economy     | Cash        | Mass Transfer | 0            | Outbound     | DELAY  | accept     | 1             | 1          | 30             | IN-PF2ST1T4 | PrintReady    | CHECKED-IN    | ADJUSTED     | baggageTransfer |

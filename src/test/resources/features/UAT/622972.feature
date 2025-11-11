@@ -9,7 +9,7 @@
 #Expected:
 #Display the Icoupon it must have the correct amount and the passenger names
 
-@UAT
+@IcouponAssign
 Feature: 622972 - Validate that the Icoupon role can compensate
 
   Background:
@@ -75,5 +75,5 @@ Feature: 622972 - Validate that the Icoupon role can compensate
 
 
     Examples:
-      |salesOffice|currency|OriginCity   |Destination |StartDate |compensationReason        |Adult|Child|INS|INF|PassengerType     |printer      |printerStatus|Amount|originClass|PaymentType|PaxCount|PassengerType1|iCouponStatus|
-      |PTY ATO    |USD     |PTY          |GUA         |01 days   |Delay between 4 to 7:59hrs|2    |0    |0  |0  |All Passenger List|US-5CD4377SFF|PrintReady   |15    |Economy    |Cash       |2       |Print List    |Assign       |
+      | salesOffice | currency | OriginCity | Destination | StartDate | compensationReason         | Adult | Child | INS | INF | PassengerType      | printer       | printerStatus | Amount | originClass | PaymentType | PaxCount | PassengerType1 | iCouponStatus |
+      | PTY ATO     | USD      | PTY        | GUA         | 01 days   | Delay between 4 to 7:59hrs | 2     | 0     | 0   | 0   | All Passenger List | US-5CD4377SFF | PrintReady    | 15     | Economy     | Cash        | 2        | Print List     | Assign        |

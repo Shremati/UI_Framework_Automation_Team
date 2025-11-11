@@ -45,7 +45,7 @@
 #12. Display agent sale report:
 #- Verify that the tickets and EMD created in the transaction are displayed correctly
 
-@UAT
+@Reissue
 Feature: 624636 - Verify ISSUE/REISSUE/OVER REISSUE - Create and issue reservation for 1ADT in COLOMBIA BAQ CTO (COP), pay with MASTER CARD, perform voluntary Reissue in MEXICO CTO MEX (MXN) pay reissue with VISA and perform Reissue over Reissue CTO MTY (MXN) pay reissue VISA is happening correctly
 
   Background:
@@ -68,8 +68,15 @@ Feature: 624636 - Verify ISSUE/REISSUE/OVER REISSUE - Create and issue reservati
     And Select from and to City "<OriginCity>" and "<Destination>"
     And I enter Start Date "<StartDate>" and Return Date "<StartDate1>" for two way booking
     And I select Adult passengers and search for flights
-    And I select class "<Class1>" for the first segment and "<Class1>" for the second segment in first connecting segment flight
-    And I select class "<Class1>" for the first segment and "<Class1>" for the second segment in second connecting segment flight
+#    And I select class "<Class1>" for the first segment and "<Class1>" for the second segment in first connecting segment flight
+#    And I select class "<Class1>" for the first segment and "<Class1>" for the second segment in second connecting segment flight
+
+    And I select class "<Class1>" for the first segment and "<Class1>" for the second segment in first connecting segment non codeshare flight
+    And I select class "<Class1>" for the first segment and "<Class1>" for the second segment in second connecting segment non codeshare flight
+#    And I select class "<originClass>" for the first connecting segment non codeshare flight
+#    And I select class "<originClass>" for the second connecting segment non codeshare flight
+#    And I select class "<Class1>" for the first segment and "<Class1>" for the second segment in first connecting segment flight
+#    And I select class "<Class1>" for the first segment and "<Class1>" for the second segment in second connecting segment flight
     And I select pricing option as "<PricingOption>"
     And I select the Quote Options and click on Next
     And I validate the Price Quote and click on Next
@@ -83,7 +90,7 @@ Feature: 624636 - Verify ISSUE/REISSUE/OVER REISSUE - Create and issue reservati
     And I validate if the payment is successful
     And I click the Tickets tab and verify the Ticket Status as "<TicketStatus>" and verify the EMD Coupon control status as "<EMDStatus>"
 
-    #shares
+#    #shares
     And I navigate to Shares Application
     And I enter valid shares credentials
     And I click on the shares Login Button
@@ -105,7 +112,7 @@ Feature: 624636 - Verify ISSUE/REISSUE/OVER REISSUE - Create and issue reservati
     And I retrieve the pnr
     And I logout from Shares application
 
-    #GUI
+  #    #GUI
     And I navigate back to previous tab in the browser "<Tab1>"
     And I navigate to home screen
     And I try to retrieve the pnr from Order Screen to check the "<TicketStatus3>" status
@@ -120,7 +127,8 @@ Feature: 624636 - Verify ISSUE/REISSUE/OVER REISSUE - Create and issue reservati
     And Select from and to City "<Destination>" and "<OriginCity>"
     And I enter Start Date "<StartDate2>" for one way booking
     And I click search button in flight search availability
-    And I select class "<Class2>" for the first segment and "<Class2>" for the second segment in first connecting segment flight
+#    And I select class "<Class2>" for the first segment and "<Class2>" for the second segment in first connecting segment flight
+    And I select class "<Class2>" for the first segment and "<Class2>" for the second segment in first connecting segment non codeshare flight
     And I select Book from Actions Dropdown and give the segment numbers as "<Segments1>"
     And I select and delete the segment "<SegmentDelete>"
     And I perform Voluntary reissue with penalty and pricing option as "<PricingOption>" and "<PenaltyAmount>"
@@ -149,13 +157,12 @@ Feature: 624636 - Verify ISSUE/REISSUE/OVER REISSUE - Create and issue reservati
     And I try to retrieve the pnr from Order Screen to check the "<TicketStatus2>" status in ticket tab
     And I click the Tickets tab and store the ticket number
     And I click the EMD subtab and view the EMD details
-    And I select sales report and select Agent sales report
-    And I validate the Tax Details in Agent Sales Report after changes
+    And I validate the Tax Details in Agent sales report by checking the issued currency
     And I logout from COPA GUI application
 
 
 
     Examples:
 
-      | salesOffice | currency | salesOffice1 | currency1 | salesOffice2 | OriginCity | Destination | OriginCity1 | Destination1 | StartDate | StartDate1 | StartDate2 | StartDate3 | PricingOption   | PaymentType | PaymentType1 | Adult | Child | INF | INS | TicketStatus | EMDStatus | SegmentDelete | TicketStatus1 | TicketStatus2 | TicketStatus3 | NoOfPax | Segments | Segment | Class1 | Class2 | Tab1 | Segments1 | PenaltyAmount |
-      | BAQ CTO     | COP      | MEX CTO      | MXN       | MTY CTO      | BAQ        | MEX         | MTY         | BAQ          | 01 days   | 04 days    | 35 days    | 50 days    | Price as Booked | MASTERCARD  | VISA         | 1     | 0     | 0   | 0   | Open         | Flown     | 2             | CM USED       | EXCHANGED     | FLOWN         | 1       | 2        | 1       | L      | E      | 1    | 34        | 100           |
+      | salesOffice | currency | salesOffice1 | currency1 | salesOffice2 | OriginCity | Destination | OriginCity1 | Destination1 | StartDate | StartDate1 | StartDate2 | StartDate3 | PricingOption   | PaymentType | PaymentType1 | Adult | Child | INF | INS | TicketStatus | EMDStatus | SegmentDelete | TicketStatus1 | TicketStatus2 | TicketStatus3 | NoOfPax | Segments | Segment | Class1 | Class2 | Tab1 | Segments1 | PenaltyAmount |originClass|
+      | BAQ CTO     | COP      | MEX CTO      | MXN       | MTY CTO      | BAQ        | MEX         | MTY         | BAQ          | 01 days   | 09 days    | 35 days    | 61 days    | Price as Booked | MASTERCARD  | VISA         | 1     | 0     | 0   | 0   | Open         | Flown     | 2             | CM USED       | EXCHANGED     | FLOWN         | 1       | 2        | 1       | L      | E      | 1    | 34        | 100           |Economy    |

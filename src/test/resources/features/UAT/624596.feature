@@ -10,7 +10,7 @@
 #  Expected:
 #Must be show Manual Reissue
 
-@UAT
+@Reissue
 Feature: 624596 - Verify Involuntary Reissue of a Dual RBD booking is happening correctly
 
   Background:
@@ -34,6 +34,7 @@ Feature: 624596 - Verify Involuntary Reissue of a Dual RBD booking is happening 
     And I enter Start Date "<StartDate>" and Return Date "<StartDate1>" for two way booking
     And I select Adult passengers and search for flights
     And I select class "<originClass>" for the first connecting segment flight
+
     And I select class "<originClass>" for the second connecting segment flights
     And I select pricing option as "<PricingOption>"
     And I select the Quote Options and click on Next

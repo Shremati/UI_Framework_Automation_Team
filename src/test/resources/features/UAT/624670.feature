@@ -6,7 +6,7 @@
 #Change the dates and reissue the tickets using the same PTC and AC
 
 
-@UAT
+@Reissue
 Feature: 624670 - Verify Voluntary Reissue - Promo BGF2X is happening correctly
 
   Background:

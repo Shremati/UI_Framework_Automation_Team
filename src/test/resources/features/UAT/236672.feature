@@ -66,7 +66,6 @@ Feature: 236672 - Give seats to involuntary passengers
     And I select the flight actions as "<ActionType>"
     And I try to assign an agent "<ActionType>"
     And I click on the standby tab to display the passenger list
-    And I try to retrieve the ticket number by selecting "<PNRText>" option
     And I initiate standby to the passenger
     And I validate if the passengers have been cleared
     And I navigate to home screen

@@ -42,13 +42,8 @@ Feature: 629199 - Pay an service with an EMD for LUGGAGE DAMAGE
     And I navigate to travel Compensation page
     And I search the Order number in Travel compensation model
     And I select the Order number and click on continue button in compensation model
-    #And I select passenger and give the compensation reason for the passenger "<compensationReason>"
     And I issue the compensation for selected passengers with amount "<Amount>" and "<compensationReason>"
     And I select passengers and view compensation details
-
-
-
-
 
     And I navigate to home screen
     And I change the Sales Office and Currency "<salesOffice1>" and "<currency>"
@@ -83,5 +78,5 @@ Feature: 629199 - Pay an service with an EMD for LUGGAGE DAMAGE
 
 
     Examples:
-      |salesOffice            |salesOffice1              |currency|OriginCity   |Destination |Destination1 |StartDate |StartDate1 |compensationReason|Adult|PassengerType     |Amount |printer      |printerStatus|flightIndex|PaymentType|serviceType|originClass|PaymentType1      |
-      |PTY ATO                |PTY CTO COSTA DEL ESTE    |USD     |PTY          |MEX         |MDE          |01 days   |03 days    |Baggage Damage    |1    |All Passenger List|150    |IN-5CD4316MPJ|PrintReady   |0          |CASH       |COPA CLUB  |Economy    |EMD               |
+      |salesOffice            |salesOffice1              |currency|OriginCity   |Destination |StartDate |StartDate1 |compensationReason|Adult|Amount |printer      |printerStatus|PaymentType|serviceType|originClass|PaymentType1      |
+      |PTY ATO                |PTY CTO COSTA DEL ESTE    |USD     |PTY          |MEX         |01 days   |03 days    |Baggage Damage    |1    |150    |IN-5CD4316MPJ|PrintReady   |CASH       |COPA CLUB  |Economy    |EMD               |

@@ -1,4 +1,16 @@
-@UAT
+#Description:
+#Sign in UIOATO CURRENCY USD
+#create a reservation RT, UIOCUN 2 ADULT, 1 CHILD , ANY DAYS, economy flex
+#Verify that the administrative fee is correctly with the POS
+#Fill the passenger information and click on book and file fare.
+#CHECK OUT PAY with CASH, complete the FOID detTails
+#Book new segments POS CUNATO MXN , 1 month later, economy classic , Quote the Involuntary Reissue: save and process the changes
+#
+#  Expected:
+#The system should process the change correctly
+
+
+@Reissue
 Feature: 624607 - Involuntary Reissue Economy Classic Flex to Economy Classic
 
   Background:
@@ -18,18 +30,12 @@ Feature: 624607 - Involuntary Reissue Economy Classic Flex to Economy Classic
     And I click on the Reservation section
     And I click on New Order for creating new PNR in GUI
     And Select from and to City "<OriginCity>" and "<Destination>"
-    And I add segment from and to City "<Destination>" and "<OriginCity1>"
-    And I add third segment from and to City "<OriginCity1>" and "<Destination1>"
-    And I add fourth segment from and to City "<Destination1>" and "<OriginCity>"
-    And I enter Start Date "<StartDate>" for one way booking
-    And I enter Start Date "<StartDate1>" for 2nd Segment
-    And I enter Start Date "<StartDate2>" for 3rd Segment
-    And I enter Start Date "<StartDate3>" for 4th Segment
+    And I enter Start Date "<StartDate>" and Return Date "<StartDate1>" for two way booking
     And I select child passengers
     And I select Adult passengers and search for flights
-    And I select class "<originClass>" for Origin flight
-    And I select class "<ReturnClass>" for Return flight
-    And I select pricing option as Economy Classic Flex
+    And I select class "<originClass>" for the first connecting segment flight
+    And I select class "<originClass>" for the second connecting segment flights
+    And I select pricing option as "<Pricingoption>"
     And I select the Quote Options and click on Next
     And I validate the Price Quote and click on Next
     Then I enter required passenger details for COPA GUI
@@ -43,9 +49,18 @@ Feature: 624607 - Involuntary Reissue Economy Classic Flex to Economy Classic
     And I check the ticket in the Tickets tab
     And I check the EMDs in EMD tab
     And I click on Order Tab to view the Itinerary Details
-    And I rebook All the Segments on New Date
-    And I Delete All the Old Segments
+    And I click on Order Availability
+    And Select from and to City "<OriginCity>" and "<Destination>"
+    And I enter Start Date "<StartDate2>" and Return Date "<StartDate3>" for two way booking
+    And I click search button in flight search availability
+    And I select class "<originClass>" for the first connecting segment flight
+    And I select class "<originClass>" for the second connecting segment flights
+    And I select Book from Actions Dropdown
+    And I select and delete the segment "<segmentNo>"
+    And I select and delete the segment "<segmentNo>"
+    And I navigate to home screen
     And I change the Sales Office and Currency "<salesOffice1>" and "<currency1>"
+    And I click the order tab
     And I perform Reissue For All Segments Booked on New Date
     And I enter the details in the email recipients page
     And I validate if the payment is successful
@@ -55,5 +70,5 @@ Feature: 624607 - Involuntary Reissue Economy Classic Flex to Economy Classic
 
 
     Examples:
-      |salesOffice |currency |salesOffice1 |currency1 |OriginCity   |Destination |StartDate |OriginCity1 |Destination1 |StartDate1|StartDate2|StartDate3|Adult|Child|INF|INS|originClass |ReturnClass|PaymentType|
-      |UIO ATO     |USD      |CUN CTO      |MXN       |UIO          |PTY         |07 days   |CUN         |PTY          |09 days   |11 days   |12 days   |2    |1    |0  |0  |Economy     |Economy    |Cash       |
+      | salesOffice | currency | salesOffice1 | currency1 | OriginCity | Destination | StartDate | Pricingoption        | segmentNo | StartDate1 | StartDate2 | StartDate3 | Adult | Child | INF | INS | originClass | PaymentType |
+      | UIO ATO     | USD      | CUN CTO      | MXN       | UIO        | CUN         | 07 days   | Economy Classic Flex | 1         | 14 days    | 21 days    | 28 days    | 2     | 1     | 0   | 0   | Economy     | Cash        |

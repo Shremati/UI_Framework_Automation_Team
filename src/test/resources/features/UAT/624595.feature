@@ -18,7 +18,7 @@
 #7. Store the Quote IdEven Exchange - with Penalty
 #8. Reissue ticket
 
-@UAT
+@Reissue
 Feature: 624595 - Even Exchange-with Penalty
 
   Background:

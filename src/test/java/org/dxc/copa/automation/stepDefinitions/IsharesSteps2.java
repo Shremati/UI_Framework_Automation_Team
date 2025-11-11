@@ -11405,9 +11405,9 @@ public class IsharesSteps2 extends StepManager {
     @And("I search for flight availability in Native shares of special pnr for first segment from {string} to {string} and {string}")
     public void iSearchForFlightAvailabilityInNativeSharesOfSpecialPnrForFirstSegmentFromToAnd(String Origin, String Destination, String departureDate) {
         try{
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I search for flight");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I search for flight availability in Native shares of special pnr for first segment from"+Origin+" to "+Destination);
             isharesPage2.searchavailabilitySpecialPNRNativeShares(logInfo, Origin, Destination,departureDate);
-            logInfo.pass("I search for flight");
+            logInfo.pass("I search for flight availability in Native shares of special pnr for first segment from"+Origin+" to "+Destination);
 
 
         } catch(AssertionError | Exception exception){
@@ -11418,9 +11418,9 @@ public class IsharesSteps2 extends StepManager {
     @And("I search for flight availability in Native shares of special pnr for second segment from {string} to {string} and {string}")
     public void iSearchForFlightAvailabilityInNativeSharesOfSpecialPnrForSecondSegmentFromToAnd(String Origin, String Destination, String departureDate) {
         try{
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I search for flight");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I search for flight availability in Native shares of special pnr for second segment from"+Origin+" to "+Destination);
             isharesPage2.searchavailabilitySpecialPNRNativeSharesSecondSeg(logInfo, Origin, Destination,departureDate);
-            logInfo.pass("I search for flight");
+            logInfo.pass("I search for flight availability in Native shares of special pnr for second segment from"+Origin+" to "+Destination);
 
 
         } catch(AssertionError | Exception exception){
@@ -11431,9 +11431,9 @@ public class IsharesSteps2 extends StepManager {
     @And("I search for flight availability in Native shares of special pnr for third segment from {string} to {string} and {string}")
     public void iSearchForFlightAvailabilityInNativeSharesOfSpecialPnrForThirdSegmentFromToAnd(String Origin, String Destination, String departureDate) {
         try{
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I search for flight");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I search for flight availability in Native shares of special pnr for third segment from"+Origin+" to "+Destination);
             isharesPage2.searchavailabilitySpecialPNRNativeSharesThirdSeg(logInfo, Origin, Destination,departureDate);
-            logInfo.pass("I search for flight");
+            logInfo.pass("I search for flight availability in Native shares of special pnr for third segment from"+Origin+" to "+Destination);
 
 
         } catch(AssertionError | Exception exception){
@@ -11444,9 +11444,9 @@ public class IsharesSteps2 extends StepManager {
     @And("I search for flight availability in Native shares of special pnr for fourth segment from {string} to {string} and {string}")
     public void iSearchForFlightAvailabilityInNativeSharesOfSpecialPnrForFourthSegmentFromToAnd(String Origin, String Destination, String departureDate) {
         try{
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I search for flight");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I search for flight availability in Native shares of special pnr for fourth segment from"+Origin+" to "+Destination);
             isharesPage2.searchavailabilitySpecialPNRNativeSharesFourthSeg(logInfo, Origin, Destination,departureDate);
-            logInfo.pass("I search for flight");
+            logInfo.pass("I search for flight availability in Native shares of special pnr for fourth segment from"+Origin+" to "+Destination);
 
 
         } catch(AssertionError | Exception exception){
@@ -11457,15 +11457,16 @@ public class IsharesSteps2 extends StepManager {
     @And("I search for flight availability in Native shares of special pnr for fifth segment from {string} to {string} and {string}")
     public void iSearchForFlightAvailabilityInNativeSharesOfSpecialPnrForFifthSegmentFromToAnd(String Origin, String Destination, String departureDate) {
         try{
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I search for flight");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I search for flight availability in Native shares of special pnr for fifth segment from"+Origin+" to "+Destination);
             isharesPage2.searchavailabilitySpecialPNRNativeSharesFifthSeg(logInfo, Origin, Destination,departureDate);
-            logInfo.pass("I search for flight");
+            logInfo.pass("I search for flight availability in Native shares of special pnr for fifth segment from"+Origin+" to "+Destination);
 
 
         } catch(AssertionError | Exception exception){
             ExtentReportListener.testStepHandle("FAIL", isharesPage1.getDriver(), logInfo, exception);
         }
     }
+
 
     @And("I enter SSR command for SSR type {string} for Segment {string}")
     public void i_enter_SSR_command_for_Specific_Segment(String SSRType,String segmentIndex) {

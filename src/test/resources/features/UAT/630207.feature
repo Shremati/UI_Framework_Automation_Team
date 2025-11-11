@@ -32,7 +32,6 @@ Feature: 630207 - Validated that the system make the correct process with unacco
     And I change the Sales Office and Currency "<salesOffice>" and "<currency>"
     And I click on the Reservation section
     And I click on New Order for creating new PNR in GUI
-    And I click on New Order for creating new PNR in GUI
     And Select from and to City "<OriginCity>" and "<Destination>"
     And I enter Start Date "<StartDate>" for one way booking
     And I select child passengers
@@ -63,8 +62,8 @@ Feature: 630207 - Validated that the system make the correct process with unacco
 
 
     Examples:
-      |salesOffice     |currency |OriginCity   |Destination |StartDate  |ServiceType|Adult|Child|INF|INS|BaggageNo |BaggageNo1|BaggageNo2|BaggageNo3|BaggageWeight|BaggageWeight3|PaymentType|originClass|returnClass|
-      |PTY ATO         |USD      |PTY          |SJO         |01 days    |UMNR       |0    |1    |0  |0  |1         |2         |3         |4         |23           |  32          |Cash       |Economy    |Economy    |
+      |salesOffice     |currency |OriginCity   |Destination |StartDate  |ServiceType|Adult|Child|INF|INS|PaymentType|originClass|
+      |PTY ATO         |USD      |PTY          |SJO         |01 days    |UMNR       |0    |1    |0  |0  |Cash       |Economy    |
 
 
 

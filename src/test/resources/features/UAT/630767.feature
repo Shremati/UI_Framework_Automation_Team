@@ -1,4 +1,35 @@
 #Description:
+#  POS: LAS-ATO / USD
+#PNR: 1 ADT / Prefer Gold / LAS-MDE / Any date / RT / Economy Classic
+#Enter the "Check-In" module
+#Enter flight number, date and click "Search"
+#Perform a search by name, select the passenger and click "Proceed to Check In"
+#Complete ADC/APIS, click "Submit" and then "Done"
+#Select the passenger and click on "Check In"
+#In the confirmation pop-up window, click "Return to Check In"
+#Click on the baggage icon
+#Add baggage in the following order:
+#1. Standard 32kg
+#2. Standard 32kg
+#3. Standard 32kg
+#4. Standard 32kg
+#5. Standard 35kg + Oversized (Select the Oversized baggage box)
+#Proceed to pay (FOP: Cash) and complete Check in
+#Verify that all EMDs have been generated correctly.
+#
+#
+#  Expected
+#Verify that all EMDs have been generated correctly.
+#After clicking "Done", the system should return to the Check-In screen.
+#-Check that the "Doc Check" icon is green
+#-Check that the passenger data and PNR are correct
+#The system should display:
+#1. Free
+#2. Free
+#3. Free
+#4. 200 usd (additional bag) + 100 usd (overweight) + tax
+#5. 200 usd (additional bag) + 200 usd (overweight) + 150 usd (oversize) + tax
+
 
 
 @UAT
@@ -63,8 +94,6 @@ Feature: 630767 - EQP-014 Validation of baggage calculation according to "Connec
     And I add standard baggage "<BaggageNo4>" and  "<BaggageWeight4>"
     And I click add another baggage
     And I add standard baggage with Overweight for fifth bag "<BaggageNo5>" and  "<BaggageWeight5>"
-#    And I click on Submit and Proceed to Pay with Foid details
-#    And I click on Submit and Proceed to Pay
     And I click on Submit and Proceed to Pay with Foid details if needed and Capture the Baggage EMD details
 
     And I click on check-in for the passenger
@@ -84,6 +113,6 @@ Feature: 630767 - EQP-014 Validation of baggage calculation according to "Connec
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice              |currency |OriginCity   |Destination |StartDate |ReturnDate|Adult|Child|INF|INS|FQTV|originClass |PaymentType|SegmentIndex1|SegmentIndex2|BaggageNo |BaggageNo1|BaggageNo2|BaggageWeight|BaggageWeight1|BaggageWeight2|BaggageNo3|BaggageWeight3|BaggageNo4|BaggageWeight4|BaggageNo5|BaggageWeight5|searchType|ticketStatus|printer      |printerStatus|documentType|
-      |LAS ATO                  |USD      |LAS          |MDE         |02 days   |05 Days   |0    |0    |0  |0  |1   |Economy     |Cash       |0            |1            |1         |1         |2         |32           |32            |32            |3         |32            |4         |32            |5         |35            |Name      |CHECKED-IN  |IN-PF2ST1T4  |PrintReady   |Passport    |
+      |salesOffice              |currency |OriginCity   |Destination |StartDate |ReturnDate|Adult|Child|INF|INS|FQTV|originClass |PaymentType|SegmentIndex1|BaggageNo1|BaggageNo2|BaggageWeight1|BaggageWeight2|BaggageNo3|BaggageWeight3|BaggageNo4|BaggageWeight4|BaggageNo5|BaggageWeight5|searchType|ticketStatus|printer      |printerStatus|
+      |LAS ATO                  |USD      |LAS          |MDE         |02 days   |05 Days   |0    |0    |0  |0  |1   |Economy     |Cash       |0            |1         |2         |32            |32            |3         |32            |4         |32            |5         |35            |Name      |CHECKED-IN  |IN-PF2ST1T4  |PrintReady   |
 

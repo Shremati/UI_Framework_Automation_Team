@@ -68,16 +68,17 @@ Feature: 622985 - Validate the addition of baggage in the EXCHANGED reservation 
     And I click add Baggage icon
     And I delete the standard baggage "<BaggageNo>"
     And I click on Submit and Continue
-    And I click the Tickets tab
-    And I click the EMD subtab present in Tickets tab
+    And I navigate to home screen
+    And I try to retrieve the pnr from Order Screen to check the "<ticketStatus>" status in ticket tab
+    And I click the EMD subtab and view the baggage details in tickets tab
     And I select Sales Report and Agent Sales Report
     And I validate EMD values in Agent Sales Report
     And I logout from COPA GUI application
 
 
     Examples:
-      |salesOffice     |currency |OriginCity   |Destination |StartDate  |SegmentIndex1|Adult|Child|INF|INS|BaggageNo |BaggageNo1|BaggageNo2|BaggageNo3|BaggageNo4|BaggageWeight|BaggageWeight1|BaggageWeight2|PaymentType|originClass|searchType|ticketStatus|Printer      |PrinterStatus|
-      |PTY ATO         |USD      |PTY          |BOG         |01 days    |0            |1    |0    |0  |0  |1         |2         |3         |4         |5         |23           |32            |35            |CASH       |Economy    |Name      |CHECKED-IN  |IN-5CD4316MPJ|PrintReady   |
+      | salesOffice | currency | OriginCity | Destination | StartDate | Adult | Child | INF | INS | BaggageNo | BaggageNo1 | BaggageWeight | BaggageWeight1 | PaymentType | originClass | Printer       | PrinterStatus | ticketStatus |
+      | PTY ATO     | USD      | PTY        | BOG         | 01 days   | 1     | 0     | 0   | 0   | 1         | 2          | 23            | 32             | CASH        | Economy     | IN-5CD4316MPJ | PrintReady    | CHECKED-IN   |
 
 
 

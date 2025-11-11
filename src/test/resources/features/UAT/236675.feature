@@ -47,8 +47,9 @@ Feature: 236675 - Display list- Held seats
     And I click on Seat Icon from Services tab
     And I select Seat for all passengers
     And I Click on CheckOut button for payment
-    And I choose one mode of payment
-    And I make the first payment by selecting the payment type as "<PaymentType>"
+#    And I choose one mode of payment
+#    And I make the first payment by selecting the payment type as "<PaymentType>"
+    And I click on pay button by selecting the required payment type "<PaymentType>"
     And I enter the details in the email recipients page
     And I validate if the payment is successful
     And I check the ticket in the Tickets tab

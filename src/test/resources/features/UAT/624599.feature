@@ -6,7 +6,7 @@
 #Expected:
 #TRR must calculate No Show penalty ($ 250 USD)
 
-@UAT
+@Reissue
 Feature: 624599 - Verify Voluntary Reissue of a No Show booking is happening correctly
 
   Background:

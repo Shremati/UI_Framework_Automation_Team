@@ -56,6 +56,6 @@ Feature: 236695 - Verify the changing of flight ,date and time are updated corre
 
     Examples:
       |salesOffice |currency|OriginCity  |Destination  |StartDate|Adult|Child|INF|INS|COS|Airline|SegmentIndex|NRPS|PNRType|FlightStatus|Status|
-      |PTY ATO     |USD     |LAX         |PTY          |00 Days  |0    |0    |0  |0  |Y  |CM     |0           |1   |NRPS   |Delayed     |OnTime|
+      |PTY ATO     |USD     |PTY         |MDE          |00 Days  |0    |0    |0  |0  |Y  |CM     |0           |1   |NRPS   |Delayed     |OnTime|
 
 

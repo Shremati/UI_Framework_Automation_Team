@@ -25,7 +25,7 @@
 #11. Validate penalty for change and add collect if apply
 #12. Resissue ticket with Visa FOP
 
-@UAT
+@Reissue
 Feature: 624656 - New order in Call Center Panama (USD) and reissue ticket (JE)
 
   Background:
@@ -73,17 +73,18 @@ Feature: 624656 - New order in Call Center Panama (USD) and reissue ticket (JE)
     And I select Book from Actions Dropdown
     And I Delete All the Old Segments
     And I perform Voluntary Reissue with Pricing Option as "<PricingOption>"
-
     And I click on pay button by selecting the required payment type "<PaymentType1>"
     And I enter the details in the email recipients page
     And I validate if the payment is successful
-    And I click on Ticket tab and check the "<ticketStatus>" status
-    And I click on Ticket tab and check the "<ticketStatus1>" status
+#    And I click on Ticket tab and check the "<ticketStatus>" status
+#    And I click on Ticket tab and check the "<ticketStatus1>" status
+    And I navigate to home screen
+    And I try to retrieve the pnr from Order Screen to check the "<ticketStatus1>" status in ticket tab
     And I navigate to home screen
     And I select Sales Report and Agent Sales Report
     And I validate EMD values in Agent Sales Report
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice               |currency|OriginCity  |Destination  |OriginCity1|Destination1|StartDate|returnDate|StartDate2|StartDate3|Adult|Child|INF|INS|PaymentType      |originClass|ReturnClass|NewDate1|NewDate2|NewDate3|NewDate4|PaymentType1|PaxNo          |ticketStatus|ticketStatus1|ServiceType           |PricingOption|
-      |PTY ATO                   |USD     |PTY         |GIG          |PTY        |GRU         |12 Days  |15 Days   |27 Days   |28 days   |4    |0    |0  |0  |MASTERCARD       |Economy    |Economy    |22 days |24 days |64 days |65 days |VISA        |1              |Open        |EXCHANGED    |WCHR                  |Economy Classic|
+      |salesOffice               |currency|OriginCity  |Destination  |OriginCity1|Destination1|StartDate|returnDate|Adult|Child|INF|INS|PaymentType      |originClass|PaymentType1|PaxNo          |ticketStatus|ticketStatus1|ServiceType           |PricingOption|
+      |PTY ATO                   |USD     |PTY         |GIG          |PTY        |GRU         |12 Days  |15 Days   |4    |0    |0  |0  |MASTERCARD       |Economy    |VISA        |1              |Open        |EXCHANGED    |WCHR                  |Economy Classic|

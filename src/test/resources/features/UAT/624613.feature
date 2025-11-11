@@ -12,7 +12,7 @@
 #The system should process the change correctly
 
 
-@UAT
+@Reissue
 Feature: 624613 - Verify the system should process the change correctly by performing Involuntary Reissue of an ETKT with stopovers
 
   Background:
@@ -53,6 +53,14 @@ Feature: 624613 - Verify the system should process the change correctly by perfo
     And I make the first payment by selecting the payment type as "<PaymentType>"
     And I enter the details in the email recipients page
     And I validate if the payment is successful
+
+    And I click the Tickets tab and try to click the Coupon number and verify the details
+    And I click the EMD subtab and view the EMD details
+    And I select sales report and select Agent sales report
+    And I validate Ticket and EMD values in Agent sales report and view tax details
+    And I navigate to home screen
+    And I click the order tab
+
     And I click on Order Availability
     And Select from and to City "<OriginCity>" and "<Destination>"
     And I enter Start Date "<StartDate3>" for one way booking
@@ -64,25 +72,27 @@ Feature: 624613 - Verify the system should process the change correctly by perfo
     And I select class "<originClass>" for Origin flight for the newly added segments via availability after the Connecting segments
     And I select class "<originClass>" for second segment for the newly added segments via availability after the Connecting segments
     And I select class "<originClass>" for third segment with connecting flights
-    And I select Book from Actions Dropdown
+    And I select Book from Actions Dropdown and give the segment numbers as "<SegmentNum>"
     And I select and delete the segment "<SegmentDelete>"
     And I select and delete the segment "<SegmentDelete>"
     And I select and delete the segment "<SegmentDelete>"
     And I perform Involuntary Reissue for specific segment "<Segment>" with Reason Code as "<ReasonCode>" and Reissue Reason Code as "<ReissueReasonCode>"
     And I enter the details in the email recipients page
-    And I validate if the payment is successful
+    #And I validate if the payment is successful
+    And I store the updated emd and ticket details and validate if payment is successful
     And I navigate to home screen
     And I try to retrieve the pnr from Order Screen to check the "<TicketStatus>" status in ticket tab
     And I navigate to Order tab
     And I click the Tickets tab and store the ticket number
     And I click the EMD subtab and view the EMD details
     And I select sales report and select Agent sales report
-    And I validate Ticket and EMD values in Agent sales report and view tax details for conjuctive segment
+    #And I validate Ticket and EMD values in Agent sales report and view tax details for conjuctive segment
+    And I validate Ticket and EMD values in Agent sales report and view tax details
     And I logout from COPA GUI application
 
 
 
     Examples:
 
-      | salesOffice | currency | OriginCity | Destination | Destination1 | Destination2 | StartDate3 | StartDate2 | StartDate | StartDate1 | StartDate4 | StartDate5 | PaymentType | Adult | Child | INF | INS | originClass | PricingOption | Segment | TicketStatus | ReasonCode     | ReissueReasonCode | SegmentDelete |
-      | MIA ATO     | USD      | MIA        | PTY         | SJO          | MIA          | 107 days   | 17 days    | 06 days   | 09 days    | 109 days   | 111 days   | AMEX        | 2     | 2     | 0   | 0   | Economy     | Economy Full  | 1234    | EXCHD IRR    | WPEN AGENCYTKT | Involuntary       | 1             |
+      | salesOffice | currency | OriginCity | Destination | Destination1 | Destination2 | StartDate3 | StartDate2 | StartDate | StartDate1 | StartDate4 | StartDate5 | PaymentType | Adult | Child | INF | INS | originClass | PricingOption | Segment | TicketStatus | ReasonCode     | ReissueReasonCode | SegmentDelete | SegmentNum |
+      | MIA ATO     | USD      | MIA        | PTY         | SJO          | MIA          | 110 days   | 20 days    | 06 days   | 12 days    | 116 days   | 126 days   | AMEX        | 2     | 2     | 0   | 0   | Economy     | Economy Full  | 1234    | EXCHD IRR    | WPEN AGENCYTKT | Involuntary       | 1             | 5678       |

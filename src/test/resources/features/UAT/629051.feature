@@ -46,15 +46,10 @@ Feature: 629051 - Validate that multiple SSRs appear in the final report
     And I click on Return to Check-In
 
     And I click on PNR hyperlink in checkin page
-#    And I add SSR "<SSRType>" through Services tab with "<SSRDescription>"
     And I add SSR "<SSRType>" with "<SSRDescription>" through Services Tab for the passenger "<PaxIndex>"
     And I add SSR "<SSRType1>" with "<SSRDescription1>" through Services Tab for the passenger "<PaxIndex1>"
     And I add SSR "<SSRType2>" with "<SSRDescription2>" through Services Tab for the passenger "<PaxIndex2>"
     And I add SSR "<SSRType3>" with "<SSRDescription2>" through Services Tab for the passenger "<PaxIndex3>"
-#    And I add SSR "<SSRType>" through Services Tab for the passenger "<PaxIndex>"
-#    And I add SSR "<SSRType1>" through Services Tab for the passenger "<PaxIndex1>"
-#    And I add SSR "<SSRType2>" through Services Tab for the passenger "<PaxIndex2>"
-#    And I add SSR "<SSRType3>" through Services Tab for the passenger "<PaxIndex3>"
     And I navigate back to the previous page in GUI
 
 
@@ -63,8 +58,6 @@ Feature: 629051 - Validate that multiple SSRs appear in the final report
     And I search the flight for the segment "<SegmentIndex>" in Gate section
     And I try to retrieve the ticket number by selecting "<PNRText>" option
     And I search for the passenger in the all passengers list in GATE module
-#    And I click on the passenger name in GATE page and validate that the added SSR "<SSRKeyword>" is present
-#    And I navigate back to the previous page in GUI
     And I click on final report and validate the SSR added for the passenger
 
     And I click on Tools Menu

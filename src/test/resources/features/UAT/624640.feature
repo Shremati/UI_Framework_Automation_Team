@@ -6,7 +6,7 @@
 #  Expected:
 #The system must correctly process the new change
 
-@UAT
+@Reissue
 Feature: 624640 - Verify Voluntary Reissue in Economy Classic is happening correctly
 
   Background:

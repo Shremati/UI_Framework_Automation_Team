@@ -7,7 +7,7 @@
 #process check out
 #Assign seating for all passengers
 #The system should process the change correctly
-@UAT
+@Reissue
 Feature: 624597 - Involuntary Reissue with open jaw ticket
 
   Background:
@@ -64,16 +64,14 @@ Feature: 624597 - Involuntary Reissue with open jaw ticket
     And I try to retrieve the pnr from Order Screen to check the "<TicketStatus1>" status in ticket tab
     And I click the Tickets tab and store the ticket number
     And I click the EMD subtab and view the EMD details
-
-
-#    And I click the Tickets tab
     And I navigate to home screen
     And I search for the PNR created in Reservation Section
     And I click on Seat Icon from Services tab
     And I select Seat for all passengers
     And I Click on CheckOut button for payment
-    And I choose one mode of payment
-    And I make the first payment by selecting the payment type as "<PaymentType1>"
+#    And I choose one mode of payment
+#    And I make the first payment by selecting the payment type as "<PaymentType1>"
+    And I click on pay button by selecting the required payment type "<PaymentType1>"
     And I enter the details in the email recipients page
     And I validate if the payment is successful
     And I click the services Tab to validate the seats

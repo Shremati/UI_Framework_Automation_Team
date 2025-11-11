@@ -50,7 +50,7 @@
 #Actual:
 
 
-@UAT
+@Reissue
 Feature: 624672 - ISSUE/REISSUE - Create reservation for 1ADT + 1CHD in BRASIL CTO GIG (BRL), pay with MISC ACCOUNT, perform voluntary Reissue in COLOMBIA CTO BOG (COP) and pay as Residual Value.
 
   Background:
@@ -116,14 +116,8 @@ Feature: 624672 - ISSUE/REISSUE - Create reservation for 1ADT + 1CHD in BRASIL C
     And I select sales report and select Agent sales report
     And I validate the EMD values in Agent Sales Report after changes
 
-#    And I navigate to home screen
-#    And I click the order tab
-#    And I click the Tickets tab
-#    And I click the EMD subtab to check the residual emd name and RFISC value as "<RFISC>" and store the residual emd value
-#
     And I navigate to home screen
     And I click the order tab
-#    And I add SSR "<SSRType>" with "<SSRDescription>" through Services Tab for the passenger "<PaxIndex>"
     And I click the services Tab
     And I add SSR "<SSRType>" through Services tab with "<SSRDescription>"
     And I Click on CheckOut button for payment
@@ -141,8 +135,8 @@ Feature: 624672 - ISSUE/REISSUE - Create reservation for 1ADT + 1CHD in BRASIL C
 
 
     Examples:
-      |salesOffice1  |currency1 |salesOffice   |currency|salesOffice2          |currency2|OriginCity  |Destination  |OriginCity1|Destination1|StartDate|StartDate1|StartDate2|StartDate3|PaymentType|SSRType|SSRDescription     |PaymentType1          |Adult|Child|INF|INS|Class|originClass|segments|SegmentDelete| PricingOption   |ticketStatus|ticketStatus1|PricingOption1   |RFISC|PaxIndex|documentType|
-      |GIG CTO       |BRL       |PTY ATO       |USD     |BOG City Ticket Office|COP      |GIG         |BOG          |PTY        |BOG         |07 Days  |10 Days   |12 Days   |16 Days   |MISC_SST   |PETC   |PET IN CABIN - 0BT |VOLRISSUE_RESIDUAL_EMD|1    |1    |0  |0  |C    |Economy    |56      |1            | Price as Booked |Open        |EXCHANGED    |Price as Best Buy|99I	   |1       |Passport  |
+      | salesOffice1 | currency1 | salesOffice2           | currency2 | OriginCity | Destination | OriginCity1 | Destination1 | StartDate | StartDate1 | StartDate2 | StartDate3 | PaymentType | SSRType | SSRDescription     | PaymentType1           | Adult | Child | INF | INS | Class | originClass | segments | SegmentDelete | PricingOption   | ticketStatus1 | PricingOption1    | documentType |
+      | GIG CTO      | BRL       | BOG City Ticket Office | COP       | GIG        | BOG         | PTY         | BOG          | 07 Days   | 10 Days    | 12 Days    | 16 Days    | MISC_SST    | PETC    | PET IN CABIN - 0BT | VOLRISSUE_RESIDUAL_EMD | 1     | 1     | 0   | 0   | C     | Economy     | 56       | 1             | Price as Booked | EXCHANGED     | Price as Best Buy | Passport     |
 
 
 

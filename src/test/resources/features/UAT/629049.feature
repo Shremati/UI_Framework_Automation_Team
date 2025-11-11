@@ -42,7 +42,6 @@ Feature: 629049 - Added SSR should be displayed in the final report of the selec
     And I click on Proceed to Check-In button
     And I enter the details in Security Document Verification - ADC & APIS page
     Then I Validate APIS Complete and click on Done button
-#    And I click on seats icon and assign seats to the passengers in CHECKIN page
     And I click on Seat Icon from Checkin page
     And I select the seats from checkin page for passengers for the given segment "<SegmentIndex>"
     And I click on PNR hyperlink in checkin page

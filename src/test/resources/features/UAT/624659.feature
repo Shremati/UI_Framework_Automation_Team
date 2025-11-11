@@ -3,7 +3,7 @@
 #2. ETKT is reissued in POS CCS CTO
 #3. Result should be a Manual Reissue as tickets cannot be issued in Venezuela
 #
-@UAT
+@Reissue
 Feature: 624659 - Voluntary Reissue with Sales Restriction
 
   Background:
@@ -19,7 +19,6 @@ Feature: 624659 - Voluntary Reissue with Sales Restriction
     And I add "<Adult>" adult passengers
     And I want to display all the passengers
     And I change the Sales Office and Currency "<salesOffice>" and "<currency>"
-    #And I select the printer "<printer>" and "<printerStatus>"
     And I click on the Reservation section
     And I click on New Order for creating new PNR in GUI
     And Select from and to City "<OriginCity>" and "<Destination>"
@@ -39,11 +38,14 @@ Feature: 624659 - Voluntary Reissue with Sales Restriction
     And I click the Tickets tab
     And I check the EMDs in EMD tab
     And I navigate to Order tab
+    And I navigate to home screen
     And I change the Sales Office and Currency "<salesOffice1>" and "<currency>"
+    And I navigate to home screen
+    And I click the order tab
     And I perform Voluntary Reissue to validate Manual Reissue required error message
     And I logout from COPA GUI application
 
 
     Examples:
-      |salesOffice                           |salesOffice1            |currency|OriginCity   |Destination |Destination1 |StartDate |StartDate1 |compensationReason|Adult|PassengerType     |Amount |printer      |printerStatus|flightIndex|PaymentType     |serviceType|originClass|PricingOption|
-      |CALL CENTER GLOBAL USD                |CCS CTO                 |USD     |PTY          |LAX         |MIA          |01 days   |03 days    |Baggage Damage    |1    |All Passenger List|150    |IN-5CD4316MPJ|PrintReady   |0          |MISC_SST        |COPA CLUB  |Economy    |Price as Booked         |
+      | salesOffice            | salesOffice1 | currency | OriginCity | Destination | StartDate | Adult | PaymentType | originClass |
+      | CALL CENTER GLOBAL USD | CCS CTO      | USD      | PTY        | LAX         | 01 days   | 1     | MISC_SST    | Economy     |

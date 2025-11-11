@@ -11,7 +11,7 @@
 #Display the Icoupon it must have the correct amount (15$)and the passenger
 
 
-@UAT
+@IcouponAssign
 Feature: 622973 - Verify that the iCoupon of 4H+ have the correct amount (15$)
 
   Background:
@@ -61,6 +61,7 @@ Feature: 622973 - Verify that the iCoupon of 4H+ have the correct amount (15$)
     And I navigate to Check-In page
     And I search the Order number in Checkin Page
     And I click on Proceed to Check-In button
+    And I select ADC bypass and give the bypass reason "<reason>"
     And I enter the details in Security Document Verification - ADC & APIS page
     Then I Validate APIS Complete and click on Done button
     And I click on check-in for the passenger
@@ -75,10 +76,9 @@ Feature: 622973 - Verify that the iCoupon of 4H+ have the correct amount (15$)
     And I navigate to travel Compensation page
     And I select passengers using flight numbers in Compensation model "<PassengerType1>"
     And I click the EMD Available for Print tab and click print button verify the amount "<Amount>"
-    And I click the EMD Available for Print tab and click print button
     And I logout from COPA GUI application
 
 
     Examples:
-      |salesOffice|currency|OriginCity   |Destination |StartDate |compensationReason        |Adult|Child|INS|INF|PassengerType     |printer      |printerStatus|originClass|ReturnClass|PaymentType|PaxCount|PassengerType1|ReturnDate|Amount|iCouponStatus|
-      |PTY ATO    |USD     |PTY          |SCL         |01 days   |Delay between 4 to 7:59hrs|2    |0    |0  |1  |All Passenger List|US-5CD4377SFF|PrintReady   |Economy    |Economy    |Cash       |2       |Print List    |02 days   |15    |Assign       |
+      |salesOffice|currency|OriginCity   |Destination |StartDate |compensationReason        |Adult|Child|INS|INF|PassengerType     |printer      |printerStatus|originClass|ReturnClass|PaymentType|PaxCount|PassengerType1|ReturnDate|Amount|iCouponStatus|reason            |
+      |PTY ATO    |USD     |PTY          |SCL         |01 days   |Delay between 4 to 7:59hrs|2    |0    |0  |1  |All Passenger List|US-5CD4377SFF|PrintReady   |Economy    |Economy    |Cash       |2       |Print List    |02 days   |15    |Assign       |DOUBLE NATIONALITY|

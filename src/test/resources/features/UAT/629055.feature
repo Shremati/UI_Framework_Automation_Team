@@ -1,7 +1,14 @@
+#Description:
+#Generate a new booking in BOG ATO and pay it.
+#Go to the COMPENSATION MODULE and generate the iCoupon compensation by searching for flights from compensation module
+#Apply the compensation reason. (Make sure is the authorize reason for MEAL compensation.
+#Display the results.
+#
+#Expected:
+#Must be able to generate correctly.
 
 
-
-@UAT
+@IcouponAssign
 Feature: 629055 - Go to the COMPENSATION MODULE and generate the iCoupon compensation by searching for flights from compensation module
 
   Background:
@@ -77,4 +84,4 @@ Feature: 629055 - Go to the COMPENSATION MODULE and generate the iCoupon compens
 
     Examples:
       |salesOffice|currency|OriginCity   |Destination |StartDate |compensationReason        |Adult|Child|INS|INF|PassengerType     |printer   |printerStatus|originClass|PaymentType|PassengerType1|ticketStatus|PassengerType2|BagCount|BaggageWeight|NameStatus|iCouponStatus|
-      |PTY ATO    |USD     |PTY          |SCL         |01 days   |Delay between 2 to 3:59hrs|1    |0    |0  |0  |All Passenger List|US-5CD4377SFF|PrintReady   |Economy    |Cash       |Print List    |CHECKED-IN  |Compensation List|1    |23           |MEAL DLY FLTS|Assign |
+      |PTY ATO    |USD     |PTY          |MDE         |01 days   |Delay between 2 to 3:59hrs|1    |0    |0  |0  |All Passenger List|US-5CD4377SFF|PrintReady   |Economy    |Cash       |Print List    |CHECKED-IN  |Compensation List|1    |23           |MEAL DLY FLTS|Assign |

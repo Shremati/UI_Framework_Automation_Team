@@ -5,7 +5,7 @@
 #Change the dates and reissue the tickets using the same PTC and AC
 
 
-@UAT
+@Reissue
 Feature: 624671 - Verify Voluntary Reissue - Promo BPF2X1 is happening correctly
 
   Background:

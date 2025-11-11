@@ -9,7 +9,7 @@
 #This Fare Basis isn't available but we use this HLAAGZ2S
 #The changes must be processed correctly
 
-@UAT
+@Reissue
 Feature: 624650 - Verify Voluntary Reissue - Dual RBD is happening correctly
 
   Background:

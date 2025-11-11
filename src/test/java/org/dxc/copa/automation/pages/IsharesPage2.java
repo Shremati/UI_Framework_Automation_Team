@@ -22946,7 +22946,7 @@ public class IsharesPage2 extends TestBase {
 //            *ET
             String command = "*ET";
             gl.logCommand(logInfo, command);
-            gl.sendCmdValidateResponse(command, "-ETKT-", logInfo);
+            gl.sendCmdValidateResponse(command, "-ETKT-","ETKT", logInfo);
 
 
         } catch (AssertionError | Exception e) {
@@ -40847,10 +40847,13 @@ public class IsharesPage2 extends TestBase {
                                     }
                                 }
 
-                                    break Destinations; // Exit as soon as a flight is booked
+                                break Destinations; // Exit as soon as a flight is booked
                             }
                             else
-                                displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 0, departuredate);
+                                isharesPageObjects2.NATIVE_SHARES_CLEAR_ALL.click();
+                            gl.waitProgress();
+
+                            displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 0, departuredate);
                         }
                     }
 
@@ -40912,6 +40915,7 @@ public class IsharesPage2 extends TestBase {
 
                             gl.logCommand(logInfo, command);
                             sendCmdToNativeSharesValidateResponse(command);
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
                             String response = isharesPageObjects2.NATIVE_SHARES_RESPONSE_VALIDATE_LINE3.getText();
                             gl.checkForErrors(command,response,logInfo);
@@ -40955,7 +40959,11 @@ public class IsharesPage2 extends TestBase {
                                 break Destinations; // Exit as soon as a flight is booked
                             }
                             else
-                                displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 0, departuredate);
+
+                                isharesPageObjects2.NATIVE_SHARES_CLEAR_ALL.click();
+                            gl.waitProgress();
+
+                            displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 0, departuredate);
                         }
                     }
 
@@ -40976,8 +40984,8 @@ public class IsharesPage2 extends TestBase {
             Assert.fail();
         }
 
-
     }
+
 
     public void searchavailabilitySpecialPNRNativeSharesSecondSeg(ExtentTest logInfo, String origin, String destination, String departureDate) {
 
@@ -41054,6 +41062,7 @@ public class IsharesPage2 extends TestBase {
 
                             gl.logCommand(logInfo, command1);
                             sendCmdToNativeSharesValidateResponse(command1);
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
                             String response = isharesPageObjects2.NATIVE_SHARES_RESPONSE_VALIDATE_LINE3.getText();
                             gl.checkForErrors(command1,response,logInfo);
@@ -41097,7 +41106,9 @@ public class IsharesPage2 extends TestBase {
                                 break Destinations; // Exit as soon as a flight is booked
                             }
                             else
-                                displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 1, departuredate);
+                                isharesPageObjects2.NATIVE_SHARES_CLEAR_ALL.click();
+                            gl.waitProgress();
+                            displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 1, departuredate);
                         }
                     }
 
@@ -41159,6 +41170,7 @@ public class IsharesPage2 extends TestBase {
 
                             gl.logCommand(logInfo, command);
                             sendCmdToNativeSharesValidateResponse(command);
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
                             String response = isharesPageObjects2.NATIVE_SHARES_RESPONSE_VALIDATE_LINE3.getText();
                             gl.checkForErrors(command,response,logInfo);
@@ -41202,7 +41214,9 @@ public class IsharesPage2 extends TestBase {
                                 break Destinations; // Exit as soon as a flight is booked
                             }
                             else
-                                displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 1, departuredate);
+                                isharesPageObjects2.NATIVE_SHARES_CLEAR_ALL.click();
+                            gl.waitProgress();
+                            displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 1, departuredate);
                         }
                     }
 
@@ -41298,6 +41312,7 @@ public class IsharesPage2 extends TestBase {
 
                             gl.logCommand(logInfo, command1);
                             sendCmdToNativeSharesValidateResponse(command1);
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
                             String response = isharesPageObjects2.NATIVE_SHARES_RESPONSE_VALIDATE_LINE3.getText();
                             gl.checkForErrors(command1,response,logInfo);
@@ -41341,7 +41356,9 @@ public class IsharesPage2 extends TestBase {
                                 break Destinations; // Exit as soon as a flight is booked
                             }
                             else
-                                displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 2, departuredate);
+                                isharesPageObjects2.NATIVE_SHARES_CLEAR_ALL.click();
+                            gl.waitProgress();
+                            displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 2, departuredate);
                         }
                     }
 
@@ -41403,6 +41420,7 @@ public class IsharesPage2 extends TestBase {
 
                             gl.logCommand(logInfo, command);
                             sendCmdToNativeSharesValidateResponse(command);
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
 
                             String response = isharesPageObjects2.NATIVE_SHARES_RESPONSE_VALIDATE_LINE3.getText();
@@ -41447,7 +41465,9 @@ public class IsharesPage2 extends TestBase {
                                 break Destinations; // Exit as soon as a flight is booked
                             }
                             else
-                                displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 2, departuredate);
+                                isharesPageObjects2.NATIVE_SHARES_CLEAR_ALL.click();
+                            gl.waitProgress();
+                            displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 2, departuredate);
                         }
                     }
 
@@ -41468,6 +41488,7 @@ public class IsharesPage2 extends TestBase {
             Assert.fail();
         }
     }
+
 
     public void searchavailabilitySpecialPNRNativeSharesFourthSeg(ExtentTest logInfo, String origin, String destination, String departureDate) {
 
@@ -41543,6 +41564,7 @@ public class IsharesPage2 extends TestBase {
 
                             gl.logCommand(logInfo, command1);
                             sendCmdToNativeSharesValidateResponse(command1);
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
                             String response = isharesPageObjects2.NATIVE_SHARES_RESPONSE_VALIDATE_LINE3.getText();
                             gl.checkForErrors(command1,response,logInfo);
@@ -41587,7 +41609,9 @@ public class IsharesPage2 extends TestBase {
                                 break Destinations; // Exit as soon as a flight is booked
                             }
                             else
-                                displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 3, departuredate);
+                                isharesPageObjects2.NATIVE_SHARES_CLEAR_ALL.click();
+                            gl.waitProgress();
+                            displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 3, departuredate);
                         }
                     }
 
@@ -41650,6 +41674,7 @@ public class IsharesPage2 extends TestBase {
 
                             gl.logCommand(logInfo, command);
                             sendCmdToNativeSharesValidateResponse(command);
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
                             String response = isharesPageObjects2.NATIVE_SHARES_RESPONSE_VALIDATE_LINE3.getText();
                             gl.checkForErrors(command,response,logInfo);
@@ -41692,7 +41717,9 @@ public class IsharesPage2 extends TestBase {
                                 break Destinations; // Exit as soon as a flight is booked
                             }
                             else
-                                displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 3, departuredate);
+                                isharesPageObjects2.NATIVE_SHARES_CLEAR_ALL.click();
+                            gl.waitProgress();
+                            displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 3, departuredate);
                         }
                     }
 
@@ -41789,6 +41816,7 @@ public class IsharesPage2 extends TestBase {
 
                             gl.logCommand(logInfo, command1);
                             sendCmdToNativeSharesValidateResponse(command1);
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
                             String response = isharesPageObjects2.NATIVE_SHARES_RESPONSE_VALIDATE_LINE3.getText();
                             gl.checkForErrors(command1,response,logInfo);
@@ -41832,7 +41860,9 @@ public class IsharesPage2 extends TestBase {
                                 break Destinations; // Exit as soon as a flight is booked
                             }
                             else
-                                displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 4, departuredate);
+                                isharesPageObjects2.NATIVE_SHARES_CLEAR_ALL.click();
+                            gl.waitProgress();
+                            displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 4, departuredate);
                         }
                     }
 
@@ -41894,7 +41924,7 @@ public class IsharesPage2 extends TestBase {
 
                             gl.logCommand(logInfo, command);
                             sendCmdToNativeSharesValidateResponse(command);
-
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
                             String response = isharesPageObjects2.NATIVE_SHARES_RESPONSE_VALIDATE_LINE3.getText();
                             gl.checkForErrors(command,response,logInfo);
@@ -41937,7 +41967,9 @@ public class IsharesPage2 extends TestBase {
                                 break Destinations; // Exit as soon as a flight is booked
                             }
                             else
-                                displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 4, departuredate);
+                                isharesPageObjects2.NATIVE_SHARES_CLEAR_ALL.click();
+                            gl.waitProgress();
+                            displaySeatsAvailabilityForFlightsNativeShares( logInfo, origin, destination, 4, departuredate);
                         }
                     }
 
@@ -41958,6 +41990,7 @@ public class IsharesPage2 extends TestBase {
             Assert.fail();
         }
     }
+
 
     public void assignEconomySeatNumber(ExtentTest logInfo,String typeOfSeat,int paxIndex)
     {
@@ -42223,6 +42256,9 @@ public class IsharesPage2 extends TestBase {
     public void enterPassengerDetailsInNativeShares(ExtentTest logInfo) {
         try {
 
+            isharesPageObjects2.NATIVE_SHARES_CLEAR_ALL.click();
+            gl.waitProgress();
+
             for (int j = 0; j < mPassengers.get(getDriverID()).size(); j++) {
 
                 Passenger pax = mPassengers.get(getDriverID()).get(j);
@@ -42231,11 +42267,13 @@ public class IsharesPage2 extends TestBase {
                     String command = "-" + pax.getfName() + "/" + pax.getlName();
 
                     sendCmdToNativeSharesValidateResponse(command, pax.getfName().toUpperCase(), isharesPageObjects2.NATIVE_SHARES_RESPONSE_VALIDATE_LINE3, logInfo);
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
                 } else if (pax.getPaxType().equalsIgnoreCase("CHD") && !pax.getIsSameSurname()) {
                     //-SWAN/KAM*-CHD06
                     String command = "-" + pax.getfName() + "/" + pax.getlName() + "*-CHD06";
 
                     sendCmdToNativeSharesValidateResponse(command, pax.getfName().toUpperCase(), isharesPageObjects2.NATIVE_SHARES_RESPONSE_VALIDATE_LINE3, logInfo);
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
                 } else if (pax.getPaxType().equalsIgnoreCase("INS") && !pax.getIsSameSurname()) {
                     //-GAYLE/SWAM*-INS/10JAN21
                     String command = "-" + pax.getfName() + "/" + pax.getlName() + "*-INS/" + pax.getDOB();
@@ -42250,26 +42288,31 @@ public class IsharesPage2 extends TestBase {
                             pax.getDOB();
 
                     sendCmdToNativeSharesValidateResponse(command, pax.getlName().toUpperCase(), isharesPageObjects2.NATIVE_SHARES_RESPONSE_VALIDATE_LINE3, logInfo);
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
                 } else if (pax.getPaxType().equalsIgnoreCase("NRSA") && !pax.getIsSameSurname()) {
                     pax.setIsNRSA(true);
                     String command = "-S01C03/" + pax.getfName() + "/" + pax.getlName();
 
                     sendCmdToNativeSharesValidateResponse(command, pax.getfName().toUpperCase(), isharesPageObjects2.NATIVE_SHARES_RESPONSE_VALIDATE_LINE3, logInfo);
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
                 } else if (pax.getPaxType().equalsIgnoreCase("NRPS") && !pax.getIsSameSurname()) {
 
                     pax.setIsNRPS(true);
                     String command = "-P00B03/" + pax.getfName() + "/" + pax.getlName();
 
                     sendCmdToNativeSharesValidateResponse(command, pax.getfName().toUpperCase(), isharesPageObjects2.NATIVE_SHARES_RESPONSE_VALIDATE_LINE3, logInfo);
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
                 } else if (pax.getPaxType().equalsIgnoreCase("FQTV") && !pax.getIsSameSurname()) {
 
                     pax.setIsFQTV(true);
                     String command = "-" + pax.getfName() + "/" + pax.getlName() + "*" + pax.getFFNumber();
 
                     sendCmdToNativeSharesValidateResponse(command, pax.getfName().toUpperCase(), isharesPageObjects2.NATIVE_SHARES_RESPONSE_VALIDATE_LINE3, logInfo);
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
                 }
             }
-
+            gl.highLightErrorMessages(logInfo, "System Processing Error");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
             logInfo.pass("I am entering pax details");
 
         } catch (AssertionError | Exception e) {
@@ -45248,9 +45291,9 @@ public class IsharesPage2 extends TestBase {
                                     flightFound = true;
                                     break DepartureDate; // Exit as soon as a flight is booked
                                 } else if (showMore)
-                                    displayNextSetOfFlights(logInfo, Origin, Destination, 0, departuredate);
+                                    displayNextSetOfFlights(logInfo, Origin, Destination, 2, departuredate);
                                 else
-                                    displaySeatsAvailabilityForFlightsForValidMarriedSegment(logInfo, Origin, Destination, 0, departuredate);
+                                    displaySeatsAvailabilityForFlightsForValidMarriedSegment(logInfo, Origin, Destination, 2, departuredate);
                             }
                         }
 
@@ -45277,7 +45320,7 @@ public class IsharesPage2 extends TestBase {
                 DepartureDate:
                 while (departuredate <= departureEndDate) // Iterate through date range
                 {
-                    displaySeatsAvailabilityForFlightsForValidMarriedSegment(logInfo, Origin, Destination, 0, departuredate);
+                    displaySeatsAvailabilityForFlightsForValidMarriedSegment(logInfo, Origin, Destination, 2, departuredate);
                     boolean showMore=false;
 
                     for(int i=0;i<2;i++)
@@ -45359,9 +45402,9 @@ public class IsharesPage2 extends TestBase {
                                     break DepartureDate; // Exit as soon as a flight is booked
                                 }
                                 else if(showMore)
-                                    displayNextSetOfFlights(logInfo, Origin, Destination, 0, departuredate);
+                                    displayNextSetOfFlights(logInfo, Origin, Destination, 2, departuredate);
                                 else
-                                    displaySeatsAvailabilityForFlightsForValidMarriedSegment(logInfo, Origin, Destination, 0, departuredate);
+                                    displaySeatsAvailabilityForFlightsForValidMarriedSegment(logInfo, Origin, Destination, 2, departuredate);
                             }
                         }
 
@@ -45369,7 +45412,7 @@ public class IsharesPage2 extends TestBase {
                         {
                             logInfo.info(MarkupHelper.createLabel("Could Not Find Any Available Flight in First List, So Displaying More Number Of Available Flights", ExtentColor.BLACK));
                             showMore=true;
-                            displayNextSetOfFlights(logInfo, Origin, Destination, 0, departuredate);
+                            displayNextSetOfFlights(logInfo, Origin, Destination, 2, departuredate);
                         }
 
                     }

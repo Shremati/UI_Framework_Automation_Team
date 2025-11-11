@@ -99,7 +99,7 @@ public class IsharesPage1 extends TestBase {
 
                 }else{
                     isharesPageObjects1.USERID.sendKeys("sz9kd0");
-                    isharesPageObjects1.PASSWORD.sendKeys("Padmavatikhot#214");
+                    isharesPageObjects1.PASSWORD.sendKeys("Padmavatikhot#215");
                 }
                 gl.waitForProfileLoad();
                 logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
@@ -6589,9 +6589,11 @@ public class IsharesPage1 extends TestBase {
         try {
             gl.waitForProfileLoad();
             isharesPageObjects1.TOOLS_MENU.click();
+            gl.waitProgress();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
         } catch (AssertionError | Exception e){
-            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);			 
-              Assert.fail("This step failed.. so stopping...");			 
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -6673,11 +6675,13 @@ public class IsharesPage1 extends TestBase {
 
             String command = "9" + POS + phoneNumber + "/H";
             sendCmdToNativeSharesValidateResponse(command, POS, isharesPageObjects1.NATIVE_SHARES_RESPONSE_VALIDATE_LINE2,logInfo);
+            gl.highLightErrorMessages(logInfo, "System Processing Error");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
 
-            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);			 
-              Assert.fail("This step failed.. so stopping...");			 
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -6689,10 +6693,12 @@ public class IsharesPage1 extends TestBase {
 
             String command = "6P";
             sendCmdToNativeSharesValidateResponse(command, "6P", isharesPageObjects1.NATIVE_SHARES_RESPONSE_VALIDATE_LINE2,logInfo);
+            gl.highLightErrorMessages(logInfo, "System Processing Error");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
-            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);			 
-              Assert.fail("This step failed.. so stopping...");			 
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -6704,10 +6710,12 @@ public class IsharesPage1 extends TestBase {
 
             String command = "7T/-";
             sendCmdToNativeSharesValidateResponse(command, "7T", isharesPageObjects1.NATIVE_SHARES_RESPONSE_VALIDATE_LINE2,logInfo);
+            gl.highLightErrorMessages(logInfo, "System Processing Error");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
-            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);			 
-              Assert.fail("This step failed.. so stopping...");			 
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -6720,6 +6728,7 @@ public class IsharesPage1 extends TestBase {
             Passenger pax= mPassengers.get(getDriverID()).get(0);
             String command = "ER";
             sendCmdToNativeSharesValidateResponse(command);
+            gl.highLightErrorMessages(logInfo, "System Processing Error");
             logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
             String response3 = isharesPageObjects1.NATIVE_SHARES_RESPONSE_VALIDATE_LINE2.getText();
             String PNR = response3.substring(0, 6);

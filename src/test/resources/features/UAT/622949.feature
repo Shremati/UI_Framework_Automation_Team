@@ -28,14 +28,10 @@ Feature: 622949 - Mass Transfer: Passenger THRU Routing GUA-SJO-PTY with Current
     And I click on New Order for creating new PNR in GUI
     And Select from and to City "<OriginCity>" and "<Destination1>"
     And I enter Start Date "<StartDate>" for one way booking
-#    And I add segment from and to City "<OriginCity1>" and "<Destination1>"
-#    And I enter Start Date "<StartDate1>" for 2nd Segment
     And I select child passengers
     And I select infant without seat passengers
     And I select Adult passengers and search for flights
     And I select class "<originClass>" for the first thru flight
-#    And I select class "<originClass>" for Origin flight
-#    And I select class "<originClass>" for Return flight
     And I select pricing option Price as Booked
     And I select the Quote Options and click on Next
     And I validate the Price Quote and click on Next
@@ -45,7 +41,6 @@ Feature: 622949 - Mass Transfer: Passenger THRU Routing GUA-SJO-PTY with Current
     And I choose one mode of payment
     And I make the first payment by selecting the payment type as "<PaymentType>"
     And I enter the FOID details for the passengers with document type as "<documentType>"
-#    And I enter the FOID details of the passengers
     And I enter the details in the email recipients page
     And I validate if the payment is successful
 
@@ -88,5 +83,5 @@ Feature: 622949 - Mass Transfer: Passenger THRU Routing GUA-SJO-PTY with Current
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice1|currency1|POS  |OriginCity   |Destination |OriginCity1|Destination1|StartDate |StartDate1|Adult|Child|INF|INS|originClass |Pax|PaymentType|ActionType   |SegmentIndex|PNRText|transferType|Reason     |buttonName|SegmentIndex1|documentType                |ticketStatus|ticketStatus1|searchType|bagCount|BaggageWeight|printer      |printerStatus|type           |
-      |GUA ATO     |GTQ      |PTY  |GUA          |SJO         |SJO        |PTY         |01 days   |02 Days   |1    |0    |0  |0  |Economy     |1  |Cash       |Mass Transfer|0           |PNR    |Current     |DELAY      |accept    |0            |National Identification Card|ADJUSTED    |CHECKED-IN   |Name      |2       |23           |IN-PF2ST1T4|PrintReady   |baggageTransfer|
+      | salesOffice1 | currency1 | OriginCity | Destination1 | StartDate | Adult | Child | INF | INS | originClass | PaymentType | ActionType    | SegmentIndex | transferType | Reason | buttonName | SegmentIndex1 | documentType                 | ticketStatus | ticketStatus1 | searchType | bagCount | BaggageWeight | printer     | printerStatus | type            |
+      | GUA ATO      | GTQ       | GUA        | PTY          | 01 days   | 1     | 0     | 0   | 0   | Economy     | Cash        | Mass Transfer | 0            | Current      | DELAY  | accept     | 0             | National Identification Card | ADJUSTED     | CHECKED-IN    | Name       | 2        | 23            | IN-PF2ST1T4 | PrintReady    | baggageTransfer |

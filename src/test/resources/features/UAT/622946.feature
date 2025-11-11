@@ -48,7 +48,6 @@ Feature: 622946 - Mass Transfer for ADT+CHD+INF
     And I search the flight for the segment "<SegmentIndex>" in Gate section
     And I select the flight actions as "<ActionType>"
     And I select the type for mass transfer as "<transferType>"
-#    And I select the flight for outbound mass transfer
     And I select the flight for outbound mass transfer with outbound segment "<SegmentIndex1>"
     And I select the reason code as "<Reason>" and select the flight for mass transfer for the segment "<SegmentIndex1>"
     And I pick the passengers manually from the list from the pnr created
@@ -62,5 +61,5 @@ Feature: 622946 - Mass Transfer for ADT+CHD+INF
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice              |currency |POS  |OriginCity   |Destination |StartDate |ReturnDate|Adult|Child|INF|INS|originClass |Pax|PaymentType|ActionType   |SegmentIndex|PNRText|transferType|Reason    |buttonName|SegmentIndex1|
-      |PTY ATO                  |USD      |PTY  |PTY          |MCO         |01 days   |02 Days   |1    |1    |1  |0  |Economy     |1  |Cash       |Mass Transfer|0           |PNR    |Outbound   |CANCELATION|accept    |1            |
+      | salesOffice | currency | OriginCity | Destination | StartDate | ReturnDate | Adult | Child | INF | INS | originClass | PaymentType | ActionType    | SegmentIndex | PNRText | transferType | Reason      | buttonName | SegmentIndex1 |
+      | PTY ATO     | USD      | PTY        | MCO         | 01 days   | 02 Days    | 1     | 1     | 1   | 0   | Economy     | Cash        | Mass Transfer | 0            | PNR     | Outbound     | CANCELATION | accept     | 1             |

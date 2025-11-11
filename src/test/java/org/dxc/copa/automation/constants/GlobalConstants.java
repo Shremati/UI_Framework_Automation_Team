@@ -8,7 +8,7 @@ public class GlobalConstants {
      * Copy the latest SIT/UAT URL's for executing the scripts
      */
 
-    public String UATMinorRelease = "https://pssgui.copauat.travel.airservices.svcs.entsvcs.com/minorrelease";
+    public String UATMinorRelease = "https://pssgui.copauat.travel.airservices.svcs.entsvcs.com/minorrelease/#/pssgui/landing";
     public String SIT = "http://sit-guife-lbi.dxccopaair.svcs.entsvcs.com:8980/release-25.3/#/pssgui/landing";
     public String UAT = "https://pssgui.copauat.travel.airservices.svcs.entsvcs.com/css/#/pssgui/landing";
 
@@ -50,8 +50,17 @@ public class GlobalConstants {
      * Provide the environment you want to execute the scripts: "SIT" or "UAT"
      */
 
+//For UAT - CSS / TPFSB
+//    public String testEnv = "sharesURL";
+//    public String guiTestEnv="UAT";
+//    public String browser = "chrome";  // chrome,edge, gecko,selenium-grid ,headless
+//    public String buildNo = "sharesURL";
+//    public String releaseNo = "sharesURL";
+
+
+//For UAT - Minor Release / TPFSC
     public String testEnv = "sharesCURL";
-    public String guiTestEnv="UAT";
+    public String guiTestEnv="UATMinorRelease";
     public String browser = "chrome";  // chrome,edge, gecko,selenium-grid ,headless
     public String buildNo = "sharesCURL";
     public String releaseNo = "sharesCURL";

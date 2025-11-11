@@ -22,7 +22,7 @@ Feature: 236694 - Verify by entering the following command, changing flight and 
     And I add "<INS>" infant with seat passengers
     And I add "<INF>" infant without seat passengers
     And I want to display all the passengers
-    And I change the Sales Office and Currency "<salesOffice>" and "<currency>"
+    And I change the Sales Office and Currency "<salesOffice>" and "<currency1>"
     And I click on Tools Menu
     And I click on Native Shares
     And I set Class Of Service to "<COS>"
@@ -45,13 +45,10 @@ Feature: 236694 - Verify by entering the following command, changing flight and 
     And I click on Native Shares
     And I try to assign the gate number "<GateNo1>" for Arrival or Departure flights "<ArrivalTime>" in Native Share
     And I click on Cancel button in native shares
-    And I change the Sales Office and Currency "<salesOffice>" and "<currency>"
+    And I change the Sales Office and Currency "<salesOffice>" and "<currency1>"
     And I click on Tools Menu
     And I click on FLIFO SEARCH under Tools menu
     And I perform flifo search with required details
-
-
-
     And I verify the Gate number of the flight for OriginCity in FLIFO
     And I verify the Gate number of the flight for DestinationCity in FLIFO
     And I try to close the FLIFO search
@@ -74,5 +71,5 @@ Feature: 236694 - Verify by entering the following command, changing flight and 
 
 
     Examples:
-      | salesOffice1 | salesOffice | currency | OriginCity | Destination | StartDate | Adult | Child | INF | INS | COS | Airline | SegmentIndex | DepartureTime | GateNo | ArrivalTime | GateNo1 | GateNo2 | GateNo3 | city1  | city2       |
-      | PTY ATO      | LAX ATO     | USD      | LAX        | PTY         | 00 days   | 1     | 0     | 0   | 0   | Y   | CM      | 0            | DepartureTime | 005    | ArrivalTime | 006     | 007     | 008     | origin | destination |
+      | salesOffice1 | salesOffice | currency |currency1| OriginCity | Destination | StartDate | Adult | Child | INF | INS | COS | Airline | SegmentIndex | DepartureTime | GateNo | ArrivalTime | GateNo1 | GateNo2 | GateNo3 | city1  | city2       |
+      | PTY ATO      | BOG ATO     | USD      |COP      | BOG        | PTY         | 00 days   | 1     | 0     | 0   | 0   | Y   | CM      | 0            | DepartureTime | 005    | ArrivalTime | 006     | 007     | 008     | origin | destination |

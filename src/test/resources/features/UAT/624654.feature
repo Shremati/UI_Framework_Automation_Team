@@ -39,7 +39,7 @@
 #- Print all Boarding Pass with EMD's
 #- Verify that the tickets and EMD created in the transaction are displayed correctly in SALES REPORT
 
-@UAT
+@Reissue
 Feature: 624654 - 146101:ISSUE/REISSUE-Create reservation for 4ADT in PANAMA ATO PTY (USD), Issue in PANAMA ATO PTY (USD), pay with MISC ACCOUNT + MASTER CARD and perform voluntary Reissue in PANAMA ATO PTY (USD), pay reissue with REFUND original FOP
 
   Background:
@@ -67,14 +67,12 @@ Feature: 624654 - 146101:ISSUE/REISSUE-Create reservation for 4ADT in PANAMA ATO
     And I select the Quote Options and click on Next
     And I validate the Price Quote and click on Next
     Then I enter required passenger details for COPA GUI
-#    And I enroll connect mile to all the passengers
     And I click on Book and FileFare button or File Fare button
     And I enroll connect mile to all the passengers
     And I Click on CheckOut button for payment
     And I choose two mode of payments
     And I make the first payment by selecting the payment type as "<PaymentType>"
     And I make the second payment by selecting the payment type as "<PaymentType1>"
-#    And I enter Passport FOID details
     And I enter the details in the email recipients page
     And I validate if the payment is successful
     And I click the Tickets tab
@@ -96,9 +94,6 @@ Feature: 624654 - 146101:ISSUE/REISSUE-Create reservation for 4ADT in PANAMA ATO
     And I select and delete the segment "<SegmentDelete>"
     And I perform Voluntary Reissue with Pricing Option as "<PricingOption>"
     And I click on pay button by selecting the required payment type "<PaymentType2>"
-#    And I choose two mode of payments
-#    And I make the first payment by selecting the payment type as "<PaymentType>"
-#    And I make the second payment by selecting the payment type as "<PaymentType1>"
     And I enter the details in the email recipients page
     And I validate if the payment is successful
     And I navigate to home screen
@@ -115,7 +110,7 @@ Feature: 624654 - 146101:ISSUE/REISSUE-Create reservation for 4ADT in PANAMA ATO
 
     Examples:
 
-      | salesOffice | currency | OriginCity | Destination | StartDate | StartDate1 | StartDate2 | originClass1 | PaymentType | PaymentType1| Adult | Child | INF | INS | TicketStatus1 | PricingOption     | originClass | PaymentType2 | SegmentDelete |
-      | PTY ATO     | USD      | PTY        | HAV         | 10 days   | 17 days    | 47 days    | Economy     | MISC_SST    | MASTERCARD  |4      | 0     | 0   | 0   | EXCHANGED     | Price as Best Buy | Business    | CASH         | 1             |
+      | salesOffice | currency | OriginCity | Destination | StartDate |  originClass1 | PaymentType | PaymentType1| Adult | Child | INF | INS | TicketStatus1 | PricingOption     | originClass | PaymentType2 | SegmentDelete |
+      | PTY ATO     | USD      | PTY        | HAV         | 10 days   |  Economy     | MISC_SST    | MASTERCARD  |4      | 0     | 0   | 0   | EXCHANGED     | Price as Best Buy | Business    | CASH         | 1             |
 
 

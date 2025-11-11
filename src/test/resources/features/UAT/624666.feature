@@ -6,7 +6,7 @@
 #Reissue reservartion from BC to Economy classic
 #Share the results
 
-@UAT
+@Reissue
 Feature: 624666 - Verify Voluntary Reissue from a Business Full a Economy Classic is happening correctly
 
   Background:

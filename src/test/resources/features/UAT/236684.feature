@@ -11,8 +11,7 @@ Feature: 236684 - Display List- Outbound connections
     Given COPA GUI Application is launched in the browser
 
   Scenario Outline: 236684 - Display List- Outbound connections
-
-    #GUI
+ #GUI
     And I create the passengers data
     And I add "<Adult>" adult passengers
     And I add "<Child>" child passengers
@@ -26,10 +25,9 @@ Feature: 236684 - Display List- Outbound connections
     And I click on New Order for creating new PNR in GUI
     And Select from and to City "<OriginCity>" and "<Destination>"
     And I enter Start Date "<StartDate>" for one way booking
-    And I select child passengers
-    And I select infant without seat passengers
     And I select Adult passengers and search for flights
     And I select class "<originClass>" for the first connecting segment flight
+#    And I select class "<originClass>" for the first connecting segment non codeshare flight
     And I select pricing option Price as Booked
     And I select the Quote Options and click on Next
     And I validate the Price Quote and click on Next
@@ -53,5 +51,5 @@ Feature: 236684 - Display List- Outbound connections
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice                |currency |OriginCity   |Destination|Destination1 |StartDate |returnDate|Adult|Child|INF|INS|originClass |PaymentType|ActionType   |SegmentIndex|PNRText|transferType|Reason     |buttonName|SegmentIndex1|
-      |PTY ATO                    |USD      |GYE          |MIA        |MIA          |01 days   |02 Days   |1    |0    |0  |0  |Economy     |Cash       |Mass Transfer|0           |PNR    |Outbound    |CANCELATION|accept    |1            |
+      |salesOffice                |currency |OriginCity   |Destination|StartDate |Adult|Child|INF|INS|originClass |PaymentType|
+      |PTY ATO                    |USD      |GYE          |SCL        |00 days   |1    |0    |0  |0  |Economy     |Cash       |

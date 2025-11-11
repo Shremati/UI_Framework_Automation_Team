@@ -23,7 +23,7 @@
 #The Email and Print options are enabled.
 #The GUI will start the printing process of the issued Vouchers.
 
-@UAT
+@IcouponUnAssign
 Feature: 622952 - Mass Compensation Voucher Generation for Flights with 100 or More Passengers
 
   Background:
@@ -61,5 +61,5 @@ Feature: 622952 - Mass Compensation Voucher Generation for Flights with 100 or M
 
 
     Examples:
-      |salesOffice  |currency|OriginCity   |Destination |StartDate |compensationReason|Adult|PassengerType     |Amount|printer   |printerStatus|flightIndex|iCouponStatus|
-      |PTY COPA CLUB|USD     |PTY          |MEX         |01 days   |Baggage Delay     |1    |All Passenger List|100   |US-5CD4377SFF|PrintReady   |0          |UnAssign  |
+      |salesOffice  |currency|OriginCity   |Destination |StartDate |compensationReason|Adult|PassengerType     |Amount|printer      |printerStatus|flightIndex|iCouponStatus|
+      |PTY COPA CLUB|USD     |PTY          |MEX         |01 days   |Baggage Delay     |1    |All Passenger List|100   |US-5CD4377SFF|PrintReady   |0          |UnAssign     |

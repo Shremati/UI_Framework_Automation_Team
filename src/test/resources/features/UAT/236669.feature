@@ -1,3 +1,10 @@
+#Description:
+#Check in pass in oversale flight no seats available or held seat for the passenger.
+#After check in process passenger will enter in standby list with HKN status.
+#Expected:
+#Expected Result 1: Display passenger in standby list.
+#Expected Result 2: In the seat field of the boarding pass must appear the SBY status.
+
 
 @UAT
 Feature: 236669 - Add HKN passenger in standby list for OVS (Oversold) flight
@@ -44,7 +51,6 @@ Feature: 236669 - Add HKN passenger in standby list for OVS (Oversold) flight
     And I assign weight restriction for the class "<OriginClass>" with number of pax "<passengers>"
     And I try to retrieve the ticket number by selecting "<PNRText>" option
     And I click on Proceed to Check-In button
-#    And I enter the details in Security Document Verification page
     And I enter the details in Security Document Verification - ADC & APIS page
     Then I Validate APIS Complete and click on Done button
     And I click on check-in for the passenger
@@ -59,5 +65,5 @@ Feature: 236669 - Add HKN passenger in standby list for OVS (Oversold) flight
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice              |currency |OriginCity  |Destination |StartDate |Adult|Child|INF|INS|PaymentType|ActionType                    |SegmentIndex|ActionType1                     |OriginClass|passengers    |searchType|printer      |printerStatus|PNRText|
-      |PTY ATO                  |USD      |PTY         |GYE         |01 days   |1    |0    |0  |0  |Cash       |View/Assign Controlling Agents|0           |Weight and Balance Restriction  |Economy    |1             |PNR       |IN-PF2ST1T4  |PrintReady    |PNR|
+      |salesOffice              |currency |OriginCity  |Destination |StartDate |Adult|Child|INF|INS|PaymentType|SegmentIndex|ActionType1                     |OriginClass|passengers    |printer      |printerStatus|PNRText|
+      |PTY ATO                  |USD      |PTY         |GYE         |01 days   |1    |0    |0  |0  |Cash       |0           |Weight and Balance Restriction  |Economy    |1             |IN-PF2ST1T4  |PrintReady    |PNR|

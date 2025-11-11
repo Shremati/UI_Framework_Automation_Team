@@ -46,7 +46,8 @@ Feature: 622936 - Verify REGATO-Validate in Gate Module and Gate Return status f
     And I verify the Status of the flight at the origin in FLIFO in GUI is "<FlightStatus>"
     And I try to close the FLIFO search
     And I navigate to Gate section
-    And I search for the flight in Gate section with Destination as "<Destination>"
+    #And I search for the flight in Gate section with Destination as "<Destination>"
+    And I select the flight in Gate section with Destination as "<Destination>"
     And I verify the flight status is displayed as "<FlightStatus>"
     And I navigate to home screen
     And I click on Tools Menu
@@ -54,7 +55,8 @@ Feature: 622936 - Verify REGATO-Validate in Gate Module and Gate Return status f
     And I try to assign the gate number "<GateNo>" in Native Shares
     And I click on Cancel button in native shares
     And I navigate to Gate section
-    And I search for the flight in Gate section with Destination as "<Destination>"
+    #And I search for the flight in Gate section with Destination as "<Destination>"
+    And I select the flight in Gate section with Destination as "<Destination>"
     And I verify the Gate number for a flight in Gate section
     And I navigate to home screen
     And I click on Tools Menu
@@ -68,6 +70,6 @@ Feature: 622936 - Verify REGATO-Validate in Gate Module and Gate Return status f
 
     Examples:
       |salesOffice |currency|OriginCity  |Destination  |StartDate|Adult|Child|INF|INS|COS|Airline|SegmentIndex|FlightStatus|GateNo|Status|
-      |PTY ATO     |USD     |PTY         |SCL          |00 Days  |1    |0    |0  |0  |Y  |CM     |0           |Delayed     |22A   |OnTime|
+      |PTY ATO     |USD     |PTY         |BOG          |00 Days  |1    |0    |0  |0  |Y  |CM     |0           |Delayed     |22A   |OnTime|
 
 

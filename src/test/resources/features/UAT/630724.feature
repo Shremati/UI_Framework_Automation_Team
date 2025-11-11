@@ -66,8 +66,8 @@ Feature: 630724 - EQP-004 Validation of baggage calculation according to "Withou
 
 
     Examples:
-      |salesOffice     |currency |OriginCity   |Destination |StartDate  |SegmentIndex1|Adult|Child|INF|INS|BaggageNo |BaggageNo1|BaggageNo2|BaggageNo3|BaggageWeight|BaggageWeight1|BaggageWeight2|PaymentType|originClass|searchType|ticketStatus|Printer      |PrinterStatus|
-      |PTY ATO         |USD      |PTY          |MEX         |01 days    |0            |1    |0    |0  |0  |1         |1         |2         |3         |23           |32            |35            |CASH       |Economy    |Name      |CHECKED-IN  |IN-5CD4316MPJ|PrintReady   |
+      |salesOffice     |currency |OriginCity   |Destination |StartDate  |SegmentIndex1|Adult|Child|INF|INS|BaggageNo1|BaggageNo2|BaggageNo3|BaggageWeight|BaggageWeight1|BaggageWeight2|PaymentType|originClass|searchType|ticketStatus|Printer      |PrinterStatus|
+      |PTY ATO         |USD      |PTY          |MEX         |01 days    |0            |1    |0    |0  |0  |1         |2         |3         |23           |32            |35            |CASH       |Economy    |Name      |CHECKED-IN  |IN-5CD4316MPJ|PrintReady   |
 
 
 

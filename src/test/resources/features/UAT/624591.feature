@@ -23,7 +23,7 @@
 #|                 |                                                        |
 
 
-@UAT
+@Reissue
 Feature: 624591 - Reissue reservation 1ADT, 2CHD, SJO-MIA RT
 
   Background:
@@ -85,8 +85,8 @@ Feature: 624591 - Reissue reservation 1ADT, 2CHD, SJO-MIA RT
 
     Examples:
 
-      | salesOffice | salesOffice1 | currency | OriginCity | Destination | StartDate | StartDate1 | StartDate2 | StartDate3 | PaymentType | PaymentType1 | Adult | Child | INF | INS | originClass | segments | PricingOption        | PricinOption1  | TicketStatus1 | SegmentDelete |
-      | SJO ATO     | JFK ATO      | USD      | SJO        | MIA         | 07 days   | 09 days    | 05 days    | 27 days    | CASH        | AMEX         | 1     | 2     | 0   | 0   | Economy     | 34     | Price as Booked | Business Promo | EXCHANGED     | 1             |
+      | salesOffice | currency | OriginCity | Destination | StartDate | StartDate1 | StartDate2 | PaymentType | PaymentType1 | Adult | Child | INF | INS | originClass | segments | PricingOption   | TicketStatus1 | SegmentDelete |
+      | SJO ATO     | USD      | SJO        | MIA         | 07 days   | 09 days    | 05 days    | CASH        | AMEX         | 1     | 2     | 0   | 0   | Economy     | 34       | Price as Booked | EXCHANGED     | 1             |
 
 
 

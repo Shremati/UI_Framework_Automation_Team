@@ -44,7 +44,6 @@ Feature: 622945 - Mass Transfer for 2ADT
     And I choose one mode of payment
     And I make the first payment by selecting the payment type as "<PaymentType>"
     And I enter the FOID details for the passengers with document type as "<documentType>"
-#    And I enter the FOID details of the passengers
     And I enter the details in the email recipients page
     And I validate if the payment is successful
     And I click the Tickets tab
@@ -66,5 +65,5 @@ Feature: 622945 - Mass Transfer for 2ADT
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice              |currency |salesOffice1|currency1|POS  |OriginCity   |Destination |OriginCity1|Destination1|StartDate |StartDate1|Adult|Child|INF|INS|originClass |Pax|PaymentType|ActionType   |SegmentIndex|PNRText|transferType|Reason    |buttonName|SegmentIndex1|documentType                |ticketStatus|
-      |PTY ATO                  |USD      |GUA ATO     |GTQ      |PTY  |GUA          |SJO         |SJO        |PTY         |01 days   |02 Days   |2    |0    |0  |0  |Economy     |1  |Cash       |Mass Transfer|0           |PNR    |Current     |DELAY     |accept    |0            |National Identification Card|ADJUSTED    |
+      | salesOffice1 | currency1 | OriginCity | Destination | OriginCity1 | Destination1 | StartDate | StartDate1 | Adult | Child | INF | INS | originClass |  PaymentType | ActionType    | SegmentIndex |  transferType | Reason | buttonName | SegmentIndex1 | documentType                 | ticketStatus |
+      | GUA ATO      | GTQ       | GUA        | SJO         | SJO         | PTY          | 01 days   | 02 Days    | 2     | 0     | 0   | 0   | Economy     |  Cash        | Mass Transfer | 0            |  Current      | DELAY  | accept     | 0             | National Identification Card | ADJUSTED     |

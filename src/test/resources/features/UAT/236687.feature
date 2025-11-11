@@ -43,31 +43,28 @@ Feature: 236687 - Release All Held Seat
     And I enter the details in the email recipients page
     And I validate if the payment is successful
     And I navigate to home screen
-    And I search for the PNR created in Reservation Section
-    And I click on Seat Icon from Services tab
+    And I click the order tab
+    And I click the services Tab
+    And I click on seat icon from services tab
     And I select Seat for all passengers
     And I Click on CheckOut button for payment
-    And I choose one mode of payment
-    And I make the first payment by selecting the payment type as "<PaymentType>"
+#    And I choose one mode of payment
+#    And I make the first payment by selecting the payment type as "<PaymentType>"
+    And I click on pay button by selecting the required payment type "<PaymentType>"
     And I enter the details in the email recipients page
     And I validate if the payment is successful
     And I check the ticket in the Tickets tab
     And I check the EMDs in EMD tab
-
-#    And I click the services Tab to validate the seats
     And I click the services Tab to validate the seats and store the seat numbers
-#    And I click the services Tab
     And I navigate to home screen
     And I navigate to Gate section
     And I search the flight for the segment "<SegmentIndex>" in Gate section
     And I select held seats to display the passenger list in Gate section
-#    And I select "<passengerListType>" from the passenger list options
     And I try to retrieve the ticket number by selecting "<PNRText>" option
     And I click on release and offload button release the "<passengerListType>" passengers
     And I validate if the held seats are released
     And I navigate to home screen
-    And I search for the PNR created in Reservation Section
-    And I navigate to Order tab
+    And I click the order tab
     And I click the Tickets tab
     And I click the services Tab
     And I open the seat map to check if the held seats are released

@@ -1,7 +1,15 @@
+#Description:
+#Go to compensation module
+#select the flight CM420 & 2 passengers
+#Select the reason
+#Select the option that apply Icoupon
+#Verify the amount $ in the Icoupon is correct
+#Verify that the Icoupon is correctly created
+#
+#Expected
+#Display the Icoupon, it must have the correct amount and the passenger names
 
-
-
-@UAT
+@IcouponAssign
 Feature: 622971 - Validate that in the case of  affectation due to change of aircraft, an iCoupon must be created
 
   Background:
@@ -18,7 +26,6 @@ Feature: 622971 - Validate that in the case of  affectation due to change of air
     And I add "<INS>" infant with seat passengers
     And I add "<INF>" infant without seat passengers
     And I want to display all the passengers
-
     And I change the Sales Office and Currency "<salesOffice>" and "<currency>"
     And I select the printer "<printer>" and "<printerStatus>"
     And I click on the Reservation section
@@ -40,8 +47,6 @@ Feature: 622971 - Validate that in the case of  affectation due to change of air
     And I validate if the payment is successful
     And I check the ticket in the Tickets tab
     And I check the EMDs in EMD tab
-
-
     And I navigate to home screen
     And I navigate to Check-In page
     And I search the Order number in Checkin Page
@@ -50,18 +55,13 @@ Feature: 622971 - Validate that in the case of  affectation due to change of air
     Then I Validate APIS Complete and click on Done button
     And I click on check-in for the passenger
     Then I validate the confirmation dialog that passenger is Checked-in
-
     And I navigate to home screen
     And I navigate to Check-In page
     And I search for the segment "<SegmentIndex>" in Check-In page
     And I select the passengers in checkin page using "<searchType>"
-
     And I navigate to home screen
     And I try to retrieve the pnr from Order Screen to check the "<ticketStatus1>" status in ticket tab
     And I check the EMDs in EMD tab
-
-
-
     And I navigate to home screen
     And I navigate to travel Compensation page
     And I select passengers using flight numbers in Compensation model "<PassengerType>"
@@ -71,18 +71,16 @@ Feature: 622971 - Validate that in the case of  affectation due to change of air
     And I navigate to home screen
     And I try to retrieve the pnr from Order Screen to check the "<ticketStatus1>" status in ticket tab
     And I check the EMDs in EMD tab
-
     And I navigate to home screen
     And I navigate to travel Compensation page
     And I select passengers using flight numbers in Compensation model "<PassengerType1>"
     And I click the EMD Available for Print tab and click print button
     And I validate the names in the Icoupon
     And I validate the amounts in the Icoupon with "<currency>"
-
     And I navigate to home screen
     And I logout from COPA GUI application
 
 
     Examples:
-      |salesOffice|currency|OriginCity   |Destination |StartDate |compensationReason        |Adult|Child|INS|INF|PassengerType     |printer    |printerStatus|flightIndex|originClass|PaymentType|PaxCount|PassengerType1|Amount|SegmentIndex|searchType|ticketStatus1|
-      |PTY ATO    |USD     |PTY          |MDZ         |01 days   |Delay between 4 to 7:59hrs|2    |0    |0  |0  |All Passenger List|IN-PF2ST1T4|PrintReady   |0          |Economy    |Cash       |2       |Print List    |15    |0           |PNR       |CHECKED-IN   |
+      |salesOffice|currency|OriginCity   |Destination |StartDate |compensationReason        |Adult|Child|INS|INF|PassengerType     |printer    |printerStatus|originClass|PaymentType|PaxCount|PassengerType1|SegmentIndex|searchType|ticketStatus1|
+      |PTY ATO    |USD     |PTY          |MDZ         |01 days   |Delay between 4 to 7:59hrs|2    |0    |0  |0  |All Passenger List|IN-PF2ST1T4|PrintReady   |Economy    |Cash       |2       |Print List    |0           |PNR       |CHECKED-IN   |

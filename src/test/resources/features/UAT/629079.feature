@@ -38,15 +38,15 @@ Feature: 629079 - Validated a gate change is reflected during the boarding proce
     And I navigate to home screen
     And I click on Tools Menu
     And I click on Native Shares
-    And I try to assign the gate number "<gateNo1>" for Arrival or Departure flights "<time1>" in Native Share
+    And I try to assign the gate number "<gateNo1>" for Arrival or Departure flights "<time>" in Native Share
     And I enter 2_ command to know the details of the flight in Native Shares
     And I click on Cancel button in native shares
     And I logout from COPA GUI application
 
 
     Examples:
-      | salesOffice | currency | OriginCity | index | time          | departureDate | gateNo | gateNo1 | time1         | Adult | Child | INS | INF |
-      | PTY ATO     | USD      | PTY        | 0     | DepartureTime | 00 days       | 12     | 14      | DepartureTime | 1     | 0     | 0   | 0   |
+      | salesOffice | currency | OriginCity | index | time          | departureDate | gateNo | gateNo1 | Adult | Child | INS | INF |
+      | PTY ATO     | USD      | PTY        | 0     | DepartureTime | 00 days       | 12     | 14      | 1     | 0     | 0   | 0   |
 
 
 

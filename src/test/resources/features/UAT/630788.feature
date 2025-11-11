@@ -132,6 +132,6 @@ Feature: 630788 - EQP-023 Validation of baggage calculation according to "Connec
 
     Examples:
       | salesOffice | currency | OriginCity | Destination | StartDate | Adult | Child | INF | INS | FQTV | BaggageNo | BaggageNo1 | BaggageNo2 | BaggageNo3 | BaggageNo4 | ticketStatus | BaggageWeight | BaggageWeight1 | PaymentType | originClass | searchType1 | segmentIndex | reason             | PricingOption  | printer  | printerStatus | PaxType1 | PaxType |
-      | MAO ATO     | BRL      | MAO        | BZE         | 00 days   | 1     | 0     | 0   | 0   | 1    | 1         | 2          | 3          | 4          | 5          | CHECKED-IN   | 32            | 35             | CASH        | Business    | PNR         | 0            | DOUBLE NATIONALITY | Business Promo | MAHAC-NB | PrintReady    | Adult    | FQTV    |
+      | MAO ATO     | BRL      | MAO        | MCO         | 00 days   | 1     | 0     | 0   | 0   | 1    | 1         | 2          | 3          | 4          | 5          | CHECKED-IN   | 32            | 35             | CASH        | Business    | PNR         | 0            | DOUBLE NATIONALITY | Business Promo | MAHAC-NB | PrintReady    | Adult    | FQTV    |
 
 

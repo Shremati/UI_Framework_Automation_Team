@@ -17023,9 +17023,9 @@ public class IsharesSteps4 extends StepManager {
     @And("I enter ZAFIL command to change segment status to flown {string}")
     public void iEnterZAFILCommandToChangeSegmentStatusToFlown(String SegmentNumber) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I enter ZAFIL command to change segment status to PD :"+SegmentNumber);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I enter ZAFIL command to change segment status to flown :"+SegmentNumber);
             isharesPage4.makeSegmentFLOWN(logInfo, SegmentNumber);
-            logInfo.pass("I enter ZAFIL command to change segment status to PD :"+SegmentNumber);
+            logInfo.pass("I enter ZAFIL command to change segment status to flown :"+SegmentNumber);
 
         } catch (AssertionError | Exception e) {
             Assert.fail("This step failed.. so stopping...");

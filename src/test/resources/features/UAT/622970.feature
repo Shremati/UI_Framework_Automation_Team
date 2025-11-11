@@ -11,7 +11,7 @@
 #Display the Icoupon it must have the correct amount (15$)and the passenger
 
 
-@UAT
+@IcouponAssign
 Feature: 622970 - Compensate a reservation in SBY - MEAL
 
   Background:
@@ -30,6 +30,11 @@ Feature: 622970 - Compensate a reservation in SBY - MEAL
     And I want to display all the passengers
     And I change the Sales Office and Currency "<salesOffice>" and "<currency>"
     And I select the printer "<printer>" and "<printerStatus>"
+
+    And I navigate to the User provisioning Tool page
+    And I enter User Id and click on search in user provisioning page
+    And I select POS and set status of the iCoupon in User Provisioning tool page "<iCouponStatus>"
+    And I navigate to home screen
 
     And I click on the Reservation section
     And I click on New Order for creating new PNR in GUI
@@ -52,7 +57,8 @@ Feature: 622970 - Compensate a reservation in SBY - MEAL
     And I click on Tools Menu
     And I click on FLIFO SEARCH under Tools menu
     And I perform flifo search with required details
-    And I verify the Status of the flight at the origin in FLIFO in GUI is "<Status>"
+    #And I verify the Status of the flight at the origin in FLIFO in GUI is "<Status>"
+    And I verify the Status of the flight at the origin in FLIFO in GUI is OnTime
     And I try to close the FLIFO search
     And I click on Tools Menu
     And I click on Native Shares
@@ -64,11 +70,7 @@ Feature: 622970 - Compensate a reservation in SBY - MEAL
     And I perform flifo search with required details
     And I verify the Status of the flight at the origin in FLIFO in GUI is "<FlightStatus>"
     And I try to close the FLIFO search
-
-
     And I navigate to home screen
-
-
     And I navigate to Check-In page
     And I search the Order number in Checkin Page
     And I click on Proceed to Check-In button
@@ -90,5 +92,5 @@ Feature: 622970 - Compensate a reservation in SBY - MEAL
 
 
     Examples:
-      |salesOffice|currency|OriginCity   |Destination |StartDate |compensationReason        |Adult|Child|INS|INF|PassengerType     |printer      |printerStatus|originClass|FlightStatus|PaymentType|PaxCount|PassengerType1|ReturnDate|Amount|Status|
-      |PTY ATO    |USD     |PTY          |GYE         |00 days   |Delay between 4 to 7:59hrs|1    |0    |0  |0  |All Passenger List|IN-PF2ST1T4  |PrintReady   |Economy    |Delayed    |Cash       |2       |Print List    |02 days   |15    |OnTime|
+      | salesOffice | currency | OriginCity | Destination | StartDate | compensationReason         | Adult | Child | INS | INF | PassengerType      | printer     | printerStatus | originClass | FlightStatus | PaymentType | PassengerType1 | iCouponStatus |
+      | PTY ATO     | USD      | PTY        | SCL         | 01 days   | Delay between 4 to 7:59hrs | 1     | 0     | 0   | 0   | All Passenger List | IN-PF2ST1T4 | PrintReady    | Economy     | Delayed      | Cash        | Print List     | Assign        |

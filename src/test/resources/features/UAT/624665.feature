@@ -10,7 +10,7 @@
 #Expected:
 #The system should process the change correctly, and the EMD should be emited.
 
-@UAT
+@Reissue
 Feature: 624665 - Voluntary Reissue of a codeshare ticket
 
   Background:
@@ -34,14 +34,8 @@ Feature: 624665 - Voluntary Reissue of a codeshare ticket
     And I enter Start Date "<StartDate>" and Return Date "<StartDate1>" for two way booking
     And I select child passengers
     And I select Adult passengers and search for flights
-#    And I select class "<string>" for the first segment and "<string>" for the second segment in first connecting segment flight
     And I select class "<Class>" for the first segment and "<Class>" for the second segment in first connecting segment codeshare flight
-#    And I select class "<string>" for the first segment and "<string>" for the second segment in second connecting segment flight
     And I select class "<Class>" for the first segment and "<Class>" for the second segment in second connecting segment codeshare flight
-##    And I select class "<originClass>" for Origin flight
-#    And I select class "<originClass>" for Codeshare Origin flight
-##    And I select class "<originClass>" for Return flight
-#    And I select class "<originClass>" for Codeshare Return flight
     And I select pricing option as "<PricingOption>"
     And I select the Quote Options and click on Next
     And I validate the Price Quote and click on Next
@@ -57,9 +51,7 @@ Feature: 624665 - Voluntary Reissue of a codeshare ticket
 
     And I navigate to home screen
     And I click the order tab
-#    And I change the date of travel for the second segment "<newDate>"
     And I change the date of travel for the second connecting segment "<newDate>"
-#    And I perform Voluntary Reissue after changing the date of travel
     And I perform Voluntary Reissue with Pricing Option as "<PricingOption>"
     And I click on pay button by selecting the required payment type "<PaymentType>"
     And I enter the details in the email recipients page
@@ -75,8 +67,8 @@ Feature: 624665 - Voluntary Reissue of a codeshare ticket
 
     Examples:
 
-      | salesOffice | currency | OriginCity | Destination | StartDate | StartDate1 | newDate | StartDate3 | PaymentType| PaymentType1 | Adult | Child | INF | INS | originClass | originClass1 | PricingOption   | PricinOption1  | TicketStatus1 | SegmentDelete |DocumentType|Class|Class1|Class2|
-      | PTY ATO     | USD      | COR        | IAH         | 15 days   | 18 days    | 21 days | 27 days    | MASTERCARD | MISC_SST     | 2     | 2     | 0   | 0   | Economy     | Business     |Price as Best Buy| Business Promo | EXCHANGED     | 1             |Passport    |Y    |T     |Y     |
+      | salesOffice | currency | OriginCity | Destination | StartDate | StartDate1 | newDate |  PaymentType|  Adult | Child | INF | INS |  PricingOption   |  TicketStatus1 | Class|
+      | PTY ATO     | USD      | COR        | IAH         | 15 days   | 18 days    | 21 days |  MASTERCARD |  2     | 2     | 0   | 0   | Price as Best Buy|  EXCHANGED     | Y    |
 
 
 

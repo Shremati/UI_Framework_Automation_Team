@@ -1,4 +1,30 @@
-#Description:
+##Description:
+#POS: MAO-ATO / BRL
+#PNR: 1 ADT / Prefer Silver / MAO-SJO / Any date / OW / Economy Classic Flex
+#Enter the "Check-In" module
+#Enter flight number, date and click "Search"
+#Perform a search by name, select the passenger and click "Proceed to Check In"
+#Complete ADC/APIS, click "Submit" and then "Done"
+#Select the passenger and click on "Check In"
+#In the confirmation pop-up window, click "Return to Check In"
+#Click on the baggage icon
+#Add baggage in the following order:
+#1. Standard 23kg
+#2. Standard 32kg
+#3. Standard 35kg + Oversized (Select the Oversized baggage box)
+#Proceed to pay (FOP: Cash) and complete Check in
+#Verify that all EMDs have been generated correctly.
+#
+#
+#  Expected:
+#After clicking "Done", the system should return to the Check-In screen.
+#-Check that the "Doc Check" icon is green
+#-Check that the passenger data and PNR are correct
+#
+#The system should display:
+#1. Free
+#2. 150 USD (additional bag) + 100 USD (overweight) + tax
+#3. 150 USD (additional bag) + 200 USD (overweight) + 150 USD (oversize) + tax
 
 
 @UAT
@@ -47,7 +73,7 @@ Feature: 630730 - EQP-010 Validation of baggage calculation according to "Connec
     And I navigate to home screen
     And I navigate to Check-In page
     And I search for the segment "<SegmentIndex1>" in Check-In page
-    And I try to retrieve the ticket number by selecting "<searchType>" option
+    And I select the passengers in checkin page using "<searchType>"
     And I click on Proceed to Check-In button
     And I enter the details in Security Document Verification - ADC & APIS page
     Then I Validate APIS Complete and click on Done button
@@ -73,5 +99,5 @@ Feature: 630730 - EQP-010 Validation of baggage calculation according to "Connec
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice              |currency |OriginCity   |Destination |StartDate |Adult|Child|INF|INS|FQTV|originClass |PaymentType|SegmentIndex1|SegmentIndex2|BaggageNo |BaggageNo1|BaggageNo2|BaggageWeight|BaggageWeight1|BaggageWeight2|BaggageNo3|BaggageWeight3|searchType|ticketStatus|printer      |printerStatus|documentType|
-      |MAO ATO                  |BRL      |MAO          |SJO         |01 days   |0    |0    |0  |0  |1   |Economy     |Cash       |0            |1            |1         |1         |2         |32           |23            |32            |3         |35            |Name      |CHECKED-IN  |IN-PF2ST1T4  |PrintReady   |Passport    |
+      |salesOffice              |currency |OriginCity   |Destination |StartDate |Adult|Child|INF|INS|FQTV|originClass |PaymentType|SegmentIndex1|BaggageNo1|BaggageNo2|BaggageWeight1|BaggageWeight2|BaggageNo3|BaggageWeight3|searchType|ticketStatus|printer      |printerStatus|documentType|
+      |MAO ATO                  |BRL      |MAO          |SJO         |01 days   |0    |0    |0  |0  |1   |Economy     |Cash       |0            |1         |2         |23            |32            |3         |35            |Name      |CHECKED-IN  |IN-PF2ST1T4  |PrintReady   |Passport    |

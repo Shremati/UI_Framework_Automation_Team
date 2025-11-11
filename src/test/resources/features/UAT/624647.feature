@@ -5,7 +5,7 @@
 #Change the dates to 11-Nov and 18-Nov
 #Complete the Voluntary Reissue
 
-@UAT
+@Reissue
 Feature: 624647 - Verify Voluntary Reissue - Dual RBD is happening correctly
 
   Background:

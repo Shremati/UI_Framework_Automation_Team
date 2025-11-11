@@ -1,14 +1,26 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 
-<suite name="Smoke Shares Suite" verbose="1" preserve-order="true" data-provider-thread-count="1" parallel="false" >
+<suite name="Smoke Shares Suite" verbose="1" preserve-order="true" data-provider-thread-count="2" parallel="false" >
     <!--    <parameter name="browser" value="edge"/>-->
 
     <test name="Shares Suite" >
         <parameter name="browser" value="headless"/>
         <classes>
 
-            <class name="org.dxc.copa.automation.runners.TestRunnerShares" />
-<!--            <class name="org.dxc.copa.automation.runners.TestRunnerFailed" />-->
+
+<!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerAssignIcoupon" />-->
+<!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerSharesUAT" />-->
+<!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerSharesAssign" />-->
+<!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerUnAssignIcoupon" />-->
+<!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerSharesReissue" />-->
+<!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerSharesUnAssign" />-->
+
+<!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerAssignIcoupon" />-->
+                                    <class name="org.dxc.copa.automation.runners.TestRunnerFailedUAT" />
+<!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerSharesAssignFailed" />-->
+<!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerUnAssignIcoupon" />-->
+<!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerSharesReissueFailed" />-->
+<!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerSharesUnAssignFailed" />-->
 
         </classes>
 

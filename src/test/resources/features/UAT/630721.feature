@@ -45,7 +45,7 @@ Feature: 630721 - EQP-001 Validation of baggage calculation according to "Withou
     And I navigate to home screen
     And I navigate to Check-In page
     And I search for the segment "<SegmentIndex1>" in Check-In page
-    And I try to retrieve the ticket number by selecting "<searchType>" option
+    And I select the passengers in checkin page using "<searchType>"
     And I click on Proceed to Check-In button
     And I enter the details in Security Document Verification - ADC & APIS page
     Then I Validate APIS Complete and click on Done button

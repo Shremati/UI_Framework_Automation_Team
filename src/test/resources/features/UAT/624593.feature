@@ -21,7 +21,7 @@
 #i.e.: 20A, 31B, 22C, etc
 #11. Open the sales reporting
 
-@UAT
+@Reissue
 Feature: 624593 - Voluntary Change (Partially used coupon)
 
   Background:
@@ -68,6 +68,7 @@ Feature: 624593 - Voluntary Change (Partially used coupon)
     And I enter T_ET|USED command to change the specific segment to CM-USED status "<segNumber>"
     And I enter T_ET|USED command to change the specific segment to CM-USED status "<segNumber1>"
     And I enter *ET command to display all the tickets in the PNR
+    And I retrieve the pnr
     And I enter ZAFIL command to change segment status to flown "<Segment>"
     And I enter ZAFIL command to change segment status to flown "<Segment1>"
     And I retrieve the pnr

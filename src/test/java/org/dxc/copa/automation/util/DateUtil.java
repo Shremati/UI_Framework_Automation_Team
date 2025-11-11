@@ -116,7 +116,7 @@ public class DateUtil {
             int days = random.nextInt(365);
             calendar.add(Calendar.DAY_OF_YEAR, -days);
         } else if (passengerType.equalsIgnoreCase("CHD")) {
-            int years = 6+random.nextInt(6); // between 5 and 11 years
+            int years = 5+random.nextInt(6); // between 5 and 11 years
             // Subtract the random number of years from today's date
             calendar.add(Calendar.YEAR, -years);
             // Generate a random number of days within the year

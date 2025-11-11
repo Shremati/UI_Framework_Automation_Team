@@ -1,11 +1,31 @@
-
-
-
-
-
+#| Step Name       | Description                                                                                                                                                             | Expected Result
+#| 1               | POS: PTY-ATO  /  USD                                                                                                                                                    |
+#|                 |                                                                                                                                                                         |
+#| 2               | PNR: 1 ADT  /  Prefer Platinum  /   HAV-PTY  /  Any date  /  RT   /  Business Full                                                                                      |
+#|                 |                                                                                                                                                                         |
+#| 3               | Enter the "Check-In" module                                                                                                                                             |
+#|                 |                                                                                                                                                                         |
+#| 4               | Enter flight number, date and click "Search"                                                                                                                            |
+#|                 |                                                                                                                                                                         |
+#| 5               | Perform a search by name, select the passenger and click "Proceed to Check In"                                                                                          |
+#|                 |                                                                                                                                                                         |
+#| 6               | Complete ADC/APIS, click "Submit" and then "Done"                                                                                                                       | After clicking "Done", the system should return to the Check-In screen. -Check that the "Doc Check" icon is green -Check that the passenger data and PNR are correct
+#|                 |                                                                                                                                                                         |
+#| 7               | Select the passenger and click on "Check In"                                                                                                                            |
+#|                 |                                                                                                                                                                         |
+#| 8               | In the confirmation pop-up window, click "Return to Check In"                                                                                                           |
+#|                 |                                                                                                                                                                         |
+#| 9               | Click on the baggage icon                                                                                                                                               |
+#|                 |                                                                                                                                                                         |
+#| 10              | Add baggage in the following order: 1. Standard 32kg 2. Standard 32kg 3. Standard 32kg 4. Standard 32kg 5. Standard 35kg + Oversized (Select the Oversized baggage box) | The system should display: 1. Free 2. Free 3. Free 4. 150 usd (additional bag) + 100 usd (overweight) + tax 5. 150 usd (additional bag) + 200 usd (overweight) + 150 usd (oversize) + tax
+#|                 |                                                                                                                                                                         |
+#| 11              | Proceed to pay (FOP: Cash) and complete Check in                                                                                                                        |
+#|                 |                                                                                                                                                                         |
+#| 12              | Verify that all EMDs have been generated correctly.                                                                                                                     |
+#|                 |                                                                                                                                                                         |
 
 @UAT
-Feature: 63078 - EQP-024 Validation of baggage calculation according to "ConnectMiles Platinum" status and "Business Full" fare
+Feature: 630789 - EQP-024 Validation of baggage calculation according to "ConnectMiles Platinum" status and "Business Full" fare
 
   Background:
     Given COPA GUI Application is launched in the browser
@@ -101,6 +121,6 @@ Feature: 63078 - EQP-024 Validation of baggage calculation according to "Connect
 
     Examples:
       |salesOffice|currency |OriginCity   |Destination |StartDate  |ReturnDate|Adult|Child|INF|INS|FQTV|BaggageNo |BaggageNo1|BaggageNo2|BaggageNo3|BaggageNo4|ticketStatus|BaggageWeight|BaggageWeight1|PaymentType|originClass|ReturnClass|searchType|segmentIndex|segmentIndex1|PricingOption|printer      |printerStatus|
-      |PTY ATO    |USD      |HAV          |PTY         |01 days    |02 days   |0    |0    |0  |0  |1   |1         |2         |3         |4         |5         |CHECKED-IN  |32           |35            |CASH       |Business   |Business   |Name       |0           |1            |Business Full|US-5CD4377SFF|PrintReady   |
+      |PTY ATO    |USD      |HAV          |PTY         |01 days    |02 days   |0    |0    |0  |0  |1   |1         |2         |3         |4         |5         |CHECKED-IN  |32           |35            |CASH       |Business   |Business   |Name      |0           |1            |Business Full|US-5CD4377SFF|PrintReady   |
 
 

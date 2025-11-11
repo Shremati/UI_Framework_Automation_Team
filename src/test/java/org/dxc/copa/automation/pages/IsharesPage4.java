@@ -3502,7 +3502,7 @@ public class IsharesPage4 extends TestBase {
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -3522,7 +3522,7 @@ public class IsharesPage4 extends TestBase {
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -3687,7 +3687,7 @@ public class IsharesPage4 extends TestBase {
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -3708,7 +3708,7 @@ public class IsharesPage4 extends TestBase {
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -3727,7 +3727,7 @@ public class IsharesPage4 extends TestBase {
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -3823,7 +3823,7 @@ public class IsharesPage4 extends TestBase {
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -8579,7 +8579,7 @@ public class IsharesPage4 extends TestBase {
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -13804,7 +13804,7 @@ public class IsharesPage4 extends TestBase {
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -13821,7 +13821,7 @@ public class IsharesPage4 extends TestBase {
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -13875,7 +13875,7 @@ public class IsharesPage4 extends TestBase {
             }
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -13889,7 +13889,7 @@ public class IsharesPage4 extends TestBase {
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -21120,7 +21120,7 @@ public class IsharesPage4 extends TestBase {
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -21971,7 +21971,7 @@ public class IsharesPage4 extends TestBase {
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -22557,7 +22557,7 @@ public class IsharesPage4 extends TestBase {
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
             logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -22593,7 +22593,7 @@ public class IsharesPage4 extends TestBase {
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
             logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -22609,7 +22609,7 @@ public class IsharesPage4 extends TestBase {
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
             logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -22622,7 +22622,7 @@ public class IsharesPage4 extends TestBase {
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
             logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -22651,7 +22651,7 @@ public class IsharesPage4 extends TestBase {
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
             logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -22683,7 +22683,7 @@ public class IsharesPage4 extends TestBase {
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -22697,11 +22697,11 @@ public class IsharesPage4 extends TestBase {
                 logInfo.info("Expected header fields are present :" + expectedFields);
             } else {
                 logInfo.info("Expected header fields are not present :" + actualFields);
-                org.testng.Assert.fail("Expected header fields are not present :" + actualFields);
+                Assert.fail("Expected header fields are not present :" + actualFields);
             }
         } else {
             logInfo.info("Actual Field Size " + actualSize + "and Expected Fields Size " + actualSize + "are not same");
-            org.testng.Assert.fail("Actual Field Size " + actualSize + "and Expected Fields Size " + actualSize + "are not same");
+            Assert.fail("Actual Field Size " + actualSize + "and Expected Fields Size " + actualSize + "are not same");
         }
     }
 
@@ -23394,7 +23394,7 @@ public class IsharesPage4 extends TestBase {
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
         if(seatNumber!=null)
@@ -23985,7 +23985,7 @@ public class IsharesPage4 extends TestBase {
             gl.sendCmdValidateResponse(command, pax.getlName().toUpperCase(), pax.getfName().toUpperCase(), logInfo);
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            org.testng.Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -42827,7 +42827,6 @@ public class IsharesPage4 extends TestBase {
             Assert.fail("This step failed.. so stopping...");
         }
     }
-
 
 
     //   *************************************************** ISHARES PAGE OBJECTS ***************************************************************************************

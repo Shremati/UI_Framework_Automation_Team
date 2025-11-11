@@ -81,14 +81,10 @@ Feature: 622941 - 134421-Prefer Upgrade  (Primary Passenger)
     And I navigate to home screen
     And I click on Tools Menu
     And I click on Native Shares
-#    And I retrieve the pnr in Native shares
     And I enter 6:LD_SB command to display standby list for passenger in Native shares
     And I click on Cancel button in native shares
     And I logout from COPA GUI application
 
-
     Examples:
-      |salesOffice|currency|OriginCity   |Destination |StartDate|Adult|Child|INS|INF|FQTV|printer    |printerStatus|originClass|PaymentType|PaxCount|PassengerType1|iCouponStatus|searchType1|Tab|ticketStatus|segmentIndex|searchType|BaggageWeight|PricingOption  |NameStatus   |Segment|Tab1|Index|
-      |PTY ATO    |USD     |PTY          |BOG         |01 days  |0    |0    |0  |0  |1   |IN-PF2ST1T4|PrintReady   |Economy    |Cash       |3       |Print List    |Assign       |PNR        |1  |CHECKED-IN  |0           |Name      |23           |Economy Classic|MEAL DLY FLTS|1      |0   |1    |
-
-
+      | salesOffice | currency | OriginCity | Destination | StartDate | Adult | Child | INS | INF | FQTV | printer     | printerStatus | originClass | PaymentType | ticketStatus | segmentIndex | searchType | PricingOption   |
+      | PTY ATO     | USD      | PTY        | BOG         | 01 days   | 0     | 0     | 0   | 0   | 1    | IN-PF2ST1T4 | PrintReady    | Economy     | Cash        | CHECKED-IN   | 0            | Name       | Economy Classic |

@@ -78,7 +78,6 @@ Feature: 622950 - Mass Transfer for ADT
     And I select the flight actions as "<ActionType>"
     And I select the type for mass transfer as "<transferType>"
     And I select the flight for outbound mass transfer with outbound segment "<SegmentIndex1>"
-#    And I select the flight for outbound mass transfer
     And I select the reason code as "<Reason>" and select the flight for mass transfer for the segment "<SegmentIndex1>"
     And I pick the passengers manually from the list from the pnr created
     And I click the button "<buttonName>" to accept or compensate
@@ -90,5 +89,5 @@ Feature: 622950 - Mass Transfer for ADT
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice              |currency |POS  |OriginCity   |Destination |StartDate |Adult|Child|INF|INS|originClass |PaymentType|ActionType   |SegmentIndex|transferType|Reason    |buttonName|SegmentIndex1|transferType1|ticketStatus|BaggageWeight|bagCount|printer    |printerStatus|
-      |PTY ATO                  |USD      |PTY  |GYE          |SCL         |01 days   |1    |0    |0  |0  |Economy     |Cash       |Mass Transfer|0           |Outbound   |DELAY      |accept    |1            |Current      |ADJUSTED    |23           |2       |IN-PF2ST1T4|PrintReady   |
+      |salesOffice              |currency |OriginCity   |Destination |StartDate |Adult|Child|INF|INS|originClass |PaymentType|ActionType   |SegmentIndex|transferType|Reason    |buttonName|SegmentIndex1|transferType1|ticketStatus|BaggageWeight|bagCount|printer    |printerStatus|
+      |PTY ATO                  |USD      |GYE          |SCL         |01 days   |1    |0    |0  |0  |Economy     |Cash       |Mass Transfer|0           |Outbound   |DELAY      |accept    |1            |Current      |ADJUSTED    |23           |2       |IN-PF2ST1T4|PrintReady   |

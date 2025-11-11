@@ -18,13 +18,13 @@
 #- Print all Eticket with EMD's
 #
 
-@UAT
-Feature: 141596 - CR-166 COLOMBIA Voluntary Change Currency (USD)One Way Reservation
+@Reissue
+Feature: 624570 - CR-166 COLOMBIA Voluntary Change Currency (USD)One Way Reservation
 
   Background:
     Given COPA GUI Application is launched in the browser
 
-  Scenario Outline: 141596 - CR-166 COLOMBIA Voluntary Change Currency (USD)One Way Reservation
+  Scenario Outline: 624570 - CR-166 COLOMBIA Voluntary Change Currency (USD)One Way Reservation
 
     And I create the passengers data
     And I add "<Adult>" adult passengers
@@ -45,9 +45,8 @@ Feature: 141596 - CR-166 COLOMBIA Voluntary Change Currency (USD)One Way Reserva
     And I select the Quote Options and click on Next
     And I validate the Price Quote and click on Next
     Then I enter required passenger details for COPA GUI
-    And I enroll connect mile to all the passengers
     And I Click on Book and FileFare button
-    #And I enroll connect mile to all the passengers
+    And I enroll connect mile to all the passengers
     And I add a service "<ServiceType>" in cabin
     And I Click on CheckOut button for payment
     And I choose two mode of payments
@@ -59,26 +58,22 @@ Feature: 141596 - CR-166 COLOMBIA Voluntary Change Currency (USD)One Way Reserva
     And I click the Tickets tab
     And I click the EMD subtab present in Tickets tab
     And I click the Tickets tab
-    #And I send email in tickets tab
-    #And I click on View button and check the Ticket details
     And I navigate to Order tab
     And I change first segment date "<StartDate1>"
     And I perform Voluntary Reissue with Pricing Option as "<PricingOption>"
     And I choose two mode of payments
     And I make the first payment by selecting the payment type as "<PaymentType>"
     And I make the second payment by selecting the payment type as "<PaymentType2>"
-    #And I make the payment of reissue by selecting the payment type as "<PaymentType2>"
     And I enter the FOID details of the passengers
     And I enter the details in the email recipients page
     And I validate if the payment is successful
     And I click the Tickets tab
-    #And I send email in tickets tab
     And I click on View button and check the Ticket details
     And I select Sales Report and Agent Sales Report
-    And I validate EMD values in Agent Sales Report
+    And I validate the EMD values in Agent Sales Report after changes
     And I logout from COPA GUI application
 
 
     Examples:
-      |salesOffice |currency |OriginCity |Destination |StartDate |StartDate1 |Adult |Child |INF |INS |originClass |ServiceType |PaymentType |PaymentType2 |PricingOption|
-      |BOG CTO     |COP      |BOG        |PTY         |07 days   |14 days   |3     |0     |0   |0   |Economy     |WCHR         |MASTERCARD  |Cash         |Price as Booked |
+      |salesOffice                  |currency |OriginCity |Destination |StartDate |StartDate1 |Adult |Child |INF |INS |originClass |ServiceType |PaymentType |PaymentType2 |PricingOption|
+      |BOG CTO                      |COP      |BOG        |PTY         |05 days   |22 days   |3     |0     |0   |0   |Economy     |WCHR         |MASTERCARD  |Cash         |Price as Booked |

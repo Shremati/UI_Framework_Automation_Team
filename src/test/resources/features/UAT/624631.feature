@@ -9,7 +9,7 @@
 #  Expected:
 #The system should process the change correctly
 
-@UAT
+@Reissue
 Feature: 64631 - Voluntary Reissue from a PTC ADT to PTC SRC (Adult to Senior Citizen)
 
   Background:

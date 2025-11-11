@@ -6,7 +6,7 @@
 #Reissue reservartion from BC to Economy classic
 #Share the results
 
-@UAT
+@Reissue
 Feature: 624645 - Voluntary Reissue with Flight Restrictions
 
   Background:
@@ -69,8 +69,8 @@ Feature: 624645 - Voluntary Reissue with Flight Restrictions
 
     Examples:
 
-      | salesOffice | currency | OriginCity | Destination | PricingOption | PricingOption1  | StartDate | StartDate1 |StartDate2| TicketStatus1 | PaymentType | Adult | Child | INF | INS | originClass | dayToBook    | SegmentDelete | COS | TicketStatus | EMDStatus |
-      | PTY ATO     | USD      | PTY        | LAX         | Economy Basic | Economy Classic | 01 days   | 02 days    | 03 Days  | EXCHANGED     | CASH        | 1     | 0     | 0   | 0   | Economy     | Weekend      | 2             | Y   | Open         | Flown     |
+      | salesOffice | currency | OriginCity | Destination | PricingOption | PricingOption1  | StartDate | StartDate1 |StartDate2| TicketStatus1 | PaymentType | Adult | Child | INF | INS | originClass | dayToBook    | SegmentDelete |  TicketStatus | EMDStatus |
+      | PTY ATO     | USD      | PTY        | LAX         | Economy Basic | Economy Classic | 01 days   | 02 days    | 03 Days  | EXCHANGED     | CASH        | 1     | 0     | 0   | 0   | Economy     | Weekend      | 2             |  Open         | Flown     |
 
 
 

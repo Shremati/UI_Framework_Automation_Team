@@ -5,7 +5,7 @@
 #Expected
 #The system does not display compensation for NR's passengers
 
-@UAT
+@IcouponAssign
 Feature: 622957 - IC1005 - Validate that the system does not allow generating an ICoupon for NR passengers
 
   Background:
@@ -58,6 +58,7 @@ Feature: 622957 - IC1005 - Validate that the system does not allow generating an
     And I navigate to Check-In page
     And I search the Order number in Checkin Page
     And I click on Proceed to Check-In button
+    And I select ADC bypass and give the bypass reason "<reason>"
     And I enter the details in Security Document Verification - ADC & APIS page
     Then I Validate APIS Complete and click on Done button
     And I click on check-in for the passenger
@@ -71,5 +72,5 @@ Feature: 622957 - IC1005 - Validate that the system does not allow generating an
 
 
     Examples:
-      |salesOffice |currency  |Adult|Child|INF|INS|NRSA|PaymentType|Origin|Destination|iCouponStatus|Airline|POS|PNRType|COS|SegmentIndex|PassengerType     |StartDate|compensationReason        |printer      |printerStatus|
-      |PTY ATO     |USD       | 0   |0    |0  |0  |1   |  Cash     |PTY   |MDE        |Assign       |CM     |PTY|NRSA   |Y  |0           |All Passenger List|01 Days  |Delay between 2 to 3:59hrs|US-5CD4377SFF|PrintReady   |
+      |salesOffice |currency  |Adult|Child|INF|INS|NRSA|PaymentType|Origin|Destination|iCouponStatus|Airline|POS|PNRType|COS|SegmentIndex|PassengerType     |StartDate|compensationReason        |printer      |printerStatus|reason            |
+      |PTY ATO     |USD       | 0   |0    |0  |0  |1   |  Cash     |PTY   |SJO        |Assign       |CM     |PTY|NRSA   |Y  |0           |All Passenger List|01 Days  |Delay between 2 to 3:59hrs|US-5CD4377SFF|PrintReady   |DOUBLE NATIONALITY|

@@ -11,7 +11,7 @@
 #Expected:
 #All old tickets should appear "Exchanged" and the new ones "Open", in Ticket window.
 #Actual:
-@UAT
+@Reissue
 Feature: 624615 - Involuntary reissue adult with infant with seat
 
   Background:

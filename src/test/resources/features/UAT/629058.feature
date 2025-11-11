@@ -9,7 +9,7 @@
 #Expected:
 #Must allow to compensate at least 50 passangers when generating an iCoupon.
 
-@UAT
+@IcouponAssign
 Feature: 629058 - Compensate 50 passangers in iCoupon after a flight delay
 
   Background:
@@ -92,6 +92,6 @@ Feature: 629058 - Compensate 50 passangers in iCoupon after a flight delay
 
     Examples:
       | salesOffice | currency | OriginCity | Destination | StartDate | Adult | Child | INS | INF | printer  | printerStatus | originClass | PaymentType | PaxCount | PassengerType      | PassengerType1 | iCouponStatus | FlightStatus | ticketStatus | segmentIndex | searchType | BaggageWeight | PricingOption   | compensationReason         |
-      | PTY ATO     | USD      | PTY        | BOG         | 01 days   | 5     | 0     | 0   | 0   | MAHAC-NB | PrintReady    | Economy     | Cash        | 5        | All Passenger List | Print List     | Assign        | Delayed      | CHECKED-IN   | 0            | Name       | 23            | Economy Classic | Delay between 2 to 3:59hrs |
+      | PTY ATO     | USD      | PTY        | SJO         | 01 days   | 5     | 0     | 0   | 0   | MAHAC-NB | PrintReady    | Economy     | Cash        | 5        | All Passenger List | Print List     | Assign        | Delayed      | CHECKED-IN   | 0            | Name       | 23            | Economy Classic | Delay between 2 to 3:59hrs |
 
 

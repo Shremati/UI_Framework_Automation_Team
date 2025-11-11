@@ -6,7 +6,7 @@
 #  Expected:
 #All the taxes and the YN tax has to apply to the penalty
 
-@UAT
+@Reissue
 Feature: 624642 - Verify Voluntary Reissue - Original ticket issued in USD is happening correctly
 
   Background:

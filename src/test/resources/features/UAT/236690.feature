@@ -32,7 +32,6 @@ Feature: 236690 - Display List-Stand By for all revenue, non revenue positive sp
     And I set startdate to "<StartDate>" for Segment "<SegmentIndex>"
     And I set PNR Type to "<PNRType>"
     And I search for flight availability in Native shares of special pnr for first segment from "<Origin>" to "<Destination>" and "<StartDate>"
-
     And I enter the passenger details in Native shares
     And I enter the passenger phone details for "<POS>"
     And I save the details of the passenger
@@ -47,14 +46,10 @@ Feature: 236690 - Display List-Stand By for all revenue, non revenue positive sp
     And I make the first payment by selecting the payment type as "<PaymentType>"
     And I enter the details in the email recipients page
     And I validate if the payment is successful
-
     And I navigate to home screen
-
-#    And I validate the Sequence number for the segment "<SegmentIndex>" in native shares
     And I display the standby list for the segment "<SegmentIndex>" in native shares
-
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice|currency |Origin       |Destination |POS|StartDate |Adult|Child|INF|INS|NRSA|Airline|COS|SegmentIndex|SegmentIndex|PaymentType|PNRType|originClass|SSRType|
-      |PTY ATO    |USD      |PTY          |LAX         |PTY|01 days   |0    |0    |0  |0  |1   |CM     |Y  |0           |1           |Cash       |NRSA   |Economy    |BULK   |
+      |salesOffice|currency |Origin       |Destination |POS|StartDate |Adult|Child|INF|INS|NRSA|Airline|COS|SegmentIndex|SegmentIndex|PaymentType|PNRType|
+      |PTY ATO    |USD      |PTY          |LAX         |PTY|01 days   |0    |0    |0  |0  |1   |CM     |Y  |0           |1           |Cash       |NRSA   |

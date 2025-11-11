@@ -5,7 +5,7 @@
 #Review the Tickets tab
 #Check if the change was made correctly
 
-@UAT
+@Reissue
 Feature: 624655 - Verify by Creating a reservation with 1 adult, 1 child, GRU-PTY, make reissue (date) is happening correctly
 
   Background:

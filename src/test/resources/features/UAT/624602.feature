@@ -11,7 +11,7 @@
 #  Expected:
 #TRR must auto populate the account code during reissue quote
 
-@UAT
+@Reissue
 Feature: 624602 - Verify Involuntary Reissue of Private Fares has happened correctly
 
   Background:

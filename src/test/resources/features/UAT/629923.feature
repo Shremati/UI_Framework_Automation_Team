@@ -26,7 +26,7 @@ Feature: 629923 - Validate that the penalty amount for change dates is correct i
     Then I enter valid credentials to log into COPA GUI application
     Then I validate successful login
     And I change the Sales Office and Currency "<salesOffice>" and "<currency>"
-    And I select the printer "<printer>" and "<printerStatus>"
+    #And I select the printer "<printer>" and "<printerStatus>"
     And I click on the Reservation section
     And I click on New Order for creating new PNR in GUI
     And Select from and to City "<OriginCity>" and "<Destination>"
@@ -49,7 +49,7 @@ Feature: 629923 - Validate that the penalty amount for change dates is correct i
     And I navigate to home screen
     And I click the order tab
     And I change the date of travel for the first segment "<NewDate1>"
-    And I change the date of travel for the second segment "<NewDate2>"
+    And I change date of travel for second segment "<NewDate2>"
     And I perform Voluntary Reissue
     And I click on pay button by selecting the required payment type "<PaymentType1>"
     And I enter the details in the email recipients page

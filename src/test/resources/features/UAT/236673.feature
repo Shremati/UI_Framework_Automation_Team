@@ -1,3 +1,13 @@
+#Description:
+#Select passenger and press Order ID
+#Select Involuntary Reissue
+#Select the Irrop reason code.
+#Assign the reason to the affected flight.
+#Select waiver of the drop down menu.
+#Reroute to the passenger without penalty per change.
+#
+#  Expected:
+#Expected Result: Show OSI in the ORDER ID with the reason code and waiver.
 
 @UAT
 Feature: 236673 - Rerout passenger and allow to use a waiver control for this case.
@@ -33,8 +43,6 @@ Feature: 236673 - Rerout passenger and allow to use a waiver control for this ca
     And I make the first payment by selecting the payment type as "<PaymentType>"
     And I enter the details in the email recipients page
     And I validate if the payment is successful
-#    And I click the Tickets tab
-#    And I navigate to Order tab
     And I change the date of travel for the first segment "<NewDate1>"
 
 

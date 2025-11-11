@@ -43,7 +43,7 @@ Feature: 630725 - EQP-005 Validation of baggage calculation according to "Withou
     And I navigate to home screen
     And I navigate to Check-In page
     And I search for the segment "<SegmentIndex>" in Check-In page
-    And I try to retrieve the ticket number by selecting "<searchType>" option
+    And I select the passengers in checkin page using "<searchType>"
     And I click on Proceed to Check-In button
     And I enter the details in Security Document Verification - ADC & APIS page
     Then I Validate APIS Complete and click on Done button
@@ -70,8 +70,8 @@ Feature: 630725 - EQP-005 Validation of baggage calculation according to "Withou
 
 
     Examples:
-      |salesOffice     |currency |OriginCity   |Destination |StartDate    |ReturnDate  |SegmentIndex|Adult|Child|INF|INS|BaggageNo |BaggageNo1|BaggageNo2|BaggageNo3|BaggageWeight|BaggageWeight1|BaggageWeight2|BaggageWeight3|PaymentType|originClass|searchType|SegmentIndex1|ticketStatus|PricingOption |Printer      |PrinterStatus|
-      |PTY ATO         |USD      |PTY          |SCL         |02 days      |03 days     |0           |1    |0    |0  |0  |1         |2         |3         |4         |32           |32            |32            |35            |CASH       |Business   |Name      |1            |CHECKED-IN  |Business Promo|IN-5CD4316MPJ|PrintReady   |
+      |salesOffice     |currency |OriginCity   |Destination |StartDate    |ReturnDate  |SegmentIndex|Adult|Child|INF|INS|BaggageNo |BaggageNo1|BaggageNo2|BaggageNo3|BaggageWeight|BaggageWeight1|BaggageWeight2|BaggageWeight3|PaymentType|originClass|searchType|ticketStatus|PricingOption |Printer      |PrinterStatus|
+      |PTY ATO         |USD      |PTY          |SCL         |02 days      |03 days     |0           |1    |0    |0  |0  |1         |2         |3         |4         |32           |32            |32            |35            |CASH       |Business   |Name      |CHECKED-IN  |Business Promo|IN-5CD4316MPJ|PrintReady   |
 
 
 

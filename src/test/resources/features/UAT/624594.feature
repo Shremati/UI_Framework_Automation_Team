@@ -29,7 +29,7 @@
 #12. Sale report.
 #- Open sales report display transaction with new ticket and ticket exchanged.
 
-@UAT
+@Reissue
 Feature: 624594 - Even Exchange with Add Collect-without Penalty
 
   Background:
@@ -48,7 +48,6 @@ Feature: 624594 - Even Exchange with Add Collect-without Penalty
     And I add "<INF>" infant without seat passengers
     And I want to display all the passengers
     And I change the Sales Office and Currency "<salesOffice>" and "<currency>"
-    And I select the printer "<printer>" and "<printerStatus>"
     And I click on the Reservation section
     And I click on New Order for creating new PNR in GUI
     And Select from and to City "<OriginCity>" and "<Destination>"
@@ -72,15 +71,13 @@ Feature: 624594 - Even Exchange with Add Collect-without Penalty
     And I click on seat icon from services tab
     And I select Seat for all passengers
     And I Click on CheckOut button for payment
-    And I choose one mode of payment
-    And I make the first payment by selecting the payment type as "<PaymentType1>"
+    And I click on pay button by selecting the required payment type "<PaymentType1>"
     And I enter the details in the email recipients page
     And I validate if the payment is successful
     And I click the services Tab to validate the seats
     And I click the Tickets tab
     And I click the EMD subtab and view the EMD details
     And I select sales report and select Agent sales report
-
     And I validate EMD values in Agent Sales Report
     And I navigate to home screen
     And I click the order tab
@@ -105,8 +102,9 @@ Feature: 624594 - Even Exchange with Add Collect-without Penalty
     And I click on seat icon from services tab
     And I select Seat for all passengers
     And I Click on CheckOut button for payment
-    And I choose one mode of payment
-    And I make the first payment by selecting the payment type as "<PaymentType1>"
+#    And I choose one mode of payment
+#    And I make the first payment by selecting the payment type as "<PaymentType1>"
+    And I click on pay button by selecting the required payment type "<PaymentType1>"
     And I enter the details in the email recipients page
     And I validate if the payment is successful
     And I click the services Tab to validate the seats

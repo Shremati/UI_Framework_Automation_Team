@@ -10,7 +10,7 @@
 #  Expected:
 #The system should process the change correctly
 
-@UAT
+@Reissue
 Feature: 624667 - Verify Voluntary Reissue of an ETKT with stopovers is happening correctly
 
   Background:
@@ -82,5 +82,5 @@ Feature: 624667 - Verify Voluntary Reissue of an ETKT with stopovers is happenin
     Examples:
 
       | salesOffice | currency | OriginCity | Destination | Destination1 | Destination2 | StartDate | ReturnDate | ReturnDate1 | PricingOption | PricingOption1  | PaymentType | Segments1 | Adult | Child | INF | INS | originClass | TicketStatus | SegmentDelete | StartDate3 | ReturnDate3 | ReturnDate4 |
-      | MIA ATO     | USD      | MIA        | PTY         | SJO          | MIA          | 10 days   | 13 days    | 20 days     | Economy Full  | Price as Booked | AMEX        | 5678      | 2     | 2     | 0   | 0   | Economy     | EXCHANGED    | 1             | 90         | 92 days     | 99 days     |
+      | MIA ATO     | USD      | MIA        | PTY         | SJO          | MIA          | 11 days   | 14 days    | 21 days     | Economy Full  | Price as Booked | AMEX        | 5678      | 2     | 2     | 0   | 0   | Economy     | EXCHANGED    | 1             | 91 days    | 93 days     | 100 days     |
 
