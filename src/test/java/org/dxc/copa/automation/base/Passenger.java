@@ -65,6 +65,7 @@ public final class Passenger
     private final ArrayList<String> Airline;  //done
     private final ArrayList<Integer> SegmentDate;//done
     private final ArrayList<Integer> SystemDate;
+    private final ArrayList<Integer> ApplicationDate;
     private final ArrayList<String> SegmentFlight;  //done
     private final ArrayList<String> segmentOriginCity; //done
     private final ArrayList<String> segmentCOS;
@@ -150,6 +151,7 @@ public final class Passenger
         documentType="";
         SegmentDate = new ArrayList<>();
         SystemDate = new ArrayList<>();
+        ApplicationDate = new ArrayList<>();
         SegmentFlight = new ArrayList<>();
         Airline  = new ArrayList<>();
         isNRSA = false;
@@ -255,9 +257,9 @@ public final class Passenger
     public void setPNRs(int i,String PNRs)
     {
         if(this.PNRs.size()>= (i+1))
-           this.PNRs.set(i,PNRs);
+            this.PNRs.set(i,PNRs);
         else
-           this.PNRs.add(i,PNRs);
+            this.PNRs.add(i,PNRs);
     }
 
     public void setSeatNo(String seatNo) {
@@ -315,9 +317,9 @@ public final class Passenger
     public void setSegmentDate(int i, int SegmentsDate)
     {
         if(this.SegmentDate.size()>= (i+1))
-           this.SegmentDate.set(i,SegmentsDate);
+            this.SegmentDate.set(i,SegmentsDate);
         else
-           this.SegmentDate.add(i,SegmentsDate);
+            this.SegmentDate.add(i,SegmentsDate);
     }
 
     public void setSystemDate(int i, int SystemDate)
@@ -326,6 +328,14 @@ public final class Passenger
             this.SystemDate.set(i,SystemDate);
         else
             this.SystemDate.add(i,SystemDate);
+    }
+
+    public void setApplicationDate(int i, int ApplicationDate)
+    {
+        if(this.ApplicationDate.size()>= (i+1))
+            this.ApplicationDate.set(i,ApplicationDate);
+        else
+            this.ApplicationDate.add(i,ApplicationDate);
     }
 
     public void setSegmentFlight(int i,String SegmentFlight)
@@ -721,8 +731,8 @@ public final class Passenger
     }
 
     public int getThirdSegDate() {
-    return ThirdSegDate;
-}
+        return ThirdSegDate;
+    }
 
     public String getBaggageEMDNumber(int i) { return this.baggageEMDNumbers.get(i); }
 
@@ -803,6 +813,10 @@ public final class Passenger
 
     public int getSystemDate(int i) {
         return this.SystemDate.get(i);
+    }
+
+    public int getApplicationDate(int i) {
+        return this.ApplicationDate.get(i);
     }
 
     public String getSegmentFlight(int i) {
@@ -1109,6 +1123,4 @@ public final class Passenger
             this.ConjuctiveTicketNumbers.remove(i);
 
     }
-
-
 }
