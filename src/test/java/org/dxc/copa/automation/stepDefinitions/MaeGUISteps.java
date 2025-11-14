@@ -102,7 +102,6 @@ public class MaeGUISteps extends StepManager
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
-
              Assert.fail("This step failed.. so stopping...");
              logInfo.fail("This step failed.. so stopping...");
         }
@@ -116,7 +115,6 @@ public class MaeGUISteps extends StepManager
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
-
              Assert.fail("This step failed.. so stopping...");
              logInfo.fail("This step failed.. so stopping...");
         }
@@ -131,7 +129,6 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I navigate to home screen");
 
         } catch (AssertionError | Exception e) {
-
              Assert.fail("This step failed.. so stopping...");
              logInfo.fail("This step failed.. so stopping...");
         }
@@ -154,9 +151,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I change the Sales Office to: " + office + " and Currency : " + currency);
 
         } catch (AssertionError | Exception e) {
-
+            logInfo.fail("This step failed.. so stopping...");
              Assert.fail("This step failed.. so stopping...");
-             logInfo.fail("This step failed.. so stopping...");
         }
     }
 
@@ -170,9 +166,8 @@ public class MaeGUISteps extends StepManager
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (Exception e) {
-
+            logInfo.fail("This step failed.. so stopping...");
              Assert.fail("This step failed.. so stopping...");
-             logInfo.fail("This step failed.. so stopping...");
         }
         System.out.println("Click Reservation..");
     }
@@ -189,9 +184,8 @@ public class MaeGUISteps extends StepManager
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
-
+            logInfo.fail("This step failed.. so stopping...");
              Assert.fail("This step failed.. so stopping...");
-             logInfo.fail("This step failed.. so stopping...");
         }
     }
 
@@ -219,9 +213,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("All the agent reports are now closed");
 
         } catch (AssertionError | Exception e) {
-
+            logInfo.fail("This step failed.. so stopping...");
              Assert.fail("This step failed.. so stopping...");
-             logInfo.fail("This step failed.. so stopping...");
         }
 
     }
@@ -237,8 +230,8 @@ public class MaeGUISteps extends StepManager
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
         }
         catch (Exception e) {
+            logInfo.fail("This step failed.. so stopping...");
              Assert.fail("This step failed.. so stopping...");
-             logInfo.fail("This step failed.. so stopping...");
         }
     }
 
@@ -252,9 +245,8 @@ public class MaeGUISteps extends StepManager
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
-
+            logInfo.fail("This step failed.. so stopping...");
              Assert.fail("This step failed.. so stopping...");
-             logInfo.fail("This step failed.. so stopping...");
         }
         System.out.println("I click on New Order");
     }
@@ -269,9 +261,8 @@ public class MaeGUISteps extends StepManager
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
-
+            logInfo.fail("This step failed.. so stopping...");
              Assert.fail("This step failed.. so stopping...");
-             logInfo.fail("This step failed.. so stopping...");
         }
     }
 
@@ -285,7 +276,6 @@ public class MaeGUISteps extends StepManager
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
-
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
         }
@@ -301,7 +291,6 @@ public class MaeGUISteps extends StepManager
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
-
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
         }
@@ -317,7 +306,6 @@ public class MaeGUISteps extends StepManager
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
-
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
         }
@@ -333,7 +321,6 @@ public class MaeGUISteps extends StepManager
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
-
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
         }
@@ -350,7 +337,6 @@ public class MaeGUISteps extends StepManager
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
-
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
         }
@@ -1077,8 +1063,6 @@ public class MaeGUISteps extends StepManager
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
         }
-
-
     }
 
     @And("I select the passenger from Ticket Tab")
@@ -1105,7 +1089,6 @@ public class MaeGUISteps extends StepManager
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
         }
-
     }
 
     @And("I click the Tickets tab and try to click the Coupon number and verify the details")
@@ -1120,7 +1103,6 @@ public class MaeGUISteps extends StepManager
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
         }
-
     }
 
     @And("I try to retrieve the pnr from Order Screen to check the {string} status")
@@ -1134,7 +1116,6 @@ public class MaeGUISteps extends StepManager
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
         }
-
     }
 
     @And("I edit passenger details")
@@ -1161,7 +1142,6 @@ public class MaeGUISteps extends StepManager
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
         }
-
     }
 
     @And("I try to delete the OSI remark from the pnr {string}")
@@ -1202,7 +1182,6 @@ public class MaeGUISteps extends StepManager
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
-
         }
         System.out.println("I select the Quote Options and click on Next retrieving PNR from ishares");
     }
@@ -1245,6 +1224,7 @@ public class MaeGUISteps extends StepManager
             logInfo.fail("This step failed.. so stopping...");
         }
     }
+
     @And("I click the order tab and enter ticket number")
     public void iClickTheOrderTabAndEnterTicketNumber() {
         try {
@@ -1254,8 +1234,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I try to retrieve pnr from Order screen using ticket number");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -1268,9 +1248,8 @@ public class MaeGUISteps extends StepManager
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
-
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -1284,9 +1263,8 @@ public class MaeGUISteps extends StepManager
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
-
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -1305,8 +1283,6 @@ public class MaeGUISteps extends StepManager
         }
 
     }
-
-
 
     @And("I change the date format for passenger DOB")
     public void iChangeTheDateFormatForPassengerDOB() {
@@ -1329,8 +1305,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I try to retrieve the pnr after cancelling the segment");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -1342,8 +1318,8 @@ public class MaeGUISteps extends StepManager
             maeGUI.clickBookAndFileFareOrFileFare(logInfo);
             logInfo.pass("I click on Book and FileFare button or File Fare button");
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
     }
@@ -1371,8 +1347,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I navigate to Order tab");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -1414,8 +1390,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I verify ADC and APIS details and click submit button");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -1428,8 +1404,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I click offload button to uncheck the passenger");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -1442,9 +1418,8 @@ public class MaeGUISteps extends StepManager
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
-
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -1696,8 +1671,8 @@ public class MaeGUISteps extends StepManager
             maeGUI.clickAddBaggageIcon(logInfo);
             logInfo.pass("I click add Baggage icon");
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -1709,8 +1684,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I add standard baggage BaggageNo and  BaggageWeight");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -1721,8 +1696,8 @@ public class MaeGUISteps extends StepManager
             maeGUI.clickAddAnotherBaggage(logInfo);
             logInfo.pass("I click add another baggage");
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -1733,8 +1708,8 @@ public class MaeGUISteps extends StepManager
             maeGUI.clickOnSubmitAndPay(logInfo);
             logInfo.pass("I click on Submit and Proceed to Pay");
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -1747,8 +1722,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I delete the standard baggage number");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -1761,8 +1736,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I click on Submit and Continue");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -1775,8 +1750,8 @@ public class MaeGUISteps extends StepManager
             logInfo.info("I select Sales Report and Agent Sales Report");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -1789,8 +1764,8 @@ public class MaeGUISteps extends StepManager
             logInfo.info("I validate EMD value in Agent Sales Report");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -1803,8 +1778,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I click on Return to Check-In");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
     }
@@ -1874,8 +1849,6 @@ public class MaeGUISteps extends StepManager
 
     }
 
-
-
     @And("I add a service {string} in cabin")
     public void i_add_a_service_in_cabin(String service) {
 
@@ -1890,8 +1863,6 @@ public class MaeGUISteps extends StepManager
             Assert.fail("This step failed.. so stopping...");
         }
     }
-
-
 
     @And("I navigate to travel Compensation page")
     public void iNavigateToTravelCompensationPage() {
@@ -2262,8 +2233,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I try to retrieve the pnr from Order Screen to check the "+ticketStatus +" status in ticket tab");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -2347,8 +2318,8 @@ public class MaeGUISteps extends StepManager
             maeGUI.selectShortCheckin(logInfo);
             logInfo.pass("I select value from the Short Checkin dropdown");
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
     }
@@ -2360,8 +2331,8 @@ public class MaeGUISteps extends StepManager
             maeGUI.standByListText(logInfo);
             logInfo.pass("I verify StandBy List text is displayed onCheckin Page");
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
     }
@@ -2424,6 +2395,7 @@ public class MaeGUISteps extends StepManager
 
         } catch(AssertionError | Exception exception){
             ExtentReportListener.testStepHandle("FAIL", maeGUI.getDriver(), logInfo, exception);
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -2437,8 +2409,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I perform flifo search with required details with Startdate as :" + date);
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
 
         }
 
@@ -2453,8 +2425,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I try to close the FLIFO search");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -2467,8 +2439,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I verify the status of the Destination for an flight in FLIFO");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
 
         }
 
@@ -2483,8 +2455,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I click summary tab");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -2512,6 +2484,7 @@ public class MaeGUISteps extends StepManager
 
         } catch (AssertionError | Exception exception) {
             ExtentReportListener.testStepHandle("FAIL", maeGUI.getDriver(), logInfo, exception);
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -2762,8 +2735,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I validate the FLIFO details shown in GUI is matching with the ishares");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -2775,8 +2748,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I click on PAY button when the amount is zero in GUI");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -2788,8 +2761,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I click on the passenger arrow to validate that the seats are assigned in GUI");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -2801,8 +2774,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I validate the FLIFO ON-TIME status of the flight in the DELAY row in GUI");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -2814,8 +2787,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I validate the text present in the Delay row under the Origin column for a flight in FLIFO");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
 
         }
     }
@@ -2828,8 +2801,8 @@ public class MaeGUISteps extends StepManager
             maeGUI.addStandardBaggageForAllPassengers(logInfo);
             logInfo.pass("I click on bag icon in checkin page, select the type of baggage as standard, add bags and do payment");
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -2842,8 +2815,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I retrive the pnr after dividing the pnr");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
     }
@@ -2856,8 +2829,8 @@ public class MaeGUISteps extends StepManager
             maeGUI.clickaddSeatsButtonFromServicesTab(logInfo);
             logInfo.pass("I click on seat icon from services tab");
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -2869,8 +2842,8 @@ public class MaeGUISteps extends StepManager
             maeGUI.seatSelectionFromServicesTab(logInfo);
             logInfo.pass("I select Seat for Passengers from services tab and add to order");
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
     }
@@ -2883,8 +2856,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I change segment date with new date");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -2975,9 +2948,7 @@ public class MaeGUISteps extends StepManager
             Assert.fail("This step failed.. so stopping...");
         }
 
-
     }
-
 
     @And("I try to click on Abort button and try to select {string} from popup")
     public void iTryToClickOnAbortButton(String button) {
@@ -2990,7 +2961,6 @@ public class MaeGUISteps extends StepManager
             ExtentReportListener.testStepHandle("FAIL", maeGUI.getDriver(), logInfo, e);
             Assert.fail("This step failed.. so stopping...");
         }
-
 
     }
 
@@ -3006,9 +2976,7 @@ public class MaeGUISteps extends StepManager
             Assert.fail("This step failed.. so stopping...");
         }
 
-
     }
-
 
     @And("I navigate to UnReconciled or Reconciled {string} subtab and check for the passengers with sequence number as {string}")
     public void iNavigateToUnReconciledReconciledSubtabAndCheckForThePassengersWithSequenceNumberAs(String subtab,String seqNo) {
@@ -3024,7 +2992,6 @@ public class MaeGUISteps extends StepManager
 
     }
 
-
     @And("I try to retrieve the ticket number by selecting {string} option with sequence number as {string}")
     public void iTryToRetrieveTheTicketNumberBySelectingOptionWithSequenceNumberAs(String dropdownValue, String seqNum) {
 
@@ -3039,7 +3006,6 @@ public class MaeGUISteps extends StepManager
         }
 
     }
-
 
     @And("I click on Cancel or Reinitiate button {string} in Gate Screen")
     public void iClickOnCancelOrReinitiateButtonButtonInGateScreen(String button) {
@@ -3203,8 +3169,8 @@ public class MaeGUISteps extends StepManager
             maeGUI.clickaddSeatsButtonFromServicesTabWithReqSegment(logInfo,segNum);
             logInfo.pass("I click on seat icon from services tab for required segment :"+segNum);
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
     }
@@ -3266,8 +3232,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I validate that the list of passengers is displayed in GATE module");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -3279,8 +3245,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I reconcile a passenger in GATE module and validate the passenger in reconciled section");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -3292,8 +3258,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I click on PNR hyperlink in checkin page");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -3306,8 +3272,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I navigate back to the previous page in GUI");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -3319,8 +3285,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I search for the passenger in the all passengers list in GATE module");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -3332,8 +3298,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I click on the passenger name in GATE page and validate that the added SSR is present");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -3345,8 +3311,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I click on final report and validate the SSR added for the passenger");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -3358,8 +3324,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I click on seats icon and assign seats to the passengers in CHECKIN page");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -3371,8 +3337,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I validate that the flight is cancelled in FLIFO in GUI");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -3384,24 +3350,9 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I search for the PNR created in Reservation Section and validate that the date of travel is changed");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
-        }
-    }
-
-
-    @And("I search for flight availability in Native shares from {string} to {string}")
-    public void iSearchForFlightAvailabilityInNativeSharesFromToAnd(String Origin, String Destination) {
-        try{
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I search for flight");
-            isharesPage2.searchavailabilityInNativeShares(logInfo, Origin, Destination);
-            logInfo.pass("I search for flight");
-
-        } catch (AssertionError | Exception e) {
             Assert.fail("This step failed.. so stopping...");
-            logInfo.fail("This step failed.. so stopping...");
         }
-
     }
 
     @And("I select held seats to display the passenger list in Gate section")
@@ -3572,7 +3523,6 @@ public class MaeGUISteps extends StepManager
                 remark = "Involuntary Reissue - INVOL REISSUE";
             }
 
-
             maeGUI.clickReservations(logInfo);
             maeGUI.checkTheRemarksFromOderTab(logInfo,remarkType);
             logInfo.info(MarkupHelper.createLabel("The remarks from order tab is validated and "+remark+" is available", ExtentColor.GREEN));
@@ -3643,8 +3593,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I add standard baggage with overweight, BaggageNo and  BaggageWeight");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
     }
@@ -3675,8 +3625,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I add standard baggage with overweight, BaggageNo and  BaggageWeight");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -3688,8 +3638,8 @@ public class MaeGUISteps extends StepManager
             maeGUI.clickOnSubmitAndPayWithFoidDetails(logInfo);
             logInfo.pass("I click on Submit and Proceed to Pay");
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -3716,8 +3666,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I add standard baggage with overweight, BaggageNo and  BaggageWeight");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -3859,8 +3809,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I select sales report and select Agent sales report");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -4197,8 +4147,8 @@ public class MaeGUISteps extends StepManager
             maeGUI.clickaddSeatsButtonFromCheckinPage(logInfo);
             logInfo.pass("I click on seat icon from Checkin page");
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -4209,8 +4159,8 @@ public class MaeGUISteps extends StepManager
             maeGUI.seatSelectionFromCheckinPage(logInfo, Integer.parseInt(segmentIndex));
             logInfo.pass("I select the seats from checkin page for passengers");
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -4222,8 +4172,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I click on release and offload button release the passengers");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -4235,8 +4185,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I validate if the held seats are released");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -4306,7 +4256,7 @@ public class MaeGUISteps extends StepManager
         } catch (AssertionError | Exception e) {
 
             ExtentReportListener.testStepHandle("FAIL", maeGUI.getDriver(), logInfo, e);
-
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -4346,8 +4296,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I navigate to the User provisioning Tool page");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
         System.out.println("I navigate to the User provisioning Tool page");
     }
@@ -4361,8 +4311,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I enter User Id and click on search in user provisioning page");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
         System.out.println("I enter User Id and click on search in user provisioning page");
     }
@@ -4637,8 +4587,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I perform flifo search with required details");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
 
         }
     }
@@ -4666,8 +4616,8 @@ public class MaeGUISteps extends StepManager
             maeGUI.addCatalogBaggageForAllPassengers(logInfo,paxType,catalogType);
             logInfo.pass("I click on bag icon in checkin page, select the type of baggage as catalog, add bags and do payment");
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
 
@@ -4682,8 +4632,8 @@ public class MaeGUISteps extends StepManager
             maeGUI.selectOrUnSelect(logInfo);
             logInfo.pass("I try to select or unselect the checkbox");
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -4696,8 +4646,8 @@ public class MaeGUISteps extends StepManager
             maeGUI.clickBaggageIconForSpecificPax(logInfo,paxTypeDisplayedInUI);
             logInfo.pass("I try to click baggage for required passenger "+paxTypeDisplayedInUI);
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
     }
@@ -4711,8 +4661,8 @@ public class MaeGUISteps extends StepManager
             maeGUI.clickOnSubmitAndContinue(logInfo);
             logInfo.pass("I try to click submit and continue button");
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
     }
@@ -4829,8 +4779,6 @@ public class MaeGUISteps extends StepManager
 
     }
 
-
-
     @And("I select specific child passenger in checkin page using {string}")
     public void iSelectSpecificChildPassengerInCheckinPageUsing(String searchType) {
         try {
@@ -4843,8 +4791,6 @@ public class MaeGUISteps extends StepManager
             Assert.fail("This step failed.. so stopping...");
         }
     }
-
-
 
     @And("I try to update the passenger in Checkin Page {string}")
     public void iTryToUpdateThePassengerInCheckinPage(String paxtype) {
@@ -4914,8 +4860,6 @@ public class MaeGUISteps extends StepManager
         }
 
     }
-
-
 
     @And("I click on the Boarding pass icon to print the Boarding pass")
     public void iClickOnTheBoardingPassIconToPrintTheBoardingPass() {
@@ -5078,8 +5022,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I click on Quotes subtab");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -5492,8 +5436,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I validate EMD ticket number in Agent sales report");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
         System.out.println("I validate EMD ticket number in Agent sales report");
     }
@@ -5523,8 +5467,8 @@ public class MaeGUISteps extends StepManager
             maeGUI.clickAddBaggageIconForSecondPassenger(logInfo);
             logInfo.pass("I click add Baggage icon for second passenger");
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
     }
@@ -5611,8 +5555,8 @@ public class MaeGUISteps extends StepManager
 
         } catch (AssertionError | Exception e) {
 
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -5793,13 +5737,11 @@ public class MaeGUISteps extends StepManager
             logInfo.info("I add the details in the Passenger Reduction Type and account code as "+accountCode);
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
     }
-
-
 
     @And("I perform Voluntary Reissue with Pricing option as {string} with an advanced option type {string} and Passenger Reduction Type as {string} {string} and panelty amount as {string}")
     public void iPerformVoluntaryReissueWithPricingOptionAsWithAnAdvancedOptionTypeAndPassengerReductionTypeAsAndPaneltyAmountAs(String pricingOption, String accountcode, String type1, String type2, String penaltyAmount) {
@@ -5810,8 +5752,8 @@ public class MaeGUISteps extends StepManager
             logInfo.info("I perform Voluntary Reissue");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
 
@@ -5826,8 +5768,8 @@ public class MaeGUISteps extends StepManager
             logInfo.info("I validate the Tax Details in Agent Sales Report after changes");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
     }
@@ -5843,8 +5785,8 @@ public class MaeGUISteps extends StepManager
 
         } catch (AssertionError | Exception e) {
 
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -5858,8 +5800,8 @@ public class MaeGUISteps extends StepManager
 
         } catch (AssertionError | Exception e) {
 
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -6048,8 +5990,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I retrieve the pnr in native shares");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -6061,8 +6003,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I validate the SSR " + SSR + " in native shares after PNR Retrieval");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -6091,8 +6033,8 @@ public class MaeGUISteps extends StepManager
             logInfo.info("I validate EMD value in Agent Sales Report");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
     }
@@ -6118,8 +6060,8 @@ public class MaeGUISteps extends StepManager
             logInfo.info("I validate EMD value in Agent Sales Report After SSR Addition");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -6208,8 +6150,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I click on off load button and validate the error message");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
     }
@@ -6221,8 +6163,8 @@ public class MaeGUISteps extends StepManager
             maeGUI.clickOnSubmitAndPayWithFoidDetailsAndCaptureTheBaggageEMD(logInfo);
             logInfo.pass("I click on Submit and Proceed to Pay and Capture the Baggage EMD details");
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -6234,8 +6176,8 @@ public class MaeGUISteps extends StepManager
             logInfo.info("I validate the Baggage EMD values in Agent Sales Report");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -6304,8 +6246,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I initiate boarding if boarding not initiated");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -6317,8 +6259,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I verify the passenger added into the Cabin STBY list in passenger details screen");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -6459,8 +6401,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I click on Action drop down to Sync the ticket");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
     @And("I click on Action drp dwn for Vol reissue")
@@ -6471,8 +6413,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I click on Action drp dwn for Vol reissue");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
 
@@ -6512,8 +6454,8 @@ public class MaeGUISteps extends StepManager
             logInfo.info("I create PNR to get Residual EMD value");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
     @And("I created Residual EMD successfully")
@@ -6523,8 +6465,8 @@ public class MaeGUISteps extends StepManager
             logInfo.info("I created Residual EMD successfully");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -6598,8 +6540,8 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I add standard baggage with overweight, BaggageNo and  BaggageWeight");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -6676,8 +6618,8 @@ public class MaeGUISteps extends StepManager
             logInfo.info("I validate Tickets and EMD values in Agent Sales Report");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -6689,8 +6631,8 @@ public class MaeGUISteps extends StepManager
             logInfo.info("I validate Ticket and EMD values in Agent Sales Report");
 
         } catch (AssertionError | Exception e) {
-            Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
     }
@@ -7098,6 +7040,32 @@ public class MaeGUISteps extends StepManager
         }
     }
 
+    @And("I perform flifo search with required details for selected flight")
+    public void iPerformFlifoSearchWithRequiredDetailsForSelectedFlight() {
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform flifo search with required details for selected flight");
+            maeGUI.enterDetailsFlifoSearchWithRequiredDetailsForSelectedFlight(logInfo);
+            logInfo.pass("I perform flifo search with required details for selected flight");
+
+        } catch (AssertionError | Exception e) {
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+
+        }
+    }
+
+    @And("I perform flifo search with required details for current date")
+    public void iPerformFlifoSearchWithRequiredDetailsForCurrentDate() {
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform flifo search with required details");
+            maeGUI.enterDetailsFlifoSearchWithRequiredDetailsForCurrentDate(logInfo);
+            logInfo.pass("I perform flifo search with required details");
+
+        } catch (AssertionError | Exception e) {
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
 }
 
 

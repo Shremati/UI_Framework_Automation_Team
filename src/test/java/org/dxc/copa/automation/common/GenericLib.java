@@ -3613,7 +3613,7 @@ public void VerifyTextinImage(By by, String elementname,String data) throws Exce
 
             JavascriptExecutor js = (JavascriptExecutor) getDriver();
             String errorText=null;
-            if(existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL) || existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL1)){
+            if((existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL) || existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL1)) && existElement(pageObjects.ERROR_MESSGAE_TRIANGLE_SYMBOL)){
 
                 if (existElement(pageObjects.ERROR_MESSAGE_WARNING_DROPDOWNS)) {
 
@@ -3638,6 +3638,29 @@ public void VerifyTextinImage(By by, String elementname,String data) throws Exce
                     }
                     waitProgress();
                     clickElement(pageObjects.ERROR_MESSAGE_WARNING_DROPDOWN);
+                } else if (existElement(pageObjects.ERROR_MESSAGE_WARNING_DROPDOWNS1)) {
+
+                    pageObjects.ERROR_MESSAGE_WARNING_DROPDOWN1.click();
+                    waitProgress();
+                    List<WebElement> messages = pageObjects.WARNING_MESSAGES_1;
+
+                    for (int i = 0; i < messages.size(); i++) {
+                        String msgText = messages.get(i).getText();
+                        if (msgText.contains(text1)) {
+                            js.executeScript("arguments[0].style.border='3px solid blue'", messages.get(i));
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                            logInfo.fail(MarkupHelper.createLabel("Failed due to "+text1, ExtentColor.RED));
+                            Assert.fail("Failed due to "+text1);
+                        } else if (msgText.contains(text2)) {
+                            js.executeScript("arguments[0].style.border='3px solid blue'", messages.get(i));
+                            waitProgress();
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                            logInfo.fail(MarkupHelper.createLabel("Failed due to "+text2, ExtentColor.RED));
+                            Assert.fail("Failed due to "+text2);
+                        }
+                    }
+                    waitProgress();
+                    clickElement(pageObjects.ERROR_MESSAGE_WARNING_DROPDOWN1);
                 } else if (existElement(pageObjects.ERROR_MESSGAES) && existElement(pageObjects.ERROR_MESSGAE_TRIANGLE_SYMBOL)) {
                     List<WebElement> errorList= pageObjects.ERROR_MESSGAES;
                     for(int i=0; i<errorList.size(); i++){
@@ -3663,7 +3686,7 @@ public void VerifyTextinImage(By by, String elementname,String data) throws Exce
 
             JavascriptExecutor js = (JavascriptExecutor) getDriver();
             String errorText= null;
-            if(existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL) || existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL1)){
+            if((existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL) || existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL1)) && existElement(pageObjects.ERROR_MESSGAE_TRIANGLE_SYMBOL)){
 
                 if (existElement(pageObjects.ERROR_MESSAGE_WARNING_DROPDOWNS)) {
 
@@ -3682,7 +3705,26 @@ public void VerifyTextinImage(By by, String elementname,String data) throws Exce
                     }
                     waitProgress();
                     clickElement(pageObjects.ERROR_MESSAGE_WARNING_DROPDOWN);
-                } else if (existElement(pageObjects.ERROR_MESSGAES)) {
+                }
+                else if (existElement(pageObjects.ERROR_MESSAGE_WARNING_DROPDOWNS1)) {
+
+                    pageObjects.ERROR_MESSAGE_WARNING_DROPDOWN1.click();
+                    waitProgress();
+                    List<WebElement> messages = pageObjects.WARNING_MESSAGES_1;
+
+                    for (int i = 0; i < messages.size(); i++) {
+                        String msgText = messages.get(i).getText();
+                        if (msgText.contains(text1)) {
+                            js.executeScript("arguments[0].style.border='3px solid blue'", messages.get(i));
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                            logInfo.fail(MarkupHelper.createLabel("Failed due to "+text1, ExtentColor.RED));
+                            Assert.fail("Failed due to "+text1);
+                        }
+                    }
+                    waitProgress();
+                    clickElement(pageObjects.ERROR_MESSAGE_WARNING_DROPDOWN1);
+                }
+                else if (existElement(pageObjects.ERROR_MESSGAES) && existElement(pageObjects.ERROR_MESSGAE_TRIANGLE_SYMBOL)) {
                     List<WebElement> errorList= pageObjects.ERROR_MESSGAES;
                     for(int i=0; i<errorList.size(); i++){
                         errorText = errorList.get(i).getText();
@@ -3707,7 +3749,7 @@ public void VerifyTextinImage(By by, String elementname,String data) throws Exce
 
             JavascriptExecutor js = (JavascriptExecutor) getDriver();
             String errorText= null;
-            if(existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL) || existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL1)){
+            if((existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL) || existElement(pageObjects.ERROR_MESSAGE_CROSS_SYMBOL1)) && existElement(pageObjects.ERROR_MESSGAE_TRIANGLE_SYMBOL)){
 
                 if (existElement(pageObjects.ERROR_MESSAGE_WARNING_DROPDOWNS)) {
 
@@ -3739,7 +3781,36 @@ public void VerifyTextinImage(By by, String elementname,String data) throws Exce
                     }
                     waitProgress();
                     clickElement(pageObjects.ERROR_MESSAGE_WARNING_DROPDOWN);
-                } else if (existElement(pageObjects.ERROR_MESSGAES) && existElement(pageObjects.ERROR_MESSGAE_TRIANGLE_SYMBOL)) {
+                } else if (existElement(pageObjects.ERROR_MESSAGE_WARNING_DROPDOWNS1)) {
+
+                    pageObjects.ERROR_MESSAGE_WARNING_DROPDOWN1.click();
+                    waitProgress();
+                    List<WebElement> messages = pageObjects.WARNING_MESSAGES_1;
+
+                    for (int i = 0; i < messages.size(); i++) {
+                        String msgText = messages.get(i).getText();
+                        if (msgText.contains(text1)) {
+                            js.executeScript("arguments[0].style.border='3px solid blue'", messages.get(i));
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                            logInfo.fail(MarkupHelper.createLabel("Failed due to "+text1, ExtentColor.RED));
+                            Assert.fail("Failed due to "+text1);
+                        } else if (msgText.contains(text2)) {
+                            js.executeScript("arguments[0].style.border='3px solid blue'", messages.get(i));
+                            waitProgress();
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                            logInfo.fail(MarkupHelper.createLabel("Failed due to "+text2, ExtentColor.RED));
+                            Assert.fail("Failed due to "+text2);
+                        } else if (msgText.contains(text3)) {
+                            js.executeScript("arguments[0].style.border='3px solid blue'", messages.get(i));
+                            waitProgress();
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                            logInfo.fail(MarkupHelper.createLabel("Failed due to "+text3, ExtentColor.RED));
+                            Assert.fail("Failed due to "+text3);
+                        }
+                    }
+                    waitProgress();
+                    clickElement(pageObjects.ERROR_MESSAGE_WARNING_DROPDOWN1);
+                }else if (existElement(pageObjects.ERROR_MESSGAES) && existElement(pageObjects.ERROR_MESSGAE_TRIANGLE_SYMBOL)) {
                     List<WebElement> errorList= pageObjects.ERROR_MESSGAES;
                     for(int i=0; i<errorList.size(); i++){
                         errorText = errorList.get(i).getText();
@@ -4057,8 +4128,14 @@ public void VerifyTextinImage(By by, String elementname,String data) throws Exce
        @FindBy(xpath = "(//i[@class='icon-arrow-down ng-scope'])[2]")
        public WebElement ERROR_MESSAGE_WARNING_DROPDOWN;
 
+       @FindBy(xpath = "(//i[@class='icon-arrow-down ng-scope'])[1]")
+       public WebElement ERROR_MESSAGE_WARNING_DROPDOWN1;
+
        @FindBy(xpath = "(//i[@class='icon-arrow-down ng-scope'])[2]")
        public List<WebElement> ERROR_MESSAGE_WARNING_DROPDOWNS;
+
+       @FindBy(xpath = "(//i[@class='icon-arrow-down ng-scope'])[1]")
+       public List<WebElement> ERROR_MESSAGE_WARNING_DROPDOWNS1;
 
        @FindBy(xpath = "//i[@class='icon-warning']//following-sibling::div")
        public List<WebElement> WARNING_MESSAGES_1;

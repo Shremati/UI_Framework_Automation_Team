@@ -55,7 +55,7 @@ Feature: 629056 - Generate an iCoupon compensation for a ONE WAY flight with aff
     And I click the EMD subtab present in Tickets tab
 
     #iShares
-    And I navigate to Shares Application
+    And I navigate to iShares Page from COPA GUI Application
     And I enter valid shares credentials
     And I click on the shares Login Button
     And I click on terminal emulation

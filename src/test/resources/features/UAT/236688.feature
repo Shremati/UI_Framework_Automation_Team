@@ -43,11 +43,32 @@ Feature: 236688 - Display List- Special Service by specific SSR code
     And I make the first payment by selecting the payment type as "<PaymentType>"
     And I enter the details in the email recipients page
     And I validate if the payment is successful
+    And I navigate to home screen
+
+    And I navigate to iShares Page from COPA GUI Application
+    And I enter valid shares credentials
+    And I click on the shares Login Button
+    And I click on terminal emulation
+    Then I validate successful shares login
+    Then I enter LOGC CMRE command for logging in
+    And I enter BSIA command for signing in
+    And I enter BSO command for sign out
+    And I enter BSIA command for signing in
+    And I enter W* command to check lniata of the session
+    And I enter BSIA command for signing in
+    And I retrieve the pnr
+    And I enter *ET command to display all the tickets in the PNR
+    And I remove SSR "<SSRType>" from the PSC Exception Table
+    And I retrieve the pnr
+    And I logout from Shares application
+
+    And I navigate back to previous tab in the browser "<Tab>"
+    And I click the order tab
     And I add SSR "<SSRType>" through Services tab in GUI
     And I navigate to home screen
     And I validate the SSR "<SSRType>" for the segment "<SegmentIndex>" in native shares
     And I logout from COPA GUI application
 
     Examples:
-      |salesOffice|currency |OriginCity   |Destination |StartDate |Adult|Child|INF|INS|SegmentIndex|SegmentIndex|PaymentType|originClass|SSRType|
-      |PTY ATO    |USD      |PTY          |LAX         |01 days   |1    |0    |0  |0  |0           |1           |Cash       |Economy    |BULK   |
+      |salesOffice|currency |OriginCity   |Destination |StartDate |Adult|Child|INF|INS|SegmentIndex|SegmentIndex|PaymentType|originClass|SSRType|Tab|
+      |PTY ATO    |USD      |PTY          |LAX         |01 days   |1    |0    |0  |0  |0           |1           |Cash       |Economy    |BULK   |1  |

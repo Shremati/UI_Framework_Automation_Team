@@ -23,16 +23,26 @@ Feature: 236694 - Verify by entering the following command, changing flight and 
     And I add "<INF>" infant without seat passengers
     And I want to display all the passengers
     And I change the Sales Office and Currency "<salesOffice>" and "<currency1>"
-    And I click on Tools Menu
-    And I click on Native Shares
-    And I set Class Of Service to "<COS>"
-    And I set Airline to "<Airline>" for Segment "<SegmentIndex>"
-    And I set startdate to "<StartDate>" for Segment "<SegmentIndex>"
-    And I search for flight availability in Native shares from "<OriginCity>" to "<Destination>"
-    And I click on Cancel button in native shares
+#    And I click on Tools Menu
+#    And I click on Native Shares
+#    And I set Class Of Service to "<COS>"
+#    And I set Airline to "<Airline>" for Segment "<SegmentIndex>"
+#    And I set startdate to "<StartDate>" for Segment "<SegmentIndex>"
+#    And I search for current date flight availability in Native shares from "<OriginCity>" to "<Destination>"
+#    And I click on Cancel button in native shares
+
+    And I click on the Reservation section
+    And I click on New Order for creating new PNR in GUI
+    And Select from and to City "<OriginCity>" and "<Destination>"
+    And I enter Start Date "<StartDate>" for one way booking
+    And I click search button in flight search availability
+    And I store all the flight numbers after flight search
+    And I navigate to home screen
+
     And I click on Tools Menu
     And I click on FLIFO SEARCH under Tools menu
-    And I perform flifo search with required details
+    #And I perform flifo search with required details
+    And I perform flifo search with required details for selected flight
     And I verify the flight is not assigned with any gate number for Origin or Destination "<city1>"
     And I verify the flight is not assigned with any gate number for Origin or Destination "<city2>"
     And I try to close the FLIFO search
@@ -48,7 +58,7 @@ Feature: 236694 - Verify by entering the following command, changing flight and 
     And I change the Sales Office and Currency "<salesOffice>" and "<currency1>"
     And I click on Tools Menu
     And I click on FLIFO SEARCH under Tools menu
-    And I perform flifo search with required details
+    And I perform flifo search with required details for current date
     And I verify the Gate number of the flight for OriginCity in FLIFO
     And I verify the Gate number of the flight for DestinationCity in FLIFO
     And I try to close the FLIFO search
@@ -63,7 +73,7 @@ Feature: 236694 - Verify by entering the following command, changing flight and 
     And I click on Cancel button in native shares
     And I click on Tools Menu
     And I click on FLIFO SEARCH under Tools menu
-    And I perform flifo search with required details
+    And I perform flifo search with required details for current date
     And I verify the Gate number of the flight for OriginCity in FLIFO
     And I verify the Gate number of the flight for DestinationCity in FLIFO
     And I try to close the FLIFO search

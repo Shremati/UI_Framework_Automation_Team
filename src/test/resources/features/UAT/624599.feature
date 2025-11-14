@@ -44,7 +44,7 @@ Feature: 624599 - Verify Voluntary Reissue of a No Show booking is happening cor
     And I click the EMD subtab and view the EMD details
 
     #shares
-    And I navigate to Shares Application
+    And I navigate to iShares Page from COPA GUI Application
     And I enter valid shares credentials
     And I click on the shares Login Button
     And I click on terminal emulation

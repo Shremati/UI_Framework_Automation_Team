@@ -72,7 +72,7 @@ Feature: 629730 - Validate that the iCoupon apply correctly for a reservation in
 
 
     And I navigate to home screen
-    And I navigate to Shares Application
+    And I navigate to iShares Page from COPA GUI Application
     And I enter valid shares credentials
     And I click on the shares Login Button
     And I click on terminal emulation

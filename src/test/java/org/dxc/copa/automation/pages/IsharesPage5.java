@@ -1539,6 +1539,34 @@ public class IsharesPage5 extends TestBase {
     }
 
 
+//    public void ToDisplayOutboudConnectionListInNativeShares(ExtentTest logInfo) {
+//        try {
+//
+//            isharesPageObjects5.NATIVE_SHARES_CLEAR_ALL.click();
+//            gl.waitProgress();
+//            Passenger pax= mPassengers.get(getDriverID()).get(0);
+//            String ignorecommand = "I";
+//            isharesPage4.sendCmdToNativeSharesValidateResponse(ignorecommand,logInfo);
+//
+//            String FlightNo = pax.getSegmentFlight(0);
+//            String PNR = pax.getPnr();
+//            gl.waitProgress();
+//
+//            //6-LD264#OC
+//            String command = "6-LD"+FlightNo+"#OC";
+//            gl.logCommand(logInfo,command);
+//            isharesPage2.sendCmdToNativeSharesValidateResponse(command,PNR,logInfo);
+//            logInfo.pass("I validate PNR " +PNR);
+//            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//
+//
+//        } catch (Exception e) {
+//
+//            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+//            org.junit.Assert.fail("This step failed.. so stopping...");
+//        }
+//    }
+
     public void ToDisplayOutboudConnectionListInNativeShares(ExtentTest logInfo) {
         try {
 
@@ -1548,6 +1576,8 @@ public class IsharesPage5 extends TestBase {
             String ignorecommand = "I";
             isharesPage4.sendCmdToNativeSharesValidateResponse(ignorecommand,logInfo);
 
+            isharesPageObjects5.NATIVE_SHARES_CLEAR_ALL.click();
+            gl.waitProgress();
             String FlightNo = pax.getSegmentFlight(0);
             String PNR = pax.getPnr();
             gl.waitProgress();
@@ -1556,18 +1586,36 @@ public class IsharesPage5 extends TestBase {
             String command = "6-LD"+FlightNo+"#OC";
             gl.logCommand(logInfo,command);
             isharesPage2.sendCmdToNativeSharesValidateResponse(command,PNR,logInfo);
-            logInfo.pass("I validate PNR " +PNR);
+            //isharesPage2.sendCmdToNativeSharesValidateResponse(command, "OUTBOUND", logInfo);
+
+            String xpath = String.format("//div[@ng-repeat='nativeData in nativeShareData.data track by $index']//pre[contains(text(), '%s')]",PNR);
+
+            List<WebElement> results = driver.get().findElements(By.xpath(xpath));
+
+            if (results.isEmpty()) {
+                logInfo.fail(MarkupHelper.createLabel(
+                        "PNR " + PNR + " NOT found in Outbound Connect list!", ExtentColor.RED));
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                Assert.fail("PNR " + PNR + " not present in Outbound Connect list.");
+            }
+
+            WebElement line = results.get(0);
+
+            //WebElement line = driver.get().findElement(By.xpath(xpath));
+            gl.scrollToWebElement(line);
+
+            logInfo.info(MarkupHelper.createLabel("The pnr is available in the Outbound Connect list. " , ExtentColor.GREEN));
+            logInfo.info(MarkupHelper.createLabel(line.getText() , ExtentColor.GREEN));
+            logInfo.pass("I display Outbound Connect list for passengers");
             logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
-
-        } catch (Exception e) {
+        } catch (AssertionError | Exception e) {
 
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
             org.junit.Assert.fail("This step failed.. so stopping...");
         }
     }
-
-
 
     public void retrievePNRInNativeSharesAndValidateAllSSRIsAdded(ExtentTest logInfo) {
         try {

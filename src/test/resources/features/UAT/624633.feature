@@ -94,7 +94,7 @@ Feature: 624633 - Voluntary Reissue the same day
 
     Examples:
       | salesOffice | currency | OriginCity1 | Destination1 | OriginCity | Destination | Destination2 | StartDate | PaymentType1 | Adult | Child | INF | INS | PaymentType | originClass | originClass1 | PricingOption | Pricingoption1  | ticketStatus | ticketStatus1 |
-      | PTY ATO     | USD      | PTY         | MEX          | PTY        | BOG         | MDE          | 14 Days   | EMD          | 1     | 0     | 0   | 0   | Cash        | Business    | Economy      | Economy Full  | Price as Booked | Open         | EXCHANGED     |
+      | PTY ATO     | USD      | PTY         | MEX          | PTY        | BOG         | MTY          | 14 Days   | EMD          | 1     | 0     | 0   | 0   | Cash        | Business    | Economy      | Economy Full  | Price as Booked | Open         | EXCHANGED     |
 
 
 

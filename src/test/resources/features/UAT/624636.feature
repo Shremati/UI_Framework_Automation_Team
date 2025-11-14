@@ -91,7 +91,7 @@ Feature: 624636 - Verify ISSUE/REISSUE/OVER REISSUE - Create and issue reservati
     And I click the Tickets tab and verify the Ticket Status as "<TicketStatus>" and verify the EMD Coupon control status as "<EMDStatus>"
 
 #    #shares
-    And I navigate to Shares Application
+    And I navigate to iShares Page from COPA GUI Application
     And I enter valid shares credentials
     And I click on the shares Login Button
     And I click on terminal emulation

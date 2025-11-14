@@ -84,4 +84,4 @@ Feature: 622943 - Mass Transfer for ADT
 
     Examples:
       | salesOffice | currency | OriginCity | Destination | StartDate | Adult | Child | INF | INS | originClass | PaymentType | ActionType    | SegmentIndex | transferType | Reason | buttonName | SegmentIndex1 | BaggageNo1 | BaggageWeight1 | printer     | printerStatus | ticketStatus1 | ticketStatus | type            |
-      | MEX ATO     | USD      | MEX        | SAL         | 01 days   | 1     | 0     | 0   | 0   | Economy     | Cash        | Mass Transfer | 0            | Outbound     | DELAY  | accept     | 1             | 1          | 30             | IN-PF2ST1T4 | PrintReady    | CHECKED-IN    | ADJUSTED     | baggageTransfer |
+      | SJO ATO     | USD      | SJO        | SAL         | 01 days   | 1     | 0     | 0   | 0   | Economy     | Cash        | Mass Transfer | 0            | Outbound     | DELAY  | accept     | 1             | 1          | 30             | IN-PF2ST1T4 | PrintReady    | CHECKED-IN    | ADJUSTED     | baggageTransfer |

@@ -24,6 +24,7 @@ import org.testng.Assert;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -384,11 +385,14 @@ public class MaeGUI extends TestBase {
             wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@ng-repeat='(key, val) in spinnerMessage.pssguiSpinnerMessageUtil.loadingMessage']")));
             waitUntilPageLoad(logInfo);
             mPassengers.get(getDriverID()).get(0).setCurrency(currency);
+            setApplicationDate(logInfo);
 
             if (gl.existElement(maeGUIObjects.report_reminder_text) || gl.existElement(maeGUIObjects.REPORT_WARNING_ICON)) {
                 closeReports(office, currency, logInfo);
             }
             logInfo.info(MarkupHelper.createLabel("SalesOffice and Currency Changed Successfully", ExtentColor.GREEN));
+
+            gl.highLightErrorMessages(logInfo, "Unable to retrieve flight");
         }catch (AssertionError | Exception e) {
 
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
@@ -1937,7 +1941,6 @@ public void selectFullEconomy(ExtentTest logInfo) {
                 gl.waitProgress();
             }
         } catch (AssertionError | Exception e) {
-
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
             Assert.fail("This step failed.. so stopping...");
         }
@@ -2347,19 +2350,12 @@ public void selectFullEconomy(ExtentTest logInfo) {
         gl.waitProgress();
         int initialRemoveIcons =0;
         int dateCount = 0;
-        int dateLimit = 1;
+        int dateLimit = 20;
         boolean seatsBooked = false;
         Passenger pax = mPassengers.get(getDriverID()).get(0);
 //        int days = pax.getFirstSegDate();
         if(gl.existElement(maeGUIObjects.REMOVE_ICONS_AVAILABLE)) {
             initialRemoveIcons = maeGUIObjects.REMOVE_ICONS_AVAILABLE.size();
-        }
-        if(maeGUIObjects.CAROUSEL_NEXT_DATES.size()>60)
-        {
-            dateLimit = 30;
-        }
-        else {
-            dateLimit = days+20;
         }
         while (true) {
             try {
@@ -2379,35 +2375,37 @@ public void selectFullEconomy(ExtentTest logInfo) {
                 boolean flightNotFound = gl.existElement(maeGUIObjects.FLIGHT_NOT_FOUND);
                 boolean noMatchingFlightFound =gl.existElement(maeGUIObjects.NO_MATCHING_FLIGHT_FOUND);
 
-                if (segmentCount == 0 || (flightNotFound&&noMatchingFlightFound)) {
+                if (segmentCount == 0 || (flightNotFound && noMatchingFlightFound)) {
                     // Move carousel
                     maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
                     gl.waitProgress();
                     dateCount++;
 
                     // Optional stop condition
-                    if (dateCount > dateLimit) {
-                        logInfo.fail(MarkupHelper.createLabel(
-                                "Flight not found for route even after " + dateLimit + " Days.",
-                                ExtentColor.RED));
+                    if (dateLimit < dateCount) {
                         logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
-                        Assert.fail("Flight not found for route even after " + dateLimit + " Days.");
+                        logInfo.fail(MarkupHelper.createLabel("Flight not found for route even after " + dateLimit + " days.", ExtentColor.RED));
+                        Assert.fail("Flight not found for route even after " + dateLimit + " days.");
                     }
-
-
                     continue; // fetch new dates in next iteration
                 }
 
                 break; // exit if you’ve found a valid flight
 
-            } catch (StaleElementReferenceException e) {
-                System.out.println("Stale element detected. Re-fetching carousel and retrying...");
-                continue; // just re-loop, re-fetch elements
-            } catch (Exception e) {
-                e.printStackTrace();
-                Assert.fail("Unexpected error: " + e.getMessage());
+            } catch (AssertionError | Exception e) {
+
+                ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+                Assert.fail("This step failed.. so stopping...");
             }
+//            catch (StaleElementReferenceException e) {
+//                System.out.println("Stale element detected. Re-fetching carousel and retrying...");
+//                continue; // just re-loop, re-fetch elements
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                Assert.fail("Unexpected error: " + e.getMessage());
+//            }
         }
+
     }
 
     public int[] getCaroselDateCountsForConnectingSegments(ExtentTest logInfo,int days) {
@@ -2415,20 +2413,14 @@ public void selectFullEconomy(ExtentTest logInfo) {
         gl.waitProgress();
         int initialRemoveIcons =0;
         int dateCount = 0;
-        int dateLimit = 1;
+        int dateLimit = 20;
         boolean seatsBooked = false;
         Passenger pax = mPassengers.get(getDriverID()).get(0);
 //        int days = pax.getFirstSegDate();
         if(gl.existElement(maeGUIObjects.REMOVE_ICONS_AVAILABLE)) {
             initialRemoveIcons = maeGUIObjects.REMOVE_ICONS_AVAILABLE.size();
         }
-        if(maeGUIObjects.CAROUSEL_NEXT_DATES.size()>60)
-        {
-            dateLimit = 30;
-        }
-        else {
-            dateLimit = days+20;
-        }
+
         while (true) {
             try {
                 // Re-fetch carousel items dynamically
@@ -2455,10 +2447,10 @@ public void selectFullEconomy(ExtentTest logInfo) {
 
                     // Optional stop condition
                     if (dateCount > dateLimit) {
+                        logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
                         logInfo.info(MarkupHelper.createLabel(
                                 "Flight not found for route even after " + dateLimit + " Days.",
                                 ExtentColor.RED));
-                        logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
                         Assert.fail("Flight not found for route even after " + dateLimit + " Days.");
                     }
 
@@ -2467,13 +2459,18 @@ public void selectFullEconomy(ExtentTest logInfo) {
 
                 break; // exit if you’ve found a valid flight
 
-            } catch (StaleElementReferenceException e) {
-                System.out.println("Stale element detected. Re-fetching carousel and retrying...");
-                continue; // just re-loop, re-fetch elements
-            } catch (Exception e) {
-                e.printStackTrace();
-                Assert.fail("Unexpected error: " + e.getMessage());
+            } catch (AssertionError | Exception e) {
+
+                ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+                Assert.fail("This step failed.. so stopping...");
             }
+//            catch (StaleElementReferenceException e) {
+//                System.out.println("Stale element detected. Re-fetching carousel and retrying...");
+//                continue; // just re-loop, re-fetch elements
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                Assert.fail("Unexpected error: " + e.getMessage());
+//            }
         }
         return new int[] { dateLimit, initialRemoveIcons };
     }
@@ -2968,8 +2965,8 @@ public void selectFullEconomy(ExtentTest logInfo) {
 //                }
 //            }
 //
-//            WebElement element= driver.get().findElement(By.cssSelector("body"));
-//            element.click();
+            WebElement element= driver.get().findElement(By.cssSelector("body"));
+            element.click();
 
 
         } catch (AssertionError | Exception e) {
@@ -4882,6 +4879,7 @@ public void selectFullEconomy(ExtentTest logInfo) {
         Passenger pax = mPassengers.get(getDriverID()).get(0);
         try {
 
+            gl.highLightErrorMessages(logInfo, "Order retrieval failed", "Sysytem Processing Error");
             String expected = "Payment Successful";
             String actual = maeGUIObjects.PAYMENT_SUCCESSFUL.getText();
             Assert.assertEquals(expected, actual);
@@ -6931,8 +6929,10 @@ public void selectFullEconomy(ExtentTest logInfo) {
             if (buttonToClick != null) {
                 buttonToClick.click();
                 gl.waitProgress();
-                gl.waitForElementAfterReload(getDriver(), maeGUIObjects.ORDER_CHECK_OUT, PAGE_LOAD_TIMEOUT);
+                waitUntilPageLoad(logInfo);
+                //gl.waitForElementAfterReload(getDriver(), maeGUIObjects.ORDER_CHECK_OUT, PAGE_LOAD_TIMEOUT);
                 gl.highLightErrorMessages(logInfo, "order operation failed", "System Processing Error");
+                gl.waitForElementAfterReload(getDriver(), maeGUIObjects.ORDER_CHECK_OUT, PAGE_LOAD_TIMEOUT);
                 logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
                 gl.waitProgress();
                 orderNumber = maeGUIObjects.ORDER_NUMBER.getText();
@@ -8327,196 +8327,391 @@ public void selectFullEconomy(ExtentTest logInfo) {
     }
 
 
-    public void selectTheReasonCodeAndFlightForMassTransfer(ExtentTest logInfo, String reasonCode, String segmentIndex) {
-        try {
-            gl.waitProgress();
-            gl.waitForProfileLoad();
-            logInfo.info(MarkupHelper.createLabel("I click on reason code drop down to select the reason for mass transfer", ExtentColor.PURPLE));
-            gl.clickElement(maeGUIObjects.IROPS_REASON_CODE_DROPDOWN);
-            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//    public void selectTheReasonCodeAndFlightForMassTransfer(ExtentTest logInfo, String reasonCode, String segmentIndex) {
+//        try {
+//            gl.waitProgress();
+//            gl.waitForProfileLoad();
+//            logInfo.info(MarkupHelper.createLabel("I click on reason code drop down to select the reason for mass transfer", ExtentColor.PURPLE));
+//            gl.clickElement(maeGUIObjects.IROPS_REASON_CODE_DROPDOWN);
+//            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//
+//            logInfo.info(MarkupHelper.createLabel("I select the reason for mass transfer as:" + reasonCode, ExtentColor.PURPLE));
+//            String xpath_ReasonCode = String.format("//md-option//div[@class = 'md-text ng-binding' and contains(text(), '%s')]", reasonCode.toUpperCase());
+//            WebElement REASON_CODE_MASS_TRANSFER = driver.get().findElement(By.xpath(xpath_ReasonCode));
+//            gl.clickElement(REASON_CODE_MASS_TRANSFER);
+//            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//
+//            Passenger pax = mPassengers.get(getDriverID()).get(0);
+//            saveOldFlightDetails(logInfo, segmentIndex);
+//            String dt = String.valueOf(pax.getSegmentDate(Integer.parseInt(segmentIndex)));
+//            int days = 0;
+//            String departureDate=gl.plusDaysFromToday(days);;
+//            logInfo.info(MarkupHelper.createLabel("I enter the departure date", ExtentColor.PURPLE));
+//            boolean noFlight = false;
+//            int j;
+//            if (gl.existElement(maeGUIObjects.NO_ALTERNATE_FLIGHT)) {
+//
+//                for (j = 0; j <= 10; j++) {
+//                    dt = String.valueOf(pax.getSegmentDate(Integer.parseInt(segmentIndex)));
+//                    days = Integer.parseInt(dt) + (j);
+//                    departureDate = gl.plusDaysFromToday(days);
+//                    logInfo.info(MarkupHelper.createLabel("I enter the departure date", ExtentColor.PURPLE));
+//                    gl.clickElement(maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT);
+////                    maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT.sendKeys(Keys.CONTROL + "a");
+////                    maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT.sendKeys(Keys.BACK_SPACE);
+//                    gl.inputText(maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT, departureDate);
+//                    gl.waitProgress();
+//                    gl.clickElement(maeGUIObjects.SEARCH_ICON_FOR_ALTERNATE_FLIGHT);
+//                    gl.waitProgress();
+//                    if (!gl.existElement(maeGUIObjects.NO_ALTERNATE_FLIGHT)) {
+//                        pax.setSegmentDate(Integer.parseInt(segmentIndex), days);
+//                        noFlight=true;
+//                        break;
+//                    } else if (j == 10) {
+//
+//                        logInfo.fail("No alternate flight available even after: " + j + " days");
+//                        Assert.fail("No flight available for Mass transfer");
+//
+//                    }
+//                }
+//
+//            }
+//
+//            List<WebElement> alternateFlights = driver.get().findElements(By.xpath("//div[@class='ng-binding layout-row flex-10']"));
+//
+//            for (int i = 1; i <= alternateFlights.size(); i++) {
+//                // Get route
+//                WebElement routeElement = driver.get().findElement(By.xpath("(//span[@class='pssgui-bold ng-binding'])[2]"));
+//                String route = routeElement.getText();
+//                String origin = route.substring(0, 3);
+//                String destination = route.substring(route.length() - 3);
+//                pax.setSegmentOriginCity(Integer.parseInt(segmentIndex), origin);
+//                pax.setSegmentDestinationCity(Integer.parseInt(segmentIndex), destination);
+//
+//                // Get alternate flight number
+//                String xpath_alternateFlights = "(//div[@class='ng-binding layout-row flex-10'])[" + ((2 * i) - 1) + "]";
+//                WebElement ALTERNATE_FLIGHT = driver.get().findElement(By.xpath(xpath_alternateFlights));
+//                String alternateFlightNumber = ALTERNATE_FLIGHT.getText().substring(2);
+//                pax.setSegmentFlight(Integer.parseInt(segmentIndex), alternateFlightNumber);
+//
+//                // Get flight status
+//                String xpath_flightStatus = "";
+//                //Get flight duration
+//                String xpath_flightDuration = "";
+//                if (pax.getmassTransferType().equalsIgnoreCase("current")) {
+//                    xpath_flightStatus = "(//div[@class='ng-binding layout-row flex-15'])[" + i + "]";
+//                } else if (pax.getmassTransferType().equalsIgnoreCase("outbound")) {
+//                    xpath_flightStatus = "(//div[@class='text-center ng-binding layout-row flex-15'])[" + i + "]";
+//                    xpath_flightDuration = "(//div[@class='layout-column flex-15'])[" + i + "]";
+//                }
+//
+//                WebElement ALTERNATE_FLIGHT_STATUS = driver.get().findElement(By.xpath(xpath_flightStatus));
+//                String alternateFlightStatus = ALTERNATE_FLIGHT_STATUS.getText();
+//                if (pax.getmassTransferType().equalsIgnoreCase("outbound")) {
+//                    WebElement ALTERNATE_FLIGHT_DURATION = driver.get().findElement(By.xpath(xpath_flightDuration));
+//                    String alternateFlightDuration = ALTERNATE_FLIGHT_DURATION.getText();
+//                    if (alternateFlightDuration.contains("-")) {
+//                        continue;
+//                    }
+//                }
+//                String xpath_Warning = "(//div[contains(@class, 'table-alt-row')])[" + i + "]//i[contains(@class, 'icon-warning') and contains(@class, 'pssgui-design-status-critical') and not(contains(@class, 'ng-hide'))]";
+//                List<WebElement> WARNING_SYMBOL = driver.get().findElements(By.xpath(xpath_Warning));
+//                if (gl.existElement(WARNING_SYMBOL)) {
+//                    continue;
+//                }
+//                gl.scrollToWebElement(ALTERNATE_FLIGHT_STATUS);
+//                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//                // Handle NotOpen flights
+//                if (alternateFlightStatus.equalsIgnoreCase("NotOpen")) {
+//                    assignShipmentNumberToFlightInGUIInMassTransferPage(Integer.parseInt(segmentIndex), logInfo);
+//
+////                    assignShipmentNumberToFlightInGUI(Integer.parseInt(segmentIndex), logInfo);
+//                    if (pax.getmassTransferType().equalsIgnoreCase("outbound")) {
+//                        if (maeGUIObjects.BACK_TO_CONNECTIONS.isEnabled()) {
+//                            gl.clickElement(maeGUIObjects.BACK_TO_CONNECTIONS);
+//                            gl.waitForProfileLoad();
+//                            gl.waitForProfileLoad();
+////                            selectTheFlightForOutboundMassTransfer(logInfo);
+//                            pax.setSegmentOriginCity(Integer.parseInt(segmentIndex), pax.getOldOriginCity());
+//                            pax.setSegmentDestinationCity(Integer.parseInt(segmentIndex), pax.getOldDestinationCity());
+//                            pax.setSegmentFlight(Integer.parseInt(segmentIndex), pax.getOldFlightNumber());
+//                            selectTheFlightForOutboundMassTransferWithOutboundSegment(logInfo, segmentIndex);
+//                            if(noFlight)
+//                            {
+//                                gl.clickElement(maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT);
+//                                gl.inputText(maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT, departureDate);
+//                                gl.waitProgress();
+//                                gl.clickElement(maeGUIObjects.SEARCH_ICON_FOR_ALTERNATE_FLIGHT);
+//                                gl.waitProgress();
+//                            }
+//                            routeElement = driver.get().findElement(By.xpath("(//span[@class='pssgui-bold ng-binding'])[2]"));
+//                            route = routeElement.getText();
+//                            origin = route.substring(0, 3);
+//                            destination = route.substring(route.length() - 3);
+//                            pax.setSegmentOriginCity(Integer.parseInt(segmentIndex), origin);
+//                            pax.setSegmentDestinationCity(Integer.parseInt(segmentIndex), destination);
+//
+//                            // Get alternate flight number
+//                            xpath_alternateFlights = "(//div[@class='ng-binding layout-row flex-10'])[" + ((2 * i) - 1) + "]";
+//                            ALTERNATE_FLIGHT = driver.get().findElement(By.xpath(xpath_alternateFlights));
+//                            alternateFlightNumber = ALTERNATE_FLIGHT.getText().substring(2);
+//                            pax.setSegmentFlight(Integer.parseInt(segmentIndex), alternateFlightNumber);
+//
+//                            // Get flight status
+//                            xpath_flightStatus = "(//div[@class='text-center ng-binding layout-row flex-15'])[" + i + "]";
+//                            ALTERNATE_FLIGHT_STATUS = driver.get().findElement(By.xpath(xpath_flightStatus));
+//                            gl.scrollToWebElement(ALTERNATE_FLIGHT_STATUS);
+//                        }
+//                    } else if (pax.getmassTransferType().equalsIgnoreCase("current")) {
+//                        if (maeGUIObjects.BACK_TO_MENU.isEnabled()) {
+//                            gl.clickElement(maeGUIObjects.BACK_TO_MENU);
+//                            selectMassTransferType(logInfo, pax.getmassTransferType());
+//
+//                            if(noFlight)
+//                            {
+//                                gl.clickElement(maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT);
+//                                gl.inputText(maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT, departureDate);
+//                                gl.waitProgress();
+//                                gl.clickElement(maeGUIObjects.SEARCH_ICON_FOR_ALTERNATE_FLIGHT);
+//                                gl.waitProgress();
+//                            }
+//                        }
+//                    }// Refresh
+//                    gl.waitForProfileLoad();
+//                    gl.waitForProfileLoad();
+//
+//                    // Re-fetch the updated status
+//                    ALTERNATE_FLIGHT_STATUS = driver.get().findElement(By.xpath(xpath_flightStatus));
+//                    alternateFlightStatus = ALTERNATE_FLIGHT_STATUS.getText();
+//
+//                    if (alternateFlightStatus.equalsIgnoreCase("Open")) {
+//                        System.out.println("Flight has been opened");
+//                    } else {
+//                        continue; // Skip this iteration if still not open
+//                    }
+//                }
+//
+//                // If flight is open, proceed to select radio button
+//                if (alternateFlightStatus.equalsIgnoreCase("Open")) {
+//                    String xpath_RadioButton = "(.//md-radio-button)[" + i + "]";
+//                    WebElement RADIO_BUTTON = driver.get().findElement(By.xpath(xpath_RadioButton));
+//                    gl.scrollToWebElement(RADIO_BUTTON);
+//                    if (RADIO_BUTTON.isEnabled()) {
+//                        gl.clickElement(RADIO_BUTTON);
+//                        break; // Exit loop after successful selection
+//                    }
+//                }
+//                logInfo.info(MarkupHelper.createLabel("I select the alternate flight as: " + alternateFlightNumber, ExtentColor.PURPLE));
+//            }
+//            gl.waitProgress();
+//            gl.waitForProfileLoad();
+//            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//            // Click 'Transfer by Priority' if available
+//            if (maeGUIObjects.TRANSFER_BY_PRIORITY.isEnabled()) {
+//                gl.clickElement(maeGUIObjects.TRANSFER_BY_PRIORITY);
+//            }
+//            waitUntilPageLoad(logInfo);
+//        } catch (AssertionError | Exception e) {
+//
+//            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+//            Assert.fail("This step failed.. so stopping...");
+//        }
+//    }
 
-            logInfo.info(MarkupHelper.createLabel("I select the reason for mass transfer as:" + reasonCode, ExtentColor.PURPLE));
-            String xpath_ReasonCode = String.format("//md-option//div[@class = 'md-text ng-binding' and contains(text(), '%s')]", reasonCode.toUpperCase());
-            WebElement REASON_CODE_MASS_TRANSFER = driver.get().findElement(By.xpath(xpath_ReasonCode));
-            gl.clickElement(REASON_CODE_MASS_TRANSFER);
-            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
-            Passenger pax = mPassengers.get(getDriverID()).get(0);
-            saveOldFlightDetails(logInfo, segmentIndex);
-            String dt = String.valueOf(pax.getSegmentDate(Integer.parseInt(segmentIndex)));
-            int days = 0;
-            String departureDate=gl.plusDaysFromToday(days);;
-            logInfo.info(MarkupHelper.createLabel("I enter the departure date", ExtentColor.PURPLE));
-            boolean noFlight = false;
-            int j;
-            if (gl.existElement(maeGUIObjects.NO_ALTERNATE_FLIGHT)) {
+public void selectTheReasonCodeAndFlightForMassTransfer(ExtentTest logInfo, String reasonCode, String segmentIndex) {
+    try {
+        gl.waitProgress();
+        gl.waitForProfileLoad();
+        logInfo.info(MarkupHelper.createLabel("I click on reason code drop down to select the reason for mass transfer", ExtentColor.PURPLE));
+        gl.clickElement(maeGUIObjects.IROPS_REASON_CODE_DROPDOWN);
+        logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
-                for (j = 0; j <= 10; j++) {
-                    dt = String.valueOf(pax.getSegmentDate(Integer.parseInt(segmentIndex)));
-                    days = Integer.parseInt(dt) + (j);
-                    departureDate = gl.plusDaysFromToday(days);
-                    logInfo.info(MarkupHelper.createLabel("I enter the departure date", ExtentColor.PURPLE));
-                    gl.clickElement(maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT);
+        logInfo.info(MarkupHelper.createLabel("I select the reason for mass transfer as:" + reasonCode, ExtentColor.PURPLE));
+        String xpath_ReasonCode = String.format("//md-option//div[@class = 'md-text ng-binding' and contains(text(), '%s')]", reasonCode.toUpperCase());
+        WebElement REASON_CODE_MASS_TRANSFER = driver.get().findElement(By.xpath(xpath_ReasonCode));
+        gl.clickElement(REASON_CODE_MASS_TRANSFER);
+        logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+        Passenger pax = mPassengers.get(getDriverID()).get(0);
+        saveOldFlightDetails(logInfo, segmentIndex);
+        String dt = String.valueOf(pax.getSegmentDate(Integer.parseInt(segmentIndex)));
+        int days = 0;
+        String departureDate=gl.plusDaysFromToday(days);;
+        logInfo.info(MarkupHelper.createLabel("I enter the departure date", ExtentColor.PURPLE));
+        boolean noFlight = false;
+        int j;
+        if (gl.existElement(maeGUIObjects.NO_ALTERNATE_FLIGHT)) {
+
+            for (j = 0; j <= 10; j++) {
+                dt = String.valueOf(pax.getSegmentDate(Integer.parseInt(segmentIndex)));
+                days = Integer.parseInt(dt) + (j);
+                departureDate = gl.plusDaysFromToday(days);
+                logInfo.info(MarkupHelper.createLabel("I enter the departure date", ExtentColor.PURPLE));
+                gl.clickElement(maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT);
 //                    maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT.sendKeys(Keys.CONTROL + "a");
 //                    maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT.sendKeys(Keys.BACK_SPACE);
-                    gl.inputText(maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT, departureDate);
-                    gl.waitProgress();
-                    gl.clickElement(maeGUIObjects.SEARCH_ICON_FOR_ALTERNATE_FLIGHT);
-                    gl.waitProgress();
-                    if (!gl.existElement(maeGUIObjects.NO_ALTERNATE_FLIGHT)) {
-                        pax.setSegmentDate(Integer.parseInt(segmentIndex), days);
-                        noFlight=true;
-                        break;
-                    } else if (j == 10) {
+                gl.inputText(maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT, departureDate);
+                gl.waitProgress();
+                gl.clickElement(maeGUIObjects.SEARCH_ICON_FOR_ALTERNATE_FLIGHT);
+                gl.waitProgress();
+                if (!gl.existElement(maeGUIObjects.NO_ALTERNATE_FLIGHT)) {
+                    pax.setSegmentDate(Integer.parseInt(segmentIndex), days);
+                    noFlight=true;
+                    break;
+                } else if (j == 10) {
 
-                        logInfo.fail("No alternate flight available even after: " + j + " days");
-                        Assert.fail("No flight available for Mass transfer");
+                    logInfo.fail("No alternate flight available even after: " + j + " days");
+                    Assert.fail("No flight available for Mass transfer");
 
-                    }
                 }
-
             }
 
-            List<WebElement> alternateFlights = driver.get().findElements(By.xpath("//div[@class='ng-binding layout-row flex-10']"));
+        }
 
-            for (int i = 1; i <= alternateFlights.size(); i++) {
-                // Get route
-                WebElement routeElement = driver.get().findElement(By.xpath("(//span[@class='pssgui-bold ng-binding'])[2]"));
-                String route = routeElement.getText();
-                String origin = route.substring(0, 3);
-                String destination = route.substring(route.length() - 3);
-                pax.setSegmentOriginCity(Integer.parseInt(segmentIndex), origin);
-                pax.setSegmentDestinationCity(Integer.parseInt(segmentIndex), destination);
+        List<WebElement> alternateFlights = driver.get().findElements(By.xpath("//div[@class='ng-binding layout-row flex-10']"));
 
-                // Get alternate flight number
-                String xpath_alternateFlights = "(//div[@class='ng-binding layout-row flex-10'])[" + ((2 * i) - 1) + "]";
-                WebElement ALTERNATE_FLIGHT = driver.get().findElement(By.xpath(xpath_alternateFlights));
-                String alternateFlightNumber = ALTERNATE_FLIGHT.getText().substring(2);
-                pax.setSegmentFlight(Integer.parseInt(segmentIndex), alternateFlightNumber);
+        for (int i = 1; i <= alternateFlights.size(); i++) {
+            // Get route
+            WebElement routeElement = driver.get().findElement(By.xpath("(//span[@class='pssgui-bold ng-binding'])[2]"));
+            String route = routeElement.getText();
+            String origin = route.substring(0, 3);
+            String destination = route.substring(route.length() - 3);
+            pax.setSegmentOriginCity(Integer.parseInt(segmentIndex), origin);
+            pax.setSegmentDestinationCity(Integer.parseInt(segmentIndex), destination);
 
-                // Get flight status
-                String xpath_flightStatus = "";
-                //Get flight duration
-                String xpath_flightDuration = "";
-                if (pax.getmassTransferType().equalsIgnoreCase("current")) {
-                    xpath_flightStatus = "(//div[@class='ng-binding layout-row flex-15'])[" + i + "]";
-                } else if (pax.getmassTransferType().equalsIgnoreCase("outbound")) {
-                    xpath_flightStatus = "(//div[@class='text-center ng-binding layout-row flex-15'])[" + i + "]";
-                    xpath_flightDuration = "(//div[@class='layout-column flex-15'])[" + i + "]";
-                }
+            // Get alternate flight number
+            String xpath_alternateFlights = "(//div[@class='ng-binding layout-row flex-10'])[" + ((2 * i) - 1) + "]";
+            WebElement ALTERNATE_FLIGHT = driver.get().findElement(By.xpath(xpath_alternateFlights));
+            String alternateFlightNumber = ALTERNATE_FLIGHT.getText().substring(2);
+            pax.setSegmentFlight(Integer.parseInt(segmentIndex), alternateFlightNumber);
 
-                WebElement ALTERNATE_FLIGHT_STATUS = driver.get().findElement(By.xpath(xpath_flightStatus));
-                String alternateFlightStatus = ALTERNATE_FLIGHT_STATUS.getText();
-                if (pax.getmassTransferType().equalsIgnoreCase("outbound")) {
-                    WebElement ALTERNATE_FLIGHT_DURATION = driver.get().findElement(By.xpath(xpath_flightDuration));
-                    String alternateFlightDuration = ALTERNATE_FLIGHT_DURATION.getText();
-                    if (alternateFlightDuration.contains("-")) {
-                        continue;
-                    }
-                }
-                String xpath_Warning = "(//div[contains(@class, 'table-alt-row')])[" + i + "]//i[contains(@class, 'icon-warning') and contains(@class, 'pssgui-design-status-critical') and not(contains(@class, 'ng-hide'))]";
-                List<WebElement> WARNING_SYMBOL = driver.get().findElements(By.xpath(xpath_Warning));
-                if (gl.existElement(WARNING_SYMBOL)) {
+            // Get flight status
+            String xpath_flightStatus = "";
+            //Get flight duration
+            String xpath_flightDuration = "";
+            if (pax.getmassTransferType().equalsIgnoreCase("current")) {
+                xpath_flightStatus = "(//div[@class='ng-binding layout-row flex-15'])[" + i + "]";
+            } else if (pax.getmassTransferType().equalsIgnoreCase("outbound")) {
+                xpath_flightStatus = "(//div[@class='text-center ng-binding layout-row flex-15'])[" + i + "]";
+                xpath_flightDuration = "(//div[@class='layout-column flex-15'])[" + i + "]";
+            }
+
+            WebElement ALTERNATE_FLIGHT_STATUS = driver.get().findElement(By.xpath(xpath_flightStatus));
+            String alternateFlightStatus = ALTERNATE_FLIGHT_STATUS.getText();
+            if (pax.getmassTransferType().equalsIgnoreCase("outbound")) {
+                WebElement ALTERNATE_FLIGHT_DURATION = driver.get().findElement(By.xpath(xpath_flightDuration));
+                String alternateFlightDuration = ALTERNATE_FLIGHT_DURATION.getText();
+                if (alternateFlightDuration.contains("-")) {
                     continue;
                 }
-                gl.scrollToWebElement(ALTERNATE_FLIGHT_STATUS);
-                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
-                // Handle NotOpen flights
-                if (alternateFlightStatus.equalsIgnoreCase("NotOpen")) {
-                    assignShipmentNumberToFlightInGUIInMassTransferPage(Integer.parseInt(segmentIndex), logInfo);
+            }
+            String xpath_Warning = "(//div[contains(@class, 'table-alt-row')])[" + i + "]//i[contains(@class, 'icon-warning') and contains(@class, 'pssgui-design-status-critical') and not(contains(@class, 'ng-hide'))]";
+            List<WebElement> WARNING_SYMBOL = driver.get().findElements(By.xpath(xpath_Warning));
+            if (gl.existElement(WARNING_SYMBOL)) {
+                continue;
+            }
+            gl.scrollToWebElement(ALTERNATE_FLIGHT_STATUS);
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            // Handle NotOpen flights
+            if (alternateFlightStatus.equalsIgnoreCase("NotOpen")) {
+                assignShipmentNumberToFlightInGUIInMassTransferPage(Integer.parseInt(segmentIndex), logInfo);
 
 //                    assignShipmentNumberToFlightInGUI(Integer.parseInt(segmentIndex), logInfo);
-                    if (pax.getmassTransferType().equalsIgnoreCase("outbound")) {
-                        if (maeGUIObjects.BACK_TO_CONNECTIONS.isEnabled()) {
-                            gl.clickElement(maeGUIObjects.BACK_TO_CONNECTIONS);
-                            gl.waitForProfileLoad();
-                            gl.waitForProfileLoad();
+                if (pax.getmassTransferType().equalsIgnoreCase("outbound")) {
+                    if (maeGUIObjects.BACK_TO_CONNECTIONS.isEnabled()) {
+                        gl.clickElement(maeGUIObjects.BACK_TO_CONNECTIONS);
+                        gl.waitForProfileLoad();
+                        gl.waitForProfileLoad();
 //                            selectTheFlightForOutboundMassTransfer(logInfo);
-                            pax.setSegmentOriginCity(Integer.parseInt(segmentIndex), pax.getOldOriginCity());
-                            pax.setSegmentDestinationCity(Integer.parseInt(segmentIndex), pax.getOldDestinationCity());
-                            pax.setSegmentFlight(Integer.parseInt(segmentIndex), pax.getOldFlightNumber());
-                            selectTheFlightForOutboundMassTransferWithOutboundSegment(logInfo, segmentIndex);
-                            if(noFlight)
-                            {
-                                gl.clickElement(maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT);
-                                gl.inputText(maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT, departureDate);
-                                gl.waitProgress();
-                                gl.clickElement(maeGUIObjects.SEARCH_ICON_FOR_ALTERNATE_FLIGHT);
-                                gl.waitProgress();
-                            }
-                            routeElement = driver.get().findElement(By.xpath("(//span[@class='pssgui-bold ng-binding'])[2]"));
-                            route = routeElement.getText();
-                            origin = route.substring(0, 3);
-                            destination = route.substring(route.length() - 3);
-                            pax.setSegmentOriginCity(Integer.parseInt(segmentIndex), origin);
-                            pax.setSegmentDestinationCity(Integer.parseInt(segmentIndex), destination);
-
-                            // Get alternate flight number
-                            xpath_alternateFlights = "(//div[@class='ng-binding layout-row flex-10'])[" + ((2 * i) - 1) + "]";
-                            ALTERNATE_FLIGHT = driver.get().findElement(By.xpath(xpath_alternateFlights));
-                            alternateFlightNumber = ALTERNATE_FLIGHT.getText().substring(2);
-                            pax.setSegmentFlight(Integer.parseInt(segmentIndex), alternateFlightNumber);
-
-                            // Get flight status
-                            xpath_flightStatus = "(//div[@class='text-center ng-binding layout-row flex-15'])[" + i + "]";
-                            ALTERNATE_FLIGHT_STATUS = driver.get().findElement(By.xpath(xpath_flightStatus));
-                            gl.scrollToWebElement(ALTERNATE_FLIGHT_STATUS);
+                        pax.setSegmentOriginCity(Integer.parseInt(segmentIndex), pax.getOldOriginCity());
+                        pax.setSegmentDestinationCity(Integer.parseInt(segmentIndex), pax.getOldDestinationCity());
+                        pax.setSegmentFlight(Integer.parseInt(segmentIndex), pax.getOldFlightNumber());
+                        selectTheFlightForOutboundMassTransferWithOutboundSegment(logInfo, segmentIndex);
+                        if(noFlight)
+                        {
+                            gl.clickElement(maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT);
+                            gl.inputText(maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT, departureDate);
+                            gl.waitProgress();
+                            gl.clickElement(maeGUIObjects.SEARCH_ICON_FOR_ALTERNATE_FLIGHT);
+                            gl.waitProgress();
                         }
-                    } else if (pax.getmassTransferType().equalsIgnoreCase("current")) {
-                        if (maeGUIObjects.BACK_TO_MENU.isEnabled()) {
-                            gl.clickElement(maeGUIObjects.BACK_TO_MENU);
-                            selectMassTransferType(logInfo, pax.getmassTransferType());
+                        routeElement = driver.get().findElement(By.xpath("(//span[@class='pssgui-bold ng-binding'])[2]"));
+                        route = routeElement.getText();
+                        origin = route.substring(0, 3);
+                        destination = route.substring(route.length() - 3);
+                        pax.setSegmentOriginCity(Integer.parseInt(segmentIndex), origin);
+                        pax.setSegmentDestinationCity(Integer.parseInt(segmentIndex), destination);
 
-                            if(noFlight)
-                            {
-                                gl.clickElement(maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT);
-                                gl.inputText(maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT, departureDate);
-                                gl.waitProgress();
-                                gl.clickElement(maeGUIObjects.SEARCH_ICON_FOR_ALTERNATE_FLIGHT);
-                                gl.waitProgress();
-                            }
-                        }
-                    }// Refresh
-                    gl.waitForProfileLoad();
-                    gl.waitForProfileLoad();
+                        // Get alternate flight number
+                        xpath_alternateFlights = "(//div[@class='ng-binding layout-row flex-10'])[" + ((2 * i) - 1) + "]";
+                        ALTERNATE_FLIGHT = driver.get().findElement(By.xpath(xpath_alternateFlights));
+                        alternateFlightNumber = ALTERNATE_FLIGHT.getText().substring(2);
+                        pax.setSegmentFlight(Integer.parseInt(segmentIndex), alternateFlightNumber);
 
-                    // Re-fetch the updated status
-                    ALTERNATE_FLIGHT_STATUS = driver.get().findElement(By.xpath(xpath_flightStatus));
-                    alternateFlightStatus = ALTERNATE_FLIGHT_STATUS.getText();
-
-                    if (alternateFlightStatus.equalsIgnoreCase("Open")) {
-                        System.out.println("Flight has been opened");
-                    } else {
-                        continue; // Skip this iteration if still not open
+                        // Get flight status
+                        xpath_flightStatus = "(//div[@class='text-center ng-binding layout-row flex-15'])[" + i + "]";
+                        ALTERNATE_FLIGHT_STATUS = driver.get().findElement(By.xpath(xpath_flightStatus));
+                        gl.scrollToWebElement(ALTERNATE_FLIGHT_STATUS);
                     }
-                }
+                } else if (pax.getmassTransferType().equalsIgnoreCase("current")) {
+                    if (maeGUIObjects.BACK_TO_MENU.isEnabled()) {
+                        gl.clickElement(maeGUIObjects.BACK_TO_MENU);
+                        selectMassTransferType(logInfo, pax.getmassTransferType());
 
-                // If flight is open, proceed to select radio button
+                        if(noFlight)
+                        {
+                            gl.clickElement(maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT);
+                            gl.inputText(maeGUIObjects.DEPARTURE_DATE_FOR_ALTERNATE_FLIGHT, departureDate);
+                            gl.waitProgress();
+                            gl.clickElement(maeGUIObjects.SEARCH_ICON_FOR_ALTERNATE_FLIGHT);
+                            gl.waitProgress();
+                        }
+                    }
+                }// Refresh
+                gl.waitForProfileLoad();
+                gl.waitForProfileLoad();
+
+                // Re-fetch the updated status
+                ALTERNATE_FLIGHT_STATUS = driver.get().findElement(By.xpath(xpath_flightStatus));
+                alternateFlightStatus = ALTERNATE_FLIGHT_STATUS.getText();
+
                 if (alternateFlightStatus.equalsIgnoreCase("Open")) {
-                    String xpath_RadioButton = "(.//md-radio-button)[" + i + "]";
-                    WebElement RADIO_BUTTON = driver.get().findElement(By.xpath(xpath_RadioButton));
-                    gl.scrollToWebElement(RADIO_BUTTON);
-                    if (RADIO_BUTTON.isEnabled()) {
-                        gl.clickElement(RADIO_BUTTON);
-                        break; // Exit loop after successful selection
-                    }
+                    System.out.println("Flight has been opened");
+                } else {
+                    continue; // Skip this iteration if still not open
                 }
-                logInfo.info(MarkupHelper.createLabel("I select the alternate flight as: " + alternateFlightNumber, ExtentColor.PURPLE));
             }
-            gl.waitProgress();
-            gl.waitForProfileLoad();
-            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
-            // Click 'Transfer by Priority' if available
-            if (maeGUIObjects.TRANSFER_BY_PRIORITY.isEnabled()) {
-                gl.clickElement(maeGUIObjects.TRANSFER_BY_PRIORITY);
-            }
-            waitUntilPageLoad(logInfo);
-        } catch (AssertionError | Exception e) {
 
-            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-            Assert.fail("This step failed.. so stopping...");
+            // If flight is open, proceed to select radio button
+            if (alternateFlightStatus.equalsIgnoreCase("Open")) {
+                String xpath_RadioButton = "(.//md-radio-button)[" + i + "]";
+                WebElement RADIO_BUTTON = driver.get().findElement(By.xpath(xpath_RadioButton));
+                gl.scrollToWebElement(RADIO_BUTTON);
+                if (RADIO_BUTTON.isEnabled()) {
+                    gl.clickElement(RADIO_BUTTON);
+                    break; // Exit loop after successful selection
+                }
+            }
+            logInfo.info(MarkupHelper.createLabel("I select the alternate flight as: " + alternateFlightNumber, ExtentColor.PURPLE));
         }
+        gl.waitProgress();
+        gl.waitForProfileLoad();
+        logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+        // Click 'Transfer by Priority' if available
+        if (maeGUIObjects.TRANSFER_BY_PRIORITY.isEnabled()) {
+            gl.clickElement(maeGUIObjects.TRANSFER_BY_PRIORITY);
+        }
+        waitUntilPageLoad(logInfo);
+
+        gl.highLightErrorMessages(logInfo,"Unable to retrieve passenger list");
+
+    } catch (AssertionError | Exception e) {
+
+        ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+        Assert.fail("This step failed.. so stopping...");
     }
+}
 
 
     public void clickPickmanuallyfromlist(ExtentTest logInfo) {
@@ -9894,7 +10089,7 @@ public void selectFullEconomy(ExtentTest logInfo) {
             logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
             gl.clickElement(maeGUIObjects.FLIGHT_SEARCH_BUTTON_IN_GATE1);
             waitUntilPageLoad(logInfo);
-            gl.highLightErrorMessages(logInfo, "Unable to retrieve passenger");
+            gl.highLightErrorMessages(logInfo, "Unable to retrieve passenger", "Unable to retrieve the flight");
             logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -10589,19 +10784,64 @@ public void selectFullEconomy(ExtentTest logInfo) {
 
     public void storeAllFlightNumbers(ExtentTest logInfo) {
         try {
+            Passenger pax= mPassengers.get(getDriverID()).get(0);
             gl.scrollDown();
             gl.waitForProfileLoad();
             int x = 0;
-            int y = 0;
-            for (WebElement flight : maeGUIObjects.FLIGHT_NUMBERS) {
-                for (Passenger passenger : mPassengers.get(getDriverID())) {
-                    passenger.setSegmentFlight(x, flight.getText().substring(0, 5));
-                    passenger.setFlightCount(y);
-                }
-                x++;
-                y++;
-            }
+            int y = 1;
 
+            String origin= maeGUIObjects.ORIGIN.getText().trim();
+            String destination= maeGUIObjects.DESTINATION.getText().trim();
+
+            pax.setSegmentOriginCity(0, origin);
+            pax.setSegmentDestinationCity(0,destination);
+
+
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+            for(int i=1; i<=maeGUIObjects.FLIGHT_NUMBERS.size(); i++){
+
+                String Ori_xpath= "(//div[@airport-code='originDestination.origin'])["+i+"]";
+                WebElement Origin= driver.get().findElement(By.xpath(Ori_xpath));
+                String Desti_xpath= "(//div[@airport-code='originDestination.destination'])["+i+"]";
+                WebElement Destination= driver.get().findElement(By.xpath(Desti_xpath));
+                if(!(Origin.getText().trim().equalsIgnoreCase(origin) && Destination.getText().trim().equalsIgnoreCase(destination))){
+                    continue;
+                }
+                String xpath= "(//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results']//div//div//div//div//div[@class='ng-binding'])["+i+"]";
+                WebElement currentTime = driver.get().findElement(By.xpath("//span[contains(@class, 'pssgui-bold') and contains(@class, 'ng-binding')]"));
+                String startTimeXpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[@ng-if='originDestination.showDateTime' and contains(@class, 'ng-binding')])[1]";
+                WebElement startTime = driver.get().findElement(By.xpath(startTimeXpath));
+                LocalTime current = LocalTime.parse(currentTime.getText().trim(), timeFormatter);
+                String time = "";
+                if (startTime.getText().trim().contains("+")) {
+                    time = startTime.getText().trim();
+                    time = time.substring(0, time.indexOf('+'));
+                } else {
+                    time = startTime.getText().trim();
+                }
+                LocalTime start = LocalTime.parse(time.trim(), timeFormatter);
+
+                WebElement dateTimeElement = driver.get().findElement(By.xpath("//pssgui-date-time//div[contains(@class, 'date-time')]"));
+                WebElement selectedDate = driver.get().findElement(By.xpath("//div[contains(@class, 'carousel-item') and contains(@class, 'tab-active')]"));
+                String dateTimeText = dateTimeElement.getText();
+                String currentdateText = dateTimeText.split(" ")[0].trim();  // e.g. "21-Jul-2025"
+                String selectedDateText = selectedDate.getText().split("\\n")[0].trim();             // e.g. "21-Jul-2025" from carousel
+
+                if (current.isAfter(start) && currentdateText.equals(selectedDateText)) {
+                    logInfo.pass("Flight has departed. Searching for the next available flight.");
+                    continue;
+                }
+                else{
+                    WebElement flight= driver.get().findElement(By.xpath(xpath));
+                    for (Passenger passenger : mPassengers.get(getDriverID())) {
+                        passenger.setSegmentFlight(x, flight.getText().substring(2));
+                        passenger.setFlightCount(y);
+
+                    }
+                    x++;
+                    y++;
+                }
+            }
 
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(120));
             wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@ng-repeat='(key, val) in spinnerMessage.pssguiSpinnerMessageUtil.loadingMessage']")));
@@ -15234,21 +15474,229 @@ public void selectFullEconomy(ExtentTest logInfo) {
 //    }
 //}
 
+//public void selectFullEconomyForConnectingFlight(ExtentTest logInfo) {
+//    try {
+//        gl.waitProgress();
+//        gl.waitForProfileLoad();
+//        Passenger pax=mPassengers.get(getDriverID()).get(0);
+//        int a=pax.getFirstSegDate();
+//
+//        int segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//        boolean flightNotFound = gl.existElement(maeGUIObjects.FLIGHT_NOT_FOUND);
+//        boolean noMatchingFlightFound =gl.existElement(maeGUIObjects.NO_MATCHING_FLIGHT_FOUND);
+//
+//        int[] value={1,0};
+//
+//        if (segmentCount == 0 ||flightNotFound&&noMatchingFlightFound) {
+//            value = getCaroselDateCountsForConnectingSegments(logInfo,a);
+//        }
+//
+//        if(maeGUIObjects.CAROUSEL_NEXT_DATES.size()==0){
+//            maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//            gl.waitProgress();
+//        }
+//
+//
+//        boolean seatsBooked = false;
+//
+//        Dates:
+//        for (WebElement nextDate : maeGUIObjects.CAROUSEL_NEXT_DATES) {
+//
+//            // Check if flights are available
+//                 segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//            int dateCount=0;
+//            if ((mPassengers.get(getDriverID()).get(0).getFirstSegDate()) == 0) {
+//                WebElement dateTimeDiv = driver.get().findElement(By.xpath("//div[contains(@class, 'date-time')]"));
+//                // Get the full text, e.g., "30-Aug-2025 01:24"
+//                String fullText = dateTimeDiv.getText();
+//                // Extract just the date part
+//                String date = fullText.split("\\s+")[0];
+//                System.out.println("Extracted Date: " + date);
+//                String todayXpath = String.format("//div[@class='ng-binding' and text()='%s']", date.trim());
+//                WebElement TodayDate = driver.get().findElement(By.xpath(todayXpath));
+//                //to select only today's date alone
+//                gl.clickElement(TodayDate);
+//            }
+//            // Define the formatter matching your time format
+//            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+//            for (int i = 1; i <= segmentCount; i++) {
+//                WebElement currentTime = driver.get().findElement(By.xpath("//span[contains(@class, 'pssgui-bold') and contains(@class, 'ng-binding')]"));
+//                String durationXPath = "(//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//span[@class = 'ng-binding' and contains(text(),'h') and contains(text(),'m')]";
+//                String startTimeXpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[@ng-if='originDestination.showDateTime' and contains(@class, 'ng-binding')])[1]";
+//                WebElement startTime = driver.get().findElement(By.xpath(startTimeXpath));
+//                WebElement durationElement = driver.get().findElement(By.xpath(durationXPath));
+//                LocalTime current = LocalTime.parse(currentTime.getText().trim(), timeFormatter);
+//                String time = "";
+//                if (startTime.getText().trim().contains("+")) {
+//                    time = startTime.getText().trim();
+//                    time = time.substring(0, time.indexOf('+'));
+//                } else {
+//                    time = startTime.getText().trim();
+//                }
+//                LocalTime start = LocalTime.parse(time.trim(), timeFormatter);
+//
+//                WebElement dateTimeElement = driver.get().findElement(By.xpath("//pssgui-date-time//div[contains(@class, 'date-time')]"));
+//                WebElement selectedDate = driver.get().findElement(By.xpath("//div[contains(@class, 'carousel-item') and contains(@class, 'tab-active')]"));
+//                String dateTimeText = dateTimeElement.getText();
+//                String currentdateText = dateTimeText.split(" ")[0].trim();  // e.g. "21-Jul-2025"
+//                String selectedDateText = selectedDate.getText().split("\\n")[0].trim();             // e.g. "21-Jul-2025" from carousel
+//
+//                if (current.isAfter(start) && currentdateText.equals(selectedDateText)) {
+//                    logInfo.pass("Flight has departed. Searching for the next available flight.");
+//                    continue;
+//                }
+//                // Skip if flight duration is 00h
+//                if (durationElement.getText().contains("00h")) {
+//                    continue;
+//                }
+//
+////                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//
+////                    for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                String segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[2]";
+//                String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[4]";
+////                        String segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//
+//                List<WebElement> segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath + "//span[contains(@class, 'small-box')]"));
+////                        List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                int totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                WebElement selectedSeat1 = null;
+//                WebElement selectedSeat2 = null;
+//
+//                // Find valid seat from segment 1
+//                for (WebElement seat : segment1Seats) {
+//                    String text = seat.getText().trim();
+//                    int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                    if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                        selectedSeat1 = seat;
+//                        break;
+//                    }
+//                }
+//
+//                // Find valid seat from segment 2
+//                for (WebElement seat : segment2Seats) {
+//                    String text = seat.getText().trim();
+//                    int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                    if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                        selectedSeat2 = seat;
+//                        break;
+//                    }
+//                }
+//                if (gl.existElement(segment1Seats) && gl.existElement(segment2Seats)) {
+//                    if (selectedSeat1 != null && selectedSeat2 != null) {
+//                        gl.clickElement(selectedSeat1);
+//                        gl.clickElement(selectedSeat2);
+//                        if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > value[1] && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                            seatsBooked = true;
+//                            System.out.println("Selected seats for both segments.");
+//                            String date= "";
+//                            if (gl.existElement(maeGUIObjects.FIRST_SEGMENT_DATE_ORDER_PAGE_1)) {
+//                                date = maeGUIObjects.FIRST_SEGMENT_DATE_ORDER_PAGE.getText().trim();
+//                                pax.setfirstConnectingSegDateOrderPage(date);
+//                                break Dates;
+//                            }
+//
+//                        }
+//                    } else {
+//                        System.out.println("No valid seat pair found for segment index: " + i);
+//                    }
+//                }
+//
+//                List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//                if (!seatsBooked && gl.existElement(nonCodeShareFlights)) {
+//                    for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                        segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[2]";
+////                        String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[4]";
+//                        segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//
+//                        segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                        segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                        totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                        selectedSeat1 = null;
+//                        selectedSeat2 = null;
+//
+//                        // Find valid seat from segment 1
+//                        for (WebElement seat : segment1Seats) {
+//                            String text = seat.getText().trim();
+//                            int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                            if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                                selectedSeat1 = seat;
+//                                break;
+//                            }
+//                        }
+//
+//                        // Find valid seat from segment 2
+//                        for (WebElement seat : segment2Seats) {
+//                            String text = seat.getText().trim();
+//                            int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                            if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                                selectedSeat2 = seat;
+//                                break;
+//                            }
+//                        }
+//
+//                        if (selectedSeat1 != null && selectedSeat2 != null) {
+//                            gl.clickElement(selectedSeat1);
+//                            gl.clickElement(selectedSeat2);
+//                            if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > value[1] && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                                seatsBooked = true;
+//                                System.out.println("Selected seats for both segments.");
+//                                break Dates;
+//                            }
+//                        } else {
+//                            System.out.println("No valid seat pair found for segment index: " + i);
+//                        }
+//                    }
+//                }
+//            }
+//
+//            dateCount++;
+//            gl.waitProgress();
+//            if(seatsBooked==false && dateCount==value[0])
+//            {
+//                logInfo.info(MarkupHelper.createLabel("No Seats found for the given class even after "+value[0]+" Days.", ExtentColor.RED));
+//                Assert.fail("No Seats found for the given class even after "+value[0]+" Days.");
+//            }
+//            maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//            nextDate.click();
+//            gl.waitProgress();
+//        }
+//
+//    } catch (AssertionError | Exception e) {
+//        ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+//        Assert.fail("This step failed.. so stopping...");
+//    }
+//}
+
 public void selectFullEconomyForConnectingFlight(ExtentTest logInfo) {
     try {
         gl.waitProgress();
         gl.waitForProfileLoad();
         Passenger pax=mPassengers.get(getDriverID()).get(0);
         int a=pax.getFirstSegDate();
+        int initialRemoveIcons =0;
+
+        int dateCount = 0;
+        int dateLimit = 20;
+        boolean seatsBooked = false;
+        if(gl.existElement(maeGUIObjects.REMOVE_ICONS_AVAILABLE)) {
+            initialRemoveIcons = maeGUIObjects.REMOVE_ICONS_AVAILABLE.size();
+        }
 
         int segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
         boolean flightNotFound = gl.existElement(maeGUIObjects.FLIGHT_NOT_FOUND);
         boolean noMatchingFlightFound =gl.existElement(maeGUIObjects.NO_MATCHING_FLIGHT_FOUND);
-
+        boolean getCaroselDate = false;
         int[] value={1,0};
 
         if (segmentCount == 0 ||flightNotFound&&noMatchingFlightFound) {
             value = getCaroselDateCountsForConnectingSegments(logInfo,a);
+            getCaroselDate = true;
         }
 
         if(maeGUIObjects.CAROUSEL_NEXT_DATES.size()==0){
@@ -15257,14 +15705,18 @@ public void selectFullEconomyForConnectingFlight(ExtentTest logInfo) {
         }
 
 
-        boolean seatsBooked = false;
+        seatsBooked = false;
 
         Dates:
         for (WebElement nextDate : maeGUIObjects.CAROUSEL_NEXT_DATES) {
-
+            if(getCaroselDate)
+            {
+                initialRemoveIcons = value[1];
+                dateLimit = value[0];
+            }
             // Check if flights are available
-//                int segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
-            int dateCount=0;
+            segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+            dateCount=0;
             if ((mPassengers.get(getDriverID()).get(0).getFirstSegDate()) == 0) {
                 WebElement dateTimeDiv = driver.get().findElement(By.xpath("//div[contains(@class, 'date-time')]"));
                 // Get the full text, e.g., "30-Aug-2025 01:24"
@@ -15347,9 +15799,13 @@ public void selectFullEconomyForConnectingFlight(ExtentTest logInfo) {
                 }
                 if (gl.existElement(segment1Seats) && gl.existElement(segment2Seats)) {
                     if (selectedSeat1 != null && selectedSeat2 != null) {
+                        gl.scrollTo(selectedSeat1);
+                        logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                        gl.scrollTo(selectedSeat2);
+                        logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
                         gl.clickElement(selectedSeat1);
                         gl.clickElement(selectedSeat2);
-                        if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > value[1] && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+                        if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > initialRemoveIcons && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
                             seatsBooked = true;
                             System.out.println("Selected seats for both segments.");
                             String date= "";
@@ -15401,9 +15857,13 @@ public void selectFullEconomyForConnectingFlight(ExtentTest logInfo) {
                         }
 
                         if (selectedSeat1 != null && selectedSeat2 != null) {
+                            gl.scrollTo(selectedSeat1);
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                            gl.scrollTo(selectedSeat2);
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
                             gl.clickElement(selectedSeat1);
                             gl.clickElement(selectedSeat2);
-                            if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > value[1] && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+                            if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > initialRemoveIcons && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
                                 seatsBooked = true;
                                 System.out.println("Selected seats for both segments.");
                                 break Dates;
@@ -15417,10 +15877,10 @@ public void selectFullEconomyForConnectingFlight(ExtentTest logInfo) {
 
             dateCount++;
             gl.waitProgress();
-            if(seatsBooked==false && dateCount==value[0])
+            if(seatsBooked==false && dateCount==dateLimit)
             {
-                logInfo.info(MarkupHelper.createLabel("No Seats found for the given class even after "+value[0]+" Days.", ExtentColor.RED));
-                Assert.fail("No Seats found for the given class even after "+value[0]+" Days.");
+                logInfo.info(MarkupHelper.createLabel("No Seats found for the given class even after "+dateLimit+" Days.", ExtentColor.RED));
+                Assert.fail("No Seats found for the given class even after "+dateLimit+" Days.");
             }
             maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
             nextDate.click();
@@ -15684,28 +16144,44 @@ public void selectFullBusinessForConnectingFlight(ExtentTest logInfo) {
         gl.waitForProfileLoad();
         Passenger pax=mPassengers.get(getDriverID()).get(0);
         int a=pax.getFirstSegDate();
+        int initialRemoveIcons =0;
+
+        int dateCount = 0;
+        int dateLimit = 20;
+        boolean seatsBooked = false;
+        if(gl.existElement(maeGUIObjects.REMOVE_ICONS_AVAILABLE)) {
+            initialRemoveIcons = maeGUIObjects.REMOVE_ICONS_AVAILABLE.size();
+        }
+
         int segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
         boolean flightNotFound = gl.existElement(maeGUIObjects.FLIGHT_NOT_FOUND);
         boolean noMatchingFlightFound =gl.existElement(maeGUIObjects.NO_MATCHING_FLIGHT_FOUND);
-
+        boolean getCaroselDate = false;
         int[] value={1,0};
 
         if (segmentCount == 0 ||flightNotFound&&noMatchingFlightFound) {
             value = getCaroselDateCountsForConnectingSegments(logInfo,a);
+            getCaroselDate = true;
         }
 
         if(maeGUIObjects.CAROUSEL_NEXT_DATES.size()==0){
             maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
             gl.waitProgress();
         }
-        boolean seatsBooked = false;
+
+
+        seatsBooked = false;
 
         Dates:
         for (WebElement nextDate : maeGUIObjects.CAROUSEL_NEXT_DATES) {
-
+            if(getCaroselDate)
+            {
+                initialRemoveIcons = value[1];
+                dateLimit = value[0];
+            }
             // Check if flights are available
-            int dateCount =0;
-
+            segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+            dateCount=0;
             if ((mPassengers.get(getDriverID()).get(0).getFirstSegDate()) == 0) {
                 WebElement dateTimeDiv = driver.get().findElement(By.xpath("//div[contains(@class, 'date-time')]"));
                 // Get the full text, e.g., "30-Aug-2025 01:24"
@@ -15767,37 +16243,34 @@ public void selectFullBusinessForConnectingFlight(ExtentTest logInfo) {
                 WebElement selectedSeat1 = null;
                 WebElement selectedSeat2 = null;
 
-                if(gl.existElement(segment1Seats) &&  gl.existElement(segment2Seats))
-                {
-                    // Find valid seat from segment 1
-                    for (WebElement seat : segment1Seats) {
-                        String text = seat.getText().trim();
-                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
-                        if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
-                            selectedSeat1 = seat;
-                            break;
-                        }
+                // Find valid seat from segment 1
+                for (WebElement seat : segment1Seats) {
+                    String text = seat.getText().trim();
+                    int available = Integer.parseInt(text.replaceAll("\\D", ""));
+                    if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+                        selectedSeat1 = seat;
+                        break;
                     }
+                }
 
-                    // Find valid seat from segment 2
-                    for (WebElement seat : segment2Seats) {
-                        String text = seat.getText().trim();
-                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
-                        if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
-                            selectedSeat2 = seat;
-                            break;
-                        }
+                // Find valid seat from segment 2
+                for (WebElement seat : segment2Seats) {
+                    String text = seat.getText().trim();
+                    int available = Integer.parseInt(text.replaceAll("\\D", ""));
+                    if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+                        selectedSeat2 = seat;
+                        break;
                     }
-
+                }
+                if (gl.existElement(segment1Seats) && gl.existElement(segment2Seats)) {
                     if (selectedSeat1 != null && selectedSeat2 != null) {
-                        gl.scrollToWebElement(selectedSeat1);
+                        gl.scrollTo(selectedSeat1);
                         logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
-                        gl.scrollToWebElement(selectedSeat2);
+                        gl.scrollTo(selectedSeat2);
                         logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
-                        gl.waitProgress();
                         gl.clickElement(selectedSeat1);
                         gl.clickElement(selectedSeat2);
-                        if(maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > value[1] && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+                        if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > initialRemoveIcons && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
                             seatsBooked = true;
                             System.out.println("Selected seats for both segments.");
                             String date= "";
@@ -15806,14 +16279,15 @@ public void selectFullBusinessForConnectingFlight(ExtentTest logInfo) {
                                 pax.setfirstConnectingSegDateOrderPage(date);
                                 break Dates;
                             }
+
                         }
                     } else {
                         System.out.println("No valid seat pair found for segment index: " + i);
                     }
                 }
+
                 List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
-                if(!seatsBooked && gl.existElement(nonCodeShareFlights))
-                {
+                if (!seatsBooked && gl.existElement(nonCodeShareFlights)) {
                     for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
                         segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[1]";
 //                        String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[4]";
@@ -15831,7 +16305,7 @@ public void selectFullBusinessForConnectingFlight(ExtentTest logInfo) {
                         for (WebElement seat : segment1Seats) {
                             String text = seat.getText().trim();
                             int available = Integer.parseInt(text.replaceAll("\\D", ""));
-                            if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+                            if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
                                 selectedSeat1 = seat;
                                 break;
                             }
@@ -15841,16 +16315,20 @@ public void selectFullBusinessForConnectingFlight(ExtentTest logInfo) {
                         for (WebElement seat : segment2Seats) {
                             String text = seat.getText().trim();
                             int available = Integer.parseInt(text.replaceAll("\\D", ""));
-                            if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+                            if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
                                 selectedSeat2 = seat;
                                 break;
                             }
                         }
 
                         if (selectedSeat1 != null && selectedSeat2 != null) {
+                            gl.scrollTo(selectedSeat1);
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                            gl.scrollTo(selectedSeat2);
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
                             gl.clickElement(selectedSeat1);
                             gl.clickElement(selectedSeat2);
-                            if(maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > value[1] && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+                            if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > initialRemoveIcons && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
                                 seatsBooked = true;
                                 System.out.println("Selected seats for both segments.");
                                 break Dates;
@@ -15864,22 +16342,227 @@ public void selectFullBusinessForConnectingFlight(ExtentTest logInfo) {
 
             dateCount++;
             gl.waitProgress();
-            if(seatsBooked==false && dateCount>=value[0])
+            if(seatsBooked==false && dateCount==dateLimit)
             {
-                logInfo.info(MarkupHelper.createLabel("No Seats found for the given class even after "+value[0]+" Days.", ExtentColor.RED));
-                Assert.fail("No Seats found for the given class even after "+value[0]+" Days.");
+                logInfo.info(MarkupHelper.createLabel("No Seats found for the given class even after "+dateLimit+" Days.", ExtentColor.RED));
+                Assert.fail("No Seats found for the given class even after "+dateLimit+" Days.");
             }
             maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
             nextDate.click();
             gl.waitProgress();
         }
 
-    }  catch (AssertionError | Exception e) {
+    } catch (AssertionError | Exception e) {
         ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
         Assert.fail("This step failed.. so stopping...");
     }
 
 }
+
+//public void selectFullBusinessForConnectingFlight(ExtentTest logInfo) {
+//
+//    try {
+//        gl.waitProgress();
+//        gl.waitForProfileLoad();
+//        Passenger pax=mPassengers.get(getDriverID()).get(0);
+//        int a=pax.getFirstSegDate();
+//        int segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//        boolean flightNotFound = gl.existElement(maeGUIObjects.FLIGHT_NOT_FOUND);
+//        boolean noMatchingFlightFound =gl.existElement(maeGUIObjects.NO_MATCHING_FLIGHT_FOUND);
+//
+//        int[] value={1,0};
+//
+//        if (segmentCount == 0 ||flightNotFound&&noMatchingFlightFound) {
+//            value = getCaroselDateCountsForConnectingSegments(logInfo,a);
+//        }
+//
+//        if(maeGUIObjects.CAROUSEL_NEXT_DATES.size()==0){
+//            maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//            gl.waitProgress();
+//        }
+//        boolean seatsBooked = false;
+//
+//        Dates:
+//        for (WebElement nextDate : maeGUIObjects.CAROUSEL_NEXT_DATES) {
+//
+//            // Check if flights are available
+//            segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//            int dateCount =0;
+//
+//            if ((mPassengers.get(getDriverID()).get(0).getFirstSegDate()) == 0) {
+//                WebElement dateTimeDiv = driver.get().findElement(By.xpath("//div[contains(@class, 'date-time')]"));
+//                // Get the full text, e.g., "30-Aug-2025 01:24"
+//                String fullText = dateTimeDiv.getText();
+//                // Extract just the date part
+//                String date = fullText.split("\\s+")[0];
+//                System.out.println("Extracted Date: " + date);
+//                String todayXpath = String.format("//div[@class='ng-binding' and text()='%s']", date.trim());
+//                WebElement TodayDate = driver.get().findElement(By.xpath(todayXpath));
+//                //to select only today's date alone
+//                gl.clickElement(TodayDate);
+//            }
+//            // Define the formatter matching your time format
+//            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+//            for (int i = 1; i <= segmentCount; i++) {
+//                WebElement currentTime = driver.get().findElement(By.xpath("//span[contains(@class, 'pssgui-bold') and contains(@class, 'ng-binding')]"));
+//                String durationXPath = "(//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//span[@class = 'ng-binding' and contains(text(),'h') and contains(text(),'m')]";
+//                String startTimeXpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[@ng-if='originDestination.showDateTime' and contains(@class, 'ng-binding')])[1]";
+//                WebElement startTime = driver.get().findElement(By.xpath(startTimeXpath));
+//                WebElement durationElement = driver.get().findElement(By.xpath(durationXPath));
+//                LocalTime current = LocalTime.parse(currentTime.getText().trim(), timeFormatter);
+//                String time = "";
+//                if (startTime.getText().trim().contains("+")) {
+//                    time = startTime.getText().trim();
+//                    time = time.substring(0, time.indexOf('+'));
+//                } else {
+//                    time = startTime.getText().trim();
+//                }
+//                LocalTime start = LocalTime.parse(time.trim(), timeFormatter);
+//
+//                WebElement dateTimeElement = driver.get().findElement(By.xpath("//pssgui-date-time//div[contains(@class, 'date-time')]"));
+//                WebElement selectedDate = driver.get().findElement(By.xpath("//div[contains(@class, 'carousel-item') and contains(@class, 'tab-active')]"));
+//                String dateTimeText = dateTimeElement.getText();
+//                String currentdateText = dateTimeText.split(" ")[0].trim();  // e.g. "21-Jul-2025"
+//                String selectedDateText = selectedDate.getText().split("\\n")[0].trim();             // e.g. "21-Jul-2025" from carousel
+//
+//                if (current.isAfter(start) && currentdateText.equals(selectedDateText)) {
+//                    logInfo.pass("Flight has departed. Searching for the next available flight.");
+//                    continue;
+//                }
+//                // Skip if flight duration is 00h
+//                if (durationElement.getText().contains("00h")) {
+//                    continue;
+//                }
+//
+////                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//
+////                    for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                String segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[1]";
+//                String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[3]";
+////                        String segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//
+//                List<WebElement> segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath + "//span[contains(@class, 'small-box')]"));
+////                        List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                int totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                WebElement selectedSeat1 = null;
+//                WebElement selectedSeat2 = null;
+//
+//                if(gl.existElement(segment1Seats) &&  gl.existElement(segment2Seats))
+//                {
+//                    // Find valid seat from segment 1
+//                    for (WebElement seat : segment1Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                            selectedSeat1 = seat;
+//                            break;
+//                        }
+//                    }
+//
+//                    // Find valid seat from segment 2
+//                    for (WebElement seat : segment2Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                            selectedSeat2 = seat;
+//                            break;
+//                        }
+//                    }
+//
+//                    if (selectedSeat1 != null && selectedSeat2 != null) {
+//                        gl.scrollToWebElement(selectedSeat1);
+//                        logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//                        gl.scrollToWebElement(selectedSeat2);
+//                        logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//                        gl.waitProgress();
+//                        gl.clickElement(selectedSeat1);
+//                        gl.clickElement(selectedSeat2);
+//                        if(maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > value[1] && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                            seatsBooked = true;
+//                            System.out.println("Selected seats for both segments.");
+//                            String date= "";
+//                            if (gl.existElement(maeGUIObjects.FIRST_SEGMENT_DATE_ORDER_PAGE_1)) {
+//                                date = maeGUIObjects.FIRST_SEGMENT_DATE_ORDER_PAGE.getText().trim();
+//                                pax.setfirstConnectingSegDateOrderPage(date);
+//                                break Dates;
+//                            }
+//                        }
+//                    } else {
+//                        System.out.println("No valid seat pair found for segment index: " + i);
+//                    }
+//                }
+//                List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//                if(!seatsBooked && gl.existElement(nonCodeShareFlights))
+//                {
+//                    for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                        segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[1]";
+////                        String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[4]";
+//                        segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//
+//                        segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                        segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                        totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                        selectedSeat1 = null;
+//                        selectedSeat2 = null;
+//
+//                        // Find valid seat from segment 1
+//                        for (WebElement seat : segment1Seats) {
+//                            String text = seat.getText().trim();
+//                            int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                            if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                                selectedSeat1 = seat;
+//                                break;
+//                            }
+//                        }
+//
+//                        // Find valid seat from segment 2
+//                        for (WebElement seat : segment2Seats) {
+//                            String text = seat.getText().trim();
+//                            int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                            if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                                selectedSeat2 = seat;
+//                                break;
+//                            }
+//                        }
+//
+//                        if (selectedSeat1 != null && selectedSeat2 != null) {
+//                            gl.clickElement(selectedSeat1);
+//                            gl.clickElement(selectedSeat2);
+//                            if(maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > value[1] && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                                seatsBooked = true;
+//                                System.out.println("Selected seats for both segments.");
+//                                break Dates;
+//                            }
+//                        } else {
+//                            System.out.println("No valid seat pair found for segment index: " + i);
+//                        }
+//                    }
+//                }
+//            }
+//
+//            dateCount++;
+//            gl.waitProgress();
+//            if(seatsBooked==false && dateCount>=value[0])
+//            {
+//                logInfo.info(MarkupHelper.createLabel("No Seats found for the given class even after "+value[0]+" Days.", ExtentColor.RED));
+//                Assert.fail("No Seats found for the given class even after "+value[0]+" Days.");
+//            }
+//            maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//            nextDate.click();
+//            gl.waitProgress();
+//        }
+//
+//    }  catch (AssertionError | Exception e) {
+//        ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+//        Assert.fail("This step failed.. so stopping...");
+//    }
+//
+//}
 
 //public void selectFullBusinessForConnectingFlight(ExtentTest logInfo) {
 //
@@ -16499,24 +17182,62 @@ public void selectFullBusinessForConnectingFlight(ExtentTest logInfo) {
         }
     }
 
+//    public void selectTheFlightForOutboundMassTransferWithOutboundSegment(ExtentTest logInfo, String segmentIndex) {
+//        try {
+//            gl.waitProgress();
+//            gl.waitForProfileLoad();
+//
+//            Passenger pax = mPassengers.get(getDriverID()).get(0);
+//            logInfo.info(MarkupHelper.createLabel("I select the outbound flight", ExtentColor.PURPLE));
+//
+//            String xpathOutboundFlight = String.format("//tr[contains(normalize-space(td[1]), '%s') and contains(normalize-space(td[2]), '%s')]", pax.getSegmentFlight(Integer.parseInt(segmentIndex)), pax.getSegmentDestinationCity(Integer.parseInt(segmentIndex)));
+//            WebElement OUTBOUNDFLIGHT = driver.get().findElement(By.xpath(xpathOutboundFlight));
+//
+//            gl.clickElement(OUTBOUNDFLIGHT);
+//            gl.scrollToWebElement(OUTBOUNDFLIGHT);
+//
+//            if (!(OUTBOUNDFLIGHT.isEnabled())) {
+//
+//                logInfo.fail("No flight available for Mass transfer");
+//                Assert.fail("No flight available for Mass transfer");
+//
+//            }
+//            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//
+//            logInfo.info(MarkupHelper.createLabel("I click on next button", ExtentColor.PURPLE));
+//            gl.clickElement(maeGUIObjects.NEXT_BTN_GATE);
+//            waitUntilPageLoad(logInfo);
+//        } catch (AssertionError | Exception e) {
+//
+//            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+//            Assert.fail("This step failed.. so stopping...");
+//        }
+//
+//    }
+
     public void selectTheFlightForOutboundMassTransferWithOutboundSegment(ExtentTest logInfo, String segmentIndex) {
         try {
             gl.waitProgress();
             gl.waitForProfileLoad();
-
+            if(gl.existElement(maeGUIObjects.NO_FLIGHTS_FOUND_DURING_MASS_TRANSFER))
+            {
+                Assert.fail("No OutBound flights available for mass transfer");
+            }
             Passenger pax = mPassengers.get(getDriverID()).get(0);
             logInfo.info(MarkupHelper.createLabel("I select the outbound flight", ExtentColor.PURPLE));
 
             String xpathOutboundFlight = String.format("//tr[contains(normalize-space(td[1]), '%s') and contains(normalize-space(td[2]), '%s')]", pax.getSegmentFlight(Integer.parseInt(segmentIndex)), pax.getSegmentDestinationCity(Integer.parseInt(segmentIndex)));
-            WebElement OUTBOUNDFLIGHT = driver.get().findElement(By.xpath(xpathOutboundFlight));
 
-            gl.clickElement(OUTBOUNDFLIGHT);
-            gl.scrollToWebElement(OUTBOUNDFLIGHT);
-
-            if (!(OUTBOUNDFLIGHT.isEnabled())) {
-
-                logInfo.fail("No flight available for Mass transfer");
-                Assert.fail("No flight available for Mass transfer");
+            List<WebElement> OUTBOUNDFLIGHTS = driver.get().findElements(By.xpath(xpathOutboundFlight));
+            if(gl.existElement(OUTBOUNDFLIGHTS)) {
+                WebElement OUTBOUNDFLIGHT = driver.get().findElement(By.xpath(xpathOutboundFlight));
+                gl.clickElement(OUTBOUNDFLIGHT);
+                gl.scrollToWebElement(OUTBOUNDFLIGHT);
+            }
+            else
+            {
+                logInfo.fail("No Outbound flight available for Mass transfer");
+                Assert.fail("No Outbound flight available for Mass transfer");
 
             }
             logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
@@ -19041,7 +19762,7 @@ public void selectFullBusinessForConnectingFlight(ExtentTest logInfo) {
     }
 
 
-public void selectFullEconomyForSecondSegmentWithConnectingFlight(ExtentTest logInfo) {
+public void selectFullEconomyForSecondSegmentWithConnectingFlight(ExtentTest logInfo) { //1st
     try {
         gl.waitProgress();
         gl.waitForProfileLoad();
@@ -19061,7 +19782,7 @@ public void selectFullEconomyForSecondSegmentWithConnectingFlight(ExtentTest log
             dateLimit = 30;
         }
         else {
-            dateLimit = days+20;
+            dateLimit = 20;
         }
 
         while (true) {
@@ -19080,8 +19801,9 @@ public void selectFullEconomyForSecondSegmentWithConnectingFlight(ExtentTest log
 
                 int segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
                 boolean flightNotFound = gl.existElement(maeGUIObjects.FLIGHT_NOT_FOUND);
+                boolean noMatchingFlightFound =gl.existElement(maeGUIObjects.NO_MATCHING_FLIGHT_FOUND);
 
-                if (segmentCount == 0 || flightNotFound) {
+                if (segmentCount == 0 || (flightNotFound && noMatchingFlightFound)) {
                     // Move carousel
                     maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
                     gl.waitProgress();
@@ -19100,13 +19822,19 @@ public void selectFullEconomyForSecondSegmentWithConnectingFlight(ExtentTest log
 
                 break; // exit if you’ve found a valid flight
 
-            } catch (StaleElementReferenceException e) {
-                System.out.println("Stale element detected. Re-fetching carousel and retrying...");
-                continue; // just re-loop, re-fetch elements
-            } catch (Exception e) {
-                e.printStackTrace();
-                Assert.fail("Unexpected error: " + e.getMessage());
+            } catch (AssertionError | Exception e) {
+
+                ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+                Assert.fail("This step failed.. so stopping...");
             }
+
+//            catch (StaleElementReferenceException e) {
+//                System.out.println("Stale element detected. Re-fetching carousel and retrying...");
+//                continue; // just re-loop, re-fetch elements
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                Assert.fail("Unexpected error: " + e.getMessage());
+//            }
         }
         Dates:
         for (WebElement nextDate : maeGUIObjects.CAROUSEL_NEXT_DATES) {
@@ -19280,49 +20008,100 @@ public void selectFullEconomyForSecondSegmentWithConnectingFlight(ExtentTest log
 }
 
 
-
-
-//    public void selectFullBusinessForSecondSegmentWithConnectingFlight(ExtentTest logInfo) {
+//public void selectFullEconomyForSecondSegmentWithConnectingFlight(ExtentTest logInfo) { // 2nd
+//    try {
+//        gl.waitProgress();
+//        gl.waitForProfileLoad();
 //
-//        try {
-//            gl.waitProgress();
-//            gl.waitForProfileLoad();
+//        Passenger pax = mPassengers.get(getDriverID()).get(0);
+//        maeGUIObjects.FLIGHTS_AVAILABLE.get(3).click();
+//        gl.waitProgress();
+//        String dt = pax.getfirstConnectingSegDateOrderPage();
+//        if (dt.isEmpty()) {
+//            logInfo.fail("Flight not Booked");
+//            Assert.fail("Flight not Booked");
+//        }
+//        String secDate = maeGUIObjects.SECOND_SEGMENT_DATE_ORDER_PAGE.getText().split("\n")[0].trim();
 //
-//            maeGUIObjects.FLIGHTS_AVAILABLE.get(3).click();
-//            gl.waitProgress();
-//            int initialRemoveIcons =0;
-//            int dateCount = 0;
-//            int dateLimit = 0;
-//            boolean seatsBooked = false;
-//            if(gl.existElement(maeGUIObjects.REMOVE_ICONS_AVAILABLE)) {
-//                initialRemoveIcons = maeGUIObjects.REMOVE_ICONS_AVAILABLE.size();
-//            }
-//            Dates:
-//            for (WebElement nextDate : maeGUIObjects.CAROUSEL_NEXT_DATES) {
-//                dateCount = 1;
-//                if(maeGUIObjects.CAROUSEL_NEXT_DATES.size()>60)
-//                {
-//                    dateLimit = 30;
-//                }
-//                else {
-//                    dateLimit = maeGUIObjects.CAROUSEL_NEXT_DATES.size();
-//                }
-//                // Check if flights are available
-//                int segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
-//                boolean flightNotFound = gl.existElement(maeGUIObjects.FLIGHT_NOT_FOUND);
+//        int a = pax.getFirstSegDate();
+//        int b = pax.getSecondSegDate();
+//        int c = b - a;
+//        dt = pax.getfirstConnectingSegDateOrderPage();
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+//        LocalDate date1 = LocalDate.parse(dt, formatter);
+//        LocalDate newDate = date1.plusDays(c);
+//        String finalDate = newDate.format(formatter);
+//        String dt1 = pax.getfirstConnectingSegDateOrderPage().substring(0, 2);
+//        int k = Integer.parseInt(dt1);
+//        String secDate1 = maeGUIObjects.SECOND_SEGMENT_DATE_ORDER_PAGE.getText().trim().substring(0, 2);
+//        int l = Integer.parseInt(secDate1);
+//        if (dt.equalsIgnoreCase(secDate) || k > l) {
+//            while (true) {
+//                try {
+//                    // Re-fetch carousel items dynamically
+//                    List<WebElement> allDates = maeGUIObjects.CAROUSEL_NEXT_DATES;
 //
-//                if (segmentCount == 0 || flightNotFound) {
-//                    // Skip this date and go to next
-//                    maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                    if (allDates.isEmpty()) {
+//                        System.out.println("No more dates visible — breaking loop.");
+//                        break;
+//                    }
+//
+//                    WebElement nextDate = allDates.get(0);  // always select the first available date
 //                    nextDate.click();
 //                    gl.waitProgress();
-//                    continue;
+//                    secDate = maeGUIObjects.SECOND_SEGMENT_DATE_ORDER_PAGE.getText().split("\n")[0].trim();
+//                    if (finalDate.equalsIgnoreCase(secDate)) {
+//
+//                        break;
+//                    }
+//                    maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                    gl.waitProgress();
+//
+//                } catch (StaleElementReferenceException e) {
+//                    System.out.println("Stale element detected. Re-fetching carousel and retrying...");
+//                    continue; // just re-loop, re-fetch elements
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    Assert.fail("Unexpected error: " + e.getMessage());
 //                }
 //
+//            }
+//
+//
+//            int segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//            boolean flightNotFound = gl.existElement(maeGUIObjects.FLIGHT_NOT_FOUND);
+//            boolean noMatchingFlightFound =gl.existElement(maeGUIObjects.NO_MATCHING_FLIGHT_FOUND);
+//
+//            int[] value={1,0};
+//
+//            if (segmentCount == 0 ||flightNotFound&&noMatchingFlightFound) {
+//                value = getCaroselDateCountsForConnectingSegments(logInfo,b);
+//            }
+//            if(maeGUIObjects.CAROUSEL_NEXT_DATES.size()==0){
+//                maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                gl.waitProgress();
+//            }
+//            boolean seatsBooked = false;
+//
+//            Dates:
+//            for (WebElement nextDate : maeGUIObjects.CAROUSEL_NEXT_DATES) {
+//                segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//                int dateCount = 0;
+//                if ((mPassengers.get(getDriverID()).get(0).getFirstSegDate()) == 0) {
+//                    WebElement dateTimeDiv = driver.get().findElement(By.xpath("//div[contains(@class, 'date-time')]"));
+//                    // Get the full text, e.g., "30-Aug-2025 01:24"
+//                    String fullText = dateTimeDiv.getText();
+//                    // Extract just the date part
+//                    String date = fullText.split("\\s+")[0];
+//                    System.out.println("Extracted Date: " + date);
+//                    String todayXpath = String.format("//div[@class='ng-binding' and text()='%s']", date.trim());
+//                    WebElement TodayDate = driver.get().findElement(By.xpath(todayXpath));
+//                    //to select only today's date alone
+//                    gl.clickElement(TodayDate);
+//                }
 //                // Define the formatter matching your time format
 //                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 //                for (int i = 1; i <= segmentCount; i++) {
-//
 //                    WebElement currentTime = driver.get().findElement(By.xpath("//span[contains(@class, 'pssgui-bold') and contains(@class, 'ng-binding')]"));
 //                    String durationXPath = "(//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//span[@class = 'ng-binding' and contains(text(),'h') and contains(text(),'m')]";
 //                    String startTimeXpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[@ng-if='originDestination.showDateTime' and contains(@class, 'ng-binding')])[1]";
@@ -19339,11 +20118,12 @@ public void selectFullEconomyForSecondSegmentWithConnectingFlight(ExtentTest log
 //                    LocalTime start = LocalTime.parse(time.trim(), timeFormatter);
 //
 //                    WebElement dateTimeElement = driver.get().findElement(By.xpath("//pssgui-date-time//div[contains(@class, 'date-time')]"));
+//                    WebElement selectedDate = driver.get().findElement(By.xpath("//div[contains(@class, 'carousel-item') and contains(@class, 'tab-active')]"));
 //                    String dateTimeText = dateTimeElement.getText();
 //                    String currentdateText = dateTimeText.split(" ")[0].trim();  // e.g. "21-Jul-2025"
-//                    String nextDateText = nextDate.getText().split("\\n")[0].trim();             // e.g. "21-Jul-2025" from carousel
+//                    String selectedDateText = selectedDate.getText().split("\\n")[0].trim();             // e.g. "21-Jul-2025" from carousel
 //
-//                    if (current.isAfter(start) && currentdateText.equals(nextDateText)) {
+//                    if (current.isAfter(start) && currentdateText.equals(selectedDateText)) {
 //                        logInfo.pass("Flight has departed. Searching for the next available flight.");
 //                        continue;
 //                    }
@@ -19351,53 +20131,47 @@ public void selectFullEconomyForSecondSegmentWithConnectingFlight(ExtentTest log
 //                    if (durationElement.getText().contains("00h")) {
 //                        continue;
 //                    }
-//                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
 //
-//                    for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
-//                        String segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[1]";
-////                        String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[3]";
-//                        String segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
-//                        List<WebElement> segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
-////                        List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath + "//span[contains(@class, 'small-box')]"));
-//                        List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+////                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
 //
-//                        int totalPassengers = mPassengers.get(getDriverID()).size();
+////                    for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                    String segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[2]";
+//                    String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[4]";
+////                        String segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
 //
-//                        WebElement selectedSeat1 = null;
-//                        WebElement selectedSeat2 = null;
+//                    List<WebElement> segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                    List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath + "//span[contains(@class, 'small-box')]"));
+////                        List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
 //
-//                        // Find valid seat from segment 1
-//                        for (WebElement seat : segment1Seats) {
-//                            String text = seat.getText().trim();
-//                            int available = Integer.parseInt(text.replaceAll("\\D", ""));
-//                            if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
-//                                selectedSeat1 = seat;
-//                                break;
-//                            }
+//                    int totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                    WebElement selectedSeat1 = null;
+//                    WebElement selectedSeat2 = null;
+//
+//                    // Find valid seat from segment 1
+//                    for (WebElement seat : segment1Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                            selectedSeat1 = seat;
+//                            break;
 //                        }
+//                    }
 //
-//                        // Find valid seat from segment 2
-//                        for (WebElement seat : segment2Seats) {
-//                            String text = seat.getText().trim();
-//                            int available = Integer.parseInt(text.replaceAll("\\D", ""));
-//                            if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
-//                                selectedSeat2 = seat;
-//                                break;
-//                            }
+//                    // Find valid seat from segment 2
+//                    for (WebElement seat : segment2Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                            selectedSeat2 = seat;
+//                            break;
 //                        }
-//
+//                    }
+//                    if (gl.existElement(segment1Seats) && gl.existElement(segment2Seats)) {
 //                        if (selectedSeat1 != null && selectedSeat2 != null) {
-//                            gl.waitProgress();
-//                            gl.scrollToWebElement(selectedSeat1);
-//                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
-//                            gl.scrollToWebElement(selectedSeat2);
-//                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 //                            gl.clickElement(selectedSeat1);
-//                            gl.waitProgress();
 //                            gl.clickElement(selectedSeat2);
-//                            gl.waitProgress();
-//
-//                            if(maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > initialRemoveIcons && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                            if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > value[1] && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
 //                                seatsBooked = true;
 //                                System.out.println("Selected seats for both segments.");
 //                                break Dates;
@@ -19406,175 +20180,1887 @@ public void selectFullEconomyForSecondSegmentWithConnectingFlight(ExtentTest log
 //                            System.out.println("No valid seat pair found for segment index: " + i);
 //                        }
 //                    }
+//
+//                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//                    if (!seatsBooked && gl.existElement(nonCodeShareFlights)) {
+//                        for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                            segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[2]";
+////                        String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[4]";
+//                            segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//
+//                            segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                            segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                            totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                            selectedSeat1 = null;
+//                            selectedSeat2 = null;
+//
+//                            // Find valid seat from segment 1
+//                            for (WebElement seat : segment1Seats) {
+//                                String text = seat.getText().trim();
+//                                int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                                if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                                    selectedSeat1 = seat;
+//                                    break;
+//                                }
+//                            }
+//
+//                            // Find valid seat from segment 2
+//                            for (WebElement seat : segment2Seats) {
+//                                String text = seat.getText().trim();
+//                                int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                                if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                                    selectedSeat2 = seat;
+//                                    break;
+//                                }
+//                            }
+//
+//                            if (selectedSeat1 != null && selectedSeat2 != null) {
+//                                gl.clickElement(selectedSeat1);
+//                                gl.clickElement(selectedSeat2);
+//                                if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > value[1] && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                                    seatsBooked = true;
+//                                    System.out.println("Selected seats for both segments.");
+//                                    break Dates;
+//                                }
+//                            } else {
+//                                System.out.println("No valid seat pair found for segment index: " + i);
+//                            }
+//                        }
+//                    }
 //                }
 //
 //                dateCount++;
 //                gl.waitProgress();
-//                if(seatsBooked==false && dateCount==dateLimit)
-//                {
-//                    logInfo.info(MarkupHelper.createLabel("No Seats found for the given class even after "+dateLimit+" Days.", ExtentColor.RED));
-//                    Assert.fail("No Seats found for the given class even after "+dateLimit+" Days.");
+//                value[0] = 7;
+//                if (seatsBooked == false && dateCount == value[0]) {
+//                    logInfo.info(MarkupHelper.createLabel("No Seats found for the given class even after " + value[0] + " Days.", ExtentColor.RED));
+//                    Assert.fail("No Seats found for the given class even after " + value[0] + " Days.");
 //                }
 //                maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
 //                nextDate.click();
 //                gl.waitProgress();
 //            }
 //
-//
-//        } catch (AssertionError | Exception e) {
-//            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-//            Assert.fail("This step failed.. so stopping...");
 //        }
+//        else {
+//
+//            int segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//            boolean flightNotFound = gl.existElement(maeGUIObjects.FLIGHT_NOT_FOUND);
+//            boolean noMatchingFlightFound =gl.existElement(maeGUIObjects.NO_MATCHING_FLIGHT_FOUND);
+//
+//            int[] value={1,0};
+//            if (segmentCount == 0 ||flightNotFound&&noMatchingFlightFound) {
+//                value = getCaroselDateCountsForConnectingSegments(logInfo,b);
+//            }
+//            if(maeGUIObjects.CAROUSEL_NEXT_DATES.size()==0){
+//                maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                gl.waitProgress();
+//            }
+//            boolean seatsBooked = false;
+//
+//            Dates:
+//            for (WebElement nextDate : maeGUIObjects.CAROUSEL_NEXT_DATES) {
+//
+//                // Check if flights are available
+//                segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//                int dateCount = 0;
+//                if ((mPassengers.get(getDriverID()).get(0).getFirstSegDate()) == 0) {
+//                    WebElement dateTimeDiv = driver.get().findElement(By.xpath("//div[contains(@class, 'date-time')]"));
+//                    // Get the full text, e.g., "30-Aug-2025 01:24"
+//                    String fullText = dateTimeDiv.getText();
+//                    // Extract just the date part
+//                    String date = fullText.split("\\s+")[0];
+//                    System.out.println("Extracted Date: " + date);
+//                    String todayXpath = String.format("//div[@class='ng-binding' and text()='%s']", date.trim());
+//                    WebElement TodayDate = driver.get().findElement(By.xpath(todayXpath));
+//                    //to select only today's date alone
+//                    gl.clickElement(TodayDate);
+//                }
+//                // Define the formatter matching your time format
+//                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+//                for (int i = 1; i <= segmentCount; i++) {
+//                    WebElement currentTime = driver.get().findElement(By.xpath("//span[contains(@class, 'pssgui-bold') and contains(@class, 'ng-binding')]"));
+//                    String durationXPath = "(//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//span[@class = 'ng-binding' and contains(text(),'h') and contains(text(),'m')]";
+//                    String startTimeXpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[@ng-if='originDestination.showDateTime' and contains(@class, 'ng-binding')])[1]";
+//                    WebElement startTime = driver.get().findElement(By.xpath(startTimeXpath));
+//                    WebElement durationElement = driver.get().findElement(By.xpath(durationXPath));
+//                    LocalTime current = LocalTime.parse(currentTime.getText().trim(), timeFormatter);
+//                    String time = "";
+//                    if (startTime.getText().trim().contains("+")) {
+//                        time = startTime.getText().trim();
+//                        time = time.substring(0, time.indexOf('+'));
+//                    } else {
+//                        time = startTime.getText().trim();
+//                    }
+//                    LocalTime start = LocalTime.parse(time.trim(), timeFormatter);
+//
+//                    WebElement dateTimeElement = driver.get().findElement(By.xpath("//pssgui-date-time//div[contains(@class, 'date-time')]"));
+//                    WebElement selectedDate = driver.get().findElement(By.xpath("//div[contains(@class, 'carousel-item') and contains(@class, 'tab-active')]"));
+//                    String dateTimeText = dateTimeElement.getText();
+//                    String currentdateText = dateTimeText.split(" ")[0].trim();  // e.g. "21-Jul-2025"
+//                    String selectedDateText = selectedDate.getText().split("\\n")[0].trim();             // e.g. "21-Jul-2025" from carousel
+//
+//                    if (current.isAfter(start) && currentdateText.equals(selectedDateText)) {
+//                        logInfo.pass("Flight has departed. Searching for the next available flight.");
+//                        continue;
+//                    }
+//                    // Skip if flight duration is 00h
+//                    if (durationElement.getText().contains("00h")) {
+//                        continue;
+//                    }
+//
+////                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//
+////                    for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                    String segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[2]";
+//                    String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[4]";
+////                        String segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//
+//                    List<WebElement> segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                    List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath + "//span[contains(@class, 'small-box')]"));
+////                        List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                    int totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                    WebElement selectedSeat1 = null;
+//                    WebElement selectedSeat2 = null;
+//
+//                    // Find valid seat from segment 1
+//                    for (WebElement seat : segment1Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                            selectedSeat1 = seat;
+//                            break;
+//                        }
+//                    }
+//
+//                    // Find valid seat from segment 2
+//                    for (WebElement seat : segment2Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                            selectedSeat2 = seat;
+//                            break;
+//                        }
+//                    }
+//                    if (gl.existElement(segment1Seats) && gl.existElement(segment2Seats)) {
+//                        if (selectedSeat1 != null && selectedSeat2 != null) {
+//                            gl.clickElement(selectedSeat1);
+//                            gl.clickElement(selectedSeat2);
+//                            if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > value[1] && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                                seatsBooked = true;
+//                                System.out.println("Selected seats for both segments.");
+//                                break Dates;
+//                            }
+//                        } else {
+//                            System.out.println("No valid seat pair found for segment index: " + i);
+//                        }
+//                    }
+//
+//                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//                    if (!seatsBooked && gl.existElement(nonCodeShareFlights)) {
+//                        for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                            segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[2]";
+////                        String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[4]";
+//                            segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//
+//                            segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                            segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                            totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                            selectedSeat1 = null;
+//                            selectedSeat2 = null;
+//
+//                            // Find valid seat from segment 1
+//                            for (WebElement seat : segment1Seats) {
+//                                String text = seat.getText().trim();
+//                                int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                                if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                                    selectedSeat1 = seat;
+//                                    break;
+//                                }
+//                            }
+//
+//                            // Find valid seat from segment 2
+//                            for (WebElement seat : segment2Seats) {
+//                                String text = seat.getText().trim();
+//                                int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                                if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                                    selectedSeat2 = seat;
+//                                    break;
+//                                }
+//                            }
+//
+//                            if (selectedSeat1 != null && selectedSeat2 != null) {
+//                                gl.clickElement(selectedSeat1);
+//                                gl.clickElement(selectedSeat2);
+//                                if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > value[1] && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                                    seatsBooked = true;
+//                                    System.out.println("Selected seats for both segments.");
+//                                    break Dates;
+//                                }
+//                            } else {
+//                                System.out.println("No valid seat pair found for segment index: " + i);
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                dateCount++;
+//                gl.waitProgress();
+//                value[0] = 7;
+//                if (seatsBooked == false && dateCount == value[0]) {
+//                    logInfo.info(MarkupHelper.createLabel("No Seats found for the given class even after " + value[0] + " Days.", ExtentColor.RED));
+//                    Assert.fail("No Seats found for the given class even after " + value[0] + " Days.");
+//                }
+//                maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                nextDate.click();
+//                gl.waitProgress();
+//            }
+//        }
+//
+//
+//    } catch (AssertionError | Exception e) {
+//        ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+//        Assert.fail("This step failed.. so stopping...");
 //    }
+//
+//}
 
-public void selectFullBusinessForSecondSegmentWithConnectingFlight(ExtentTest logInfo) {
+//public void selectFullEconomyForSecondSegmentWithConnectingFlight(ExtentTest logInfo) { // 3rd
+//    try {
+//        gl.waitProgress();
+//        gl.waitForProfileLoad();
+//
+//        Passenger pax = mPassengers.get(getDriverID()).get(0);
+//        maeGUIObjects.FLIGHTS_AVAILABLE.get(3).click();
+//        gl.waitProgress();
+//        String dt = pax.getfirstConnectingSegDateOrderPage();
+//        if (dt.isEmpty()) {
+//            logInfo.fail("Flight not Booked");
+//            Assert.fail("Flight not Booked");
+//        }
+//        String secDate = maeGUIObjects.SECOND_SEGMENT_DATE_ORDER_PAGE.getText().split("\n")[0].trim();
+//
+//        int a = pax.getFirstSegDate();
+//        int b = pax.getSecondSegDate();
+//        int c = b - a;
+//        dt = pax.getfirstConnectingSegDateOrderPage();
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+//        LocalDate date1 = LocalDate.parse(dt, formatter);
+//        LocalDate newDate = date1.plusDays(c);
+//        String finalDate = newDate.format(formatter);
+//        String dt1 = pax.getfirstConnectingSegDateOrderPage().substring(0, 2);
+//        int k = Integer.parseInt(dt1);
+//        String secDate1 = maeGUIObjects.SECOND_SEGMENT_DATE_ORDER_PAGE.getText().trim().substring(0, 2);
+//        int l = Integer.parseInt(secDate1);
+//        if (dt.equalsIgnoreCase(secDate) || k > l) {
+//            while (true) {
+//                try {
+//                    // Re-fetch carousel items dynamically
+//                    List<WebElement> allDates = maeGUIObjects.CAROUSEL_NEXT_DATES;
+//
+//                    if (allDates.isEmpty()) {
+//                        System.out.println("No more dates visible — breaking loop.");
+//                        break;
+//                    }
+//
+//                    WebElement nextDate = allDates.get(0);  // always select the first available date
+//                    nextDate.click();
+//                    gl.waitProgress();
+//                    secDate = maeGUIObjects.SECOND_SEGMENT_DATE_ORDER_PAGE.getText().split("\n")[0].trim();
+//                    if (finalDate.equalsIgnoreCase(secDate)) {
+//
+//                        break;
+//                    }
+//                    maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                    gl.waitProgress();
+//
+//                } catch (StaleElementReferenceException e) {
+//                    System.out.println("Stale element detected. Re-fetching carousel and retrying...");
+//                    continue; // just re-loop, re-fetch elements
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    Assert.fail("Unexpected error: " + e.getMessage());
+//                }
+//
+//            }
+//
+//
+//            int segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//            boolean flightNotFound = gl.existElement(maeGUIObjects.FLIGHT_NOT_FOUND);
+//            boolean noMatchingFlightFound =gl.existElement(maeGUIObjects.NO_MATCHING_FLIGHT_FOUND);
+//            int initialRemoveIcons =0;
+//
+//            int dateCount = 0;
+//            int dateLimit = 20;
+//            boolean getCaroselDate = false;
+//            boolean seatsBooked = false;
+//            if(gl.existElement(maeGUIObjects.REMOVE_ICONS_AVAILABLE)) {
+//                initialRemoveIcons = maeGUIObjects.REMOVE_ICONS_AVAILABLE.size();
+//            }
+//            int[] value={1,0};
+//
+//            if (segmentCount == 0 ||flightNotFound&&noMatchingFlightFound) {
+//                value = getCaroselDateCountsForConnectingSegments(logInfo,b);
+//                getCaroselDate=true;
+//            }
+//            if(maeGUIObjects.CAROUSEL_NEXT_DATES.size()==0){
+//                maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                gl.waitProgress();
+//            }
+//            seatsBooked = false;
+//
+//            Dates:
+//            for (WebElement nextDate : maeGUIObjects.CAROUSEL_NEXT_DATES) {
+//                segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//                dateCount = 0;
+//                if(getCaroselDate)
+//                {
+//                    initialRemoveIcons = value[1];
+//                    dateLimit = value[0];
+//                }
+//                if ((mPassengers.get(getDriverID()).get(0).getFirstSegDate()) == 0) {
+//                    WebElement dateTimeDiv = driver.get().findElement(By.xpath("//div[contains(@class, 'date-time')]"));
+//                    // Get the full text, e.g., "30-Aug-2025 01:24"
+//                    String fullText = dateTimeDiv.getText();
+//                    // Extract just the date part
+//                    String date = fullText.split("\\s+")[0];
+//                    System.out.println("Extracted Date: " + date);
+//                    String todayXpath = String.format("//div[@class='ng-binding' and text()='%s']", date.trim());
+//                    WebElement TodayDate = driver.get().findElement(By.xpath(todayXpath));
+//                    //to select only today's date alone
+//                    gl.clickElement(TodayDate);
+//                }
+//                // Define the formatter matching your time format
+//                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+//                for (int i = 1; i <= segmentCount; i++) {
+//                    WebElement currentTime = driver.get().findElement(By.xpath("//span[contains(@class, 'pssgui-bold') and contains(@class, 'ng-binding')]"));
+//                    String durationXPath = "(//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//span[@class = 'ng-binding' and contains(text(),'h') and contains(text(),'m')]";
+//                    String startTimeXpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[@ng-if='originDestination.showDateTime' and contains(@class, 'ng-binding')])[1]";
+//                    WebElement startTime = driver.get().findElement(By.xpath(startTimeXpath));
+//                    WebElement durationElement = driver.get().findElement(By.xpath(durationXPath));
+//                    LocalTime current = LocalTime.parse(currentTime.getText().trim(), timeFormatter);
+//                    String time = "";
+//                    if (startTime.getText().trim().contains("+")) {
+//                        time = startTime.getText().trim();
+//                        time = time.substring(0, time.indexOf('+'));
+//                    } else {
+//                        time = startTime.getText().trim();
+//                    }
+//                    LocalTime start = LocalTime.parse(time.trim(), timeFormatter);
+//
+//                    WebElement dateTimeElement = driver.get().findElement(By.xpath("//pssgui-date-time//div[contains(@class, 'date-time')]"));
+//                    WebElement selectedDate = driver.get().findElement(By.xpath("//div[contains(@class, 'carousel-item') and contains(@class, 'tab-active')]"));
+//                    String dateTimeText = dateTimeElement.getText();
+//                    String currentdateText = dateTimeText.split(" ")[0].trim();  // e.g. "21-Jul-2025"
+//                    String selectedDateText = selectedDate.getText().split("\\n")[0].trim();             // e.g. "21-Jul-2025" from carousel
+//
+//                    if (current.isAfter(start) && currentdateText.equals(selectedDateText)) {
+//                        logInfo.pass("Flight has departed. Searching for the next available flight.");
+//                        continue;
+//                    }
+//                    // Skip if flight duration is 00h
+//                    if (durationElement.getText().contains("00h")) {
+//                        continue;
+//                    }
+//
+////                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//
+////                    for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                    String segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[2]";
+//                    String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[4]";
+////                        String segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//
+//                    List<WebElement> segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                    List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath + "//span[contains(@class, 'small-box')]"));
+////                        List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                    int totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                    WebElement selectedSeat1 = null;
+//                    WebElement selectedSeat2 = null;
+//
+//                    // Find valid seat from segment 1
+//                    for (WebElement seat : segment1Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                            selectedSeat1 = seat;
+//                            break;
+//                        }
+//                    }
+//
+//                    // Find valid seat from segment 2
+//                    for (WebElement seat : segment2Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                            selectedSeat2 = seat;
+//                            break;
+//                        }
+//                    }
+//                    if (gl.existElement(segment1Seats) && gl.existElement(segment2Seats)) {
+//                        if (selectedSeat1 != null && selectedSeat2 != null) {
+//                            gl.scrollToWebElement(selectedSeat1);
+//                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//                            gl.scrollToWebElement(selectedSeat2);
+//                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//                            gl.clickElement(selectedSeat1);
+//                            gl.clickElement(selectedSeat2);
+//                            if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > initialRemoveIcons && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                                seatsBooked = true;
+//                                System.out.println("Selected seats for both segments.");
+//                                break Dates;
+//                            }
+//                        } else {
+//                            System.out.println("No valid seat pair found for segment index: " + i);
+//                        }
+//                    }
+//
+//                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//                    if (!seatsBooked && gl.existElement(nonCodeShareFlights)) {
+//                        for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                            segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[2]";
+////                        String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[4]";
+//                            segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//
+//                            segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                            segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                            totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                            selectedSeat1 = null;
+//                            selectedSeat2 = null;
+//
+//                            // Find valid seat from segment 1
+//                            for (WebElement seat : segment1Seats) {
+//                                String text = seat.getText().trim();
+//                                int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                                if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                                    selectedSeat1 = seat;
+//                                    break;
+//                                }
+//                            }
+//
+//                            // Find valid seat from segment 2
+//                            for (WebElement seat : segment2Seats) {
+//                                String text = seat.getText().trim();
+//                                int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                                if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                                    selectedSeat2 = seat;
+//                                    break;
+//                                }
+//                            }
+//
+//                            if (selectedSeat1 != null && selectedSeat2 != null) {
+//                                gl.scrollToWebElement(selectedSeat1);
+//                                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//                                gl.scrollToWebElement(selectedSeat2);
+//                                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//                                gl.clickElement(selectedSeat1);
+//                                gl.clickElement(selectedSeat2);
+//                                if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > initialRemoveIcons && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                                    seatsBooked = true;
+//                                    System.out.println("Selected seats for both segments.");
+//                                    break Dates;
+//                                }
+//                            } else {
+//                                System.out.println("No valid seat pair found for segment index: " + i);
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                dateCount++;
+//                gl.waitProgress();
+//
+//                if (seatsBooked == false && dateCount == dateLimit) {
+//                    logInfo.info(MarkupHelper.createLabel("No Seats found for the given class even after " + dateLimit + " Days.", ExtentColor.RED));
+//                    Assert.fail("No Seats found for the given class even after " + dateLimit + " Days.");
+//                }
+//                maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                nextDate.click();
+//                gl.waitProgress();
+//            }
+//
+//        }
+//        else {
+//
+//            int segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//            boolean flightNotFound = gl.existElement(maeGUIObjects.FLIGHT_NOT_FOUND);
+//            boolean noMatchingFlightFound =gl.existElement(maeGUIObjects.NO_MATCHING_FLIGHT_FOUND);
+//            int initialRemoveIcons =0;
+//
+//            int dateCount = 0;
+//            int dateLimit = 20;
+//            boolean getCaroselDate = false;
+//            boolean seatsBooked = false;
+//            if(gl.existElement(maeGUIObjects.REMOVE_ICONS_AVAILABLE)) {
+//                initialRemoveIcons = maeGUIObjects.REMOVE_ICONS_AVAILABLE.size();
+//            }
+//            int[] value={1,0};
+//            if (segmentCount == 0 ||flightNotFound&&noMatchingFlightFound) {
+//                value = getCaroselDateCountsForConnectingSegments(logInfo,b);
+//                getCaroselDate=true;
+//            }
+//            if(maeGUIObjects.CAROUSEL_NEXT_DATES.size()==0){
+//                maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                gl.waitProgress();
+//            }
+//
+//            Dates:
+//            for (WebElement nextDate : maeGUIObjects.CAROUSEL_NEXT_DATES) {
+//
+//                // Check if flights are available
+//                segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//                dateCount = 0;
+//                if(getCaroselDate)
+//                {
+//                    initialRemoveIcons = value[1];
+//                    dateLimit = value[0];
+//                }
+//                if ((mPassengers.get(getDriverID()).get(0).getFirstSegDate()) == 0) {
+//                    WebElement dateTimeDiv = driver.get().findElement(By.xpath("//div[contains(@class, 'date-time')]"));
+//                    // Get the full text, e.g., "30-Aug-2025 01:24"
+//                    String fullText = dateTimeDiv.getText();
+//                    // Extract just the date part
+//                    String date = fullText.split("\\s+")[0];
+//                    System.out.println("Extracted Date: " + date);
+//                    String todayXpath = String.format("//div[@class='ng-binding' and text()='%s']", date.trim());
+//                    WebElement TodayDate = driver.get().findElement(By.xpath(todayXpath));
+//                    //to select only today's date alone
+//                    gl.clickElement(TodayDate);
+//                }
+//                // Define the formatter matching your time format
+//                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+//                for (int i = 1; i <= segmentCount; i++) {
+//                    WebElement currentTime = driver.get().findElement(By.xpath("//span[contains(@class, 'pssgui-bold') and contains(@class, 'ng-binding')]"));
+//                    String durationXPath = "(//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//span[@class = 'ng-binding' and contains(text(),'h') and contains(text(),'m')]";
+//                    String startTimeXpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[@ng-if='originDestination.showDateTime' and contains(@class, 'ng-binding')])[1]";
+//                    WebElement startTime = driver.get().findElement(By.xpath(startTimeXpath));
+//                    WebElement durationElement = driver.get().findElement(By.xpath(durationXPath));
+//                    LocalTime current = LocalTime.parse(currentTime.getText().trim(), timeFormatter);
+//                    String time = "";
+//                    if (startTime.getText().trim().contains("+")) {
+//                        time = startTime.getText().trim();
+//                        time = time.substring(0, time.indexOf('+'));
+//                    } else {
+//                        time = startTime.getText().trim();
+//                    }
+//                    LocalTime start = LocalTime.parse(time.trim(), timeFormatter);
+//
+//                    WebElement dateTimeElement = driver.get().findElement(By.xpath("//pssgui-date-time//div[contains(@class, 'date-time')]"));
+//                    WebElement selectedDate = driver.get().findElement(By.xpath("//div[contains(@class, 'carousel-item') and contains(@class, 'tab-active')]"));
+//                    String dateTimeText = dateTimeElement.getText();
+//                    String currentdateText = dateTimeText.split(" ")[0].trim();  // e.g. "21-Jul-2025"
+//                    String selectedDateText = selectedDate.getText().split("\\n")[0].trim();             // e.g. "21-Jul-2025" from carousel
+//
+//                    if (current.isAfter(start) && currentdateText.equals(selectedDateText)) {
+//                        logInfo.pass("Flight has departed. Searching for the next available flight.");
+//                        continue;
+//                    }
+//                    // Skip if flight duration is 00h
+//                    if (durationElement.getText().contains("00h")) {
+//                        continue;
+//                    }
+//
+////                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//
+////                    for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                    String segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[2]";
+//                    String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[4]";
+////                        String segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//
+//                    List<WebElement> segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                    List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath + "//span[contains(@class, 'small-box')]"));
+////                        List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                    int totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                    WebElement selectedSeat1 = null;
+//                    WebElement selectedSeat2 = null;
+//
+//                    // Find valid seat from segment 1
+//                    for (WebElement seat : segment1Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                            selectedSeat1 = seat;
+//                            break;
+//                        }
+//                    }
+//
+//                    // Find valid seat from segment 2
+//                    for (WebElement seat : segment2Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                            selectedSeat2 = seat;
+//                            break;
+//                        }
+//                    }
+//                    if (gl.existElement(segment1Seats) && gl.existElement(segment2Seats)) {
+//                        if (selectedSeat1 != null && selectedSeat2 != null) {
+//                            gl.clickElement(selectedSeat1);
+//                            gl.clickElement(selectedSeat2);
+//                            if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > value[1] && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                                seatsBooked = true;
+//                                System.out.println("Selected seats for both segments.");
+//                                break Dates;
+//                            }
+//                        } else {
+//                            System.out.println("No valid seat pair found for segment index: " + i);
+//                        }
+//                    }
+//
+//                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//                    if (!seatsBooked && gl.existElement(nonCodeShareFlights)) {
+//                        for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                            segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[2]";
+////                        String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[4]";
+//                            segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//
+//                            segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                            segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                            totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                            selectedSeat1 = null;
+//                            selectedSeat2 = null;
+//
+//                            // Find valid seat from segment 1
+//                            for (WebElement seat : segment1Seats) {
+//                                String text = seat.getText().trim();
+//                                int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                                if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                                    selectedSeat1 = seat;
+//                                    break;
+//                                }
+//                            }
+//
+//                            // Find valid seat from segment 2
+//                            for (WebElement seat : segment2Seats) {
+//                                String text = seat.getText().trim();
+//                                int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                                if (seat.isEnabled() && isAllowedEconomyClass(text) && available >= totalPassengers) {
+//                                    selectedSeat2 = seat;
+//                                    break;
+//                                }
+//                            }
+//
+//                            if (selectedSeat1 != null && selectedSeat2 != null) {
+//                                gl.clickElement(selectedSeat1);
+//                                gl.clickElement(selectedSeat2);
+//                                if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > initialRemoveIcons && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                                    seatsBooked = true;
+//                                    System.out.println("Selected seats for both segments.");
+//                                    break Dates;
+//                                }
+//                            } else {
+//                                System.out.println("No valid seat pair found for segment index: " + i);
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                dateCount++;
+//                gl.waitProgress();
+//                if (seatsBooked == false && dateCount == dateLimit) {
+//                    logInfo.info(MarkupHelper.createLabel("No Seats found for the given class even after " + dateLimit + " Days.", ExtentColor.RED));
+//                    Assert.fail("No Seats found for the given class even after " + dateLimit + " Days.");
+//                }
+//                maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                nextDate.click();
+//                gl.waitProgress();
+//            }
+//        }
+//
+//
+//    } catch (AssertionError | Exception e) {
+//        ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+//        Assert.fail("This step failed.. so stopping...");
+//    }
+//
+//}
 
-    try {
-        gl.waitProgress();
-        gl.waitForProfileLoad();
 
-        maeGUIObjects.FLIGHTS_AVAILABLE.get(3).click();
-        gl.waitProgress();
-        Passenger pax = mPassengers.get(getDriverID()).get(0);
-        int days = pax.getSecondSegDate();
-        maeGUIObjects.FLIGHTS_AVAILABLE.get(3).click();
-        gl.waitProgress();
-        int initialRemoveIcons =0;
-        int dateCount = 1;
-        int dateLimit = 1;
-        boolean seatsBooked = false;
-        if(gl.existElement(maeGUIObjects.REMOVE_ICONS_AVAILABLE)) {
-            initialRemoveIcons = maeGUIObjects.REMOVE_ICONS_AVAILABLE.size();
-        }
-        Dates:
-        for (WebElement nextDate : maeGUIObjects.CAROUSEL_NEXT_DATES) {
-            dateCount = 1;
-            if(maeGUIObjects.CAROUSEL_NEXT_DATES.size()>60)
-            {
-                dateLimit = 30;
+
+    public void selectFullBusinessForSecondSegmentWithConnectingFlight(ExtentTest logInfo) {
+
+        try {
+            gl.waitProgress();
+            gl.waitForProfileLoad();
+
+            maeGUIObjects.FLIGHTS_AVAILABLE.get(3).click();
+            gl.waitProgress();
+            int initialRemoveIcons =0;
+            int dateCount = 0;
+            int dateLimit = 0;
+            boolean seatsBooked = false;
+            if(gl.existElement(maeGUIObjects.REMOVE_ICONS_AVAILABLE)) {
+                initialRemoveIcons = maeGUIObjects.REMOVE_ICONS_AVAILABLE.size();
             }
-            else {
-                dateLimit = days+20;
-            }
-            // Check if flights are available
-            int segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
-            boolean flightNotFound = gl.existElement(maeGUIObjects.FLIGHT_NOT_FOUND);
+            Dates:
+            for (WebElement nextDate : maeGUIObjects.CAROUSEL_NEXT_DATES) {
+                dateCount = 1;
+                if(maeGUIObjects.CAROUSEL_NEXT_DATES.size()>60)
+                {
+                    dateLimit = 30;
+                }
+                else {
+                    dateLimit = maeGUIObjects.CAROUSEL_NEXT_DATES.size();
+                }
+                // Check if flights are available
+                int segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+                boolean flightNotFound = gl.existElement(maeGUIObjects.FLIGHT_NOT_FOUND);
+                boolean noMatchingFlightFound =gl.existElement(maeGUIObjects.NO_MATCHING_FLIGHT_FOUND);
 
-            if (segmentCount == 0 || flightNotFound) {
-                // Skip this date and go to next
+                if (segmentCount == 0 || (flightNotFound && noMatchingFlightFound)) {
+                    // Skip this date and go to next
+                    maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+                    nextDate.click();
+                    gl.waitProgress();
+                    continue;
+                }
+
+                // Define the formatter matching your time format
+                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+                for (int i = 1; i <= segmentCount; i++) {
+
+                    WebElement currentTime = driver.get().findElement(By.xpath("//span[contains(@class, 'pssgui-bold') and contains(@class, 'ng-binding')]"));
+                    String durationXPath = "(//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//span[@class = 'ng-binding' and contains(text(),'h') and contains(text(),'m')]";
+                    String startTimeXpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[@ng-if='originDestination.showDateTime' and contains(@class, 'ng-binding')])[1]";
+                    WebElement startTime = driver.get().findElement(By.xpath(startTimeXpath));
+                    WebElement durationElement = driver.get().findElement(By.xpath(durationXPath));
+                    LocalTime current = LocalTime.parse(currentTime.getText().trim(), timeFormatter);
+                    String time = "";
+                    if (startTime.getText().trim().contains("+")) {
+                        time = startTime.getText().trim();
+                        time = time.substring(0, time.indexOf('+'));
+                    } else {
+                        time = startTime.getText().trim();
+                    }
+                    LocalTime start = LocalTime.parse(time.trim(), timeFormatter);
+
+                    WebElement dateTimeElement = driver.get().findElement(By.xpath("//pssgui-date-time//div[contains(@class, 'date-time')]"));
+                    String dateTimeText = dateTimeElement.getText();
+                    String currentdateText = dateTimeText.split(" ")[0].trim();  // e.g. "21-Jul-2025"
+                    String nextDateText = nextDate.getText().split("\\n")[0].trim();             // e.g. "21-Jul-2025" from carousel
+
+                    if (current.isAfter(start) && currentdateText.equals(nextDateText)) {
+                        logInfo.pass("Flight has departed. Searching for the next available flight.");
+                        continue;
+                    }
+                    // Skip if flight duration is 00h
+                    if (durationElement.getText().contains("00h")) {
+                        continue;
+                    }
+                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+
+                    for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+                        String segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[1]";
+//                        String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[3]";
+                        String segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+                        List<WebElement> segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                        List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath + "//span[contains(@class, 'small-box')]"));
+                        List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+
+                        int totalPassengers = mPassengers.get(getDriverID()).size();
+
+                        WebElement selectedSeat1 = null;
+                        WebElement selectedSeat2 = null;
+
+                        // Find valid seat from segment 1
+                        for (WebElement seat : segment1Seats) {
+                            String text = seat.getText().trim();
+                            int available = Integer.parseInt(text.replaceAll("\\D", ""));
+                            if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+                                selectedSeat1 = seat;
+                                break;
+                            }
+                        }
+
+                        // Find valid seat from segment 2
+                        for (WebElement seat : segment2Seats) {
+                            String text = seat.getText().trim();
+                            int available = Integer.parseInt(text.replaceAll("\\D", ""));
+                            if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+                                selectedSeat2 = seat;
+                                break;
+                            }
+                        }
+
+                        if (selectedSeat1 != null && selectedSeat2 != null) {
+                            gl.waitProgress();
+                            gl.scrollToWebElement(selectedSeat1);
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                            gl.scrollToWebElement(selectedSeat2);
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                            gl.clickElement(selectedSeat1);
+                            gl.waitProgress();
+                            gl.clickElement(selectedSeat2);
+                            gl.waitProgress();
+
+                            if(maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > initialRemoveIcons && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+                                seatsBooked = true;
+                                System.out.println("Selected seats for both segments.");
+                                break Dates;
+                            }
+                        } else {
+                            System.out.println("No valid seat pair found for segment index: " + i);
+                        }
+                    }
+                }
+
+                dateCount++;
+                gl.waitProgress();
+                if(seatsBooked==false && dateCount==dateLimit)
+                {
+                    logInfo.info(MarkupHelper.createLabel("No Seats found for the given class even after "+dateLimit+" Days.", ExtentColor.RED));
+                    Assert.fail("No Seats found for the given class even after "+dateLimit+" Days.");
+                }
                 maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
                 nextDate.click();
                 gl.waitProgress();
-                continue;
             }
 
-            // Define the formatter matching your time format
-            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-            for (int i = 1; i <= segmentCount; i++) {
 
-                WebElement currentTime = driver.get().findElement(By.xpath("//span[contains(@class, 'pssgui-bold') and contains(@class, 'ng-binding')]"));
-                String durationXPath = "(//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//span[@class = 'ng-binding' and contains(text(),'h') and contains(text(),'m')]";
-                String startTimeXpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[@ng-if='originDestination.showDateTime' and contains(@class, 'ng-binding')])[1]";
-                WebElement startTime = driver.get().findElement(By.xpath(startTimeXpath));
-                WebElement durationElement = driver.get().findElement(By.xpath(durationXPath));
-                LocalTime current = LocalTime.parse(currentTime.getText().trim(), timeFormatter);
-                String time = "";
-                if (startTime.getText().trim().contains("+")) {
-                    time = startTime.getText().trim();
-                    time = time.substring(0, time.indexOf('+'));
-                } else {
-                    time = startTime.getText().trim();
-                }
-                LocalTime start = LocalTime.parse(time.trim(), timeFormatter);
-
-                WebElement dateTimeElement = driver.get().findElement(By.xpath("//pssgui-date-time//div[contains(@class, 'date-time')]"));
-                String dateTimeText = dateTimeElement.getText();
-                String currentdateText = dateTimeText.split(" ")[0].trim();  // e.g. "21-Jul-2025"
-                String nextDateText = nextDate.getText().split("\\n")[0].trim();             // e.g. "21-Jul-2025" from carousel
-
-                if (current.isAfter(start) && currentdateText.equals(nextDateText)) {
-                    logInfo.pass("Flight has departed. Searching for the next available flight.");
-                    continue;
-                }
-                // Skip if flight duration is 00h
-                if (durationElement.getText().contains("00h")) {
-                    continue;
-                }
-                List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
-
-                for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
-                    String segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[1]";
-//                        String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[3]";
-                    String segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
-                    List<WebElement> segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
-//                        List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath + "//span[contains(@class, 'small-box')]"));
-                    List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
-
-                    int totalPassengers = mPassengers.get(getDriverID()).size();
-
-                    WebElement selectedSeat1 = null;
-                    WebElement selectedSeat2 = null;
-
-                    // Find valid seat from segment 1
-                    for (WebElement seat : segment1Seats) {
-                        String text = seat.getText().trim();
-                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
-                        if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
-                            selectedSeat1 = seat;
-                            break;
-                        }
-                    }
-
-                    // Find valid seat from segment 2
-                    for (WebElement seat : segment2Seats) {
-                        String text = seat.getText().trim();
-                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
-                        if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
-                            selectedSeat2 = seat;
-                            break;
-                        }
-                    }
-
-                    if (selectedSeat1 != null && selectedSeat2 != null) {
-                        gl.waitProgress();
-                        gl.scrollToWebElement(selectedSeat1);
-                        logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
-                        gl.scrollToWebElement(selectedSeat2);
-                        logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
-                        gl.clickElement(selectedSeat1);
-                        gl.waitProgress();
-                        gl.clickElement(selectedSeat2);
-                        gl.waitProgress();
-
-                        if(maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > initialRemoveIcons && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
-                            seatsBooked = true;
-                            System.out.println("Selected seats for both segments.");
-                            break Dates;
-                        }
-                    } else {
-                        System.out.println("No valid seat pair found for segment index: " + i);
-                    }
-                }
-            }
-
-            dateCount++;
-            gl.waitProgress();
-            if(seatsBooked==false && dateCount==dateLimit)
-            {
-                logInfo.info(MarkupHelper.createLabel("No Seats found for the given class even after "+dateLimit+" Days.", ExtentColor.RED));
-                Assert.fail("No Seats found for the given class even after "+dateLimit+" Days.");
-            }
-            maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
-            nextDate.click();
-            gl.waitProgress();
+        } catch (AssertionError | Exception e) {
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
         }
-
-
-    } catch (AssertionError | Exception e) {
-        ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
-        Assert.fail("This step failed.. so stopping...");
     }
-}
+
+//public void selectFullBusinessForSecondSegmentWithConnectingFlight(ExtentTest logInfo) {
+//
+//    try {
+//        gl.waitProgress();
+//        gl.waitForProfileLoad();
+//
+//        maeGUIObjects.FLIGHTS_AVAILABLE.get(3).click();
+//        gl.waitProgress();
+//        Passenger pax = mPassengers.get(getDriverID()).get(0);
+//        int days = pax.getSecondSegDate();
+//        maeGUIObjects.FLIGHTS_AVAILABLE.get(3).click();
+//        gl.waitProgress();
+//        int initialRemoveIcons =0;
+//        int dateCount = 1;
+//        int dateLimit = 1;
+//        boolean seatsBooked = false;
+//        if(gl.existElement(maeGUIObjects.REMOVE_ICONS_AVAILABLE)) {
+//            initialRemoveIcons = maeGUIObjects.REMOVE_ICONS_AVAILABLE.size();
+//        }
+//        Dates:
+//        for (WebElement nextDate : maeGUIObjects.CAROUSEL_NEXT_DATES) {
+//            dateCount = 1;
+//            if(maeGUIObjects.CAROUSEL_NEXT_DATES.size()>60)
+//            {
+//                dateLimit = 30;
+//            }
+//            else {
+//                dateLimit = days+20;
+//            }
+//            // Check if flights are available
+//            int segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//            boolean flightNotFound = gl.existElement(maeGUIObjects.FLIGHT_NOT_FOUND);
+//
+//            if (segmentCount == 0 || flightNotFound) {
+//                // Skip this date and go to next
+//                maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                nextDate.click();
+//                gl.waitProgress();
+//                continue;
+//            }
+//
+//            // Define the formatter matching your time format
+//            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+//            for (int i = 1; i <= segmentCount; i++) {
+//
+//                WebElement currentTime = driver.get().findElement(By.xpath("//span[contains(@class, 'pssgui-bold') and contains(@class, 'ng-binding')]"));
+//                String durationXPath = "(//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//span[@class = 'ng-binding' and contains(text(),'h') and contains(text(),'m')]";
+//                String startTimeXpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[@ng-if='originDestination.showDateTime' and contains(@class, 'ng-binding')])[1]";
+//                WebElement startTime = driver.get().findElement(By.xpath(startTimeXpath));
+//                WebElement durationElement = driver.get().findElement(By.xpath(durationXPath));
+//                LocalTime current = LocalTime.parse(currentTime.getText().trim(), timeFormatter);
+//                String time = "";
+//                if (startTime.getText().trim().contains("+")) {
+//                    time = startTime.getText().trim();
+//                    time = time.substring(0, time.indexOf('+'));
+//                } else {
+//                    time = startTime.getText().trim();
+//                }
+//                LocalTime start = LocalTime.parse(time.trim(), timeFormatter);
+//
+//                WebElement dateTimeElement = driver.get().findElement(By.xpath("//pssgui-date-time//div[contains(@class, 'date-time')]"));
+//                String dateTimeText = dateTimeElement.getText();
+//                String currentdateText = dateTimeText.split(" ")[0].trim();  // e.g. "21-Jul-2025"
+//                String nextDateText = nextDate.getText().split("\\n")[0].trim();             // e.g. "21-Jul-2025" from carousel
+//
+//                if (current.isAfter(start) && currentdateText.equals(nextDateText)) {
+//                    logInfo.pass("Flight has departed. Searching for the next available flight.");
+//                    continue;
+//                }
+//                // Skip if flight duration is 00h
+//                if (durationElement.getText().contains("00h")) {
+//                    continue;
+//                }
+//                List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//
+//                for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                    String segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[1]";
+////                        String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[3]";
+//                    String segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//                    List<WebElement> segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+////                        List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath + "//span[contains(@class, 'small-box')]"));
+//                    List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                    int totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                    WebElement selectedSeat1 = null;
+//                    WebElement selectedSeat2 = null;
+//
+//                    // Find valid seat from segment 1
+//                    for (WebElement seat : segment1Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                            selectedSeat1 = seat;
+//                            break;
+//                        }
+//                    }
+//
+//                    // Find valid seat from segment 2
+//                    for (WebElement seat : segment2Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                            selectedSeat2 = seat;
+//                            break;
+//                        }
+//                    }
+//
+//                    if (selectedSeat1 != null && selectedSeat2 != null) {
+//                        gl.waitProgress();
+//                        gl.scrollToWebElement(selectedSeat1);
+//                        logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//                        gl.scrollToWebElement(selectedSeat2);
+//                        logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//                        gl.clickElement(selectedSeat1);
+//                        gl.waitProgress();
+//                        gl.clickElement(selectedSeat2);
+//                        gl.waitProgress();
+//
+//                        if(maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > initialRemoveIcons && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                            seatsBooked = true;
+//                            System.out.println("Selected seats for both segments.");
+//                            break Dates;
+//                        }
+//                    } else {
+//                        System.out.println("No valid seat pair found for segment index: " + i);
+//                    }
+//                }
+//            }
+//
+//            dateCount++;
+//            gl.waitProgress();
+//            if(seatsBooked==false && dateCount==dateLimit)
+//            {
+//                logInfo.info(MarkupHelper.createLabel("No Seats found for the given class even after "+dateLimit+" Days.", ExtentColor.RED));
+//                Assert.fail("No Seats found for the given class even after "+dateLimit+" Days.");
+//            }
+//            maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//            nextDate.click();
+//            gl.waitProgress();
+//        }
+//
+//
+//    } catch (AssertionError | Exception e) {
+//        ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+//        Assert.fail("This step failed.. so stopping...");
+//    }
+//}
+
+//public void selectFullBusinessForSecondSegmentWithConnectingFlight(ExtentTest logInfo) {
+//    try {
+//        gl.waitProgress();
+//        gl.waitForProfileLoad();
+//
+//        Passenger pax = mPassengers.get(getDriverID()).get(0);
+//        maeGUIObjects.FLIGHTS_AVAILABLE.get(3).click();
+//        gl.waitProgress();
+//        String dt = pax.getfirstConnectingSegDateOrderPage();
+//        if (dt.isEmpty()) {
+//            logInfo.fail("Flight not Booked");
+//            Assert.fail("Flight not Booked");
+//        }
+//        String secDate = maeGUIObjects.SECOND_SEGMENT_DATE_ORDER_PAGE.getText().split("\n")[0].trim();
+//
+//        int a = pax.getFirstSegDate();
+//        int b = pax.getSecondSegDate();
+//        int c = b - a;
+//        dt = pax.getfirstConnectingSegDateOrderPage();
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+//        LocalDate date1 = LocalDate.parse(dt, formatter);
+//        LocalDate newDate = date1.plusDays(c);
+//        String finalDate = newDate.format(formatter);
+//        String dt1 = pax.getfirstConnectingSegDateOrderPage().substring(0, 2);
+//        int k = Integer.parseInt(dt1);
+//        String secDate1 = maeGUIObjects.SECOND_SEGMENT_DATE_ORDER_PAGE.getText().trim().substring(0, 2);
+//        int l = Integer.parseInt(secDate1);
+//        if (dt.equalsIgnoreCase(secDate) || k > l) {
+//            while (true) {
+//                try {
+//                    // Re-fetch carousel items dynamically
+//                    List<WebElement> allDates = maeGUIObjects.CAROUSEL_NEXT_DATES;
+//
+//                    if (allDates.isEmpty()) {
+//                        System.out.println("No more dates visible — breaking loop.");
+//                        break;
+//                    }
+//
+//                    WebElement nextDate = allDates.get(0);  // always select the first available date
+//                    nextDate.click();
+//                    gl.waitProgress();
+//                    secDate = maeGUIObjects.SECOND_SEGMENT_DATE_ORDER_PAGE.getText().split("\n")[0].trim();
+//                    if (finalDate.equalsIgnoreCase(secDate)) {
+//
+//                        break;
+//                    }
+//                    maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                    gl.waitProgress();
+//
+//                } catch (StaleElementReferenceException e) {
+//                    System.out.println("Stale element detected. Re-fetching carousel and retrying...");
+//                    continue; // just re-loop, re-fetch elements
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    Assert.fail("Unexpected error: " + e.getMessage());
+//                }
+//
+//            }
+//
+//
+//            int segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//            boolean flightNotFound = gl.existElement(maeGUIObjects.FLIGHT_NOT_FOUND);
+//            boolean noMatchingFlightFound =gl.existElement(maeGUIObjects.NO_MATCHING_FLIGHT_FOUND);
+//
+//            int[] value={1,0};
+//
+//            if (segmentCount == 0 ||flightNotFound&&noMatchingFlightFound) {
+//                value = getCaroselDateCountsForConnectingSegments(logInfo,b);
+//            }
+//            if(maeGUIObjects.CAROUSEL_NEXT_DATES.size()==0){
+//                maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                gl.waitProgress();
+//            }
+//            boolean seatsBooked = false;
+//
+//            Dates:
+//            for (WebElement nextDate : maeGUIObjects.CAROUSEL_NEXT_DATES) {
+//                segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//                int dateCount = 0;
+//                if ((mPassengers.get(getDriverID()).get(0).getFirstSegDate()) == 0) {
+//                    WebElement dateTimeDiv = driver.get().findElement(By.xpath("//div[contains(@class, 'date-time')]"));
+//                    // Get the full text, e.g., "30-Aug-2025 01:24"
+//                    String fullText = dateTimeDiv.getText();
+//                    // Extract just the date part
+//                    String date = fullText.split("\\s+")[0];
+//                    System.out.println("Extracted Date: " + date);
+//                    String todayXpath = String.format("//div[@class='ng-binding' and text()='%s']", date.trim());
+//                    WebElement TodayDate = driver.get().findElement(By.xpath(todayXpath));
+//                    //to select only today's date alone
+//                    gl.clickElement(TodayDate);
+//                }
+//                // Define the formatter matching your time format
+//                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+//                for (int i = 1; i <= segmentCount; i++) {
+//                    WebElement currentTime = driver.get().findElement(By.xpath("//span[contains(@class, 'pssgui-bold') and contains(@class, 'ng-binding')]"));
+//                    String durationXPath = "(//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//span[@class = 'ng-binding' and contains(text(),'h') and contains(text(),'m')]";
+//                    String startTimeXpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[@ng-if='originDestination.showDateTime' and contains(@class, 'ng-binding')])[1]";
+//                    WebElement startTime = driver.get().findElement(By.xpath(startTimeXpath));
+//                    WebElement durationElement = driver.get().findElement(By.xpath(durationXPath));
+//                    LocalTime current = LocalTime.parse(currentTime.getText().trim(), timeFormatter);
+//                    String time = "";
+//                    if (startTime.getText().trim().contains("+")) {
+//                        time = startTime.getText().trim();
+//                        time = time.substring(0, time.indexOf('+'));
+//                    } else {
+//                        time = startTime.getText().trim();
+//                    }
+//                    LocalTime start = LocalTime.parse(time.trim(), timeFormatter);
+//
+//                    WebElement dateTimeElement = driver.get().findElement(By.xpath("//pssgui-date-time//div[contains(@class, 'date-time')]"));
+//                    WebElement selectedDate = driver.get().findElement(By.xpath("//div[contains(@class, 'carousel-item') and contains(@class, 'tab-active')]"));
+//                    String dateTimeText = dateTimeElement.getText();
+//                    String currentdateText = dateTimeText.split(" ")[0].trim();  // e.g. "21-Jul-2025"
+//                    String selectedDateText = selectedDate.getText().split("\\n")[0].trim();             // e.g. "21-Jul-2025" from carousel
+//
+//                    if (current.isAfter(start) && currentdateText.equals(selectedDateText)) {
+//                        logInfo.pass("Flight has departed. Searching for the next available flight.");
+//                        continue;
+//                    }
+//                    // Skip if flight duration is 00h
+//                    if (durationElement.getText().contains("00h")) {
+//                        continue;
+//                    }
+//
+////                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//
+////                    for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                    String segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[1]";
+//                    String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[3]";
+////                        String segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//
+//                    List<WebElement> segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                    List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath + "//span[contains(@class, 'small-box')]"));
+////                        List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                    int totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                    WebElement selectedSeat1 = null;
+//                    WebElement selectedSeat2 = null;
+//
+//                    // Find valid seat from segment 1
+//                    for (WebElement seat : segment1Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                            selectedSeat1 = seat;
+//                            break;
+//                        }
+//                    }
+//
+//                    // Find valid seat from segment 2
+//                    for (WebElement seat : segment2Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                            selectedSeat2 = seat;
+//                            break;
+//                        }
+//                    }
+//                    if (gl.existElement(segment1Seats) && gl.existElement(segment2Seats)) {
+//                        if (selectedSeat1 != null && selectedSeat2 != null) {
+//                            gl.clickElement(selectedSeat1);
+//                            gl.clickElement(selectedSeat2);
+//                            if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > value[1] && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                                seatsBooked = true;
+//                                System.out.println("Selected seats for both segments.");
+//                                break Dates;
+//                            }
+//                        } else {
+//                            System.out.println("No valid seat pair found for segment index: " + i);
+//                        }
+//                    }
+//
+//                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//                    if (!seatsBooked && gl.existElement(nonCodeShareFlights)) {
+//                        for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                            segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[1]";
+////                        String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[4]";
+//                            segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//
+//                            segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                            segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                            totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                            selectedSeat1 = null;
+//                            selectedSeat2 = null;
+//
+//                            // Find valid seat from segment 1
+//                            for (WebElement seat : segment1Seats) {
+//                                String text = seat.getText().trim();
+//                                int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                                if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                                    selectedSeat1 = seat;
+//                                    break;
+//                                }
+//                            }
+//
+//                            // Find valid seat from segment 2
+//                            for (WebElement seat : segment2Seats) {
+//                                String text = seat.getText().trim();
+//                                int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                                if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                                    selectedSeat2 = seat;
+//                                    break;
+//                                }
+//                            }
+//
+//                            if (selectedSeat1 != null && selectedSeat2 != null) {
+//                                gl.clickElement(selectedSeat1);
+//                                gl.clickElement(selectedSeat2);
+//                                if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > value[1] && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                                    seatsBooked = true;
+//                                    System.out.println("Selected seats for both segments.");
+//                                    break Dates;
+//                                }
+//                            } else {
+//                                System.out.println("No valid seat pair found for segment index: " + i);
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                dateCount++;
+//                gl.waitProgress();
+//                value[0] = 7;
+//                if (seatsBooked == false && dateCount == value[0]) {
+//                    logInfo.info(MarkupHelper.createLabel("No Seats found for the given class even after " + value[0] + " Days.", ExtentColor.RED));
+//                    Assert.fail("No Seats found for the given class even after " + value[0] + " Days.");
+//                }
+//                maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                nextDate.click();
+//                gl.waitProgress();
+//            }
+//
+//        }
+//        else {
+//
+//            int segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//            boolean flightNotFound = gl.existElement(maeGUIObjects.FLIGHT_NOT_FOUND);
+//            boolean noMatchingFlightFound =gl.existElement(maeGUIObjects.NO_MATCHING_FLIGHT_FOUND);
+//
+//            int[] value={1,0};
+//            if (segmentCount == 0 ||flightNotFound&&noMatchingFlightFound) {
+//                value = getCaroselDateCountsForConnectingSegments(logInfo,b);
+//            }
+//            if(maeGUIObjects.CAROUSEL_NEXT_DATES.size()==0){
+//                maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                gl.waitProgress();
+//            }
+//            boolean seatsBooked = false;
+//
+//            Dates:
+//            for (WebElement nextDate : maeGUIObjects.CAROUSEL_NEXT_DATES) {
+//
+//                // Check if flights are available
+//                segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//                int dateCount = 0;
+//                if ((mPassengers.get(getDriverID()).get(0).getFirstSegDate()) == 0) {
+//                    WebElement dateTimeDiv = driver.get().findElement(By.xpath("//div[contains(@class, 'date-time')]"));
+//                    // Get the full text, e.g., "30-Aug-2025 01:24"
+//                    String fullText = dateTimeDiv.getText();
+//                    // Extract just the date part
+//                    String date = fullText.split("\\s+")[0];
+//                    System.out.println("Extracted Date: " + date);
+//                    String todayXpath = String.format("//div[@class='ng-binding' and text()='%s']", date.trim());
+//                    WebElement TodayDate = driver.get().findElement(By.xpath(todayXpath));
+//                    //to select only today's date alone
+//                    gl.clickElement(TodayDate);
+//                }
+//                // Define the formatter matching your time format
+//                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+//                for (int i = 1; i <= segmentCount; i++) {
+//                    WebElement currentTime = driver.get().findElement(By.xpath("//span[contains(@class, 'pssgui-bold') and contains(@class, 'ng-binding')]"));
+//                    String durationXPath = "(//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//span[@class = 'ng-binding' and contains(text(),'h') and contains(text(),'m')]";
+//                    String startTimeXpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[@ng-if='originDestination.showDateTime' and contains(@class, 'ng-binding')])[1]";
+//                    WebElement startTime = driver.get().findElement(By.xpath(startTimeXpath));
+//                    WebElement durationElement = driver.get().findElement(By.xpath(durationXPath));
+//                    LocalTime current = LocalTime.parse(currentTime.getText().trim(), timeFormatter);
+//                    String time = "";
+//                    if (startTime.getText().trim().contains("+")) {
+//                        time = startTime.getText().trim();
+//                        time = time.substring(0, time.indexOf('+'));
+//                    } else {
+//                        time = startTime.getText().trim();
+//                    }
+//                    LocalTime start = LocalTime.parse(time.trim(), timeFormatter);
+//
+//                    WebElement dateTimeElement = driver.get().findElement(By.xpath("//pssgui-date-time//div[contains(@class, 'date-time')]"));
+//                    WebElement selectedDate = driver.get().findElement(By.xpath("//div[contains(@class, 'carousel-item') and contains(@class, 'tab-active')]"));
+//                    String dateTimeText = dateTimeElement.getText();
+//                    String currentdateText = dateTimeText.split(" ")[0].trim();  // e.g. "21-Jul-2025"
+//                    String selectedDateText = selectedDate.getText().split("\\n")[0].trim();             // e.g. "21-Jul-2025" from carousel
+//
+//                    if (current.isAfter(start) && currentdateText.equals(selectedDateText)) {
+//                        logInfo.pass("Flight has departed. Searching for the next available flight.");
+//                        continue;
+//                    }
+//                    // Skip if flight duration is 00h
+//                    if (durationElement.getText().contains("00h")) {
+//                        continue;
+//                    }
+//
+////                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//
+////                    for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                    String segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[1]";
+//                    String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[3]";
+////                        String segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//
+//                    List<WebElement> segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                    List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath + "//span[contains(@class, 'small-box')]"));
+////                        List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                    int totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                    WebElement selectedSeat1 = null;
+//                    WebElement selectedSeat2 = null;
+//
+//                    // Find valid seat from segment 1
+//                    for (WebElement seat : segment1Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                            selectedSeat1 = seat;
+//                            break;
+//                        }
+//                    }
+//
+//                    // Find valid seat from segment 2
+//                    for (WebElement seat : segment2Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                            selectedSeat2 = seat;
+//                            break;
+//                        }
+//                    }
+//                    if (gl.existElement(segment1Seats) && gl.existElement(segment2Seats)) {
+//                        if (selectedSeat1 != null && selectedSeat2 != null) {
+//                            gl.clickElement(selectedSeat1);
+//                            gl.clickElement(selectedSeat2);
+//                            if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > value[1] && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                                seatsBooked = true;
+//                                System.out.println("Selected seats for both segments.");
+//                                break Dates;
+//                            }
+//                        } else {
+//                            System.out.println("No valid seat pair found for segment index: " + i);
+//                        }
+//                    }
+//
+//                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//                    if (!seatsBooked && gl.existElement(nonCodeShareFlights)) {
+//                        for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                            segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[1]";
+////                        String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[4]";
+//                            segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//
+//                            segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                            segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                            totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                            selectedSeat1 = null;
+//                            selectedSeat2 = null;
+//
+//                            // Find valid seat from segment 1
+//                            for (WebElement seat : segment1Seats) {
+//                                String text = seat.getText().trim();
+//                                int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                                if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                                    selectedSeat1 = seat;
+//                                    break;
+//                                }
+//                            }
+//
+//                            // Find valid seat from segment 2
+//                            for (WebElement seat : segment2Seats) {
+//                                String text = seat.getText().trim();
+//                                int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                                if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                                    selectedSeat2 = seat;
+//                                    break;
+//                                }
+//                            }
+//
+//                            if (selectedSeat1 != null && selectedSeat2 != null) {
+//                                gl.clickElement(selectedSeat1);
+//                                gl.clickElement(selectedSeat2);
+//                                if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > value[1] && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                                    seatsBooked = true;
+//                                    System.out.println("Selected seats for both segments.");
+//                                    break Dates;
+//                                }
+//                            } else {
+//                                System.out.println("No valid seat pair found for segment index: " + i);
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                dateCount++;
+//                gl.waitProgress();
+//                value[0] = 7;
+//                if (seatsBooked == false && dateCount == value[0]) {
+//                    logInfo.info(MarkupHelper.createLabel("No Seats found for the given class even after " + value[0] + " Days.", ExtentColor.RED));
+//                    Assert.fail("No Seats found for the given class even after " + value[0] + " Days.");
+//                }
+//                maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                nextDate.click();
+//                gl.waitProgress();
+//            }
+//        }
+//
+//
+//    } catch (AssertionError | Exception e) {
+//        ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+//        Assert.fail("This step failed.. so stopping...");
+//    }
+//}
+
+//public void selectFullBusinessForSecondSegmentWithConnectingFlight(ExtentTest logInfo) {
+//    try {
+//        gl.waitProgress();
+//        gl.waitForProfileLoad();
+//
+//        Passenger pax = mPassengers.get(getDriverID()).get(0);
+//        maeGUIObjects.FLIGHTS_AVAILABLE.get(3).click();
+//        gl.waitProgress();
+//        String dt = pax.getfirstConnectingSegDateOrderPage();
+//        if (dt.isEmpty()) {
+//            logInfo.fail("Flight not Booked");
+//            Assert.fail("Flight not Booked");
+//        }
+//        String secDate = maeGUIObjects.SECOND_SEGMENT_DATE_ORDER_PAGE.getText().split("\n")[0].trim();
+//
+//        int a = pax.getFirstSegDate();
+//        int b = pax.getSecondSegDate();
+//        int c = b - a;
+//        dt = pax.getfirstConnectingSegDateOrderPage();
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+//        LocalDate date1 = LocalDate.parse(dt, formatter);
+//        LocalDate newDate = date1.plusDays(c);
+//        String finalDate = newDate.format(formatter);
+//        String dt1 = pax.getfirstConnectingSegDateOrderPage().substring(0, 2);
+//        int k = Integer.parseInt(dt1);
+//        String secDate1 = maeGUIObjects.SECOND_SEGMENT_DATE_ORDER_PAGE.getText().trim().substring(0, 2);
+//        int l = Integer.parseInt(secDate1);
+//        if (dt.equalsIgnoreCase(secDate) || k > l) {
+//            while (true) {
+//                try {
+//                    // Re-fetch carousel items dynamically
+//                    List<WebElement> allDates = maeGUIObjects.CAROUSEL_NEXT_DATES;
+//
+//                    if (allDates.isEmpty()) {
+//                        System.out.println("No more dates visible — breaking loop.");
+//                        break;
+//                    }
+//
+//                    WebElement nextDate = allDates.get(0);  // always select the first available date
+//                    nextDate.click();
+//                    gl.waitProgress();
+//                    secDate = maeGUIObjects.SECOND_SEGMENT_DATE_ORDER_PAGE.getText().split("\n")[0].trim();
+//                    if (finalDate.equalsIgnoreCase(secDate)) {
+//
+//                        break;
+//                    }
+//                    maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                    gl.waitProgress();
+//
+//                } catch (StaleElementReferenceException e) {
+//                    System.out.println("Stale element detected. Re-fetching carousel and retrying...");
+//                    continue; // just re-loop, re-fetch elements
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    Assert.fail("Unexpected error: " + e.getMessage());
+//                }
+//
+//            }
+//
+//
+//            int segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//            boolean flightNotFound = gl.existElement(maeGUIObjects.FLIGHT_NOT_FOUND);
+//            boolean noMatchingFlightFound =gl.existElement(maeGUIObjects.NO_MATCHING_FLIGHT_FOUND);
+//            int initialRemoveIcons =0;
+//
+//            int dateCount = 0;
+//            int dateLimit = 20;
+//            boolean getCaroselDate = false;
+//            boolean seatsBooked = false;
+//            if(gl.existElement(maeGUIObjects.REMOVE_ICONS_AVAILABLE)) {
+//                initialRemoveIcons = maeGUIObjects.REMOVE_ICONS_AVAILABLE.size();
+//            }
+//            int[] value={1,0};
+//
+//            if (segmentCount == 0 ||flightNotFound&&noMatchingFlightFound) {
+//                value = getCaroselDateCountsForConnectingSegments(logInfo,b);
+//                getCaroselDate=true;
+//            }
+//            if(maeGUIObjects.CAROUSEL_NEXT_DATES.size()==0){
+//                maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                gl.waitProgress();
+//            }
+//            seatsBooked = false;
+//
+//            Dates:
+//            for (WebElement nextDate : maeGUIObjects.CAROUSEL_NEXT_DATES) {
+//                segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//                dateCount = 0;
+//                if(getCaroselDate)
+//                {
+//                    initialRemoveIcons = value[1];
+//                    dateLimit = value[0];
+//                }
+//                if ((mPassengers.get(getDriverID()).get(0).getFirstSegDate()) == 0) {
+//                    WebElement dateTimeDiv = driver.get().findElement(By.xpath("//div[contains(@class, 'date-time')]"));
+//                    // Get the full text, e.g., "30-Aug-2025 01:24"
+//                    String fullText = dateTimeDiv.getText();
+//                    // Extract just the date part
+//                    String date = fullText.split("\\s+")[0];
+//                    System.out.println("Extracted Date: " + date);
+//                    String todayXpath = String.format("//div[@class='ng-binding' and text()='%s']", date.trim());
+//                    WebElement TodayDate = driver.get().findElement(By.xpath(todayXpath));
+//                    //to select only today's date alone
+//                    gl.clickElement(TodayDate);
+//                }
+//                // Define the formatter matching your time format
+//                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+//                for (int i = 1; i <= segmentCount; i++) {
+//                    WebElement currentTime = driver.get().findElement(By.xpath("//span[contains(@class, 'pssgui-bold') and contains(@class, 'ng-binding')]"));
+//                    String durationXPath = "(//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//span[@class = 'ng-binding' and contains(text(),'h') and contains(text(),'m')]";
+//                    String startTimeXpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[@ng-if='originDestination.showDateTime' and contains(@class, 'ng-binding')])[1]";
+//                    WebElement startTime = driver.get().findElement(By.xpath(startTimeXpath));
+//                    WebElement durationElement = driver.get().findElement(By.xpath(durationXPath));
+//                    LocalTime current = LocalTime.parse(currentTime.getText().trim(), timeFormatter);
+//                    String time = "";
+//                    if (startTime.getText().trim().contains("+")) {
+//                        time = startTime.getText().trim();
+//                        time = time.substring(0, time.indexOf('+'));
+//                    } else {
+//                        time = startTime.getText().trim();
+//                    }
+//                    LocalTime start = LocalTime.parse(time.trim(), timeFormatter);
+//
+//                    WebElement dateTimeElement = driver.get().findElement(By.xpath("//pssgui-date-time//div[contains(@class, 'date-time')]"));
+//                    WebElement selectedDate = driver.get().findElement(By.xpath("//div[contains(@class, 'carousel-item') and contains(@class, 'tab-active')]"));
+//                    String dateTimeText = dateTimeElement.getText();
+//                    String currentdateText = dateTimeText.split(" ")[0].trim();  // e.g. "21-Jul-2025"
+//                    String selectedDateText = selectedDate.getText().split("\\n")[0].trim();             // e.g. "21-Jul-2025" from carousel
+//
+//                    if (current.isAfter(start) && currentdateText.equals(selectedDateText)) {
+//                        logInfo.pass("Flight has departed. Searching for the next available flight.");
+//                        continue;
+//                    }
+//                    // Skip if flight duration is 00h
+//                    if (durationElement.getText().contains("00h")) {
+//                        continue;
+//                    }
+//
+////                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//
+////                    for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                    String segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[1]";
+//                    String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[3]";
+////                        String segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//
+//                    List<WebElement> segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                    List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath + "//span[contains(@class, 'small-box')]"));
+////                        List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                    int totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                    WebElement selectedSeat1 = null;
+//                    WebElement selectedSeat2 = null;
+//
+//                    // Find valid seat from segment 1
+//                    for (WebElement seat : segment1Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                            selectedSeat1 = seat;
+//                            break;
+//                        }
+//                    }
+//
+//                    // Find valid seat from segment 2
+//                    for (WebElement seat : segment2Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                            selectedSeat2 = seat;
+//                            break;
+//                        }
+//                    }
+//                    if (gl.existElement(segment1Seats) && gl.existElement(segment2Seats)) {
+//                        if (selectedSeat1 != null && selectedSeat2 != null) {
+//                            gl.scrollToWebElement(selectedSeat1);
+//                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//                            gl.scrollToWebElement(selectedSeat2);
+//                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//                            gl.clickElement(selectedSeat1);
+//                            gl.clickElement(selectedSeat2);
+//                            if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > initialRemoveIcons && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                                seatsBooked = true;
+//                                System.out.println("Selected seats for both segments.");
+//                                break Dates;
+//                            }
+//                        } else {
+//                            System.out.println("No valid seat pair found for segment index: " + i);
+//                        }
+//                    }
+//
+//                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//                    if (!seatsBooked && gl.existElement(nonCodeShareFlights)) {
+//                        for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                            segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[1]";
+////                        String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[4]";
+//                            segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//
+//                            segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                            segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                            totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                            selectedSeat1 = null;
+//                            selectedSeat2 = null;
+//
+//                            // Find valid seat from segment 1
+//                            for (WebElement seat : segment1Seats) {
+//                                String text = seat.getText().trim();
+//                                int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                                if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                                    selectedSeat1 = seat;
+//                                    break;
+//                                }
+//                            }
+//
+//                            // Find valid seat from segment 2
+//                            for (WebElement seat : segment2Seats) {
+//                                String text = seat.getText().trim();
+//                                int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                                if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                                    selectedSeat2 = seat;
+//                                    break;
+//                                }
+//                            }
+//
+//                            if (selectedSeat1 != null && selectedSeat2 != null) {
+//                                gl.scrollToWebElement(selectedSeat1);
+//                                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//                                gl.scrollToWebElement(selectedSeat2);
+//                                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//                                gl.clickElement(selectedSeat1);
+//                                gl.clickElement(selectedSeat2);
+//                                if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > initialRemoveIcons && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                                    seatsBooked = true;
+//                                    System.out.println("Selected seats for both segments.");
+//                                    break Dates;
+//                                }
+//                            } else {
+//                                System.out.println("No valid seat pair found for segment index: " + i);
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                dateCount++;
+//                gl.waitProgress();
+//
+//                if (seatsBooked == false && dateCount == dateLimit) {
+//                    logInfo.info(MarkupHelper.createLabel("No Seats found for the given class even after " + dateLimit + " Days.", ExtentColor.RED));
+//                    Assert.fail("No Seats found for the given class even after " + dateLimit + " Days.");
+//                }
+//                maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                nextDate.click();
+//                gl.waitProgress();
+//            }
+//
+//        }
+//        else {
+//
+//            int segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//            boolean flightNotFound = gl.existElement(maeGUIObjects.FLIGHT_NOT_FOUND);
+//            boolean noMatchingFlightFound =gl.existElement(maeGUIObjects.NO_MATCHING_FLIGHT_FOUND);
+//            int initialRemoveIcons =0;
+//
+//            int dateCount = 0;
+//            int dateLimit = 20;
+//            boolean getCaroselDate = false;
+//            boolean seatsBooked = false;
+//            if(gl.existElement(maeGUIObjects.REMOVE_ICONS_AVAILABLE)) {
+//                initialRemoveIcons = maeGUIObjects.REMOVE_ICONS_AVAILABLE.size();
+//            }
+//            int[] value={1,0};
+//            if (segmentCount == 0 ||flightNotFound&&noMatchingFlightFound) {
+//                value = getCaroselDateCountsForConnectingSegments(logInfo,b);
+//                getCaroselDate=true;
+//            }
+//            if(maeGUIObjects.CAROUSEL_NEXT_DATES.size()==0){
+//                maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                gl.waitProgress();
+//            }
+//
+//            Dates:
+//            for (WebElement nextDate : maeGUIObjects.CAROUSEL_NEXT_DATES) {
+//
+//                // Check if flights are available
+//                segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+//                dateCount = 0;
+//                if(getCaroselDate)
+//                {
+//                    initialRemoveIcons = value[1];
+//                    dateLimit = value[0];
+//                }
+//                if ((mPassengers.get(getDriverID()).get(0).getFirstSegDate()) == 0) {
+//                    WebElement dateTimeDiv = driver.get().findElement(By.xpath("//div[contains(@class, 'date-time')]"));
+//                    // Get the full text, e.g., "30-Aug-2025 01:24"
+//                    String fullText = dateTimeDiv.getText();
+//                    // Extract just the date part
+//                    String date = fullText.split("\\s+")[0];
+//                    System.out.println("Extracted Date: " + date);
+//                    String todayXpath = String.format("//div[@class='ng-binding' and text()='%s']", date.trim());
+//                    WebElement TodayDate = driver.get().findElement(By.xpath(todayXpath));
+//                    //to select only today's date alone
+//                    gl.clickElement(TodayDate);
+//                }
+//                // Define the formatter matching your time format
+//                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+//                for (int i = 1; i <= segmentCount; i++) {
+//                    WebElement currentTime = driver.get().findElement(By.xpath("//span[contains(@class, 'pssgui-bold') and contains(@class, 'ng-binding')]"));
+//                    String durationXPath = "(//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//span[@class = 'ng-binding' and contains(text(),'h') and contains(text(),'m')]";
+//                    String startTimeXpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[@ng-if='originDestination.showDateTime' and contains(@class, 'ng-binding')])[1]";
+//                    WebElement startTime = driver.get().findElement(By.xpath(startTimeXpath));
+//                    WebElement durationElement = driver.get().findElement(By.xpath(durationXPath));
+//                    LocalTime current = LocalTime.parse(currentTime.getText().trim(), timeFormatter);
+//                    String time = "";
+//                    if (startTime.getText().trim().contains("+")) {
+//                        time = startTime.getText().trim();
+//                        time = time.substring(0, time.indexOf('+'));
+//                    } else {
+//                        time = startTime.getText().trim();
+//                    }
+//                    LocalTime start = LocalTime.parse(time.trim(), timeFormatter);
+//
+//                    WebElement dateTimeElement = driver.get().findElement(By.xpath("//pssgui-date-time//div[contains(@class, 'date-time')]"));
+//                    WebElement selectedDate = driver.get().findElement(By.xpath("//div[contains(@class, 'carousel-item') and contains(@class, 'tab-active')]"));
+//                    String dateTimeText = dateTimeElement.getText();
+//                    String currentdateText = dateTimeText.split(" ")[0].trim();  // e.g. "21-Jul-2025"
+//                    String selectedDateText = selectedDate.getText().split("\\n")[0].trim();             // e.g. "21-Jul-2025" from carousel
+//
+//                    if (current.isAfter(start) && currentdateText.equals(selectedDateText)) {
+//                        logInfo.pass("Flight has departed. Searching for the next available flight.");
+//                        continue;
+//                    }
+//                    // Skip if flight duration is 00h
+//                    if (durationElement.getText().contains("00h")) {
+//                        continue;
+//                    }
+//
+////                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//
+////                    for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                    String segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[1]";
+//                    String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[3]";
+////                        String segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//
+//                    List<WebElement> segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                    List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath + "//span[contains(@class, 'small-box')]"));
+////                        List<WebElement> segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                    int totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                    WebElement selectedSeat1 = null;
+//                    WebElement selectedSeat2 = null;
+//
+//                    // Find valid seat from segment 1
+//                    for (WebElement seat : segment1Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                            selectedSeat1 = seat;
+//                            break;
+//                        }
+//                    }
+//
+//                    // Find valid seat from segment 2
+//                    for (WebElement seat : segment2Seats) {
+//                        String text = seat.getText().trim();
+//                        int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                        if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                            selectedSeat2 = seat;
+//                            break;
+//                        }
+//                    }
+//                    if (gl.existElement(segment1Seats) && gl.existElement(segment2Seats)) {
+//                        if (selectedSeat1 != null && selectedSeat2 != null) {
+//                            gl.clickElement(selectedSeat1);
+//                            gl.clickElement(selectedSeat2);
+//                            if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > value[1] && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                                seatsBooked = true;
+//                                System.out.println("Selected seats for both segments.");
+//                                break Dates;
+//                            }
+//                        } else {
+//                            System.out.println("No valid seat pair found for segment index: " + i);
+//                        }
+//                    }
+//
+//                    List<WebElement> nonCodeShareFlights = driver.get().findElements(By.xpath("(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])"));
+//                    if (!seatsBooked && gl.existElement(nonCodeShareFlights)) {
+//                        for (int j = 1; j <= nonCodeShareFlights.size(); j++) {
+//                            segment1Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[1]";
+////                        String segment2Xpath = "((//div[@ng-repeat='(segmentIndex, segment) in flightAvailability.segments as results'])[" + i + "]//div[contains(@class, 'layout-wrap')])[4]";
+//                            segment2Xpath = "(//div[contains(@class, 'table-row') and not(.//div[@ng-if='!flight.IsHostCarrierSegment'])])[" + j + "]//span[contains(@class, 'active-state')]";
+//
+//                            segment1Seats = driver.get().findElements(By.xpath(segment1Xpath + "//span[contains(@class, 'small-box')]"));
+//                            segment2Seats = driver.get().findElements(By.xpath(segment2Xpath));
+//
+//                            totalPassengers = mPassengers.get(getDriverID()).size();
+//
+//                            selectedSeat1 = null;
+//                            selectedSeat2 = null;
+//
+//                            // Find valid seat from segment 1
+//                            for (WebElement seat : segment1Seats) {
+//                                String text = seat.getText().trim();
+//                                int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                                if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                                    selectedSeat1 = seat;
+//                                    break;
+//                                }
+//                            }
+//
+//                            // Find valid seat from segment 2
+//                            for (WebElement seat : segment2Seats) {
+//                                String text = seat.getText().trim();
+//                                int available = Integer.parseInt(text.replaceAll("\\D", ""));
+//                                if (seat.isEnabled() && isAllowedBusinessClass(text) && available >= totalPassengers) {
+//                                    selectedSeat2 = seat;
+//                                    break;
+//                                }
+//                            }
+//
+//                            if (selectedSeat1 != null && selectedSeat2 != null) {
+//                                gl.clickElement(selectedSeat1);
+//                                gl.clickElement(selectedSeat2);
+//                                if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() > initialRemoveIcons && !maeGUIObjects.REMOVE_ICONS_AVAILABLE.isEmpty()) {
+//                                    seatsBooked = true;
+//                                    System.out.println("Selected seats for both segments.");
+//                                    break Dates;
+//                                }
+//                            } else {
+//                                System.out.println("No valid seat pair found for segment index: " + i);
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                dateCount++;
+//                gl.waitProgress();
+//                if (seatsBooked == false && dateCount == dateLimit) {
+//                    logInfo.info(MarkupHelper.createLabel("No Seats found for the given class even after " + dateLimit + " Days.", ExtentColor.RED));
+//                    Assert.fail("No Seats found for the given class even after " + dateLimit + " Days.");
+//                }
+//                maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+//                nextDate.click();
+//                gl.waitProgress();
+//            }
+//        }
+//
+//    } catch (AssertionError | Exception e) {
+//        ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+//        Assert.fail("This step failed.. so stopping...");
+//    }
+//}
 
     public void selectSpecificSeats(ExtentTest logInfo, String seatToBook, String seatToCheck) {
 
@@ -25121,8 +27607,7 @@ public void selectFullBusinessForSecondSegmentWithConnectingFlight(ExtentTest lo
             gl.waitForProfileLoad();
             gl.waitProgress();
             logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
-
-
+            gl.highLightErrorMessages(logInfo,"Unable to retrieve passenger list","Error returned from Airport Passenger List service");
             WebElement close = driver.get().findElement(By.xpath("(//i[contains(@class, 'icon-close')])[3]"));
             gl.clickElement(close);
             gl.waitForProfileLoad();
@@ -25165,7 +27650,7 @@ public void selectFullBusinessForSecondSegmentWithConnectingFlight(ExtentTest lo
             gl.waitForProfileLoad();
             gl.waitProgress();
             logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
-
+            gl.highLightErrorMessages(logInfo,"Unable to retrieve passenger list","Error returned from Airport Passenger List service");
             WebElement close = driver.get().findElement(By.xpath("(//i[contains(@class, 'icon-close')])[3]"));
             gl.clickElement(close);
             gl.waitForProfileLoad();
@@ -27622,9 +30107,20 @@ public void selectFullBusinessForSecondSegmentWithConnectingFlight(ExtentTest lo
             String dt = departureDate.substring(0, 2);
             int days = Integer.parseInt(dt);
             String date = gl.plusDaysFromToday(days);
+            int first= Integer.parseInt(date.substring(3, 5));
 
-            pax.setSegmentOriginCity(0, origin);
-            pax.setSegmentDate(0, days);
+            WebElement dateTimeDiv = driver.get().findElement(By.xpath("//div[contains(@class, 'date-time')]"));
+            String fullText = dateTimeDiv.getText();
+            String sysDate = fullText.split("\\s+")[0];
+            System.out.println("Extracted Date: " + sysDate);
+
+            SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+            SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+            Date systemDate = inputFormat.parse(sysDate);
+            String formattedDate = outputFormat.format(systemDate);
+            int sec= Integer.parseInt(formattedDate.substring(3, 5));
+            int days1=sec- first;
 
             gl.clickElement(maeGUIObjects.GATE_PAGE_DEPATURE_AIRPORT);
             maeGUIObjects.GATE_PAGE_DEPATURE_AIRPORT.sendKeys(Keys.CONTROL + "a");
@@ -27634,21 +30130,40 @@ public void selectFullBusinessForSecondSegmentWithConnectingFlight(ExtentTest lo
             gl.waitProgress();
             logInfo.info(MarkupHelper.createLabel("I select the Departure Airport", ExtentColor.PURPLE));
 
-            gl.clickElement(maeGUIObjects.INPUT_TRAVEL_DATE2);
-            maeGUIObjects.INPUT_TRAVEL_DATE2.sendKeys(Keys.CONTROL + "a");
-            maeGUIObjects.INPUT_TRAVEL_DATE2.sendKeys(Keys.BACK_SPACE);
-            gl.inputText(maeGUIObjects.INPUT_TRAVEL_DATE2, date);
-            gl.waitProgress();
-            gl.waitForProfileLoad();
-            logInfo.info(MarkupHelper.createLabel("I enter the departure date", ExtentColor.PURPLE));
-            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            if (formattedDate.equals(date)) {
+                pax.setSegmentOriginCity(0, origin);
+                pax.setSegmentDate(0, days);
 
+                gl.clickElement(maeGUIObjects.INPUT_TRAVEL_DATE2);
+                maeGUIObjects.INPUT_TRAVEL_DATE2.sendKeys(Keys.CONTROL + "a");
+                maeGUIObjects.INPUT_TRAVEL_DATE2.sendKeys(Keys.BACK_SPACE);
+                gl.inputText(maeGUIObjects.INPUT_TRAVEL_DATE2, date);
+                gl.waitProgress();
+                gl.waitForProfileLoad();
+                logInfo.info(MarkupHelper.createLabel("I enter the departure date", ExtentColor.PURPLE));
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+            } else{
+                pax.setSegmentOriginCity(0, origin);
+                pax.setSegmentDate(0, days1);
+
+                gl.clickElement(maeGUIObjects.INPUT_TRAVEL_DATE2);
+                maeGUIObjects.INPUT_TRAVEL_DATE2.sendKeys(Keys.CONTROL + "a");
+                maeGUIObjects.INPUT_TRAVEL_DATE2.sendKeys(Keys.BACK_SPACE);
+                gl.inputText(maeGUIObjects.INPUT_TRAVEL_DATE2, formattedDate);
+                gl.waitProgress();
+                gl.waitForProfileLoad();
+                logInfo.info(MarkupHelper.createLabel("I enter the departure date", ExtentColor.PURPLE));
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            }
             gl.clickElement(maeGUIObjects.GATE_PAGE_SEARCH);
             waitUntilPageLoad(logInfo);
+            gl.highLightErrorMessages(logInfo, "Unable to retrieve");
             logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
 
             String text = "";
+            String text1 = "";
             List<WebElement> flightNumbers = maeGUIObjects.FLIGHT_NUMBERS_GATE_PAGE;
 
             for (int i = 0; i < flightNumbers.size(); i++) {
@@ -27657,7 +30172,23 @@ public void selectFullBusinessForSecondSegmentWithConnectingFlight(ExtentTest lo
                 WebElement flightStatusText = driver.get().findElement(By.xpath(xpath_SearchOptionSelection));
                 text = flightStatusText.getText().trim();
 
-                if (!text.isEmpty()) {
+                if (text.isEmpty()) {
+
+                    logInfo.info(MarkupHelper.createLabel("Gate number not assigned to the Flight. So assign the Gate", ExtentColor.GREEN));
+
+                    String flightNo1 = flightNumbers.get(0).getText().substring(2);
+                    pax.setSegmentFlight(0, flightNo1);
+                    isharesPage1.clickOnToolsMenu(logInfo);
+                    isharesPage1.clickonNativeShares(logInfo);
+                    isharesPage5.assignGateNumberForArrivalOrDepartureInNativeShares(logInfo, gateNo, time);
+                    isharesPage1.cancelNativeShares(logInfo);
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                    text1= pax.getDepartureFlightGateNumber();
+                    pax.setGateNumber(text1);
+                    break;
+                }
+                else if (!text.isEmpty()) {
 
                     logInfo.info(MarkupHelper.createLabel("Gate number already assigned to the selected flight", ExtentColor.GREEN));
                     String flightNo = flightNumbers.get(i).getText().substring(2);
@@ -27672,19 +30203,18 @@ public void selectFullBusinessForSecondSegmentWithConnectingFlight(ExtentTest lo
                 }
 
             }
-            if (text.isEmpty()) {
-
-                logInfo.info(MarkupHelper.createLabel("Gate number not assigned to the Flight. So assign the Gate", ExtentColor.GREEN));
-
-                String flightNo1 = flightNumbers.get(0).getText().substring(2);
-                pax.setSegmentFlight(0, flightNo1);
-                isharesPage1.clickOnToolsMenu(logInfo);
-                isharesPage1.clickonNativeShares(logInfo);
-                isharesPage5.assignGateNumberForArrivalOrDepartureInNativeShares(logInfo, gateNo, time);
-                isharesPage1.cancelNativeShares(logInfo);
-
-                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
-            }
+//            if (text.isEmpty()) {
+//
+//                logInfo.info(MarkupHelper.createLabel("Gate number not assigned to the Flight. So assign the Gate", ExtentColor.GREEN));
+//
+//                String flightNo1 = flightNumbers.get(0).getText().substring(2);
+//                pax.setSegmentFlight(0, flightNo1);
+//                isharesPage1.clickOnToolsMenu(logInfo);
+//                isharesPage1.clickonNativeShares(logInfo);
+//                isharesPage5.assignGateNumberForArrivalOrDepartureInNativeShares(logInfo, gateNo, time);
+//                isharesPage1.cancelNativeShares(logInfo);
+//                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+//            }
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
             org.junit.Assert.fail("This step failed.. so stopping...");
@@ -40666,6 +43196,187 @@ public void voluntaryManualReissueAfterAddingSurcharges(ExtentTest logInfo) {
 //        }
 //    }
 
+    public void setApplicationDate(ExtentTest logInfo){
+    try{
+        Passenger pax= mPassengers.get(getDriverID()).get(0);
+        WebElement dateTimeDiv = driver.get().findElement(By.xpath("//div[contains(@class, 'date-time')]"));
+        String fullText = dateTimeDiv.getText();
+        String sysDate = fullText.split("\\s+")[0];
+        System.out.println("Extracted Date: " + sysDate);
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+        SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+        Date systemDate = inputFormat.parse(sysDate);
+        String formattedDate = outputFormat.format(systemDate);
+        int date= Integer.parseInt(formattedDate.substring(3, 5));
+
+        LocalDate today = LocalDate.now().plusDays(0);
+        int day = today.getDayOfMonth();
+        int days= date-day;
+        pax.setApplicationDate(0,days);
+
+     } catch (AssertionError | Exception e) {
+
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
+    }
+    }
+
+    public void enterDetailsFlifoSearchWithRequiredDetailsForSelectedFlight(ExtentTest logInfo) {
+        try {
+
+
+            Passenger pax = mPassengers.get(getDriverID()).get(0);
+            String dt = String.valueOf(pax.getApplicationDate(0));
+            int flightCount= pax.getFlightCount();
+            String Origin= pax.getSegmentOriginCity(0);
+
+            int days = Integer.parseInt(dt);
+            LocalDate tomorrow = LocalDate.now().plusDays(days);
+            int day = tomorrow.getDayOfMonth();
+            String month = tomorrow.getMonth().name();// e.g., AUGUST
+            String month1 = month.charAt(0) + month.substring(1).toLowerCase();
+            String day1 = tomorrow.getDayOfWeek().name();
+            String day2 = day1.charAt(0) + day1.substring(1).toLowerCase();
+            int year = tomorrow.getYear();
+
+            for(int j=0; j<flightCount; j++) {
+
+                String segmentflightNum = pax.getSegmentFlight(j);
+
+                String xpath_SearchOptionSelection2 = "//button[@class='md-datepicker-button md-icon-button md-button md-ink-ripple']";
+                WebElement SEARCH_TYPE2 = driver.get().findElement(By.xpath(xpath_SearchOptionSelection2));
+                gl.clickElement(SEARCH_TYPE2);
+                gl.waitForProfileLoad();
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                String xpath = "//tr//td[@aria-label='" + day2 + " " + month1 + " " + day + " " + year + "']";
+                WebElement dateElement = getDriver().findElement(By.xpath(xpath));
+                gl.waitProgress();
+                dateElement.click();
+                gl.waitProgress();
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                gl.waitForProfileLoad();
+                gl.waitForProfileLoad();
+                maeGUIObjects.FLIFO_FLIGHT_NUMBER.click();
+                maeGUIObjects.FLIFO_FLIGHT_NUMBER.clear();
+
+                JavascriptExecutor js = (JavascriptExecutor) getDriver();
+                js.executeScript("arguments[0].value='" + segmentflightNum + "'", maeGUIObjects.FLIFO_FLIGHT_NUMBER);
+                gl.waitForProfileLoad();
+
+                maeGUIObjects.FLIFO_ORIGIN_CITY.click();
+                maeGUIObjects.FLIFO_ORIGIN_CITY.clear();
+                js.executeScript("arguments[0].value='" +Origin + "'", maeGUIObjects.FLIFO_ORIGIN_CITY);
+                gl.waitForProfileLoad();
+                maeGUIObjects.FLIFO_ORIGIN_CITY.sendKeys(Keys.ENTER);
+
+                gl.waitProgress();
+                maeGUIObjects.FLIFO_FLIGHT_NUMBER.sendKeys(Keys.chord(Keys.CONTROL + "a" + Keys.BACK_SPACE));
+                maeGUIObjects.FLIFO_FLIGHT_NUMBER.sendKeys(Keys.BACK_SPACE, segmentflightNum);
+
+                logInfo.pass("I entered required details for flifo search");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                gl.waitForProfileLoad();
+                gl.waitProgress();
+
+                maeGUIObjects.FLIFO_SEARCH_ICON.click();
+                waitUntilPageLoad(logInfo);
+                logInfo.pass("I click on flifo search icon");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                String originGateNo1 = maeGUIObjects.ORIGIN_FLIGHT_GATE_NUMBER.getText();
+                String destinationGateNo1 = maeGUIObjects.DESTINATION_FLIGHT_GATE_NUMBER.getText();
+
+                if (originGateNo1.isEmpty() && destinationGateNo1.isEmpty()) {
+                    logInfo.info("The Flight is not assigned with any gate number for Origin city");
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                    pax.setSegmentFlight(0, segmentflightNum);
+                    break;
+                } else{
+                    logInfo.info(MarkupHelper.createLabel("Flight -"+segmentflightNum+" already has a gate assigned. Select another flight.", ExtentColor.PURPLE));
+                }
+
+            }
+
+        } catch (AssertionError | Exception e) {
+
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+    public void enterDetailsFlifoSearchWithRequiredDetailsForCurrentDate(ExtentTest logInfo) {
+        try {
+
+            Passenger pax = mPassengers.get(getDriverID()).get(0);
+            String dt = String.valueOf(pax.getApplicationDate(0));
+            String Origin= pax.getSegmentOriginCity(0);
+
+            int days = Integer.parseInt(dt);
+            LocalDate tomorrow = LocalDate.now().plusDays(days);
+            int day = tomorrow.getDayOfMonth();
+            String month = tomorrow.getMonth().name();// e.g., AUGUST
+            String month1 = month.charAt(0) + month.substring(1).toLowerCase();
+            String day1 = tomorrow.getDayOfWeek().name();
+            String day2 = day1.charAt(0) + day1.substring(1).toLowerCase();
+            int year = tomorrow.getYear();
+
+            String xpath_SearchOptionSelection2 = "//button[@class='md-datepicker-button md-icon-button md-button md-ink-ripple']";
+            WebElement SEARCH_TYPE2 = driver.get().findElement(By.xpath(xpath_SearchOptionSelection2));
+            gl.clickElement(SEARCH_TYPE2);
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+            String xpath = "//tr//td[@aria-label='" + day2 + " " + month1 + " " + day + " " + year + "']";
+            WebElement dateElement = getDriver().findElement(By.xpath(xpath));
+            gl.waitProgress();
+            dateElement.click();
+            gl.waitProgress();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+            String segmentflightNum = pax.getSegmentFlight(0);
+            gl.waitForProfileLoad();
+            gl.waitForProfileLoad();
+            maeGUIObjects.FLIFO_FLIGHT_NUMBER.click();
+            maeGUIObjects.FLIFO_FLIGHT_NUMBER.clear();
+
+            JavascriptExecutor js = (JavascriptExecutor) getDriver();
+            js.executeScript("arguments[0].value='" + segmentflightNum + "'", maeGUIObjects.FLIFO_FLIGHT_NUMBER);
+            gl.waitForProfileLoad();
+
+            maeGUIObjects.FLIFO_ORIGIN_CITY.click();
+            maeGUIObjects.FLIFO_ORIGIN_CITY.clear();
+            js.executeScript("arguments[0].value='" +Origin + "'", maeGUIObjects.FLIFO_ORIGIN_CITY);
+            gl.waitForProfileLoad();
+            maeGUIObjects.FLIFO_ORIGIN_CITY.sendKeys(Keys.ENTER);
+
+            gl.waitProgress();
+            maeGUIObjects.FLIFO_FLIGHT_NUMBER.sendKeys(Keys.chord(Keys.CONTROL + "a" + Keys.BACK_SPACE));
+            maeGUIObjects.FLIFO_FLIGHT_NUMBER.sendKeys(Keys.BACK_SPACE, segmentflightNum);
+
+            logInfo.pass("I entered required details for flifo search");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+            gl.waitForProfileLoad();
+            gl.waitProgress();
+
+            maeGUIObjects.FLIFO_SEARCH_ICON.click();
+            waitUntilPageLoad(logInfo);
+            logInfo.pass("I click on flifo search icon");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+
+        } catch (AssertionError | Exception e) {
+
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
     //   *************************************************** MaeGUIObjects ***************************************************************************************
 
     static class MaeGUIObjects {
@@ -43879,6 +46590,15 @@ public void voluntaryManualReissueAfterAddingSurcharges(ExtentTest logInfo) {
 
         @FindBy(xpath = "(//i[@ng-if='errorPanel.pssguiConstants.messageLogs[0].messageType'])[1]")
         public WebElement ERROR_MESSAGE_CROSS_SYMBOL1;
+
+        @FindBy(xpath = "//div[@translate='pssgui.no.flights.found']")
+        public List<WebElement> NO_FLIGHTS_FOUND_DURING_MASS_TRANSFER;
+
+        @FindBy(xpath = "//span[@airport-code='tab.labels[0]']")
+        public WebElement ORIGIN;
+
+        @FindBy(xpath = "//span[@airport-code='tab.labels[1]']")
+        public WebElement DESTINATION;
 
     }
 }

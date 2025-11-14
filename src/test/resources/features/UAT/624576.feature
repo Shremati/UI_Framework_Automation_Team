@@ -153,7 +153,7 @@ Feature: 624576 - 145392-ISSUE/REISSUE-Create reservation for 1CHD in CTO Mini-C
     And I validate the Tax Details in Agent Sales Report after changes
     And I navigate to home screen
 
-    And I navigate to Shares Application
+    And I navigate to iShares Page from COPA GUI Application
     And I enter valid shares credentials
     And I click on the shares Login Button
     And I click on terminal emulation

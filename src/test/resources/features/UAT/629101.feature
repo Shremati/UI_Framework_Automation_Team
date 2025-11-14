@@ -48,4 +48,4 @@ Feature: 629101 - Verify the assigned gate number is displayed correctly in all 
 
     Examples:
       | salesOffice | currency | OriginCity | Destination | StartDate | Adult | Child | INF | INS | COS | Airline | SegmentIndex |   GateNo |
-      | PTY ATO     | USD      | PTY        | BOG         | 00 Days   | 1     | 0     | 0   | 0   | Y   | CM      | 0            |   001    |
+      | PTY ATO     | USD      | PTY        | MDE         | 00 Days   | 1     | 0     | 0   | 0   | Y   | CM      | 0            |   001    |

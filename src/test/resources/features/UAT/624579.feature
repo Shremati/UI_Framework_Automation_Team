@@ -62,8 +62,7 @@ Feature: 624579 - 144437-REISSUE-Retrieve CSS reservation departure from BOG wit
     And I click the Tickets tab
     And I click the EMD subtab and view the EMD details
 
-
-    And I navigate to Shares Application
+    And I navigate to iShares Page from COPA GUI Application
     And I enter valid shares credentials
     And I click on the shares Login Button
     And I click on terminal emulation
