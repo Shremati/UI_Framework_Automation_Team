@@ -11,7 +11,7 @@ import static io.cucumber.testng.CucumberOptions.SnippetType.CAMELCASE;
 @CucumberOptions(
         features = "src\\test\\resources\\features\\UAT\\236675.feature",
         glue = {"org.dxc.copa.automation.stepDefinitions"},
-        tags = "@UAT",
+        tags = "@UAT or @IcouponAssign or @AssignIcoupon or @Reissue or @IcouponUnAssign or @UnAssignIcoupon",
 //        tags = "@UATPrinter",
         monochrome = true,
         //for step definitions validation check

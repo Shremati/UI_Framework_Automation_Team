@@ -9,14 +9,14 @@
 
 
 <!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerAssignIcoupon" />-->
-<!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerSharesUAT" />-->
+                                    <class name="org.dxc.copa.automation.runners.TestRunnerSharesUAT" />
 <!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerSharesAssign" />-->
 <!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerUnAssignIcoupon" />-->
 <!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerSharesReissue" />-->
 <!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerSharesUnAssign" />-->
 
 <!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerAssignIcoupon" />-->
-                                    <class name="org.dxc.copa.automation.runners.TestRunnerFailedUAT" />
+<!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerFailedUAT" />-->
 <!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerSharesAssignFailed" />-->
 <!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerUnAssignIcoupon" />-->
 <!--                                    <class name="org.dxc.copa.automation.runners.TestRunnerSharesReissueFailed" />-->
