@@ -28,6 +28,8 @@ Feature: 236677 - Display list- Thru Pax
     And I click on New Order for creating new PNR in GUI
     And Select from and to City "<OriginCity>" and "<Destination>"
     And I enter Start Date "<StartDate>" for one way booking
+#    you need to remove a pax from the PNR
+
     And I select child passengers
     And I select infant without seat passengers
     And I select Adult passengers and search for flights

@@ -15,8 +15,7 @@ import java.io.IOException;
 
 import static org.dxc.copa.automation.common.ExtentReportListener.getBase64;
 
-public class MaeGUISteps extends StepManager
-{
+public class MaeGUISteps extends StepManager {
     ExtentTest logInfo = null;
 
     @Given("COPA GUI Application is launched in the browser")
@@ -102,8 +101,8 @@ public class MaeGUISteps extends StepManager
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
-             Assert.fail("This step failed.. so stopping...");
-             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+            logInfo.fail("This step failed.. so stopping...");
         }
     }
 
@@ -115,8 +114,8 @@ public class MaeGUISteps extends StepManager
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
-             Assert.fail("This step failed.. so stopping...");
-             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+            logInfo.fail("This step failed.. so stopping...");
         }
     }
 
@@ -129,14 +128,13 @@ public class MaeGUISteps extends StepManager
             logInfo.pass("I navigate to home screen");
 
         } catch (AssertionError | Exception e) {
-             Assert.fail("This step failed.. so stopping...");
-             logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+            logInfo.fail("This step failed.. so stopping...");
         }
     }
 
     @And("I change the Sales Office and Currency {string} and {string}")
-    public void i_change_the_sales_office_and_currency_and(String office, String currency)
-    {
+    public void i_change_the_sales_office_and_currency_and(String office, String currency) {
 
         try {
 
@@ -152,7 +150,7 @@ public class MaeGUISteps extends StepManager
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
-             Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -167,11 +165,10 @@ public class MaeGUISteps extends StepManager
 
         } catch (Exception e) {
             logInfo.fail("This step failed.. so stopping...");
-             Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
         System.out.println("Click Reservation..");
     }
-
 
 
     @Then("I validate the iShares PNR created in the GUI order Page")
@@ -185,7 +182,7 @@ public class MaeGUISteps extends StepManager
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
-             Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -214,7 +211,7 @@ public class MaeGUISteps extends StepManager
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
-             Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
 
     }
@@ -228,10 +225,9 @@ public class MaeGUISteps extends StepManager
             maeGUI.refreshTheGUIPage(logInfo);
             logInfo.pass("I refresh the GUI page and check if the segments are flown");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logInfo.fail("This step failed.. so stopping...");
-             Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -246,7 +242,7 @@ public class MaeGUISteps extends StepManager
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
-             Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
         System.out.println("I click on New Order");
     }
@@ -256,13 +252,13 @@ public class MaeGUISteps extends StepManager
 
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "Select from and to City for 1st Segment");
-            maeGUI.selectCities(origin, destination,logInfo);
-            logInfo.pass("Selected origin city : " + origin + " and the destination city: " + destination+" for 1st Segment");
+            maeGUI.selectCities(origin, destination, logInfo);
+            logInfo.pass("Selected origin city : " + origin + " and the destination city: " + destination + " for 1st Segment");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
-             Assert.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
         }
     }
 
@@ -271,8 +267,8 @@ public class MaeGUISteps extends StepManager
 
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "Select from and to City for 2nd Segment");
-            maeGUI.selectCitiesForSecondSegment(origin, destination,logInfo);
-            logInfo.pass("Selected origin city : " + origin + " and the destination city: " + destination+" for 2nd segment");
+            maeGUI.selectCitiesForSecondSegment(origin, destination, logInfo);
+            logInfo.pass("Selected origin city : " + origin + " and the destination city: " + destination + " for 2nd segment");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -286,8 +282,8 @@ public class MaeGUISteps extends StepManager
 
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "Select from and to City for 3rd Segment");
-            maeGUI.selectCitiesForThirdSegment(origin, destination,logInfo);
-            logInfo.pass("Selected origin city : " + origin + " and the destination city: " + destination+" for 3rd segment");
+            maeGUI.selectCitiesForThirdSegment(origin, destination, logInfo);
+            logInfo.pass("Selected origin city : " + origin + " and the destination city: " + destination + " for 3rd segment");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -301,8 +297,8 @@ public class MaeGUISteps extends StepManager
 
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "Select from and to City for 4th Segment");
-            maeGUI.selectCitiesForFourthSegment(origin, destination,logInfo);
-            logInfo.pass("Selected origin city : " + origin + " and the destination city: " + destination+" for 4th segment");
+            maeGUI.selectCitiesForFourthSegment(origin, destination, logInfo);
+            logInfo.pass("Selected origin city : " + origin + " and the destination city: " + destination + " for 4th segment");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -312,8 +308,7 @@ public class MaeGUISteps extends StepManager
     }
 
     @And("I enter Start Date {string} for one way booking")
-    public void i_enter(String travelDate) throws Exception
-    {
+    public void i_enter(String travelDate) throws Exception {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I enter date of departure for one way booking");
             maeGUI.bookOneWay(travelDate, logInfo);
@@ -327,8 +322,7 @@ public class MaeGUISteps extends StepManager
     }
 
     @And("I enter Start Date {string} and Return Date {string} for two way booking")
-    public void i_enter_and(String startDate, String returnDate)
-    {
+    public void i_enter_and(String startDate, String returnDate) {
 
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I enter date of departure and date of arrival for two way booking");
@@ -343,8 +337,7 @@ public class MaeGUISteps extends StepManager
     }
 
     @And("I enter Start Date {string} for 2nd Segment")
-    public void i_enter_startDate_for_2nd_Segment(String travelDate) throws Exception
-    {
+    public void i_enter_startDate_for_2nd_Segment(String travelDate) throws Exception {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I enter date of departure for 2nd Segment");
             maeGUI.book2ndSegment(travelDate, logInfo);
@@ -359,8 +352,7 @@ public class MaeGUISteps extends StepManager
     }
 
     @And("I enter Start Date {string} for 3rd Segment")
-    public void i_enter_startDate_for_3rd_Segment(String travelDate) throws Exception
-    {
+    public void i_enter_startDate_for_3rd_Segment(String travelDate) throws Exception {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I enter date of departure for 3rd Segment");
             maeGUI.book3rdSegment(travelDate, logInfo);
@@ -385,10 +377,9 @@ public class MaeGUISteps extends StepManager
                 maeGUI.selectFullEconomy(logInfo);
             } else if (cabin.equalsIgnoreCase("Business")) {
                 maeGUI.selectFullBusiness(logInfo);
-            }   else if (cabin.equalsIgnoreCase("SelectADifferentFlight")) {
+            } else if (cabin.equalsIgnoreCase("SelectADifferentFlight")) {
                 maeGUI.selectFullEconomyForADifferentFlight(logInfo);
-            }
-            else {
+            } else {
                 maeGUI.selectAnySeat();
             }
             logInfo.pass("I select " + cabin + " class for Origin flight");
@@ -406,7 +397,7 @@ public class MaeGUISteps extends StepManager
 
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select " + cabin + " class in other segment flights");
-            maeGUI.selectAllFlights(cabin,logInfo);
+            maeGUI.selectAllFlights(cabin, logInfo);
             logInfo.pass("I select " + cabin + " class in other segment flights");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
         } catch (AssertionError | Exception e) {
@@ -555,13 +546,10 @@ public class MaeGUISteps extends StepManager
 
 
     @And("I check class for Business Class availability")
-    public void i_check_class_availability()
-    {
-        try
-        {
+    public void i_check_class_availability() {
+        try {
             maeGUI.checkBusinessClass();
-        }
-        catch (AssertionError | Exception e) {
+        } catch (AssertionError | Exception e) {
 
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
@@ -589,7 +577,7 @@ public class MaeGUISteps extends StepManager
     public void i_select_the_second_segment_and_delete_the_segment(String SegmentNumber) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select and delete the segment");
-            maeGUI.deleteSecondSegment(logInfo,SegmentNumber);
+            maeGUI.deleteSecondSegment(logInfo, SegmentNumber);
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -697,11 +685,10 @@ public class MaeGUISteps extends StepManager
 
     @And("I make the first payment by selecting the payment type as {string}")
     public void i_make_the_first_payment_by_selecting_the_payment_type_as(String paymentType) {
-        try
-        {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I make the first payment by selecting the payment type as "+paymentType);
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I make the first payment by selecting the payment type as " + paymentType);
             maeGUI.makeFirstPayment(paymentType, logInfo);
-            logInfo.pass(paymentType+" Payment is successful");
+            logInfo.pass(paymentType + " Payment is successful");
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -711,11 +698,10 @@ public class MaeGUISteps extends StepManager
 
     @And("I make the second payment by selecting the payment type as {string}")
     public void i_make_the_second_payment_by_selecting_the_payment_type_as(String paymentType) {
-        try
-        {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I make the second payment by selecting the payment type as "+paymentType);
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I make the second payment by selecting the payment type as " + paymentType);
             maeGUI.makeSecondPayment(paymentType, logInfo);
-            logInfo.pass(paymentType+" Payment is successful");
+            logInfo.pass(paymentType + " Payment is successful");
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -725,11 +711,10 @@ public class MaeGUISteps extends StepManager
 
     @And("I make the third payment by selecting the payment type as {string}")
     public void i_make_the_third_payment_by_selecting_the_payment_type_as(String paymentType) {
-        try
-        {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I make the third payment by selecting the payment type as "+paymentType);
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I make the third payment by selecting the payment type as " + paymentType);
             maeGUI.makeThirdPayment(paymentType, logInfo);
-            logInfo.pass(paymentType+" Payment is successful");
+            logInfo.pass(paymentType + " Payment is successful");
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -752,7 +737,6 @@ public class MaeGUISteps extends StepManager
     }
 
 
-
     @And("I validate if the payment is successful")
     public void validate_if_the_payment_is_successful() {
         try {
@@ -769,8 +753,7 @@ public class MaeGUISteps extends StepManager
     }
 
     @Then("I check the ticket in the Tickets tab")
-    public void i_check_the_ticket_in_the_tickets_tab()
-    {
+    public void i_check_the_ticket_in_the_tickets_tab() {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("Then"), "I check the ticket in the Tickets tab");
             maeGUI.checkTicket(logInfo);
@@ -783,8 +766,7 @@ public class MaeGUISteps extends StepManager
     }
 
     @And("I check the EMDs in EMD tab")
-    public void i_check_the_emds_in_emd_tab()
-    {
+    public void i_check_the_emds_in_emd_tab() {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I check the EMDs in EMD tab");
             maeGUI.checkEMD(logInfo);
@@ -917,7 +899,7 @@ public class MaeGUISteps extends StepManager
 
 
     @And("I enter Start Date {string} for 4th Segment")
-    public void iEnterStartDateForFourthSegment(String travelDate) throws Exception{
+    public void iEnterStartDateForFourthSegment(String travelDate) throws Exception {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I enter date of departure for 4th Segment");
             maeGUI.book4thSegment(travelDate, logInfo);
@@ -932,12 +914,11 @@ public class MaeGUISteps extends StepManager
     }
 
 
-
     @And("I navigate back to previous tab in the browser {string}")
     public void iNavigateBackToPreviousTabInTheBrowser(String tabNum) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I navigate back to previous tab in the browser");
-            maeGUI.navigateToRequiredTab(logInfo,tabNum);
+            maeGUI.navigateToRequiredTab(logInfo, tabNum);
             logInfo.pass("I navigate back to previous tab in the browser");
 
         } catch (AssertionError | Exception e) {
@@ -1025,10 +1006,10 @@ public class MaeGUISteps extends StepManager
     public void iAddARNKAfterToTheItinerary(String segment) {
 
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add ARNK After to the itenary :"+segment);
-            maeGUI.addingARNKAfter(logInfo,segment);
-            logInfo.pass("I add ARNK After to the itenary :"+segment);
-            
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add ARNK After to the itenary :" + segment);
+            maeGUI.addingARNKAfter(logInfo, segment);
+            logInfo.pass("I add ARNK After to the itenary :" + segment);
+
         } catch (AssertionError | Exception e) {
 
             logInfo.fail("This step failed.. so stopping...");
@@ -1108,9 +1089,9 @@ public class MaeGUISteps extends StepManager
     @And("I try to retrieve the pnr from Order Screen to check the {string} status")
     public void iTryToRetrieveThePnrFromOrderScreenToCheckTheStatus(String ticketStatus) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to retrieve the pnr from Order Screen to check the "+ticketStatus +" status");
-            maeGUI.searchOrderScreenToCheckStatus(logInfo,ticketStatus);
-            logInfo.pass("I try to retrieve the pnr from Order Screen to check the "+ticketStatus +" status");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to retrieve the pnr from Order Screen to check the " + ticketStatus + " status");
+            maeGUI.searchOrderScreenToCheckStatus(logInfo, ticketStatus);
+            logInfo.pass("I try to retrieve the pnr from Order Screen to check the " + ticketStatus + " status");
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -1147,9 +1128,9 @@ public class MaeGUISteps extends StepManager
     @And("I try to delete the OSI remark from the pnr {string}")
     public void iTryToDeleteTheOSIRemarkFromThePnr(String osiValue) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to delete the OSI remark from the pnr "+osiValue);
-            maeGUI.deleteOSIRemark(logInfo,osiValue);
-            logInfo.pass("I try to delete the OSI remark from the pnr "+osiValue);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to delete the OSI remark from the pnr " + osiValue);
+            maeGUI.deleteOSIRemark(logInfo, osiValue);
+            logInfo.pass("I try to delete the OSI remark from the pnr " + osiValue);
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -1161,9 +1142,9 @@ public class MaeGUISteps extends StepManager
     public void iTryToAddTheOSIRemarkAs(String osiRemarkText) {
 
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to add the OSI remark as "+osiRemarkText);
-            maeGUI.addOSIRemark(logInfo,osiRemarkText);
-            logInfo.pass("I try to add the OSI remark as "+osiRemarkText);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to add the OSI remark as " + osiRemarkText);
+            maeGUI.addOSIRemark(logInfo, osiRemarkText);
+            logInfo.pass("I try to add the OSI remark as " + osiRemarkText);
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -1189,15 +1170,16 @@ public class MaeGUISteps extends StepManager
     @And("I try to retrieve the pnr from Order Screen to check the {string} status in ticket tab")
     public void iTryToRetrieveThePnrFromOrderScreenToCheckTheStatusInTicketTab(String ticketStatus) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to retrieve the pnr from Order Screen to check the "+ticketStatus +" status in ticket tab");
-            maeGUI.searchOrderScreenToCheckStatusInTicketTab(logInfo,ticketStatus);
-            logInfo.pass("I try to retrieve the pnr from Order Screen to check the "+ticketStatus +" status in ticket tab");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to retrieve the pnr from Order Screen to check the " + ticketStatus + " status in ticket tab");
+            maeGUI.searchOrderScreenToCheckStatusInTicketTab(logInfo, ticketStatus);
+            logInfo.pass("I try to retrieve the pnr from Order Screen to check the " + ticketStatus + " status in ticket tab");
 
         } catch (AssertionError | Exception e) {
             Assert.fail("This step failed.. so stopping...");
             logInfo.fail("This step failed.. so stopping...");
         }
     }
+
     @And("I click on File Fare button")
     public void iClickOnFileFareButton() {
         try {
@@ -1357,7 +1339,7 @@ public class MaeGUISteps extends StepManager
 
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select the Split Booking option from the DropDown");
-            maeGUI.splitBookingOption(logInfo,num);
+            maeGUI.splitBookingOption(logInfo, num);
             logInfo.pass("I select the Split Booking option from the DropDown");
 
         } catch (AssertionError | Exception e) {
@@ -1424,7 +1406,7 @@ public class MaeGUISteps extends StepManager
     }
 
     @And("I enter Start Date {string} for 5th Segment")
-    public void iEnterStartDateForFifthSegment(String travelDate) throws Exception{
+    public void iEnterStartDateForFifthSegment(String travelDate) throws Exception {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I enter date of departure for 5th Segment");
             maeGUI.book5thSegment(travelDate, logInfo);
@@ -1443,8 +1425,8 @@ public class MaeGUISteps extends StepManager
 
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "Select from and to City for 5th Segment");
-            maeGUI.selectCitiesForFifthSegment(origin, destination,logInfo);
-            logInfo.pass("Selected origin city : " + origin + " and the destination city: " + destination+" for 5th segment");
+            maeGUI.selectCitiesForFifthSegment(origin, destination, logInfo);
+            logInfo.pass("Selected origin city : " + origin + " and the destination city: " + destination + " for 5th segment");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -1485,13 +1467,13 @@ public class MaeGUISteps extends StepManager
     }
 
     @And("I click on Tools Menu in GUI application")
-    public void I_click_on_Tools_Menu(){
-        try{
+    public void I_click_on_Tools_Menu() {
+        try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on Tools Menu in GUI application");
             maeGUI.clickOnToolsMenuInGUIApplication(logInfo);
             logInfo.pass("I click on Tools Menu in GUI application");
 
-        } catch(AssertionError | Exception exception){
+        } catch (AssertionError | Exception exception) {
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
         }
@@ -1500,12 +1482,12 @@ public class MaeGUISteps extends StepManager
     @And("I click on Order Tab to view the Itinerary Details")
     public void iClickOnOrderTabToViewTheItineraryDetails() {
 
-        try{
+        try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on Order Tab to view the Itinerary Details");
             maeGUI.clickOnOrderTab(logInfo);
             logInfo.pass("I click on Order Tab to view the Itinerary Details");
 
-        } catch(AssertionError | Exception exception){
+        } catch (AssertionError | Exception exception) {
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
         }
@@ -1530,10 +1512,10 @@ public class MaeGUISteps extends StepManager
     @And("I select the flight actions as {string}")
     public void iSelectTheFlightActionsAs(String actionType) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("Given"), "I select the flight actions as: "+actionType);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("Given"), "I select the flight actions as: " + actionType);
             maeGUI.clickFlightActions(logInfo);
             maeGUI.selectActionType(logInfo, actionType);
-            logInfo.pass("I select the flight actions as: "+actionType);
+            logInfo.pass("I select the flight actions as: " + actionType);
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (Exception e) {
@@ -1561,9 +1543,9 @@ public class MaeGUISteps extends StepManager
     @And("I try to retrieve the ticket number by selecting {string} option")
     public void iTryToRetrieveTheTicketNumberBySelectingOption(String pnrValueText) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to retrieve the ticket number by selecting "+pnrValueText+" option");
-            maeGUI.selectValueFromPNRDropDown(logInfo,pnrValueText);
-            logInfo.pass("I try to retrieve the ticket number by selecting "+pnrValueText+" option");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to retrieve the ticket number by selecting " + pnrValueText + " option");
+            maeGUI.selectValueFromPNRDropDown(logInfo, pnrValueText);
+            logInfo.pass("I try to retrieve the ticket number by selecting " + pnrValueText + " option");
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -1605,7 +1587,7 @@ public class MaeGUISteps extends StepManager
     public void iSelectTheReasonCodeAndSelectTheFlightForMassTransfer(String reasonCode, String segmentIndex) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("Given"), "I select the reason code and select the flight for mass transfer");
-            maeGUI.selectTheReasonCodeAndFlightForMassTransfer(logInfo, reasonCode,segmentIndex);
+            maeGUI.selectTheReasonCodeAndFlightForMassTransfer(logInfo, reasonCode, segmentIndex);
             logInfo.pass("I select the reason code and select the flight for mass transfer");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
@@ -1634,9 +1616,9 @@ public class MaeGUISteps extends StepManager
     @And("I click the button {string} to accept or compensate")
     public void iClickTheButtonToAcceptOrCompensate(String buttonType) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("Given"), "I click the button:" +buttonType);
-            maeGUI.clickTheButtonToAcceptOrCompensate(logInfo,buttonType);
-            logInfo.pass("I click the button:" +buttonType);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("Given"), "I click the button:" + buttonType);
+            maeGUI.clickTheButtonToAcceptOrCompensate(logInfo, buttonType);
+            logInfo.pass("I click the button:" + buttonType);
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (Exception e) {
@@ -1680,7 +1662,7 @@ public class MaeGUISteps extends StepManager
     public void iAddStandardBaggageAnd(String BaggageNo, String BaggageWeight) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add standard baggage BaggageNo and  BaggageWeight");
-            maeGUI.addBaggageCountAndWeight(BaggageNo,BaggageWeight,logInfo);
+            maeGUI.addBaggageCountAndWeight(BaggageNo, BaggageWeight, logInfo);
             logInfo.pass("I add standard baggage BaggageNo and  BaggageWeight");
 
         } catch (AssertionError | Exception e) {
@@ -1718,7 +1700,7 @@ public class MaeGUISteps extends StepManager
     public void iDeleteTheStandardBaggage(String BaggageNo) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I delete the standard baggage number");
-            maeGUI.deleteTheBaggage(BaggageNo,logInfo);
+            maeGUI.deleteTheBaggage(BaggageNo, logInfo);
             logInfo.pass("I delete the standard baggage number");
 
         } catch (AssertionError | Exception e) {
@@ -1788,9 +1770,9 @@ public class MaeGUISteps extends StepManager
     @And("I click the Tickets tab and verify the Ticket Status as {string} and verify the EMD Coupon control status as {string}")
     public void iClickTheTicketsTabAndVerifyTheTicketStatusAsAndVerifyTheEMDCouponControlStatusAs(String ticketStatus, String couponControlStatus) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click the Tickets tab and verify the Ticket Status as "+ticketStatus+ " and verify the EMD Coupon control status as "+couponControlStatus);
-            maeGUI.clickTicketsTabAndVerifyDetails(logInfo,ticketStatus,couponControlStatus);
-            logInfo.pass("I click the Tickets tab and verify the Ticket Status as "+ticketStatus+ " and verify the EMD Coupon control status as "+couponControlStatus);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click the Tickets tab and verify the Ticket Status as " + ticketStatus + " and verify the EMD Coupon control status as " + couponControlStatus);
+            maeGUI.clickTicketsTabAndVerifyDetails(logInfo, ticketStatus, couponControlStatus);
+            logInfo.pass("I click the Tickets tab and verify the Ticket Status as " + ticketStatus + " and verify the EMD Coupon control status as " + couponControlStatus);
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -1853,7 +1835,7 @@ public class MaeGUISteps extends StepManager
     public void i_add_a_service_in_cabin(String service) {
 
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add a service "+service+" in cabin");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add a service " + service + " in cabin");
             maeGUI.addAService(service, logInfo);
             logInfo.pass("I enroll connect mile to all the passengers");
 
@@ -1947,7 +1929,6 @@ public class MaeGUISteps extends StepManager
     }
 
 
-
     @And("I select passengers and click print button")
     public void iSelectPassengersAndClickPrintButton() {
         try {
@@ -1994,7 +1975,7 @@ public class MaeGUISteps extends StepManager
     public void i_change_the_date_of_travel_for_four_segments_(String newDate1, String newDate2, String newDate3, String newDate4) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the date of travel for the four segments");
-            maeGUI.changeTheDateOfTravelForFourSeg(logInfo, newDate1, newDate2,newDate3,newDate4);
+            maeGUI.changeTheDateOfTravelForFourSeg(logInfo, newDate1, newDate2, newDate3, newDate4);
             logInfo.pass("I change the date of travel for the four segments");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
@@ -2139,9 +2120,9 @@ public class MaeGUISteps extends StepManager
     @And("I select the Special Passenger from dropdown present in checkinpage with type of passenger as {string}")
     public void iSelectTheSpecialPassengerFromDropdownPresentInCheckinpage(String typeOfSpecialPassenger) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select the Special Passenger from dropdown present in checkinpage with type of passenger as "+typeOfSpecialPassenger);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select the Special Passenger from dropdown present in checkinpage with type of passenger as " + typeOfSpecialPassenger);
             maeGUI.selectSpecialPassenger(logInfo, typeOfSpecialPassenger);
-            logInfo.pass("I select the Special Passenger from dropdown present in checkinpage with type of passenger as "+typeOfSpecialPassenger);
+            logInfo.pass("I select the Special Passenger from dropdown present in checkinpage with type of passenger as " + typeOfSpecialPassenger);
 
         } catch (AssertionError | Exception e) {
 
@@ -2201,9 +2182,9 @@ public class MaeGUISteps extends StepManager
     @And("I change the passenger type in GUI {string} to {string}")
     public void iChangeThePassengerTypeInGUITo(String paxType, String paxType1) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the passenger type " +paxType +" to "+ paxType1);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the passenger type " + paxType + " to " + paxType1);
             maeGUI.changePassengerTypeInPassengerTab(logInfo, paxType, paxType1);
-            logInfo.pass("I change the passenger type " +paxType +" to "+ paxType1);
+            logInfo.pass("I change the passenger type " + paxType + " to " + paxType1);
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -2228,9 +2209,9 @@ public class MaeGUISteps extends StepManager
     @And("I try to retrieve the 2nd pnr from Order Screen to check the {string} status in ticket tab")
     public void iTryToRetrieveThe2ndPnrFromOrderScreenToCheckTheStatusInTicketTab(String ticketStatus) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to retrieve the pnr from Order Screen to check the "+ticketStatus +" status in ticket tab");
-            maeGUI.search2ndPNROrderScreenToCheckStatusInTicketTab(logInfo,ticketStatus);
-            logInfo.pass("I try to retrieve the pnr from Order Screen to check the "+ticketStatus +" status in ticket tab");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to retrieve the pnr from Order Screen to check the " + ticketStatus + " status in ticket tab");
+            maeGUI.search2ndPNROrderScreenToCheckStatusInTicketTab(logInfo, ticketStatus);
+            logInfo.pass("I try to retrieve the pnr from Order Screen to check the " + ticketStatus + " status in ticket tab");
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -2241,9 +2222,9 @@ public class MaeGUISteps extends StepManager
     @And("I set the payment type as {string}")
     public void iSelectThePaymentType(String PaymentType) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I set the payment type as "+PaymentType);
-            maeGUI.setPaymentType(logInfo,PaymentType);
-            logInfo.pass("I set the payment type as "+PaymentType);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I set the payment type as " + PaymentType);
+            maeGUI.setPaymentType(logInfo, PaymentType);
+            logInfo.pass("I set the payment type as " + PaymentType);
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
@@ -2263,7 +2244,6 @@ public class MaeGUISteps extends StepManager
             Assert.fail("This step failed.. so stopping...");
         }
     }
-
 
 
     @And("I click the Tickets tab and try to click the Coupon number and verify the details for Conjunctive segment")
@@ -2342,8 +2322,8 @@ public class MaeGUISteps extends StepManager
     public void iAddSixthSegmentFromAndToCityAnd(String origin, String destination) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "Select from and to City for 6th Segment");
-            maeGUI.selectCitiesForSixthSegment(origin,destination,logInfo);
-            logInfo.pass("Selected origin city : " + origin + " and the destination city: " + destination+" for 6th segment");
+            maeGUI.selectCitiesForSixthSegment(origin, destination, logInfo);
+            logInfo.pass("Selected origin city : " + origin + " and the destination city: " + destination + " for 6th segment");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -2358,7 +2338,7 @@ public class MaeGUISteps extends StepManager
     public void iEnterStartDateForSixthSegment(String travelDate) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I enter date of departure for 6th Segment");
-            maeGUI.book6thSegment(travelDate,logInfo);
+            maeGUI.book6thSegment(travelDate, logInfo);
             logInfo.pass("I enter date of departure for 6th Segment");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
@@ -2387,13 +2367,13 @@ public class MaeGUISteps extends StepManager
 
 
     @And("I click on FLIFO SEARCH under Tools menu")
-    public void I_click_on_flifo_search_Menu(){
-        try{
+    public void I_click_on_flifo_search_Menu() {
+        try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on FLIFO SEARCH under Tools menu");
             maeGUI.clickOnToolsFlifoSearchMenu(logInfo);
             logInfo.pass("I click on FLIFO SEARCH under Tools menu");
 
-        } catch(AssertionError | Exception exception){
+        } catch (AssertionError | Exception exception) {
             ExtentReportListener.testStepHandle("FAIL", maeGUI.getDriver(), logInfo, exception);
             Assert.fail("This step failed.. so stopping...");
         }
@@ -2879,9 +2859,9 @@ public class MaeGUISteps extends StepManager
     @And("I search for the flight in Gate section with Destination as {string}")
     public void iSearchTheFlightInGateSectionWithDestinationAs(String destination) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("Given"), "I search for the flight in Gate section with Destination as "+destination);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("Given"), "I search for the flight in Gate section with Destination as " + destination);
             maeGUI.searchFlightInGateWithDestination(logInfo, destination);
-            logInfo.pass("I search for the flight in Gate section with Destination as "+destination);
+            logInfo.pass("I search for the flight in Gate section with Destination as " + destination);
 
 
         } catch (Exception e) {
@@ -2911,9 +2891,9 @@ public class MaeGUISteps extends StepManager
     @And("I verify the Status of the flight at the origin in FLIFO in GUI is {string}")
     public void iVerifyTheStatusOfTheFlightAtTheOriginInFLIFOInGUIIs(String flightStatus) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I verify the Status of the flight at the origin in FLIFO in GUI is "+flightStatus);
-            maeGUI.verifyFlightStatusINFLIFO(logInfo,flightStatus);
-            logInfo.pass("I verify the Status of the flight at the origin in FLIFO in GUI is "+flightStatus);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I verify the Status of the flight at the origin in FLIFO in GUI is " + flightStatus);
+            maeGUI.verifyFlightStatusINFLIFO(logInfo, flightStatus);
+            logInfo.pass("I verify the Status of the flight at the origin in FLIFO in GUI is " + flightStatus);
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", maeGUI.getDriver(), logInfo, e);
@@ -2939,9 +2919,9 @@ public class MaeGUISteps extends StepManager
     @And("I verify the flight is not assigned with any gate number for Origin or Destination {string}")
     public void iVerifyTheFlightIsNotAssignedWithAnyGateNumberForOriginOrDestination(String place) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I verify the flight is not assigned with any gate number for "+place);
-            maeGUI.verifyFlightIsNotAssigned(logInfo,place);
-            logInfo.pass("I verify the flight is not assigned with any gate number for "+place);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I verify the flight is not assigned with any gate number for " + place);
+            maeGUI.verifyFlightIsNotAssigned(logInfo, place);
+            logInfo.pass("I verify the flight is not assigned with any gate number for " + place);
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", maeGUI.getDriver(), logInfo, e);
@@ -2979,11 +2959,11 @@ public class MaeGUISteps extends StepManager
     }
 
     @And("I navigate to UnReconciled or Reconciled {string} subtab and check for the passengers with sequence number as {string}")
-    public void iNavigateToUnReconciledReconciledSubtabAndCheckForThePassengersWithSequenceNumberAs(String subtab,String seqNo) {
+    public void iNavigateToUnReconciledReconciledSubtabAndCheckForThePassengersWithSequenceNumberAs(String subtab, String seqNo) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I navigate to UnReconciled or Reconciled "+subtab+" subtab and check for the passengers with sequence number as "+seqNo);
-            maeGUI.reconciledOrUnReconciledSubTab(logInfo,subtab,seqNo);
-            logInfo.pass("I navigate to UnReconciled or Reconciled "+subtab+" subtab and check for the passengers with sequence number as "+seqNo);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I navigate to UnReconciled or Reconciled " + subtab + " subtab and check for the passengers with sequence number as " + seqNo);
+            maeGUI.reconciledOrUnReconciledSubTab(logInfo, subtab, seqNo);
+            logInfo.pass("I navigate to UnReconciled or Reconciled " + subtab + " subtab and check for the passengers with sequence number as " + seqNo);
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", maeGUI.getDriver(), logInfo, e);
@@ -2996,9 +2976,9 @@ public class MaeGUISteps extends StepManager
     public void iTryToRetrieveTheTicketNumberBySelectingOptionWithSequenceNumberAs(String dropdownValue, String seqNum) {
 
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to retrieve the ticket number by selecting " + dropdownValue + " option with sequence number as "+seqNum);
-            maeGUI.selectValueFromPNRDropDownForSequence(logInfo, dropdownValue,seqNum);
-            logInfo.pass("I try to retrieve the ticket number by selecting " + dropdownValue + " option with sequence number as "+seqNum);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to retrieve the ticket number by selecting " + dropdownValue + " option with sequence number as " + seqNum);
+            maeGUI.selectValueFromPNRDropDownForSequence(logInfo, dropdownValue, seqNum);
+            logInfo.pass("I try to retrieve the ticket number by selecting " + dropdownValue + " option with sequence number as " + seqNum);
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -3011,7 +2991,7 @@ public class MaeGUISteps extends StepManager
     public void iClickOnCancelOrReinitiateButtonButtonInGateScreen(String button) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on Cancel or Reinitiate button :" + button + " in Gate Screen");
-            maeGUI.selectCancelOrReInitiateButtonInGatePage(logInfo,button);
+            maeGUI.selectCancelOrReInitiateButtonInGatePage(logInfo, button);
             logInfo.pass("I click on Cancel or Re-initiate button :" + button + " in Gate Screen");
 
         } catch (AssertionError | Exception e) {
@@ -3026,7 +3006,7 @@ public class MaeGUISteps extends StepManager
     public void iEnterAccountCodeAs(String accountCode) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I enter Account code as :" + accountCode);
-            maeGUI.toAddAccountCode(logInfo,accountCode);
+            maeGUI.toAddAccountCode(logInfo, accountCode);
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -3057,11 +3037,11 @@ public class MaeGUISteps extends StepManager
     @And("I validate the Price Quote and verify Account code {string} is displaying or not and click on Next")
     public void iValidateThePriceQuoteAndVerifyAccountCodeIsDisplayingOrNotAndClickOnNext(String accountCode) {
 
-        try{
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I validate the Price Quote and verify Account code "+accountCode+" is displaying or not and click on Next");
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I validate the Price Quote and verify Account code " + accountCode + " is displaying or not and click on Next");
             maeGUI.toCheckAccountCodeInFaresPage(logInfo, accountCode);
 
-        }catch (AssertionError | Exception e) {
+        } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
         }
@@ -3069,11 +3049,11 @@ public class MaeGUISteps extends StepManager
 
 
     @And("I perform Involuntary Reissue for specific segment {string} with Reason Code as {string} and Reissue Reason Code as {string}")
-    public void iPerformInvoluntaryReissueForSpecificSegmentWithReasonCodeAndReissueReasonCodeAs(String segment,String reasonCode,String reissueReasonCode) {
+    public void iPerformInvoluntaryReissueForSpecificSegmentWithReasonCodeAndReissueReasonCodeAs(String segment, String reasonCode, String reissueReasonCode) {
 
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Involuntary Reissue for specific segment");
-            maeGUI.inVoluntaryReissueForSpecificSegment(logInfo,segment,reasonCode,reissueReasonCode);
+            maeGUI.inVoluntaryReissueForSpecificSegment(logInfo, segment, reasonCode, reissueReasonCode);
         } catch (AssertionError | Exception e) {
 
             ExtentReportListener.testStepHandle("FAIL", maeGUI.getDriver(), logInfo, e);
@@ -3085,9 +3065,9 @@ public class MaeGUISteps extends StepManager
     public void iPerformVoluntaryReissueByAddingAccountCodeAs(String accountCode) {
 
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Voluntary Reissue by adding Account number as "+accountCode);
-            maeGUI.performVoluntaryReissueByAddingAccountNumber(logInfo,accountCode);
-            logInfo.pass("I perform Voluntary Reissue by adding Account number as "+accountCode);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Voluntary Reissue by adding Account number as " + accountCode);
+            maeGUI.performVoluntaryReissueByAddingAccountNumber(logInfo, accountCode);
+            logInfo.pass("I perform Voluntary Reissue by adding Account number as " + accountCode);
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", maeGUI.getDriver(), logInfo, e);
@@ -3165,9 +3145,9 @@ public class MaeGUISteps extends StepManager
     @And("I click on seat icon from services tab for required segment {string}")
     public void iClickOnSeatIconFromServicesTabForRequiredSegment(String segNum) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on seat icon from services tab for required segment :"+segNum);
-            maeGUI.clickaddSeatsButtonFromServicesTabWithReqSegment(logInfo,segNum);
-            logInfo.pass("I click on seat icon from services tab for required segment :"+segNum);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on seat icon from services tab for required segment :" + segNum);
+            maeGUI.clickaddSeatsButtonFromServicesTabWithReqSegment(logInfo, segNum);
+            logInfo.pass("I click on seat icon from services tab for required segment :" + segNum);
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
@@ -3180,7 +3160,7 @@ public class MaeGUISteps extends StepManager
     public void iClickOnPayButtonBySelectingTheRequiredPaymentType(String paymentType) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on pay button");
-            maeGUI.clickPayButtonIfEnabled(logInfo,paymentType);
+            maeGUI.clickPayButtonIfEnabled(logInfo, paymentType);
             logInfo.pass("I click on pay button");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
         } catch (AssertionError | Exception e) {
@@ -3212,7 +3192,7 @@ public class MaeGUISteps extends StepManager
 
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select " + cabin + " class in other segment flights");
-            maeGUI.selectAllFlightForAvailability(cabin,logInfo);
+            maeGUI.selectAllFlightForAvailability(cabin, logInfo);
             logInfo.pass("I select " + cabin + " class in other segment flights");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
         } catch (AssertionError | Exception e) {
@@ -3221,7 +3201,6 @@ public class MaeGUISteps extends StepManager
             Assert.fail("This step failed.. so stopping...");
         }
     }
-
 
 
     @And("I validate that the list of passengers is displayed in GATE module")
@@ -3372,9 +3351,9 @@ public class MaeGUISteps extends StepManager
     @And("I select {string} from the passenger list options")
     public void iSelectFromThePassengerListOptions(String passengerListType) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select the type of passenger from the passenger list as: "+passengerListType);
-            maeGUI.selectPassengerTypeFromPassengerListInGate(logInfo,passengerListType);
-            logInfo.pass("I select the type of passenger from the passenger list as: "+passengerListType);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select the type of passenger from the passenger list as: " + passengerListType);
+            maeGUI.selectPassengerTypeFromPassengerListInGate(logInfo, passengerListType);
+            logInfo.pass("I select the type of passenger from the passenger list as: " + passengerListType);
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -3386,9 +3365,9 @@ public class MaeGUISteps extends StepManager
     @And("I select the offpoint as {string} in Mass Transfer page")
     public void iSelectTheOffpointAsInMassTransferPage(String Destination) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select the offpoint as: "+Destination);
-            maeGUI.selectOffpointInMassTransferPage(logInfo,Destination);
-            logInfo.pass("I select the offpoint as: "+Destination);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select the offpoint as: " + Destination);
+            maeGUI.selectOffpointInMassTransferPage(logInfo, Destination);
+            logInfo.pass("I select the offpoint as: " + Destination);
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -3402,17 +3381,15 @@ public class MaeGUISteps extends StepManager
     public void iEnterTheFOIDDetailsForThePassengersWithDocumentTypeAs(String documentType) {
 
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I enter the FOID details of the passengers with document type as: "+documentType);
-            maeGUI.enterFOIDDetailsWithSpecifiedDocumentType(logInfo,documentType);
-            logInfo.pass("I enter the FOID details of the passengers with document type as: "+documentType);
-        }
-        catch (AssertionError | Exception e) {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I enter the FOID details of the passengers with document type as: " + documentType);
+            maeGUI.enterFOIDDetailsWithSpecifiedDocumentType(logInfo, documentType);
+            logInfo.pass("I enter the FOID details of the passengers with document type as: " + documentType);
+        } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
 
         }
     }
-
 
 
     @And("I select class {string} for the first connecting segment flight")
@@ -3440,7 +3417,7 @@ public class MaeGUISteps extends StepManager
     public void iOpenFlightForTheSegmentInNativeShares(String segmentIndex) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I open the flight in native shares");
-            maeGUI.openFlightInNativeShares(logInfo,Integer.parseInt(segmentIndex));
+            maeGUI.openFlightInNativeShares(logInfo, Integer.parseInt(segmentIndex));
             logInfo.pass("I open the flight in native shares");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
@@ -3464,7 +3441,6 @@ public class MaeGUISteps extends StepManager
 
         }
     }
-
 
 
     @And("I click the services Tab to validate the seats")
@@ -3514,18 +3490,17 @@ public class MaeGUISteps extends StepManager
     public void iCheckToTheRemarksFromOrderTab(String remarkType) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I check to the remarks from order tab");
-            String remark ="";
+            String remark = "";
 
             if (remarkType.equalsIgnoreCase("baggageTransfer")) {
                 remark = "Baggage transfer - CBAG";
-            }
-            else if (remarkType.equalsIgnoreCase("InvoluntaryReissue")) {
+            } else if (remarkType.equalsIgnoreCase("InvoluntaryReissue")) {
                 remark = "Involuntary Reissue - INVOL REISSUE";
             }
 
             maeGUI.clickReservations(logInfo);
-            maeGUI.checkTheRemarksFromOderTab(logInfo,remarkType);
-            logInfo.info(MarkupHelper.createLabel("The remarks from order tab is validated and "+remark+" is available", ExtentColor.GREEN));
+            maeGUI.checkTheRemarksFromOderTab(logInfo, remarkType);
+            logInfo.info(MarkupHelper.createLabel("The remarks from order tab is validated and " + remark + " is available", ExtentColor.GREEN));
             logInfo.pass("I check to the remarks from order tab and validate the remarks");
 
         } catch (AssertionError | Exception e) {
@@ -3539,7 +3514,7 @@ public class MaeGUISteps extends StepManager
     public void iSelectTheFlightForOutboundMassTransferWithOutboundSegment(String segmentIndex) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("Given"), "I select the flight for outbound mass transfer");
-            maeGUI.selectTheFlightForOutboundMassTransferWithOutboundSegment(logInfo,segmentIndex);
+            maeGUI.selectTheFlightForOutboundMassTransferWithOutboundSegment(logInfo, segmentIndex);
             logInfo.pass("I select the flight for outbound mass transfer");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
@@ -3586,10 +3561,10 @@ public class MaeGUISteps extends StepManager
 
 
     @And("I add standard baggage with Overweight for third bag {string} and  {string}")
-    public void iAddStandardBaggageWithOverweightForThirdBagAnd(String BaggageNo, String BaggageWeight ) {
+    public void iAddStandardBaggageWithOverweightForThirdBagAnd(String BaggageNo, String BaggageWeight) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add standard baggage with overweight, BaggageNo and  BaggageWeight");
-            maeGUI.addStandardBaggageWithOverweightForThirdBag(BaggageNo,BaggageWeight,logInfo);
+            maeGUI.addStandardBaggageWithOverweightForThirdBag(BaggageNo, BaggageWeight, logInfo);
             logInfo.pass("I add standard baggage with overweight, BaggageNo and  BaggageWeight");
 
         } catch (AssertionError | Exception e) {
@@ -3621,7 +3596,7 @@ public class MaeGUISteps extends StepManager
     public void iAddStandardBaggageWithOverweightForSecondBagAnd(String BaggageNo, String BaggageWeight) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add standard baggage with overweight, BaggageNo and  BaggageWeight");
-            maeGUI.addStandardBaggageWithOverweightForSecondBag(BaggageNo,BaggageWeight,logInfo);
+            maeGUI.addStandardBaggageWithOverweightForSecondBag(BaggageNo, BaggageWeight, logInfo);
             logInfo.pass("I add standard baggage with overweight, BaggageNo and  BaggageWeight");
 
         } catch (AssertionError | Exception e) {
@@ -3659,10 +3634,10 @@ public class MaeGUISteps extends StepManager
 
 
     @And("I add standard baggage with Overweight for fourth bag {string} and  {string}")
-    public void iAddStandardBaggageWithOverweightForFourthBagAnd(String BaggageNo, String BaggageWeight ) {
+    public void iAddStandardBaggageWithOverweightForFourthBagAnd(String BaggageNo, String BaggageWeight) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add standard baggage with overweight, BaggageNo and  BaggageWeight");
-            maeGUI.addStandardBaggageWithOverweightForFourthBag(BaggageNo,BaggageWeight,logInfo);
+            maeGUI.addStandardBaggageWithOverweightForFourthBag(BaggageNo, BaggageWeight, logInfo);
             logInfo.pass("I add standard baggage with overweight, BaggageNo and  BaggageWeight");
 
         } catch (AssertionError | Exception e) {
@@ -3691,7 +3666,7 @@ public class MaeGUISteps extends StepManager
     public void iChangeFirstSegmentDate(String StartDate) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change first segment date");
-            maeGUI.changeTheDateOfTravelForFirstSeg(logInfo,StartDate);
+            maeGUI.changeTheDateOfTravelForFirstSeg(logInfo, StartDate);
             logInfo.pass("I change first segment date");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
@@ -3725,9 +3700,9 @@ public class MaeGUISteps extends StepManager
     @And("I click on Ticket tab and check the {string} status")
     public void iClickOnTicketTabAndCheckTheStatus(String ticketStatus) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on Ticket tab and check the status "+ ticketStatus);
-            maeGUI.ClickOnTicketTabAndCheckTheStatus(logInfo,ticketStatus);
-            logInfo.pass("I click on Ticket tab and check the status "+ ticketStatus);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on Ticket tab and check the status " + ticketStatus);
+            maeGUI.ClickOnTicketTabAndCheckTheStatus(logInfo, ticketStatus);
+            logInfo.pass("I click on Ticket tab and check the status " + ticketStatus);
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -3736,16 +3711,15 @@ public class MaeGUISteps extends StepManager
     }
 
 
-
 //    -------------------------------
 
     @And("I select pricing option as {string}")
     public void iSelectPricingOptionAs(String pricingOption) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select pricing option as " +pricingOption);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select pricing option as " + pricingOption);
             maeGUI.clickPriceQuoteButton(logInfo);
             maeGUI.selcetPricingOption(logInfo, pricingOption);
-            logInfo.pass("I select pricing option as " +pricingOption);
+            logInfo.pass("I select pricing option as " + pricingOption);
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -3791,9 +3765,9 @@ public class MaeGUISteps extends StepManager
     @And("I select the passengers in checkin page using {string}")
     public void iSelectThePassengersInCheckinPageUsing(String searchType) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select the passengers in checkin page using "+ searchType);
-            maeGUI.selcetPassengerInCheckinPage(logInfo,searchType);
-            logInfo.pass("I select the passengers in checkin page using "+ searchType);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select the passengers in checkin page using " + searchType);
+            maeGUI.selcetPassengerInCheckinPage(logInfo, searchType);
+            logInfo.pass("I select the passengers in checkin page using " + searchType);
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -3815,7 +3789,6 @@ public class MaeGUISteps extends StepManager
     }
 
 
-
     @And("I validate Ticket and EMD values in Agent sales report and view tax details")
     public void iValidateTicketAndEMDValuesInAgentSalesReportAndViewTaxDetails() {
         try {
@@ -3833,9 +3806,9 @@ public class MaeGUISteps extends StepManager
     @And("I select ADC bypass and give the bypass reason {string}")
     public void iSelectADCBypassAndGiveTheBypassReason(String reason) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select ADC bypass and give the bypass reason - "+ reason);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select ADC bypass and give the bypass reason - " + reason);
             maeGUI.selectADCBypassGiveReason(logInfo, reason);
-            logInfo.pass("I select ADC bypass and give the bypass reason - "+ reason);
+            logInfo.pass("I select ADC bypass and give the bypass reason - " + reason);
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
@@ -3846,9 +3819,9 @@ public class MaeGUISteps extends StepManager
     @And("I add standard baggage with Overweight for fifth bag {string} and  {string}")
     public void iAddStandardBaggageWithOverweightForFifthBagAnd(String BaggageNo, String BaggageWeight) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add standard baggage with overweight " +BaggageNo+" and "+ BaggageWeight);
-            maeGUI.addStandardBaggageWithOverweightForFifth(BaggageNo,BaggageWeight,logInfo);
-            logInfo.pass("I add standard baggage with overweight " +BaggageNo+" and "+ BaggageWeight);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add standard baggage with overweight " + BaggageNo + " and " + BaggageWeight);
+            maeGUI.addStandardBaggageWithOverweightForFifth(BaggageNo, BaggageWeight, logInfo);
+            logInfo.pass("I add standard baggage with overweight " + BaggageNo + " and " + BaggageWeight);
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -3907,9 +3880,9 @@ public class MaeGUISteps extends StepManager
     @And("I enter Order Id and select compensation reason for the passenger {string} and {string}")
     public void iEnterOrderIdAndSelectCompensationReasonForThePassenger(String reason, String paxType) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I enter Order Id and select compensation reason for the passenger - " +reason);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I enter Order Id and select compensation reason for the passenger - " + reason);
             maeGUI.enterOrderIDAndSelectCompensationReason(logInfo, reason, paxType);
-            logInfo.pass("I enter Order Id and select compensation reason for the passenger - " +reason);
+            logInfo.pass("I enter Order Id and select compensation reason for the passenger - " + reason);
 
         } catch (AssertionError | Exception e) {
 
@@ -3917,7 +3890,7 @@ public class MaeGUISteps extends StepManager
             Assert.fail("This step failed.. so stopping...");
         }
 
-        System.out.println("I enter Order Id and select compensation reason for the passenger - " +reason);
+        System.out.println("I enter Order Id and select compensation reason for the passenger - " + reason);
     }
 
     @And("I select required passengers and click the issue compensation button")
@@ -3971,12 +3944,11 @@ public class MaeGUISteps extends StepManager
     }
 
 
-
     @And("I change the date of travel for the second connecting segment {string}")
     public void iChangeTheDateOfTravelForTheSecondConnectingSegment(String newDate1) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the date of travel for the second connecting segment");
-            maeGUI.changeTheDateOfTravelForSecondConnectingSeg(logInfo,newDate1);
+            maeGUI.changeTheDateOfTravelForSecondConnectingSeg(logInfo, newDate1);
             logInfo.pass("I change the date of travel for the second connecting segment");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
@@ -3992,7 +3964,7 @@ public class MaeGUISteps extends StepManager
     public void iChangeTheDateOfTravelForTheFirstConnectingSegment(String newDate1) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the date of travel for the first connecting segment");
-            maeGUI.changeTheDateOfTravelForFirstConnectingSeg(logInfo,newDate1);
+            maeGUI.changeTheDateOfTravelForFirstConnectingSeg(logInfo, newDate1);
             logInfo.pass("I change the date of travel for the first connecting segment");
 
         } catch (AssertionError | Exception e) {
@@ -4029,11 +4001,11 @@ public class MaeGUISteps extends StepManager
     @And("I select specific class {string} for Origin flight and check the seats are available in {string} aswell")
     public void iSelectSpecificClassForOriginFlightAndCheckTheSeatsAreAvailableInAswell(String seatToBook, String seatToCheck) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select specific class "+seatToBook+" for Origin flight and check the seats are available in "+seatToCheck+" aswell");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select specific class " + seatToBook + " for Origin flight and check the seats are available in " + seatToCheck + " aswell");
 
             maeGUI.clickOriginFlight();
-            maeGUI.selectSpecificSeats(logInfo,seatToBook,seatToCheck);
-            logInfo.pass("I select specific class "+seatToBook+" for Origin flight and check the seats are available in "+seatToCheck+" aswell");
+            maeGUI.selectSpecificSeats(logInfo, seatToBook, seatToCheck);
+            logInfo.pass("I select specific class " + seatToBook + " for Origin flight and check the seats are available in " + seatToCheck + " aswell");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -4049,9 +4021,9 @@ public class MaeGUISteps extends StepManager
     public void iSelectSpecificClassForReturnFlightAndCheckTheSeatsAreAvailableInAswell(String seatToBook, String seatToCheck) {
 
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select specific class "+seatToBook+" for Return flight and check the seats are available in "+seatToCheck+" aswell");
-            maeGUI.selectSpecificSeatsForReturnFlight(logInfo,seatToBook,seatToCheck);
-            logInfo.pass("I select specific class "+seatToBook+" for Return flight and check the seats are available in "+seatToCheck+" aswell");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select specific class " + seatToBook + " for Return flight and check the seats are available in " + seatToCheck + " aswell");
+            maeGUI.selectSpecificSeatsForReturnFlight(logInfo, seatToBook, seatToCheck);
+            logInfo.pass("I select specific class " + seatToBook + " for Return flight and check the seats are available in " + seatToCheck + " aswell");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
         } catch (AssertionError | Exception e) {
 
@@ -4061,12 +4033,11 @@ public class MaeGUISteps extends StepManager
     }
 
 
-
     @And("I click on Quotes subtab and verify Account code {string} is displaying or not")
     public void iClickOnQuotesSubtabAndVerifyAccountCodeIsDisplayingOrNot(String accountCode) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on Quotes subtab and verify Account code " + accountCode + " is displaying or not");
-            maeGUI.toCheckAccountCodeInQuotesSubTab(logInfo,accountCode);
+            maeGUI.toCheckAccountCodeInQuotesSubTab(logInfo, accountCode);
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -4114,7 +4085,6 @@ public class MaeGUISteps extends StepManager
         }
 
     }
-
 
 
     @And("I select class {string} for Origin flight for the newly added segments via availability after the Connecting segments")
@@ -4230,7 +4200,7 @@ public class MaeGUISteps extends StepManager
     public void iValidateTheReasonAndCaptureTheOSIRemarksInSharesAfterRetrievingThePNRFromGUI(String reason) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I validate the reason and capture the OSI remarks after retrieving the PNR from GUI");
-            maeGUI.validateOSIRemarksInNativeShares(logInfo,reason);
+            maeGUI.validateOSIRemarksInNativeShares(logInfo, reason);
             logInfo.pass("I retrieve pnr to check the OSI remarks to validate the reason");
 
         } catch (AssertionError | Exception e) {
@@ -4277,14 +4247,14 @@ public class MaeGUISteps extends StepManager
 
     @And("I select Book from Actions Dropdown")
     public void i_select_book_from_actions_dropdown() {
-       try {
-           logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select Book from Actions Dropdown and Book");
-           maeGUI.actionSelectBook(logInfo);
-       } catch (AssertionError | Exception e) {
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select Book from Actions Dropdown and Book");
+            maeGUI.actionSelectBook(logInfo);
+        } catch (AssertionError | Exception e) {
 
-           ExtentReportListener.testStepHandle("FAIL", maeGUI.getDriver(), logInfo, e);
-           Assert.fail("This step failed.. so stopping...");
-       }
+            ExtentReportListener.testStepHandle("FAIL", maeGUI.getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
+        }
     }
 
 
@@ -4321,25 +4291,25 @@ public class MaeGUISteps extends StepManager
     @And("I select POS and set status of the iCoupon in User Provisioning tool page {string}")
     public void iSelectPOSAndSetStatusOfTheICouponInUserProvisioningToolPage(String iCouponStatus) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select POS and set status of the iCoupon in User Provisioning tool pager - " +iCouponStatus);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select POS and set status of the iCoupon in User Provisioning tool pager - " + iCouponStatus);
             maeGUI.selectPOSAndSetICouponStatusInUserProvisioningPage(logInfo, iCouponStatus);
-            logInfo.pass("I select POS and set status of the iCoupon in User Provisioning tool page - " +iCouponStatus);
+            logInfo.pass("I select POS and set status of the iCoupon in User Provisioning tool page - " + iCouponStatus);
 
         } catch (AssertionError | Exception e) {
 
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
         }
-        System.out.println("I select POS and set status of the iCoupon in User Provisioning tool page - " +iCouponStatus);
+        System.out.println("I select POS and set status of the iCoupon in User Provisioning tool page - " + iCouponStatus);
     }
 
 
     @And("I add free standard baggage for all the passenger {string}")
     public void iAddFreeStandardBaggageForAllThePassengerAnd(String BaggageWeight) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add free standard baggage for all the passenger - "+BaggageWeight+"KG Weight");
-            maeGUI.addFreeStandardBaggageForAllPax(BaggageWeight,logInfo);
-            logInfo.pass("I add free standard baggage for all the passenger - "+BaggageWeight+"KG Weight");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add free standard baggage for all the passenger - " + BaggageWeight + "KG Weight");
+            maeGUI.addFreeStandardBaggageForAllPax(BaggageWeight, logInfo);
+            logInfo.pass("I add free standard baggage for all the passenger - " + BaggageWeight + "KG Weight");
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -4418,9 +4388,9 @@ public class MaeGUISteps extends StepManager
     @And("I click the tickets tab and click ticket EMD tab verify the segment name status {string}")
     public void iClickTheTicketsTabAndClickTicketEMDTabVerifyTheSegmentNameStatus(String nameStatus) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click the tickets tab and click ticket EMD tab verify the segment name status - " +nameStatus);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click the tickets tab and click ticket EMD tab verify the segment name status - " + nameStatus);
             maeGUI.clickTicketsTabAndVerifyTheEMDSegmentNameStatus(logInfo, nameStatus);
-            logInfo.pass("I click the tickets tab and click ticket EMD tab verify the segment name status - " +nameStatus);
+            logInfo.pass("I click the tickets tab and click ticket EMD tab verify the segment name status - " + nameStatus);
 
         } catch (AssertionError | Exception e) {
 
@@ -4428,7 +4398,7 @@ public class MaeGUISteps extends StepManager
             Assert.fail("This step failed.. so stopping...");
         }
 
-        System.out.println("I click the tickets tab and click ticket EMD tab verify the segment name status - " +nameStatus);
+        System.out.println("I click the tickets tab and click ticket EMD tab verify the segment name status - " + nameStatus);
     }
 
     @And("I select the passengers and click the issue compensation button and validate the error message")
@@ -4451,9 +4421,9 @@ public class MaeGUISteps extends StepManager
     @And("I add catalog baggage {string} and {string} and {string}")
     public void iAddCatalogBaggageAndAnd(String BaggageType, String BaggageNo, String BaggageWeight) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add catalog baggage "+BaggageType+" and "+BaggageNo+" and "+BaggageWeight+"KG");
-            maeGUI.addCatalogBaggageCountAndWeight(BaggageType,BaggageNo,BaggageWeight,logInfo);
-            logInfo.pass("I add catalog baggage "+BaggageType+" and "+BaggageNo+" and "+BaggageWeight+"KG");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add catalog baggage " + BaggageType + " and " + BaggageNo + " and " + BaggageWeight + "KG");
+            maeGUI.addCatalogBaggageCountAndWeight(BaggageType, BaggageNo, BaggageWeight, logInfo);
+            logInfo.pass("I add catalog baggage " + BaggageType + " and " + BaggageNo + " and " + BaggageWeight + "KG");
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -4496,9 +4466,9 @@ public class MaeGUISteps extends StepManager
     public void iChangeTheClassOfSeatForTheRequiredSegment(String cos, String segment) {
 
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the class of seat to "+cos+" for the required segment "+segment);
-            maeGUI.changeCOSForFirstSegment(logInfo,cos,segment);
-            logInfo.pass("I change the class of seat to "+cos+" for the required segment "+segment);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the class of seat to " + cos + " for the required segment " + segment);
+            maeGUI.changeCOSForFirstSegment(logInfo, cos, segment);
+            logInfo.pass("I change the class of seat to " + cos + " for the required segment " + segment);
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -4506,15 +4476,14 @@ public class MaeGUISteps extends StepManager
             Assert.fail("This step failed.. so stopping...");
         }
     }
-
 
 
     @And("I perform Voluntary Reissue with Pricing Option as {string}")
     public void iPerformVoluntaryReissueWithPricingOptionAs(String pricingOption) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Voluntary Reissue with Pricing Option as "+pricingOption);
-            maeGUI.voluntaryReissueWithPricingOption(logInfo,pricingOption);
-            logInfo.pass("I perform Voluntary Reissue with Pricing Option as "+pricingOption);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Voluntary Reissue with Pricing Option as " + pricingOption);
+            maeGUI.voluntaryReissueWithPricingOption(logInfo, pricingOption);
+            logInfo.pass("I perform Voluntary Reissue with Pricing Option as " + pricingOption);
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -4523,14 +4492,13 @@ public class MaeGUISteps extends StepManager
         }
 
     }
-
 
 
     @And("I change date of travel for second segment {string}")
     public void iChangeDateOfTravelForSecondSegment(String newDate1) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the date of travel for the second segment");
-            maeGUI.changeDateOfTravelForSecondSeg(logInfo,newDate1);
+            maeGUI.changeDateOfTravelForSecondSeg(logInfo, newDate1);
             logInfo.pass("I change the date of travel for the second segment");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
@@ -4546,9 +4514,9 @@ public class MaeGUISteps extends StepManager
     public void iSelectSpecificClassForTheFirstConnectingSegmentFlightAndCheckTheSeatsAreAvailableInAswell(String seatToBook, String seatToCheck) {
 
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select specific class "+seatToBook+" for the first connecting segment flight and check the seats are available in "+seatToCheck+" aswell");
-            maeGUI.selectSpecificClassForFirstConnectingSegment(logInfo,seatToBook,seatToCheck);
-            logInfo.pass("I select specific class "+seatToBook+" for the first connecting segment flight and check the seats are available in "+seatToCheck+" aswell");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select specific class " + seatToBook + " for the first connecting segment flight and check the seats are available in " + seatToCheck + " aswell");
+            maeGUI.selectSpecificClassForFirstConnectingSegment(logInfo, seatToBook, seatToCheck);
+            logInfo.pass("I select specific class " + seatToBook + " for the first connecting segment flight and check the seats are available in " + seatToCheck + " aswell");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -4564,9 +4532,9 @@ public class MaeGUISteps extends StepManager
     @And("I select specific class {string} for the second connecting segment flight and check the seats are available in {string} aswell")
     public void iSelectSpecificClassForTheSecondConnectingSegmentFlightAndCheckTheSeatsAreAvailableInAswell(String seatToBook, String seatToCheck) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select specific class "+seatToBook+" for the second connecting segment flight and check the seats are available in "+seatToCheck+" aswell");
-            maeGUI.selectSpecificClassForSecondConnectingSegment(logInfo,seatToBook,seatToCheck);
-            logInfo.pass("I select specific class "+seatToBook+" for the second connecting segment flight and check the seats are available in "+seatToCheck+" aswell");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select specific class " + seatToBook + " for the second connecting segment flight and check the seats are available in " + seatToCheck + " aswell");
+            maeGUI.selectSpecificClassForSecondConnectingSegment(logInfo, seatToBook, seatToCheck);
+            logInfo.pass("I select specific class " + seatToBook + " for the second connecting segment flight and check the seats are available in " + seatToCheck + " aswell");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -4576,7 +4544,6 @@ public class MaeGUISteps extends StepManager
         }
 
     }
-
 
 
     @And("I perform flifo search with required details")
@@ -4613,7 +4580,7 @@ public class MaeGUISteps extends StepManager
     public void iClickOnBagIconInCheckinPageForPassengerAndSelectTheTypeOfBaggageAsCatalogAndAddBagsAndDoPayment(String paxType, String catalogType) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on bag icon in checkin page, select the type of baggage as catalog, add bags and do payment");
-            maeGUI.addCatalogBaggageForAllPassengers(logInfo,paxType,catalogType);
+            maeGUI.addCatalogBaggageForAllPassengers(logInfo, paxType, catalogType);
             logInfo.pass("I click on bag icon in checkin page, select the type of baggage as catalog, add bags and do payment");
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -4642,9 +4609,9 @@ public class MaeGUISteps extends StepManager
     public void iTryToClickBaggageForRequiredPassenger(String paxTypeDisplayedInUI) {
 
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to click baggage for required passenger "+paxTypeDisplayedInUI);
-            maeGUI.clickBaggageIconForSpecificPax(logInfo,paxTypeDisplayedInUI);
-            logInfo.pass("I try to click baggage for required passenger "+paxTypeDisplayedInUI);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to click baggage for required passenger " + paxTypeDisplayedInUI);
+            maeGUI.clickBaggageIconForSpecificPax(logInfo, paxTypeDisplayedInUI);
+            logInfo.pass("I try to click baggage for required passenger " + paxTypeDisplayedInUI);
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
@@ -4668,12 +4635,11 @@ public class MaeGUISteps extends StepManager
     }
 
 
-
     @And("I change date of travel for second connecting segment {string} after the first connecting segment booked")
     public void iChangeDateOfTravelForSecondConnectingSegmentAfterTheFirstConnectingSegmentBooked(String newDate1) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the date of travel for the second connecting segment");
-            maeGUI.changDateForSecondConnectingSegment(logInfo,newDate1);
+            maeGUI.changDateForSecondConnectingSegment(logInfo, newDate1);
             logInfo.pass("I change the date of travel for the second connecting segment");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
@@ -4720,7 +4686,7 @@ public class MaeGUISteps extends StepManager
 
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select " + cabin + " class in other segment flights");
-            maeGUI.selectFlightForSecondSegmentInAvailability(cabin,logInfo);
+            maeGUI.selectFlightForSecondSegmentInAvailability(cabin, logInfo);
             logInfo.pass("I select " + cabin + " class in other segment flights");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
         } catch (AssertionError | Exception e) {
@@ -4782,9 +4748,9 @@ public class MaeGUISteps extends StepManager
     @And("I select specific child passenger in checkin page using {string}")
     public void iSelectSpecificChildPassengerInCheckinPageUsing(String searchType) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select specific child passenger in checkin page using "+ searchType);
-            maeGUI.selectChildPax(logInfo,searchType);
-            logInfo.pass("I select specific child passenger in checkin page using "+ searchType);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select specific child passenger in checkin page using " + searchType);
+            maeGUI.selectChildPax(logInfo, searchType);
+            logInfo.pass("I select specific child passenger in checkin page using " + searchType);
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -4794,13 +4760,13 @@ public class MaeGUISteps extends StepManager
 
     @And("I try to update the passenger in Checkin Page {string}")
     public void iTryToUpdateThePassengerInCheckinPage(String paxtype) {
-        try{
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to update the passenger in Checkin Page as "+paxtype);
-            maeGUI.updatePassengerInCheckInPage(logInfo,paxtype);
-            logInfo.pass("I try to update the passenger in Checkin Page as "+paxtype);
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to update the passenger in Checkin Page as " + paxtype);
+            maeGUI.updatePassengerInCheckInPage(logInfo, paxtype);
+            logInfo.pass("I try to update the passenger in Checkin Page as " + paxtype);
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
-        }catch (AssertionError | Exception e) {
+        } catch (AssertionError | Exception e) {
 
             ExtentReportListener.testStepHandle("FAIL", maeGUI.getDriver(), logInfo, e);
             Assert.fail("This step failed.. so stopping...");
@@ -4812,13 +4778,13 @@ public class MaeGUISteps extends StepManager
     @And("I try to add the Infant Without seat passenger from Order Screen")
     public void iTryToAddTheInfantWithoutSeatPassengerFromOrderScreen() {
 
-        try{
+        try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to add the Infant Without seat passenger from Order Screen");
             maeGUI.addInfantWithoutSeatPassenger(logInfo);
             logInfo.pass("I try to add the Infant Without seat passenger from Order Screen");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
-        }catch (AssertionError | Exception e) {
+        } catch (AssertionError | Exception e) {
 
             ExtentReportListener.testStepHandle("FAIL", maeGUI.getDriver(), logInfo, e);
             Assert.fail("This step failed.. so stopping...");
@@ -4828,13 +4794,13 @@ public class MaeGUISteps extends StepManager
 
     @And("I verify infant icon is displayed and passenger type is displayed as {string}")
     public void iVerifyInfantIconIsDisplayedAndPassengerTypeIsDisplayedAs(String paxType) {
-        try{
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I verify infant icon is displayed and passenger type is displayed as "+paxType);
-            maeGUI.toVerifyPaxIcon(logInfo,paxType);
-            logInfo.pass("I verify infant icon is displayed and passenger type is displayed as "+paxType);
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I verify infant icon is displayed and passenger type is displayed as " + paxType);
+            maeGUI.toVerifyPaxIcon(logInfo, paxType);
+            logInfo.pass("I verify infant icon is displayed and passenger type is displayed as " + paxType);
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
-        }catch (AssertionError | Exception e) {
+        } catch (AssertionError | Exception e) {
 
             ExtentReportListener.testStepHandle("FAIL", maeGUI.getDriver(), logInfo, e);
             Assert.fail("This step failed.. so stopping...");
@@ -4847,13 +4813,13 @@ public class MaeGUISteps extends StepManager
     @And("I try to click on Back button")
     public void iTryToClickOnBackButton() {
 
-        try{
+        try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I try to click on Back button");
             maeGUI.clickBackButton(logInfo);
             logInfo.pass("I try to click on Back button");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
-        }catch (AssertionError | Exception e) {
+        } catch (AssertionError | Exception e) {
 
             ExtentReportListener.testStepHandle("FAIL", maeGUI.getDriver(), logInfo, e);
             Assert.fail("This step failed.. so stopping...");
@@ -4909,7 +4875,7 @@ public class MaeGUISteps extends StepManager
     public void iIssueTheCompensationForSelectedPassengersWithAmountAnd(String Amount, String reason) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select passengers and issue compensation");
-            maeGUI.IssueCompensationWithSpecificAmount(logInfo, Amount,reason);
+            maeGUI.IssueCompensationWithSpecificAmount(logInfo, Amount, reason);
             logInfo.pass("I select passengers and issue compensation");
 
         } catch (AssertionError | Exception e) {
@@ -4918,7 +4884,6 @@ public class MaeGUISteps extends StepManager
             Assert.fail("This step failed.. so stopping...");
         }
     }
-
 
 
     @And("I select passengers and view compensation details")
@@ -4939,9 +4904,9 @@ public class MaeGUISteps extends StepManager
     @And("I add advanced option {string}")
     public void iAddAdvancedOption(String optionType) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add advanced option " +optionType);
-            maeGUI.addAdvancedOption(logInfo,optionType);
-            logInfo.pass("I add advanced option " +optionType);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add advanced option " + optionType);
+            maeGUI.addAdvancedOption(logInfo, optionType);
+            logInfo.pass("I add advanced option " + optionType);
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -4953,16 +4918,15 @@ public class MaeGUISteps extends StepManager
     @And("I perform Voluntary Reissue with Pricing Option as {string} with an advanced option type  {string}")
     public void iPerformVoluntaryReissueWithPricingOptionAsWithAnAdvancedOptionType(String pricingOption, String optionType) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Voluntary Reissue with Pricing Option as "+pricingOption+" with an advanced option type "+optionType);
-            maeGUI.voluntaryReissueWithPricingOptionWithAnAdvancedOptionType(logInfo,pricingOption,optionType);
-            logInfo.pass("I perform Voluntary Reissue with Pricing Option as "+pricingOption +" with an advanced option type "+optionType);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Voluntary Reissue with Pricing Option as " + pricingOption + " with an advanced option type " + optionType);
+            maeGUI.voluntaryReissueWithPricingOptionWithAnAdvancedOptionType(logInfo, pricingOption, optionType);
+            logInfo.pass("I perform Voluntary Reissue with Pricing Option as " + pricingOption + " with an advanced option type " + optionType);
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
         }
     }
-
 
 
     @And("I select specific class {string} for Origin flight in Economy Class")
@@ -5135,7 +5099,7 @@ public class MaeGUISteps extends StepManager
     public void iSelectPassengersUsingFlightNumbersInCompensationModelForTheSegment(String paxType, String segmentIndex) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select passengers using flight numbers in Compensation model");
-            maeGUI.selectPassengersFromCompensationPageWithPaxTypeForThegivenSegment(logInfo, paxType,segmentIndex);
+            maeGUI.selectPassengersFromCompensationPageWithPaxTypeForThegivenSegment(logInfo, paxType, segmentIndex);
             logInfo.pass("I select passengers using flight numbers in Compensation model");
 
         } catch (AssertionError | Exception e) {
@@ -5237,7 +5201,7 @@ public class MaeGUISteps extends StepManager
     public void iAssignWeightRestrictionForTheClassWithNumberOfPax(String originClass, String paxCount) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I assign weight restriction for the given class");
-            maeGUI.AssignWeightRestriction(logInfo,originClass,paxCount);
+            maeGUI.AssignWeightRestriction(logInfo, originClass, paxCount);
             logInfo.pass("I assign weight restriction for the given class");
 
         } catch (AssertionError | Exception e) {
@@ -5251,7 +5215,7 @@ public class MaeGUISteps extends StepManager
     public void iUnassignWeightRestrictionForTheClassWithNumberOfPax(String originClass, String paxCount) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I unassign weight restriction for the given class");
-            maeGUI.UnassignWeightRestriction(logInfo,originClass,paxCount);
+            maeGUI.UnassignWeightRestriction(logInfo, originClass, paxCount);
             logInfo.pass("I unassign weight restriction for the given class");
 
         } catch (AssertionError | Exception e) {
@@ -5293,7 +5257,7 @@ public class MaeGUISteps extends StepManager
     public void iSelectClassForTheFirstSegmentAndForTheSecondSegmentInFirstConnectingSegmentFlight(String firstSegmentClass, String secondSegmentClass) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select specific class for the first segment and second segment in first connecting segment flight");
-            maeGUI.selectSpecificClassForSegmentsInFirstConnectingFlight(logInfo,firstSegmentClass,secondSegmentClass);
+            maeGUI.selectSpecificClassForSegmentsInFirstConnectingFlight(logInfo, firstSegmentClass, secondSegmentClass);
             logInfo.pass("I select specific class for the first segment and second segment in first connecting segment flight");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
@@ -5309,7 +5273,7 @@ public class MaeGUISteps extends StepManager
     public void iSelectClassForTheFirstSegmentAndForTheSecondSegmentInSecondConnectingSegmentFlight(String firstSegmentClass, String secondSegmentClass) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select specific class for the first segment and second segment in second connecting segment flight");
-            maeGUI.selectSpecificClassForSegmentsInSecondConnectingFlight(logInfo,firstSegmentClass,secondSegmentClass);
+            maeGUI.selectSpecificClassForSegmentsInSecondConnectingFlight(logInfo, firstSegmentClass, secondSegmentClass);
             logInfo.pass("I select specific class for the first segment and second segment in second connecting segment flight");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
@@ -5333,10 +5297,9 @@ public class MaeGUISteps extends StepManager
                 maeGUI.selectFullEconomyForCodeshare(logInfo);
             } else if (cabin.equalsIgnoreCase("Business")) {
                 maeGUI.selectFullBusiness(logInfo);
-            }   else if (cabin.equalsIgnoreCase("SelectADifferentFlight")) {
+            } else if (cabin.equalsIgnoreCase("SelectADifferentFlight")) {
                 maeGUI.selectFullEconomyForADifferentFlight(logInfo);
-            }
-            else {
+            } else {
                 maeGUI.selectAnySeat();
             }
             logInfo.pass("I select " + cabin + " class for Codeshare Origin flight");
@@ -5354,7 +5317,7 @@ public class MaeGUISteps extends StepManager
 
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select " + cabin + " class for Codeshare Return flight");
-            maeGUI.selectAllCodeShareFlights(cabin,logInfo);
+            maeGUI.selectAllCodeShareFlights(cabin, logInfo);
             logInfo.pass("I select " + cabin + " class for Codeshare Return flight");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
         } catch (AssertionError | Exception e) {
@@ -5400,15 +5363,15 @@ public class MaeGUISteps extends StepManager
     @And("I select flight by flight status in gate page {string} and {string} and {string}")
     public void iSelectFlightByFlightStatusInGatePage(String origin, String departureDate, String flightStatus) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select flight by flight status in gate page - " +flightStatus);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select flight by flight status in gate page - " + flightStatus);
             maeGUI.selectFlightWithStatusInGatePage(logInfo, origin, departureDate, flightStatus);
-            logInfo.pass("I select flight by flight status in gate page - " +flightStatus);
+            logInfo.pass("I select flight by flight status in gate page - " + flightStatus);
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
         }
-        System.out.println("I select flight by flight status in gate page - " +flightStatus);
+        System.out.println("I select flight by flight status in gate page - " + flightStatus);
     }
 
 
@@ -5490,9 +5453,9 @@ public class MaeGUISteps extends StepManager
     @And("I perform Voluntary reissue with penalty and pricing option as {string} and {string} and {string}")
     public void iPerformVoluntaryReissueWithPenaltyAndPricingOptionAs(String pricingOption, String penalty, String taxCode) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Voluntary reissue with penalty and pricing option as "+pricingOption);
-            maeGUI.voluntaryReissueWithPenaltyAndPricingOption(logInfo,pricingOption, penalty, taxCode);
-            logInfo.pass("I perform Voluntary reissue with penalty and pricing option as "+pricingOption);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Voluntary reissue with penalty and pricing option as " + pricingOption);
+            maeGUI.voluntaryReissueWithPenaltyAndPricingOption(logInfo, pricingOption, penalty, taxCode);
+            logInfo.pass("I perform Voluntary reissue with penalty and pricing option as " + pricingOption);
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -5504,9 +5467,9 @@ public class MaeGUISteps extends StepManager
     @And("I add OSI remarks in order tab {string}")
     public void iAddOSIRemarksInOrderTab(String osiRemarkText) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add OSI remarks in order tab "+osiRemarkText);
-            maeGUI.addOSIRemarkInOrderTab(logInfo,osiRemarkText);
-            logInfo.pass("I add OSI remarks in order tab "+osiRemarkText);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add OSI remarks in order tab " + osiRemarkText);
+            maeGUI.addOSIRemarkInOrderTab(logInfo, osiRemarkText);
+            logInfo.pass("I add OSI remarks in order tab " + osiRemarkText);
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -5564,9 +5527,9 @@ public class MaeGUISteps extends StepManager
     @And("I change the class of seat {string} for required connecting segment {string}")
     public void iChangeTheClassOfSeatForRequiredConnectingSegment(String cos, String segment) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the class of seat to "+cos+" for required connecting segment");
-            maeGUI.changeCOSForRequiredConnectingSegment(logInfo,cos,segment);
-            logInfo.pass("I change the class of seat to "+cos+" for required connecting segment");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the class of seat to " + cos + " for required connecting segment");
+            maeGUI.changeCOSForRequiredConnectingSegment(logInfo, cos, segment);
+            logInfo.pass("I change the class of seat to " + cos + " for required connecting segment");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -5579,7 +5542,7 @@ public class MaeGUISteps extends StepManager
     public void iMakeTheSecondPaymentBySelectingTheRequiredPaymentType(String paymentType) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on pay button");
-            maeGUI.clickPayButtonIfEnabledForSecondPayment(logInfo,paymentType);
+            maeGUI.clickPayButtonIfEnabledForSecondPayment(logInfo, paymentType);
             logInfo.pass("I click on pay button");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
         } catch (AssertionError | Exception e) {
@@ -5710,16 +5673,13 @@ public class MaeGUISteps extends StepManager
     }
 
 
-
-
-
     @And("I perform Voluntary Reissue by selecting specific segment {string} with Pricing Option as {string}")
     public void iPerformVoluntaryReissueBySelectingSpecificSegmentWithPricingOptionAs(String segment, String pricingOption) {
 
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Voluntary Reissue by selecting specific segment "+segment+" with Pricing option as "+pricingOption);
-            maeGUI.performingReissueForSpecificSegment(logInfo,segment,pricingOption);
-            logInfo.pass("I perform Voluntary Reissue by selecting specific segment "+segment+" with Pricing option as "+pricingOption);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Voluntary Reissue by selecting specific segment " + segment + " with Pricing option as " + pricingOption);
+            maeGUI.performingReissueForSpecificSegment(logInfo, segment, pricingOption);
+            logInfo.pass("I perform Voluntary Reissue by selecting specific segment " + segment + " with Pricing option as " + pricingOption);
 
         } catch (AssertionError | Exception e) {
 
@@ -5732,9 +5692,9 @@ public class MaeGUISteps extends StepManager
     @And("I add the details in the Passenger Reduction Type as {string} {string} and account code as {string}")
     public void iAddTheDetailsInThePassengerReductionTypeAsAndAccountCodeAs(String type1, String type2, String accountCode) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add the details in the Passenger Reduction Type and account code as "+accountCode);
-            maeGUI.addingAccountCodeAndAdvancedOption(logInfo,type1,type2,accountCode);
-            logInfo.info("I add the details in the Passenger Reduction Type and account code as "+accountCode);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I add the details in the Passenger Reduction Type and account code as " + accountCode);
+            maeGUI.addingAccountCodeAndAdvancedOption(logInfo, type1, type2, accountCode);
+            logInfo.info("I add the details in the Passenger Reduction Type and account code as " + accountCode);
 
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
@@ -5748,7 +5708,7 @@ public class MaeGUISteps extends StepManager
 
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Voluntary Reissue");
-            maeGUI.performingVoluntaryReissueWithAccountCodeAndPassengerReduction(logInfo,pricingOption,accountcode,type1,type2,penaltyAmount);
+            maeGUI.performingVoluntaryReissueWithAccountCodeAndPassengerReduction(logInfo, pricingOption, accountcode, type1, type2, penaltyAmount);
             logInfo.info("I perform Voluntary Reissue");
 
         } catch (AssertionError | Exception e) {
@@ -5808,9 +5768,9 @@ public class MaeGUISteps extends StepManager
     @And("I perform Voluntary reissue with penalty and pricing option as {string} and {string}")
     public void iPerformVoluntaryReissueWithPenaltyAndPricingOptionAsAnd(String pricingOption, String penalty) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Voluntary reissue with penalty and pricing option as "+pricingOption);
-            maeGUI.voluntaryReissueWithPenalty(logInfo,pricingOption, penalty);
-            logInfo.pass("I perform Voluntary reissue with penalty and pricing option as "+pricingOption);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Voluntary reissue with penalty and pricing option as " + pricingOption);
+            maeGUI.voluntaryReissueWithPenalty(logInfo, pricingOption, penalty);
+            logInfo.pass("I perform Voluntary reissue with penalty and pricing option as " + pricingOption);
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -5822,9 +5782,9 @@ public class MaeGUISteps extends StepManager
     @And("I click add Baggage icon for the specific pax {string}")
     public void iClickAddBaggageIconForTheSpecificPax(String PaxType) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click add Baggage icon for the specific pax - "+ PaxType);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click add Baggage icon for the specific pax - " + PaxType);
             maeGUI.clickAddBaggageIconForSpcificPax(logInfo, PaxType);
-            logInfo.pass("I click add Baggage icon for the specific pax - "+ PaxType);
+            logInfo.pass("I click add Baggage icon for the specific pax - " + PaxType);
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
@@ -5862,9 +5822,9 @@ public class MaeGUISteps extends StepManager
     @And("I perform Voluntary Reissue with Circle trip and Pricing Option as {string}")
     public void iPerformVoluntaryReissueWithCircleTripAndPricingOptionAs(String pricingOption) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Voluntary Reissue with Circle trip and Pricing Option as "+pricingOption);
-            maeGUI.voluntaryReissueWithCircleTripAndPricingOption(logInfo,pricingOption);
-            logInfo.pass("I perform Voluntary Reissue with Circle trip and Pricing Option as "+pricingOption);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Voluntary Reissue with Circle trip and Pricing Option as " + pricingOption);
+            maeGUI.voluntaryReissueWithCircleTripAndPricingOption(logInfo, pricingOption);
+            logInfo.pass("I perform Voluntary Reissue with Circle trip and Pricing Option as " + pricingOption);
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -6397,7 +6357,7 @@ public class MaeGUISteps extends StepManager
     public void iClickOnActionDropDownToSyncTheTicket(String Service, String SegmentIndex) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on Action drop down to Sync the ticket");
-            maeGUI.ToSyncTicketBasedOnClass(logInfo,Service,SegmentIndex);
+            maeGUI.ToSyncTicketBasedOnClass(logInfo, Service, SegmentIndex);
             logInfo.pass("I click on Action drop down to Sync the ticket");
 
         } catch (AssertionError | Exception e) {
@@ -6405,6 +6365,7 @@ public class MaeGUISteps extends StepManager
             Assert.fail("This step failed.. so stopping...");
         }
     }
+
     @And("I click on Action drp dwn for Vol reissue")
     public void iClickOnActionDrpDwnForVolReissue() {
         try {
@@ -6419,6 +6380,7 @@ public class MaeGUISteps extends StepManager
 
 
     }
+
     @And("I validate the Refunded ticket in Agent Sales Report")
     public void iValidateTheRefundedTicketInAgentSalesReport() {
 
@@ -6436,9 +6398,9 @@ public class MaeGUISteps extends StepManager
     @And("I perform Voluntary reissue with penalty waiver and pricing option as {string}")
     public void iPerformVoluntaryReissueWithPenaltyWaiverAndPricingOptionAs(String pricingOption) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Voluntary reissue with penalty waiver and pricing option as "+pricingOption);
-            maeGUI.voluntaryReissueWithPenaltyWaiverAndPricingOption(logInfo,pricingOption);
-            logInfo.pass("I perform Voluntary reissue with penalty waiver and pricing option as "+pricingOption);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Voluntary reissue with penalty waiver and pricing option as " + pricingOption);
+            maeGUI.voluntaryReissueWithPenaltyWaiverAndPricingOption(logInfo, pricingOption);
+            logInfo.pass("I perform Voluntary reissue with penalty waiver and pricing option as " + pricingOption);
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -6458,6 +6420,7 @@ public class MaeGUISteps extends StepManager
             Assert.fail("This step failed.. so stopping...");
         }
     }
+
     @And("I created Residual EMD successfully")
     public void iCreatedResidualEMDSuccessfully() {
         try {
@@ -6517,13 +6480,12 @@ public class MaeGUISteps extends StepManager
     }
 
 
-
     @And("I select value from the Short Checkin dropdown {string}")
     public void iSelectValueFromTheShortCheckinDropdown(String checkinDestination) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select value from the Short Checkin dropdown - "+checkinDestination);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select value from the Short Checkin dropdown - " + checkinDestination);
             maeGUI.selectShortCheckinWithDestination(logInfo, checkinDestination);
-            logInfo.pass("I select value from the Short Checkin dropdown - "+checkinDestination);
+            logInfo.pass("I select value from the Short Checkin dropdown - " + checkinDestination);
         } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
@@ -6562,7 +6524,7 @@ public class MaeGUISteps extends StepManager
     public void iExpandAndCheckTheEMDsInEMDTab(String field) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I expand and check the EMDs in EMD tab");
-            maeGUI.expandAndVerifyEMDs(logInfo,field);
+            maeGUI.expandAndVerifyEMDs(logInfo, field);
             logInfo.pass("I expand and check the EMDs in EMD tab");
 
         } catch (AssertionError | Exception e) {
@@ -6598,7 +6560,7 @@ public class MaeGUISteps extends StepManager
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select " + cabin + " class for Return flight");
 
 
-            maeGUI.selectAllFlightsOnSameDay(cabin,logInfo);
+            maeGUI.selectAllFlightsOnSameDay(cabin, logInfo);
 
             logInfo.pass("I select " + cabin + " class for Return flight");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
@@ -6670,9 +6632,9 @@ public class MaeGUISteps extends StepManager
     @And("I select the flight in Gate section with Destination as {string}")
     public void iSelectTheFlightInGateSectionWithDestinationAs(String destination) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("Given"), "I select for the flight in Gate section with Destination as "+destination);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("Given"), "I select for the flight in Gate section with Destination as " + destination);
             maeGUI.selectFlightInGateWithDestination(logInfo, destination);
-            logInfo.pass("I select for the flight in Gate section with Destination as "+destination);
+            logInfo.pass("I select for the flight in Gate section with Destination as " + destination);
         } catch (Exception e) {
 
             logInfo.fail("This step failed.. so stopping...");
@@ -6696,9 +6658,8 @@ public class MaeGUISteps extends StepManager
 
     @And("I make the last payment if required by selecting the payment type as {string}")
     public void iMakeTheLastPaymentIfRequiredBySelectingThePaymentTypeAs(String paymentType) {
-        try
-        {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I make the last payment if required by selecting the payment type as "+paymentType);
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I make the last payment if required by selecting the payment type as " + paymentType);
             maeGUI.makeLastPayment(paymentType, logInfo);
 
         } catch (AssertionError | Exception e) {
@@ -6706,12 +6667,13 @@ public class MaeGUISteps extends StepManager
             Assert.fail("This step failed.. so stopping...");
         }
     }
+
     @And("I click the EMD Available for Print tab and click print button verify the amount {string}")
     public void iClickTheEMDAvailableForPrintTabAndClickPrintButtonVerifyTheAmount(String amount) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click the EMD Available for Print tab and click print button verify the amount - "+ amount);
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click the EMD Available for Print tab and click print button verify the amount - " + amount);
             maeGUI.clickEMDAvailableTabAndClickPrintAndVerifyAmount(logInfo, amount);
-            logInfo.pass("I click the EMD Available for Print tab and click print button verify the amount - "+ amount);
+            logInfo.pass("I click the EMD Available for Print tab and click print button verify the amount - " + amount);
 
         } catch (AssertionError | Exception e) {
 
@@ -6719,7 +6681,7 @@ public class MaeGUISteps extends StepManager
             Assert.fail("This step failed.. so stopping...");
         }
 
-        System.out.println("I click the EMD Available for Print tab and click print button verify the amount - "+ amount);
+        System.out.println("I click the EMD Available for Print tab and click print button verify the amount - " + amount);
     }
 
 
@@ -6857,7 +6819,7 @@ public class MaeGUISteps extends StepManager
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
         }
-        
+
     }
 
     @And("I select the booked class for the return flight")
@@ -6879,7 +6841,7 @@ public class MaeGUISteps extends StepManager
     public void iSelectClassForTheFirstSegmentAndForTheSecondSegmentInFirstConnectingSegmentNonCodeshareFlight(String firstSegmentClass, String secondSegmentClass) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select specific class for the first segment and second segment in first connecting segment flight");
-            maeGUI.selectSpecificClassForSegmentsInFirstConnectingNonCodeshareFlight(logInfo,firstSegmentClass,secondSegmentClass);
+            maeGUI.selectSpecificClassForSegmentsInFirstConnectingNonCodeshareFlight(logInfo, firstSegmentClass, secondSegmentClass);
             logInfo.pass("I select specific class for the first segment and second segment in first connecting segment flight");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
@@ -6895,7 +6857,7 @@ public class MaeGUISteps extends StepManager
     public void iSelectClassForTheFirstSegmentAndForTheSecondSegmentInSecondConnectingSegmentNonCodeshareFlight(String firstSegmentClass, String secondSegmentClass) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select specific class for the first segment and second segment in second connecting segment flight");
-            maeGUI.selectSpecificClassForSegmentsInSecondConnectingNonCodeshareFlight(logInfo,firstSegmentClass,secondSegmentClass);
+            maeGUI.selectSpecificClassForSegmentsInSecondConnectingNonCodeshareFlight(logInfo, firstSegmentClass, secondSegmentClass);
             logInfo.pass("I select specific class for the first segment and second segment in second connecting segment flight");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
@@ -6909,9 +6871,9 @@ public class MaeGUISteps extends StepManager
     @And("I change the class of seat Economic to Business for the required segment {string}")
     public void iChangeTheClassOfSeatEconomicToBusinessForTheRequiredSegment(String segment) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the class of seat to Economic to Business for the "+segment+" segment");
-            maeGUI.changeEconomicCOSToBusinessCOSForRequiredSegment(logInfo,segment);
-            logInfo.pass("I change the class of seat to Economic to Business for the "+segment+" segment");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the class of seat to Economic to Business for the " + segment + " segment");
+            maeGUI.changeEconomicCOSToBusinessCOSForRequiredSegment(logInfo, segment);
+            logInfo.pass("I change the class of seat to Economic to Business for the " + segment + " segment");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -6923,9 +6885,9 @@ public class MaeGUISteps extends StepManager
     @And("I change the class of seat Business to Economic for the required segment {string}")
     public void iChangeTheClassOfSeatBusinessToEconomicForTheRequiredSegment(String segment) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the class of seat to Business to Economic for the "+segment+" segment");
-            maeGUI.changeBusinessCOSToEconomicCOSForRequiredSegment(logInfo,segment);
-            logInfo.pass("I change the class of seat to Business to Economic for the "+segment+" segment");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the class of seat to Business to Economic for the " + segment + " segment");
+            maeGUI.changeBusinessCOSToEconomicCOSForRequiredSegment(logInfo, segment);
+            logInfo.pass("I change the class of seat to Business to Economic for the " + segment + " segment");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -6937,9 +6899,9 @@ public class MaeGUISteps extends StepManager
     @And("I change the class of seat Business to Economic for the required connecting segment {string} and {string}")
     public void iChangeTheClassOfSeatBusinessToEconomicForTheRequiredConnectingSegment(String segment, String index) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the class of seat to Business to Economic for the "+segment+" connecting segment");
-            maeGUI.changeBusinessCOSToEconomicCOSForRequiredConnectingSegment(logInfo,segment, index);
-            logInfo.pass("I change the class of seat to Business to Economic for the "+segment+" connecting segment");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the class of seat to Business to Economic for the " + segment + " connecting segment");
+            maeGUI.changeBusinessCOSToEconomicCOSForRequiredConnectingSegment(logInfo, segment, index);
+            logInfo.pass("I change the class of seat to Business to Economic for the " + segment + " connecting segment");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -6951,9 +6913,9 @@ public class MaeGUISteps extends StepManager
     @And("I change the class of seat Economic to Business for the required connecting segment {string} and {string}")
     public void iChangeTheClassOfSeatEconomicToBusinessForTheRequiredConnectingSegmentAnd(String segment, String index) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the class of seat to Economic to Business for the "+segment+" connecting segment");
-            maeGUI.changeEconomicCOSToBusinessCOSForRequiredConnectingSegment(logInfo,segment, index);
-            logInfo.pass("I change the class of seat to Economic to Business for the "+segment+" connecting segment");
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the class of seat to Economic to Business for the " + segment + " connecting segment");
+            maeGUI.changeEconomicCOSToBusinessCOSForRequiredConnectingSegment(logInfo, segment, index);
+            logInfo.pass("I change the class of seat to Economic to Business for the " + segment + " connecting segment");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
@@ -6980,7 +6942,7 @@ public class MaeGUISteps extends StepManager
     public void iClickOnCheckoutAndPayButtonBySelectingTheRequiredPaymentType(String paymentType) {
         try {
             logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on checkout and pay button");
-            maeGUI.clickCheckoutAndPayButtonIfEnabled(logInfo,paymentType);
+            maeGUI.clickCheckoutAndPayButtonIfEnabled(logInfo, paymentType);
             logInfo.pass("I click on checkout and pay button");
             logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
         } catch (AssertionError | Exception e) {
@@ -6994,11 +6956,10 @@ public class MaeGUISteps extends StepManager
     @And("I enter the FOID details if required with document type as {string}")
     public void iEnterTheFOIDDetailsIfRequiredWithDocumentTypeAs(String documentType) {
         try {
-            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I enter the FOID details if required with document type as: "+documentType);
-            maeGUI.enterFOIDDetailsIfRequiredWithSpecifiedDocumentType(logInfo,documentType);
-            logInfo.pass("I enter the FOID details if required with document type as: "+documentType);
-        }
-        catch (AssertionError | Exception e) {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I enter the FOID details if required with document type as: " + documentType);
+            maeGUI.enterFOIDDetailsIfRequiredWithSpecifiedDocumentType(logInfo, documentType);
+            logInfo.pass("I enter the FOID details if required with document type as: " + documentType);
+        } catch (AssertionError | Exception e) {
             logInfo.fail("This step failed.. so stopping...");
             Assert.fail("This step failed.. so stopping...");
 
@@ -7066,7 +7027,28 @@ public class MaeGUISteps extends StepManager
             Assert.fail("This step failed.. so stopping...");
         }
     }
+
+
+
+
+//    @And("I select specific class {string} for Return flight in Economy Class")
+//    public void iSelectSpecificClassForReturnFlightInEconomyClass(String cos) {
+//        try {
+//            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select specific class " + cos + " for Return flight in Economy Class");
+//            maeGUI.clickOriginFlight();
+//            maeGUI.selectSpecificSeatInEconomyClass(logInfo, cos);
+//            logInfo.pass("I select specific class " + cos + " for Return flight in Economy Class");
+//            logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
+//
+//        } catch (AssertionError | Exception e) {
+//
+//            logInfo.fail("This step failed.. so stopping...");
+//            Assert.fail("This step failed.. so stopping...");
+//        }
+//    }
+
 }
+
 
 
 

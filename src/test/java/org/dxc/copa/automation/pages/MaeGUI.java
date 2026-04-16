@@ -98,6 +98,7 @@ public class MaeGUI extends TestBase {
             gl.waitForElementAfterReload(getDriver(), maeGUIObjects.GUI_SUBMIT, PAGE_LOAD_TIMEOUT);
             logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
+
         } catch (AssertionError | Exception e) {
 
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
@@ -7796,6 +7797,8 @@ public void returnFullBusiness(ExtentTest logInfo, int segmentsToCheck) {
         try {
             maeGUIObjects.TOOLS_MENU.click();
             gl.waitForProfileLoad();
+            logInfo.pass("I click on tool menu in GUI A pplication");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
@@ -27472,6 +27475,7 @@ public void selectFullEconomyForThirdSegmentWithConnectingFlights(ExtentTest log
             maeGUIObjects.HOME_PAGE_BACK_BUTTON.click();
             waitUntilPageLoad(logInfo);
             logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            waitUntilPageLoad(logInfo);
 
         } catch (AssertionError | Exception e) {
             ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
@@ -47161,7 +47165,7 @@ public void voluntaryManualReissueAfterAddingSurcharges(ExtentTest logInfo) {
         @FindBy(xpath = "//p[@class='ng-binding']")
         public List<WebElement> CHECKIN_PAGE_COLLECT_API;
 
-        @FindBy(xpath = "//div[contains(text(),'Back')]")
+        @FindBy(xpath = "//button[contains(text(),'Back')]")
         public WebElement HOME_PAGE_BACK_BUTTON;
 
         @FindBy(xpath = "//i[@class='icon-boarding icon-medium padding-bottom ng-scope']")

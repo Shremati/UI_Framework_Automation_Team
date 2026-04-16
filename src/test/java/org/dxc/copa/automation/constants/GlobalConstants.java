@@ -60,7 +60,7 @@ public class GlobalConstants {
 
 //For UAT - Minor Release / TPFSC
     public String testEnv = "sharesCURL";
-    public String guiTestEnv="UATMinorRelease";
+    public String guiTestEnv="UAT";
     public String browser = "chrome";  // chrome,edge, gecko,selenium-grid ,headless
     public String buildNo = "sharesCURL";
     public String releaseNo = "sharesCURL";

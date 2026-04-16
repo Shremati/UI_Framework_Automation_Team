@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import static io.cucumber.testng.CucumberOptions.SnippetType.CAMELCASE;
 
 @CucumberOptions(
-        features = "src\\test\\resources\\features\\UAT\\236675.feature",
+        features = "src\\test\\resources\\features\\PLOG77027_TC_05.feature",
         glue = {"org.dxc.copa.automation.stepDefinitions"},
         tags = "@VIR or @UAT or @IcouponAssign or @AssignIcoupon or @Reissue or @IcouponUnAssign or @UnAssignIcoupon",
 //        tags = "@UATPrinter",

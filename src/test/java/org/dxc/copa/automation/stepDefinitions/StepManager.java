@@ -12,6 +12,7 @@ public class StepManager {
     IsharesPage5 isharesPage5;
     ThirdPartyGUI thirdPartyGUI;
     MaeGUI maeGUI;
+    MaeGUI_2 maeGUI_2;
 
     public StepManager() {
         initializePages();
@@ -26,5 +27,8 @@ public class StepManager {
         isharesPage5=pageManager.getisharesPage5();
         thirdPartyGUI = pageManager.getThirdPartyGUI();
         maeGUI = pageManager.getmaeGUI();
+        maeGUI_2 = pageManager.getmaeGUI_2();
     }
 }
+
+

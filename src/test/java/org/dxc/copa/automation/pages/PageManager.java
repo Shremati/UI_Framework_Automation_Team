@@ -10,6 +10,7 @@ public class PageManager {
     private IsharesPage5 isharesPage5;
     private ThirdPartyGUI thirdPartyGUI;
     private MaeGUI maeGUI;
+    private MaeGUI_2 maeGUI_2;
 
 
     public IsharesPage1 getisharesPage1() {
@@ -38,5 +39,9 @@ public class PageManager {
 
     public MaeGUI getmaeGUI() {
         return (maeGUI == null) ? maeGUI = new MaeGUI() : maeGUI;
+    }
+
+    public MaeGUI_2 getmaeGUI_2() {
+        return (maeGUI_2 == null) ? maeGUI_2 = new MaeGUI_2() : maeGUI_2;
     }
 }

@@ -151,7 +151,7 @@ Feature: 624588 - 146079 - ISSUE/REISSUE-Create reservation for 2ADT + 1CHD + 1I
     And I click the EMD subtab and view the EMD details
     And I select sales report and select Agent sales report
     And I validate Ticket and EMD values in Agent sales report after changes
-    And I logout from COPA GUI application
+
 
     Examples:
       |salesOffice               |salesOffice1                          |salesOffice2               |currency|OriginCity  |Destination  |Destination1|Destination2|StartDate|returnDate|StartDate1|returnDate1|Adult1          |Adult|Child|INF|INS|PaymentType     |originClass|originClass1|PaymentType1|PricingOption      |PricingOption1         |PaymentType4|PaymentType2                    |PaymentType3|Printer      |PrinterStatus|optionType1|segmentNo|ticketStatus|ticketStatus1 |optionType                 |optionType2                           |
