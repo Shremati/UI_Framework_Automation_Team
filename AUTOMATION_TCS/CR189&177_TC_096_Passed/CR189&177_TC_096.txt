@@ -1,0 +1,464 @@
+And I change the class of seat "<COS1>" for the multiple segment "<Segment>"
+
+And I perform Involuntary Reissue for multiple segments "<segment6>" with Reason Code as "<ReasonCode>" and Reissue Reason Code as "<ReissueCode>"
+
+And I perform Involuntary Refund for specific segment "<segment>" with Reason Code as "<ReasonCode>" and Refund Reason Code as "<ReissueCode>"
+
+And I choose two modes of payment where the first payment is 20% and the second payment is 80%
+
+   @And("I choose two modes of payment where the first payment is {int}% and the second payment is {int}%")
+    public void iChooseTwoModesOfPaymentWhereTheFirstPaymentIsAndTheSecondPaymentIs(int arg0, int arg1) {
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I choose two modes of payment where the first payment is {int}% and the second payment is {int}%");
+            maeGUI_2.ChooseTwoModesOfPaymentWith20And80Split(logInfo);
+            logInfo.pass("I choose two modes of payment where the first payment is {int}% and the second payment is {int}%");
+            logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
+
+        } catch (AssertionError | Exception e) {
+
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+ @And("I perform Involuntary Refund for specific segment {string} with Reason Code as {string} and Refund Reason Code as {string}")
+    public void iPerformInvoluntaryRefundForSpecificSegmentWithReasonCodeAndRefundReasonCodeAs(String segment, String reasonCode, String refundReasonCode) {
+
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Involuntary Refund for specific segment");
+            maeGUI_2.inVoluntaryRefundForSpecificSegment(logInfo, segment, reasonCode, refundReasonCode);
+        } catch (AssertionError | Exception e) {
+
+            ExtentReportListener.testStepHandle("FAIL", maeGUI.getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
+        }
+
+    }
+
+
+@And("I change the class of seat {string} for the multiple segment {string}")
+    public void iChangeTheClassOfSeatForThemultipleSegment(String cos, String segment) {
+
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I change the class of seat to " + cos + " for the multiple segment " + segment);
+            maeGUI_2.changeCOSForMultipleSegment(logInfo, cos, segment);
+            logInfo.pass("I change the class of seat to " + cos + " for the multiple segment " + segment);
+            logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
+
+        } catch (AssertionError | Exception e) {
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+    @And("I perform Involuntary Reissue for multiple segments {string} with Reason Code as {string} and Reissue Reason Code as {string}")
+    public void iPerformInvoluntaryReissueForMultipleSegmentsWithReasonCodeAsAndReissueReasonCodeAs(String segment, String reasonCode, String reissueReasonCode) {
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform Involuntary Reissue for multiple segment");
+            maeGUI_2.inVoluntaryReissueFormultipleSegment(logInfo, segment, reasonCode, reissueReasonCode);
+        } catch (AssertionError | Exception e) {
+
+            ExtentReportListener.testStepHandle("FAIL", maeGUI.getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+
+
+public void changeCOSForMultipleSegment(ExtentTest logInfo, String cos, String segment) {
+
+            try {
+                int seg = Integer.parseInt(segment);
+                if (seg == 1) {
+                    maeGUIObjects.ORDER_TAB_FIRST_SEGMENT_CLASS_DROPDOWN.click();
+                } else if (seg == 2) {
+                    maeGUIObjects.ORDER_TAB_SECOND_SEGMENT_CLASS_DROPDOWN.click();
+                } else if (seg == 3) {
+                    maeGUIObjects2.ORDER_TAB_THIRD_SEGMENT_CLASS_DROPDOWN.click();
+                } else if (seg == 4) {
+                    maeGUIObjects2.ORDER_TAB_FOURTH_SEGMENT_CLASS_DROPDOWN.click();
+                } else if (seg == 5) {
+                    maeGUIObjects2.ORDER_TAB_FIFTH_SEGMENT_CLASS_DROPDOWN.click();
+                } else if (seg == 6) {
+                    maeGUIObjects2.ORDER_TAB_SIXTH_SEGMENT_CLASS_DROPDOWN.click();
+                } else {
+                    Assert.fail("Segment number is invalid");
+                }
+                maeGUIObjects.OFFPOINT_DROPDOWN.click();
+                gl.waitProgress();
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                boolean classPresent = false;
+                List<WebElement> dropDownValues = maeGUIObjects.ORDER_TAB_FIRST_SEGMENT_CLASS_DROPDOWN_VALUES;
+                for (WebElement values : dropDownValues) {
+                    if (values.getText().equalsIgnoreCase(cos)) {
+                        values.click();
+                        logInfo.pass(cos + " has been selected");
+                        classPresent = true;
+                        break;
+                    }
+
+                }
+                if (!classPresent) {
+                    Assert.fail(cos + " is not available.");
+                }
+
+                gl.waitProgress();
+                maeGUIObjects.SAVE_BUTTON.click();
+                gl.waitProgress();
+                gl.highLightErrorMessages(logInfo, "System Processing Error", "error while processing the Booking request", "CHECK CLASS STATUS/AVAILABILITY");
+                mPassengers.get(getDriverID()).get(0).setnewCOS(cos);
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+            } catch (AssertionError | Exception e) {
+                ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+                org.junit.Assert.fail("This step failed.. so stopping...");
+            }
+
+        }
+
+        public void inVoluntaryReissueFormultipleSegment(ExtentTest logInfo, String segment, String reasonCode, String reissueReasonCode) {
+            try {
+
+                logInfo.info(MarkupHelper.createLabel("I perform the Involuntary Reissue for multiple segment :" + segment, ExtentColor.PURPLE));
+
+                System.out.println("I am in reissue page. ");
+                gl.clickElement(maeGUIObjects.ORDER_TAB);
+                int segNo = Integer.parseInt(segment);
+                gl.waitForProfileLoad();
+                getDriver().findElement(By.xpath("(//div[@class=\"md-container md-ink-ripple\"])[1]")).click();
+                gl.waitForProfileLoad();
+                gl.clickElement(maeGUIObjects.ACTIONS_DROPDOWN);
+                gl.waitForProfileLoad();
+                gl.clickElement(maeGUIObjects.OPTION_INVOLUNTARY_REISSUE);
+                gl.waitForProfileLoad();
+                maeGUI.waitUntilPageLoad(logInfo);
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                maeGUIObjects.REISSUE_PROCESS.click();
+                gl.waitForProfileLoad();
+                maeGUIObjects.CHANGES_OPTION.click();
+                gl.waitForProfileLoad();
+                maeGUIObjects.REASON_CODE.click();
+                gl.waitForProfileLoad();
+
+                List<WebElement> reasonCodeOptions = maeGUIObjects.INVOLUNTARY_REASONCODE_OPTION;
+
+                for (WebElement ele : reasonCodeOptions) {
+                    if ((ele.getText().trim()).equalsIgnoreCase(reasonCode)) {
+                        ele.click();
+                        gl.waitForProfileLoad();
+                        logInfo.pass("I select reason code as :" + reasonCode);
+                        break;
+                    }
+
+                }
+                maeGUIObjects.REISSUE_INVOLUNTARY.click();
+                gl.waitForProfileLoad();
+
+                List<WebElement> reissueReasonCodeOptions = maeGUIObjects.INVOLUNTARY_REISSUE_REASONCODE_OPTION;
+
+                for (WebElement ele1 : reissueReasonCodeOptions) {
+                    if ((ele1.getText().trim()).equalsIgnoreCase(reissueReasonCode)) {
+                        ele1.click();
+                        gl.waitForProfileLoad();
+                        logInfo.pass("I select reissue reason code as :" + reasonCode);
+                        break;
+                    }
+
+                }
+
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                gl.clickButton(maeGUIObjects.INVOLUNTARY_PRICE_QUOTE);
+                gl.waitProgress();
+                gl.waitForProfileLoad();
+                logInfo.pass("I want to Quote the Involuntary Reissue");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+
+                logInfo.info(MarkupHelper.createLabel("I click on Store Quote Id button", ExtentColor.PURPLE));
+                gl.clickElement(maeGUIObjects.STORE_QUOTE_ID_BUTTON);
+                gl.waitProgress();
+                gl.waitForProfileLoad();
+                maeGUI.waitUntilPageLoad(logInfo);
+                logInfo.pass("I click on Store Quote Id button");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                logInfo.info(MarkupHelper.createLabel("I click on the reissue quote id link", ExtentColor.PURPLE));
+
+                gl.scrollTo(maeGUIObjects.REMARKS_LINK);
+                gl.clickElement(maeGUIObjects.REMARKS_LINK);
+                gl.clickElement(maeGUIObjects.INVOL_REISSUE_QUOTE_ID_LINK);
+                gl.waitProgress();
+                gl.waitForProfileLoad();
+                logInfo.pass("I click on the reissue quote id link");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                logInfo.info(MarkupHelper.createLabel("I click on reissue ticket button", ExtentColor.PURPLE));
+                gl.clickButton(maeGUIObjects.REISSUE_TICKET_BUTTON);
+                gl.waitProgress();
+                gl.waitForProfileLoad();
+                logInfo.pass("I click on reissue ticket button");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                logInfo.info(MarkupHelper.createLabel("I click on the Check Out button", ExtentColor.PURPLE));
+                gl.clickButton(maeGUIObjects.CHECK_OUT_BUTTON);
+                gl.waitProgress();
+                gl.waitForProfileLoad();
+                logInfo.pass("I click on the Check Out button");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                logInfo.info(MarkupHelper.createLabel("I click on the Reissue button", ExtentColor.PURPLE));
+
+                gl.clickButton(maeGUIObjects.REISSUE_BUTTON);
+                gl.waitProgress();
+                gl.waitForProfileLoad();
+
+                logInfo.pass("I click on the Reissue button");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                logInfo.info(MarkupHelper.createLabel("I click on the Pay button", ExtentColor.PURPLE));
+
+                gl.clickButton(maeGUIObjects.PAY_BUTTON);
+                gl.waitProgress();
+                gl.waitForProfileLoad();
+                logInfo.pass("I click on the Pay button");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+            } catch (AssertionError | Exception e) {
+
+                ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+                Assert.fail("This step failed.. so stopping...");
+            }
+
+        }
+
+
+   public void inVoluntaryRefundForSpecificSegment(ExtentTest logInfo, String segment, String reasonCode, String RefundReasonCode) {
+            try {
+
+                logInfo.info(MarkupHelper.createLabel("I perform the Involuntary Refund for specific segment :" + segment, ExtentColor.PURPLE));
+
+                System.out.println("I am in Refund page. ");
+                gl.clickElement(maeGUIObjects.ORDER_TAB);
+                int segNo = Integer.parseInt(segment);
+
+                if (segNo == 34) {
+                    gl.clickElement(maeGUIObjects.ORDER_TAB_SEGMENT_NUMBER_3);
+                    gl.waitProgress();
+                    gl.clickElement(maeGUIObjects.ORDER_TAB_SEGMENT_NUMBER_4);
+                    logInfo.pass("I select third and fourth segment");
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                } else if (segNo == 3) {
+                    gl.clickElement(maeGUIObjects.ORDER_TAB_SEGMENT_NUMBER_3);
+                    logInfo.pass("I select third segment");
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                } else if (segNo == 2) {
+                    gl.clickElement(maeGUIObjects.ORDER_TAB_SEGMENT_NUMBER_2);
+                    logInfo.pass("I select second segment");
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                } else if (segNo == 23) {
+                    gl.clickElement(maeGUIObjects.ORDER_TAB_SEGMENT_NUMBER_2);
+                    gl.waitProgress();
+                    gl.clickElement(maeGUIObjects.ORDER_TAB_SEGMENT_NUMBER_3);
+                    logInfo.pass("I select second and third segment");
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                } else if (segNo == 1) {
+                    gl.clickElement(maeGUIObjects.ORDER_TAB_SEGMENT_NUMBER_1);
+                    logInfo.pass("I select first segment");
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                } else if (segNo == 12) {
+                    gl.clickElement(maeGUIObjects.ORDER_TAB_SEGMENT_NUMBER_1);
+                    gl.waitProgress();
+                    gl.clickElement(maeGUIObjects.ORDER_TAB_SEGMENT_NUMBER_2);
+                    logInfo.pass("I select first and second segment");
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                } else if (segNo == 1234) {
+                    gl.clickElement(maeGUIObjects.ORDER_TAB_SEGMENT_NUMBER_1);
+                    gl.waitProgress();
+                    gl.clickElement(maeGUIObjects.ORDER_TAB_SEGMENT_NUMBER_2);
+                    gl.waitProgress();
+                    gl.clickElement(maeGUIObjects.ORDER_TAB_SEGMENT_NUMBER_3);
+                    gl.waitProgress();
+                    gl.clickElement(maeGUIObjects.ORDER_TAB_SEGMENT_NUMBER_4);
+                    logInfo.pass("I select first, second, third and fourth segment");
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                }
+
+                gl.clickElement(maeGUIObjects.ACTIONS_DROPDOWN);
+                gl.waitForProfileLoad();
+                gl.clickElement(maeGUIObjects.OPTION_INVOLUNTARY_REFUND);
+                gl.waitForProfileLoad();
+                maeGUI.waitUntilPageLoad(logInfo);
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                int i = 1;
+                for (WebElement number : maeGUIObjects.FLLIGHT_ORDER_NUMBER) {
+                    number.sendKeys(String.valueOf(i));
+                    i++;
+                }
+                gl.waitProgress();
+                gl.waitForProfileLoad();
+                maeGUIObjects.REFUND_PROCESS.click();
+                gl.waitProgress();
+                gl.waitForProfileLoad();
+                maeGUIObjects.WAIVER_REFUND.click();
+                gl.waitProgress();
+                gl.waitForProfileLoad();
+                maeGUIObjects.REASON_CODE_REFUND.click();
+                gl.waitForProfileLoad();
+                if (gl.existElement(maeGUIObjects.REASON1)) {
+
+                    maeGUIObjects.REASON.click();
+                } else {
+                    maeGUIObjects.NEW_REASON.click();
+                }
+                gl.waitForProfileLoad();
+                maeGUIObjects.REASON_CODE2.click();
+                gl.waitForProfileLoad();
+                maeGUIObjects.REASON_INVOLUNTARY.click();
+                logInfo.pass("I choose the reason code and  process refund from dropdown");
+                gl.waitForProfileLoad();
+                gl.clickButton(maeGUIObjects.INVOLUNTARY_REFUND_NEXT_BUTTON);
+                gl.waitProgress();
+
+                logInfo.info(MarkupHelper.createLabel("I click on Store Quote Id button", ExtentColor.PURPLE));
+                gl.clickElement(maeGUIObjects.STORE_QUOTE_ID_BUTTON);
+                gl.waitProgress();
+                gl.waitForProfileLoad();
+                maeGUI.waitUntilPageLoad(logInfo);
+                logInfo.pass("I click on Store Quote Id button");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                logInfo.info(MarkupHelper.createLabel("I click on the Refund quote id link", ExtentColor.PURPLE));
+
+                gl.scrollTo(maeGUIObjects.REMARKS_LINK);
+                gl.clickElement(maeGUIObjects.REMARKS_LINK);
+                gl.clickElement(maeGUIObjects.VOL_REFUND_QUOTE_ID_LINK);
+                gl.waitProgress();
+                gl.waitForProfileLoad();
+                logInfo.pass("I click on the Refund quote id link");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                logInfo.info(MarkupHelper.createLabel("I click on Refund ticket button", ExtentColor.PURPLE));
+                gl.clickButton(maeGUIObjects.ADD_TO_ORDER_BUTTON);
+                gl.waitProgress();
+                gl.waitForProfileLoad();
+                logInfo.pass("I click on Refund ticket button");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                logInfo.info(MarkupHelper.createLabel("I click on the Check Out button", ExtentColor.PURPLE));
+                gl.clickButton(maeGUIObjects.CHECK_OUT_BUTTON);
+                gl.waitProgress();
+                gl.waitForProfileLoad();
+                logInfo.pass("I click on the Check Out button");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                try {
+
+                    logInfo.info(MarkupHelper.createLabel("I click on the Refund button", ExtentColor.PURPLE));
+
+                    if (maeGUIObjects.REFUND_BUTTON.isEnabled()) //the gui issue
+                    {
+                        if (mWantEmd.get(getDriverID())) //we want through residual emd
+                        {
+                            gl.clickButton(maeGUIObjects.RESIDUAL_EMD);
+                            gl.waitProgress();
+                            gl.waitForProfileLoad();
+                            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                            isRefund = true;
+                            gl.clickButton(maeGUIObjects.REFUND_BUTTON);
+                            gl.waitProgress();
+                            gl.waitForProfileLoad();
+                            gl.clickButton(maeGUIObjects.PAY_BUTTON);
+                            gl.waitProgress();
+                            gl.waitForProfileLoad();
+                            mWantEmd.put(getDriverID(), false);
+                        } else {
+                            gl.clickButton(maeGUIObjects.REFUND_BUTTON);  //we will follow the payment steps
+                            gl.waitProgress();
+                            gl.waitForProfileLoad();
+                            gl.clickButton(maeGUIObjects.PAY_BUTTON);
+                            gl.waitProgress();
+                            gl.waitForProfileLoad();
+                        }
+
+                    } else {
+                        gl.clickButton(maeGUIObjects.RESIDUAL_EMD);
+                        gl.waitProgress();
+                        gl.waitForProfileLoad();
+                        gl.clickButton(maeGUIObjects.REFUND_BUTTON);
+                        gl.waitProgress();
+                        gl.waitForProfileLoad();
+                        gl.clickButton(maeGUIObjects.PAY_BUTTON);
+                        gl.waitProgress();
+                        gl.waitForProfileLoad();
+
+                    }
+
+                    logInfo.pass("I click on the pay button");
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                } catch (AssertionError | Exception e) {
+
+                    ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+                    Assert.fail("This step failed.. so stopping...");
+                }
+            } catch (AssertionError | Exception e) {
+
+                ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+                Assert.fail("This step failed.. so stopping...");
+            }
+        }
+
+
+public void ChooseTwoModesOfPaymentWith20And80Split(ExtentTest logInfo) {
+            try {
+                String amountFromGUI = maeGUIObjects.INPUT_AMOUNT.get(0).getAttribute("value");
+
+                String amount1; // 20%
+                String amount2; // 80%
+
+                if (amountFromGUI.contains(".")) {
+
+                    BigDecimal totalAmount = new BigDecimal(amountFromGUI);
+
+                    // 20%
+                    BigDecimal firstAmount = totalAmount.multiply(BigDecimal.valueOf(0.20)).setScale(2, RoundingMode.HALF_UP);
+
+                    // 80%
+                    BigDecimal secondAmount = totalAmount.subtract(firstAmount).setScale(2, RoundingMode.HALF_UP);
+
+                    amount1 = firstAmount.stripTrailingZeros().toPlainString();
+                    amount2 = secondAmount.stripTrailingZeros().toPlainString();
+
+                } else {
+
+                    int totalAmount = Integer.parseInt(amountFromGUI);
+
+                    // 20%
+                    int firstAmount = (int) Math.ceil(totalAmount * 0.20);
+
+                    // 80%
+                    int secondAmount = totalAmount - firstAmount;
+
+                    amount1 = String.valueOf(firstAmount);
+                    amount2 = String.valueOf(secondAmount);
+                }
+
+                for (Passenger pax : mPassengers.get(getDriverID())) {
+                    pax.setPaymentAmount(amount1 + "/" + amount2);
+                }
+
+                logInfo.info(MarkupHelper.createLabel("The Payment Amount is divided as 20% / 80% : " + amount1 + "/" + amount2, ExtentColor.PURPLE));
+
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+            } catch (AssertionError | Exception e) {
+                ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+                Assert.fail("This step failed.. so stopping...");
+            }
+        }
+

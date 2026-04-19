@@ -1,0 +1,358 @@
+And I create a PNR in NATIVE SHARES for "<Adult>" adult passengers ans "<Child>" child passengers using "<Origin>" to "<Destination>" and "<StartDate>"
+
+And I select pricing option Price as booked after retrieving PNR from shares
+
+And I search for the smart search with "<OPTION>"
+
+And I validate the passenger in All passenger list in gate module by PNR
+
+
+ @And("I create a PNR in NATIVE SHARES for {string} adult passengers ans {string} child passengers using {string} to {string} and {string}")
+    public void iCreateAPNRInNATIVESHARESForAdultPassengersAnsChildPassengersUsingToAnd(String adtcount, String chdcount, String origin, String destination, String dateoftravel) {
+
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I create a PNR in NATIVE SHARES for " + adtcount + " adult passengers ans " + chdcount + " child passengers using " + origin + " to " + destination + " and " + dateoftravel + "");
+            maeGUI_2.CreateAPNRInNATIVESHARESForAdultPassengersAnsChildPassengersUsingToAnd(logInfo, adtcount, chdcount, origin, destination, dateoftravel);
+            logInfo.pass("I create a PNR in NATIVE SHARES for " + adtcount + " adult passengers ans " + chdcount + " child passengers using " + origin + " to " + destination + " and " + dateoftravel + "");
+
+        } catch (AssertionError | Exception exception) {
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+
+  @And("I select pricing option Price as booked after retrieving PNR from shares")
+    public void iSelectPricingOptionPriceAsBookedAfterRetrievingPNRFromShares() {
+        try{
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select pricing option Price as booked after retrieving PNR from shares");
+            maeGUI_2.pricingOptionPriceAsBookedNew(logInfo);
+            logInfo.pass("I select pricing option Price as booked after retrieving PNR from shares");
+            logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
+
+        } catch (AssertionError | Exception e) {
+
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+ @And("I search for the smart search with {string}")
+    public void iSearchForTheSmartSearchWith(String smartsearch) {
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I search for the smart search with " + smartsearch + "");
+            maeGUI_2.SearchForTheSmartSearchWith(logInfo, smartsearch);
+            logInfo.pass("I search for the smart search with " + smartsearch + "");
+
+        } catch (AssertionError | Exception exception) {
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+ @And("I validate the passenger in All passenger list in gate module by PNR")
+    public void iValidateThePassengerInAllPassengerListInGateModuleByPNR() {
+
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I validate the passenger in All passenger list in gate module by PNR");
+            maeGUI_2.ValidateThePassengerInAllPassengerListInGateModuleByPNR(logInfo);
+            logInfo.pass("I validate the passenger in All passenger list in gate module by PNR");
+
+        } catch (AssertionError | Exception exception) {
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+
+
+   public void CreateAPNRInNATIVESHARESForAdultPassengersAnsChildPassengersUsingToAnd(
+                ExtentTest logInfo,
+                String adtcount,
+                String chdcount,
+                String origin,
+                String destination,
+                String dateoftravel) {
+
+            try {
+                Passenger pax= mPassengers.get(getDriverID()).get(0);
+                /* ---------------- DATE CALCULATION ---------------- */
+
+                Pattern pattern = Pattern.compile("\\b\\d{2,3}\\b");
+                Matcher matcher = pattern.matcher(dateoftravel);
+                String timeCode = null;
+                if (matcher.find()) {
+                    timeCode = matcher.group();
+                    System.out.println("Extracted time: " + timeCode);
+                } else {
+                    System.out.println("No matching time found.");
+                }
+                String dt = timeCode;
+                int days = Integer.parseInt(dt);
+                dateoftravel = gl.plusDaysFromToday(days);
+                DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+                DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("ddMMM", Locale.ENGLISH);
+                LocalDate date = LocalDate.parse(dateoftravel, inputFormatter);
+                String departureDate = date.format(outputFormatter).toUpperCase();
+                String adtCountStr = adtcount;   // Adult count (String)
+                String chdCountStr = chdcount;   // Child count (String)
+                int adtCount = Integer.parseInt(adtCountStr);
+                int chdCount = Integer.parseInt(chdCountStr);
+                int totalCount = adtCount + chdCount;
+                /* ---------------- AVAILABILITY ENTRY ---------------- */
+
+                String availabilityEntry = "A " + origin + destination + " " + departureDate;
+                pax.setSegmentOriginCity(0, origin);
+                pax.setSegmentDate(0, days);
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_INPUT.sendKeys(availabilityEntry);
+                gl.waitForProfileLoad();
+//                gl.waitTillElementVisible(maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT);
+                gl.waitForProfileLoad();
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_SUBMIT_BUTTON.click();
+                gl.waitForProfileLoad();
+
+                /* ---------------- FIND Y LINE ---------------- */
+
+                Pattern flightPattern = Pattern.compile("\\b\\d*CM\\s*\\d{3}.*\\bC\\d*");
+                int flightNumber = 0;
+                int selectedFlight = -1;
+
+                for (WebElement line : maeGUIObjects2.LIST_OF_NATIVE_SHARES_RESPONSE) {
+
+                    String text = line.getText().trim();
+
+                    if (flightPattern.matcher(text).find()) {
+
+                        flightNumber++; // increment ONLY when a flight line is found
+
+                        Matcher yMatcher = Pattern.compile("\\bC(\\d+)").matcher(text);
+
+                        if (yMatcher.find()) {
+                            int yValue = Integer.parseInt(yMatcher.group(1));
+
+                            if (yValue > totalCount) {
+                                selectedFlight = flightNumber;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (selectedFlight == -1) {
+                    throw new RuntimeException("No suitable C class found for pax count " + totalCount);
+                }
+
+                /* ---------------- BOOK ITINERARY ---------------- */
+
+                maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT.click();
+                gl.waitForProfileLoad();
+                String bookItinerary = "N" + totalCount + "C" + selectedFlight;
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_INPUT.sendKeys(bookItinerary);
+                gl.waitForProfileLoad();
+//                gl.waitTillElementVisible(maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT);
+                gl.waitForProfileLoad();
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_SUBMIT_BUTTON.click();
+                gl.waitForProfileLoad();
+                maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT.click();
+                gl.waitForProfileLoad();
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_INPUT.sendKeys("-FERNANDEZ/JOSE");
+                gl.waitForProfileLoad();
+//                gl.waitTillElementVisible(maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT);
+                gl.waitForProfileLoad();
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_SUBMIT_BUTTON.click();
+                gl.waitForProfileLoad();
+                maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT.click();
+                gl.waitForProfileLoad();
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_INPUT.sendKeys("-FERNANDEZ/MARIA");
+                gl.waitForProfileLoad();
+//                gl.waitTillElementVisible(maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT);
+                gl.waitForProfileLoad();
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_SUBMIT_BUTTON.click();
+                gl.waitForProfileLoad();
+                maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT.click();
+                gl.waitForProfileLoad();
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_INPUT.sendKeys("-FERNANDEZ/ANA*-CHD09");
+                pax.setfName("ANA");
+                pax.setlName("FERNANDEZ");
+                gl.waitForProfileLoad();
+//                gl.waitTillElementVisible(maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT);
+                gl.waitForProfileLoad();
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_SUBMIT_BUTTON.click();
+                gl.waitForProfileLoad();
+                maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT.click();
+                gl.waitForProfileLoad();
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_INPUT.sendKeys("9PTY123456789/H");
+                gl.waitForProfileLoad();
+//                gl.waitTillElementVisible(maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT);
+                gl.waitForProfileLoad();
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_SUBMIT_BUTTON.click();
+                gl.waitForProfileLoad();
+                maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT.click();
+                gl.waitForProfileLoad();
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_INPUT.sendKeys("6P");
+                gl.waitForProfileLoad();
+//                gl.waitTillElementVisible(maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT);
+                gl.waitForProfileLoad();
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_SUBMIT_BUTTON.click();
+                gl.waitForProfileLoad();
+                maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT.click();
+                gl.waitForProfileLoad();
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_INPUT.sendKeys("7T/");
+                gl.waitForProfileLoad();
+//                gl.waitTillElementVisible(maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT);
+                gl.waitForProfileLoad();
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_SUBMIT_BUTTON.click();
+                gl.waitForProfileLoad();
+                maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT.click();
+                gl.waitForProfileLoad();
+                maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT.click();
+                gl.waitForProfileLoad();
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_INPUT.sendKeys("ER");
+                gl.waitForProfileLoad();
+//                gl.waitTillElementVisible(maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT);
+                gl.waitForProfileLoad();
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_SUBMIT_BUTTON.click();
+                gl.waitForProfileLoad();
+                String flightnumberextract = getDriver().findElement(By.xpath("(//div//pre)[7]")).getText();
+                for (String flightNumber1 : flightnumberextract.split("\\s+")) {
+                    if (flightNumber1.endsWith("C")) {
+                        flightNumber1 = flightNumber1.replace("C", ""); // FIX
+                        pax.setSegmentFlight(0, flightNumber1); // sets "120"
+                        break;
+                    }
+                }
+                String response = getDriver().findElement(By.xpath("(//div//pre)[2]")).getText();
+                String PNR = response.substring(0, 6);
+                System.out.println("PNR created : " + PNR);
+                org.junit.Assert.assertTrue(response.contains(PNR));
+                pax.setPnr(PNR);
+                gl.waitForProfileLoad();
+                maeGUIObjects2.CANCEL_NATIVE_SHARES_COMMAND_INPUT.click();
+                gl.waitForProfileLoad();
+            } catch (Exception e) {
+                ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+                org.junit.Assert.fail("This step failed.. so stopping...");
+            }
+        }
+
+
+
+public void pricingOptionPriceAsBookedNew(ExtentTest logInfo) {
+            try {
+                gl.waitForProfileLoad();
+                maeGUIObjects2.PRICE_OPTION_DROPDOWN_AS_BOOKED.click();
+                gl.waitForProfileLoad();
+                logInfo.pass("I Click on the Price Option Dropdown As Booked");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                gl.waitForProfileLoad();
+                maeGUIObjects2.PRICED_AS_BOOKED.click();
+                gl.waitForProfileLoad();
+                logInfo.pass("I Select the Priced As Booked Option from the Price Option Dropdown");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                gl.waitForProfileLoad();
+                maeGUIObjects2.PRICE_OPTION_DROPDOWN_NEXT_BUTTON.click();
+                gl.waitProgress();
+                gl.waitForProfileLoad();
+            } catch (AssertionError | Exception e) {
+                ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+                org.junit.Assert.fail("This step failed.. so stopping...");
+            }
+            }
+
+   public void SearchForTheSmartSearchWith(ExtentTest logInfo, String smartsearch) {
+            try {
+                gl.waitTillElementVisible(maeGUIObjects2.GATE_MODULE_OPTION_DROP_DOWM);
+                gl.waitForProfileLoad();
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Smart Search visible");
+                maeGUIObjects2.SMART_SEARCH_INPUT.clear();
+                gl.waitForProfileLoad();
+                String text = smartsearch;
+                WebElement searchBox = maeGUIObjects2.SMART_SEARCH_INPUT;
+                for (char c : text.toCharArray()) {
+                    searchBox.sendKeys(String.valueOf(c));
+                }
+                gl.waitForProfileLoad();
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Entered Smart Search value : " + smartsearch);
+                maeGUIObjects2.SMART_SEARCH_INPUT.sendKeys(Keys.ENTER);
+                gl.waitProgress();
+                gl.waitForProfileLoad();
+                gl.waitTillElementVisible(maeGUIObjects2.GATE_MODULE_OPTION_DROP_DOWM);
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Smart Search result displayed for : " + smartsearch);
+                logInfo.pass("Successfully searched Smart Search with value : " + smartsearch);
+
+            } catch (AssertionError | Exception e) {
+                ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+                org.junit.Assert.fail("This step failed.. so stopping...");
+            }
+        }
+
+  public void ValidateThePassengerInAllPassengerListInGateModuleByPNR(ExtentTest logInfo) {
+            try {
+                gl.waitForProfileLoad();
+                maeGUIObjects2.GATE_MODULE_OPTION_DROP_DOWM.click();
+                gl.waitForProfileLoad();
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                maeGUIObjects2.GATE_MODULE_PNR_OPTION.click();
+                gl.waitForProfileLoad();
+                logInfo.pass("I Select the PNR Option from the Gate Module Option Dropdown");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                gl.waitForProfileLoad();
+                maeGUIObjects2.GATE_MODULE_SEARCH_INPUT.sendKeys(mPassengers.get(getDriverID()).get(0).getPnr());
+                gl.waitForProfileLoad();
+                logInfo.pass("I search the Passenger BY PNR");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                gl.waitForProfileLoad();
+                for(WebElement paxNameElement : maeGUIObjects2.GATE_MODULE_PASSENGER_NAME) {
+                    String paxNameText = paxNameElement.getText().trim();
+                    String expectedPaxName = mPassengers.get(getDriverID()).get(0).getfName().trim();
+                    if(paxNameText.contains(expectedPaxName)) {
+                        logInfo.pass("Passenger found in All Passenger List: " + expectedPaxName);
+                        logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                        break;
+                    }
+                }
+            } catch (AssertionError | Exception e) {
+                ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+                org.junit.Assert.fail("This step failed.. so stopping...");
+            }
+        }
+
+
+
+     @FindBy(xpath = "//input[@name='smartsearch']")
+            public WebElement SMART_SEARCH_INPUT;
+
+            @FindBy(xpath = "(//span[@class='md-select-icon'])[3]")
+            public WebElement GATE_MODULE_OPTION_DROP_DOWM;
+
+            @FindBy(xpath = "//div[contains(text(),'PNR')]")
+            public WebElement GATE_MODULE_PNR_OPTION;
+
+            @FindBy(xpath = "//input[@ng-model='airportPassenger.model.searchText']")
+            public WebElement GATE_MODULE_SEARCH_INPUT;
+
+            @FindBy(xpath = "//div[normalize-space()='Native SHARES']")
+            public WebElement NATIVE_SHARES_OPTION;
+
+            @FindBy(xpath = "//button[normalize-space()='Clear All']")
+            public WebElement CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT;
+
+            @FindBy(xpath = "//button[normalize-space()='Cancel']")
+            public WebElement CANCEL_NATIVE_SHARES_COMMAND_INPUT;
+
+            @FindBy(xpath = "//div//pre")
+            public List<WebElement> LIST_OF_NATIVE_SHARES_RESPONSE;
+
+            @FindBy(xpath = "//span[contains(@class,\"pssgui-link pssgui-bold header-label-name margin-bottom-15 ng-binding\")]")
+            public List<WebElement> GATE_MODULE_PASSENGER_NAME;
+
+            @FindBy(xpath = "(//span[@class=\"md-select-icon\"])[2]")
+            public WebElement PRICE_OPTION_DROPDOWN_AS_BOOKED;
+
+            @FindBy(xpath = "(//md-option//div[normalize-space()='Price as Booked'])")
+            public WebElement PRICED_AS_BOOKED;
+
+            @FindBy(xpath = "//button[normalize-space()='Next']")
+            public WebElement PRICE_OPTION_DROPDOWN_NEXT_BUTTON;
+
+

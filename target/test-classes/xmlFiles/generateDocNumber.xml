@@ -1,0 +1,54 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:emd="http://emd.airservices.svcs.entsvcs.net/tr/purchase/emd/2021/08/EMD_NeutralIssueRQ" xmlns:iata="http://www.iata.org/IATA/2007/00/IATA_CommonTypes" xmlns:iata1="http://www.iata.org/IATA/2007/00/IATA_ET_CommonTypes">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <EMD_NeutralIssueRQ EchoToken="PPSEchoToken" Target="Test" Version="1.0" PrimaryLangID="EN-US" RetransmissionIndicator="false" CorrelationID="873fb9df-0bc8-4f7d-b793-8aa35764c1f5" TicketDocQuantity="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://emd.airservices.svcs.entsvcs.net/tr/purchase/emd/2021/08/EMD_NeutralIssueRQ">
+            <POS>
+                <Source AgentSine="0049AE" PseudoCityCode="JFK" ISOCountry="US" ISOCurrency="USD" AgentDutyCode="GS" AirlineVendorID="CM" AirportCode="JFK" ERSP_UserID="cm.pty.agent" TerminalID="123456" xmlns="http://www.iata.org/IATA/2007/00/IATA_CommonTypes">
+                    <RequestorID Type="A" ID="33990456" ID_Context="IATA">
+                        <CompanyName CompanyShortName="Airline Office" Code="CM" CodeContext="AIRSOA CM"/>
+                    </RequestorID>
+                    <BookingChannel Type="CTO"/>
+                </Source>
+            </POS>
+            <BookingTicketingRefID Type="1" ID="QQKGQM"/>
+            <IssuingAgencyAirlineInfo Name="Airline Office" Place="JFK"/>
+            <Passenger TotalFltSegQty="" TicketingModeCode="">
+                <Name Code="ADT">
+                    <GivenName xmlns="http://www.iata.org/IATA/2007/00/IATA_CommonTypes">LLL</GivenName>
+                    <Surname xmlns="http://www.iata.org/IATA/2007/00/IATA_CommonTypes">KKK</Surname>
+                </Name>
+                <AgentID Type="A" ID="33990456" ID_Context="IATA">
+                    <CompanyName Code="CM" CodeContext="AIRSOA CM" xmlns="http://www.iata.org/IATA/2007/00/IATA_CommonTypes"/>
+                </AgentID>
+                <PaymentDetail PaymentType="CA">
+                    <Cash xmlns="http://www.iata.org/IATA/2007/00/IATA_CommonTypes"/>
+                    <PaymentAmount Amount="107.00" CurrencyCode="USD" DecimalPlaces="2" xmlns="http://www.iata.org/IATA/2007/00/IATA_CommonTypes"/>
+                </PaymentDetail>
+                <BaseFare Amount="100" CurrencyCode="USD" DecimalPlaces="2" Purpose="Base"/>
+                <TotalFare Purpose="Base" Amount="107.00" CurrencyCode="USD" DecimalPlaces="2"/>
+                <UnstructuredFareCalcInfo Type="Base" PricingCode="0" Info=""/>
+                <FareInfo NonEndorsableInd="false" NonRefundableInd="false" NonReissuableNonExchgInd="false"/>
+                <TicketDocument TicketDocumentNbr="2302250000881" Type="J" DateOfIssue="2025-06-24" ExchangeTktNbrInd="false">
+                    <CouponInfo Number="1" InConnectionDocNbr="2302250000881" InConnectionNbr="1" Status="O" ConsumedAtIssuanceInd="false" NbrOfSvcs="1" Value="100">
+                        <SoldAirlineInfo DepartureDateTime="2025-06-24T11:56:00" ArrivalDateTime="2025-06-24T04:43:00" FlightNumber="472" StopoverInd="true" xmlns="http://www.iata.org/IATA/2007/00/IATA_ET_CommonTypes">
+                            <DepartureAirport LocationCode="PTY" CodeContext="IATA" xmlns="http://www.iata.org/IATA/2007/00/IATA_CommonTypes"/>
+                            <ArrivalAirport LocationCode="LAX" CodeContext="IATA" xmlns="http://www.iata.org/IATA/2007/00/IATA_CommonTypes"/>
+                            <OperatingAirline Code="" xmlns="http://www.iata.org/IATA/2007/00/IATA_CommonTypes"/>
+                            <MarketingAirline Code="CM" xmlns="http://www.iata.org/IATA/2007/00/IATA_CommonTypes"/>
+                        </SoldAirlineInfo>
+                        <ReasonForIssuance Code="C" SubCode="0N2" Description="SURFBOARD UP TO 45KG"/>
+                    </CouponInfo>
+                </TicketDocument>
+                <ReasonForIssuance Code="C" SubCode="0N2" Description="SURFBOARD UP TO 45KG"/>
+                <ValidatingAirline Code="CM"/>
+                <TaxCouponInformation BirthDate="0001-01-01">
+                    <TicketDocument TicketDocumentNbr="2302250000881" xmlns="http://www.iata.org/IATA/2007/00/IATA_ET_CommonTypes">
+                        <CouponNumber Number="1">
+                            <Tax Amount="7.00" CurrencyCode="USD" TaxType="PA"/>
+                        </CouponNumber>
+                    </TicketDocument>
+                </TaxCouponInformation>
+            </Passenger>
+        </EMD_NeutralIssueRQ>
+    </soapenv:Body>
+</soapenv:Envelope>

@@ -1,0 +1,15 @@
+[
+  {
+    "passenger":{
+      "surName":"CARTER",
+      "givenName":"WILLIAM",
+      "dob": "12/24/1965",
+      "gender1": "Male",
+      "email": "testone@testone.com",
+      "phoneType": "Home Phone",
+      "countryCode": "NZ",
+      "areaCode": "123",
+      "phoneNumber": "3456789999"
+    }
+  }
+]

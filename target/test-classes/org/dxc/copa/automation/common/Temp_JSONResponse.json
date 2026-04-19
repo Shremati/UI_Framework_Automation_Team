@@ -1,0 +1,18 @@
+{
+  "id": 101,
+  "name": "John Doe",
+  "address": {
+    "city": "New York",
+    "zip": "1001",
+    },
+  "orders": [
+    {
+      "orderId": 1,
+      "amount": 60
+    },
+    {
+      "orderId": 2,
+      "amount": 90
+    }
+  ]
+}

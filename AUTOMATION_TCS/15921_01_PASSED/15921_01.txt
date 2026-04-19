@@ -1,0 +1,190 @@
+And I perform voluntary refund using CreditCard override option
+
+@And("I perform voluntary refund using CreditCard override option")
+    public void iPerformVoluntaryRefundUsingCreditCardOverrideOption() {
+
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I perform voluntary refund using CreditCard override option");
+            maeGUI_2.voluntaryRefundUsingCreditCardOverrideOption(logInfo);
+            logInfo.pass("I perform voluntary refund using CreditCard override option");
+            logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI_2.getDriver()), "Screenshot");
+
+        } catch (AssertionError | Exception e) {
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+
+public void voluntaryRefundUsingCreditCardOverrideOption(ExtentTest logInfo) {
+        try {
+            logInfo.info("I perform voluntary refund");
+            gl.clickElement(maeGUIObjects.ORDER_TAB);
+            gl.clickElement(maeGUIObjects.ACTIONS_DROPDOWN);
+            gl.waitForProfileLoad();
+            gl.scrollTo(maeGUIObjects2.OPTION_VOLUNTARY_REFUND);
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            maeGUIObjects2.OPTION_VOLUNTARY_REFUND.click();
+            gl.waitProgress();
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+            maeGUIObjects.VOLUNTARY_REFUND_NEXT_BUTTON.click();
+            gl.waitProgress();
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            gl.waitForProfileLoad();
+            maeGUIObjects.STORE_QUOTE_ID_BUTTON.click();
+            gl.waitProgress();
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            gl.waitForProfileLoad();
+        } catch (AssertionError | Exception e) {
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
+        }
+
+        try {
+            gl.scrollTo(maeGUIObjects.REMARKS_LINK);
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            maeGUIObjects.REMARKS_LINK.click();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            gl.scrollTo(maeGUIObjects.VOL_REFUND_QUOTE_ID_LINK);
+            gl.waitProgress();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            maeGUIObjects.VOL_REFUND_QUOTE_ID_LINK.click();
+            gl.waitProgress();
+            gl.waitForProfileLoad();
+            logInfo.pass("I click on the Voluntary refund quote id link");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+        } catch (AssertionError | Exception e) {
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
+        }
+        try {
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            logInfo.info("Before clicking on Add to Order button");
+            gl.clickButton(maeGUIObjects.ADD_TO_ORDER_BUTTON);
+            gl.waitProgress();
+            gl.waitForProfileLoad();
+            logInfo.pass("After clicking on Add to Order button");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+        } catch (AssertionError | Exception e) {
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
+        }
+        try {
+            gl.clickButton(maeGUIObjects.CHECK_OUT_BUTTON);
+            gl.waitProgress();
+            gl.waitForProfileLoad();
+            logInfo.pass("I click on the Check Out button");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+        } catch (AssertionError | Exception e) {
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
+        }
+
+        try {
+            List<WebElement> dropdown = maeGUIObjects.MANUAL_REFUND_OVERRIDE_DROPDOWN;
+            for (int i = 0; i < dropdown.size(); i++) {
+                gl.clickElement(dropdown.get(i));
+                gl.waitProgress();
+                String xpath = "//div[contains(text(),'CreditCard')]";
+                WebElement dropdownSelect = driver.get().findElement(By.xpath(xpath));
+                dropdownSelect.click();
+            }
+            if (maeGUIObjects.REFUND_BUTTON.isEnabled()) //the gui issue
+            {
+                gl.clickButton(maeGUIObjects.REFUND_BUTTON);  //we will follow the payment steps
+                gl.waitProgress();
+                gl.waitForProfileLoad();
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                if (maeGUIObjects.PAY_BUTTON.isEnabled()) {
+                    gl.clickButton(maeGUIObjects.PAY_BUTTON);
+                    gl.waitProgress();
+                    gl.waitForProfileLoad();
+                    logInfo.pass("I click on the pay button");
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                }
+            }
+            gl.waitForProfileLoad();
+            gl.waitTillElementinVisible(maeGUIObjects.INPUT_RECIPIENT_EMAIL);
+            String email = maeGUIObjects.INPUT_RECIPIENT_EMAIL.getAttribute("value");
+            if (StringUtils.isEmpty(email) || !email.equalsIgnoreCase("testone@testone.com")) {
+                email = "testone@testone.com";
+                maeGUIObjects.INPUT_RECIPIENT_EMAIL.clear();
+                maeGUIObjects.INPUT_RECIPIENT_EMAIL.sendKeys(email);
+                gl.waitForProfileLoad();
+            }
+            maeGUIObjects.EmailRecipient_dropDown.click();
+            gl.waitForProfileLoad();
+            maeGUIObjects.EmailLanguageSelect.click();
+            gl.waitForProfileLoad();
+            logInfo.pass("I enter the details in the email recipients page");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            maeGUIObjects.EmailButton.click();
+            gl.waitProgress();
+            gl.waitForProfileLoad();
+            try {
+                if (gl.existElement(maeGUIObjects.WARNING_CREDITCARD_DETAIL_MESSAGE)) {
+                    String text = maeGUIObjects.WARNING_CREDITCARD_DETAIL_MESSAGE.get(0).getText();
+                    logInfo.info(text);
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                    maeGUIObjects.VOLUNTARY_REFUND_NEXT_BUTTON.click();
+                }
+            } catch (AssertionError | Exception e) {
+                ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+                Assert.fail("This step failed.. so stopping...");
+            }
+            gl.waitProgress();
+            gl.waitProgress();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            maeGUIObjects2.FOP_SUBTYPE_DROPDOWN_2.click();
+            gl.waitForProfileLoad();
+            maeGUIObjects2.FOP_SUBTYPE_CREDITCARD_2.click();
+            gl.waitForProfileLoad();
+            maeGUIObjects.INPUT_CREDITCARD_NUMBER.clear();
+            gl.waitForProfileLoad();
+            gl.inputText(maeGUIObjects2.CREDITCARD_NUMBER_2, "4444333322221111");
+            gl.waitForProfileLoad();
+            gl.inputText(maeGUIObjects2.CREDITCARD_EXPIRE_2, "062026");
+            gl.waitForProfileLoad();
+            gl.inputText(maeGUIObjects2.INPUT_CARD_HOLDER_NAME_2, "JAK Test");
+            gl.waitForProfileLoad();
+            logInfo.pass("I enter the card details");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            maeGUIObjects2.CARD_SUBMIT_BUTTON.click();
+            gl.waitProgress();
+            gl.waitForProfileLoad();
+            gl.waitTillElementVisible(maeGUIObjects.PaymentDoneButton);
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            gl.waitForProfileLoad();
+            gl.clickButton(maeGUIObjects.PaymentDoneButton);
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+        } catch (AssertionError | Exception e) {
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+------------------------------------------------------------------------------------------------------------------------
+
+ @FindBy(xpath = "(//md-select[contains(@aria-label,\"FOP Subtype\")])[2]")
+        public WebElement FOP_SUBTYPE_DROPDOWN_2;
+
+        @FindBy(xpath = "(//div[contains(text(),'Visa')])[2]")
+        public WebElement FOP_SUBTYPE_CREDITCARD_2;
+
+        @FindBy(xpath = "(//input[@name='CCCC'])[2]")
+        public WebElement CREDITCARD_NUMBER_2;
+
+        @FindBy(xpath = "(//input[@name='CCEX'])[2]")
+        public WebElement CREDITCARD_EXPIRE_2;
+
+        @FindBy(xpath = "(//input[@name='CCCH'])[2]")
+        public WebElement INPUT_CARD_HOLDER_NAME_2;
+
+        @FindBy(xpath = "//button[contains(@aria-label,'card-deposit')]")
+        public WebElement CARD_SUBMIT_BUTTON;

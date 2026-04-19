@@ -1,0 +1,37 @@
+[
+    {
+        "FrequentFlyer":{
+            "firstName":"GOLD",
+            "surName":"JOSHUA",
+            "FFNumber": "230266192"
+        }
+    },
+    {
+        "FrequentFlyer":{
+            "firstName":"PLATINUM",
+            "surName":"JENNY",
+            "FFNumber": "230022732"
+        }
+    },
+    {
+        "FrequentFlyer":{
+            "firstName":"CARRIZO",
+            "surName":"PATRICIA",
+            "FFNumber": "230003128"
+        }
+    },
+    {
+        "FrequentFlyer":{
+            "firstName":"Aduriz",
+            "surName":"Pablo",
+            "FFNumber": "230411228"
+        }
+    },
+    {
+        "FrequentFlyer":{
+            "firstName":"ARCILAECHEVERRI",
+            "surName":"HECTOR",
+            "FFNumber": "000700977141-AS"
+        }
+    }
+]

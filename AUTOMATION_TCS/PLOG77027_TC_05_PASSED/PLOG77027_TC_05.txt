@@ -1,0 +1,116 @@
+And I open flight in native shares using the updated date
+
+
+ @And("I open flight in native shares using the updated date")
+    public void iOpenFlightInNativeSharesUsingTheUpdatedDate() {
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I open flight in native shares using the updated date");
+            maeGUI_2.OpenFlightInNativeSharesUsingTheUpdatedDate(logInfo);
+            logInfo.pass("I open flight in native shares using the updated date");
+
+        } catch (AssertionError | Exception exception) {
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+
+ public void OpenFlightInNativeSharesUsingTheUpdatedDate(ExtentTest logInfo) {
+            try {
+                gl.waitForProfileLoad();
+                gl.waitForProfileLoad();
+                maeGUIObjects.LOGO_COPA_LINK.click();
+                gl.waitForProfileLoad();
+                gl.waitForProfileLoad();
+                maeGUIObjects2.TOOLS_MENU.click();
+                gl.waitForProfileLoad();
+                gl.waitForProfileLoad();
+                maeGUIObjects2.NATIVE_SHARES_OPTION.click();
+                gl.waitForProfileLoad();
+                gl.waitForProfileLoad();
+                String retrive_PNR = mPassengers.get(getDriverID()).get(0).getPnr();
+                String retrive_PNR_COMMAND = "*" + retrive_PNR;
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_INPUT.sendKeys(retrive_PNR_COMMAND);
+                gl.waitForProfileLoad();
+                gl.waitForProfileLoad();
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_SUBMIT_BUTTON.click();
+                gl.waitForProfileLoad();
+                gl.waitForProfileLoad();
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                String flightdate_extract = getDriver().findElement(By.xpath("(//div//pre)[6]")).getText();
+                String flightdate = flightdate_extract.trim().split("\\s+")[3];
+                maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT.click();
+                gl.waitForProfileLoad();
+                gl.waitForProfileLoad();
+                String flightcity = mPassengers.get(getDriverID()).get(0).getSegmentOriginCity(0);
+                String flightNumber = mPassengers.get(getDriverID()).get(0).getSegmentFlight(0);
+                String flightopencommand1 = "6:*A" + flightNumber + "/" + flightdate + flightcity;
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_INPUT.sendKeys(flightopencommand1);
+                gl.waitForProfileLoad();
+                gl.waitForProfileLoad();
+                maeGUIObjects2.NATIVE_SHARES_COMMAND_SUBMIT_BUTTON.click();
+                gl.waitForProfileLoad();
+                gl.waitForProfileLoad();
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                String sharesText = getDriver()
+                        .findElement(By.xpath("(//div//pre)[2]"))
+                        .getText()
+                        .replace("*", "")
+                        .trim();
+
+                if (sharesText.contains("SHIP ASSIGNED")) {
+                    maeGUIObjects2.CANCEL_NATIVE_SHARES_COMMAND_INPUT.click();
+                } else {
+                    String Equipmentextract = getDriver().findElement(By.xpath("(//div//pre)[6]")).getText();
+                    String Equpmenttext = Equipmentextract.trim().split("\\s+")[1];
+                    maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT.click();
+                    gl.waitForProfileLoad();
+                    gl.waitForProfileLoad();
+                    String flightopencommand2 = "6:I*F" + Equpmenttext;
+                    maeGUIObjects2.NATIVE_SHARES_COMMAND_INPUT.sendKeys(flightopencommand2);
+                    gl.waitForProfileLoad();
+                    gl.waitForProfileLoad();
+                    maeGUIObjects2.NATIVE_SHARES_COMMAND_SUBMIT_BUTTON.click();
+                    gl.waitForProfileLoad();
+                    gl.waitForProfileLoad();
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                    String response = getDriver().findElement(By.xpath("(//div//pre)[2]")).getText();
+                    if (response.contains("FIN OR IGN TRANS")) {
+                        maeGUIObjects2.NATIVE_SHARES_COMMAND_INPUT.sendKeys("I");
+                        gl.waitForProfileLoad();
+                        gl.waitForProfileLoad();
+                        maeGUIObjects2.NATIVE_SHARES_COMMAND_SUBMIT_BUTTON.click();
+                        gl.waitForProfileLoad();
+                        gl.waitForProfileLoad();
+                        maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT.click();
+                        gl.waitForProfileLoad();
+                        gl.waitForProfileLoad();
+                        maeGUIObjects2.NATIVE_SHARES_COMMAND_INPUT.sendKeys(flightopencommand2);
+                        gl.waitForProfileLoad();
+                        gl.waitForProfileLoad();
+                        maeGUIObjects2.NATIVE_SHARES_COMMAND_SUBMIT_BUTTON.click();
+                        gl.waitForProfileLoad();
+                        gl.waitForProfileLoad();
+                        logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                    }
+                    String Fleetnumberextract = getDriver().findElement(By.xpath("(//div//pre)[4]")).getText();
+                    String Fleetnumbertext = Fleetnumberextract.trim().split("\\s+")[2];
+                    maeGUIObjects2.CLEAR_ALL_NATIVE_SHARES_COMMAND_INPUT.click();
+                    gl.waitForProfileLoad();
+                    gl.waitForProfileLoad();
+                    maeGUIObjects2.NATIVE_SHARES_COMMAND_INPUT.sendKeys("6:CA" + flightdate, Keys.ENTER, flightNumber + flightcity + Fleetnumbertext);
+                    gl.waitForProfileLoad();
+                    gl.waitForProfileLoad();
+                    maeGUIObjects2.NATIVE_SHARES_COMMAND_SUBMIT_BUTTON.click();
+                    gl.waitForProfileLoad();
+                    gl.waitForProfileLoad();
+                    logInfo.pass("I Open Flight in Native Shares using the updated date");
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                    maeGUIObjects2.CANCEL_NATIVE_SHARES_COMMAND_INPUT.click();
+                    gl.waitForProfileLoad();
+                }
+            } catch (AssertionError | Exception e) {
+                ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+                org.junit.Assert.fail("This step failed.. so stopping...");
+            }
+        }

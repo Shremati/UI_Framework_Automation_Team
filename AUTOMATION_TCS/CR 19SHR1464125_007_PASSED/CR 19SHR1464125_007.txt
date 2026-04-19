@@ -1,0 +1,108 @@
+And I search flight by "<flight number>" "<OriginCity>" and "<departureDate>" in gate page
+And I click on eTKT Not Sync tab in Gate - All passenger list screen
+
+
+  @And("I search flight by {string} {string} and {string} in gate page")
+    public void iSearchFlightByAndInGatePage(String flightnumber, String from, String date) {
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I search flight by " + flightnumber + " " + from + " and " + date + " in gate page");
+            maeGUI_2.SearchFlightInGatePage(logInfo, flightnumber, from, date);
+            logInfo.pass("I search flight by " + flightnumber + " " + from + " and " + date + " in gate page");
+
+        } catch (AssertionError | Exception exception) {
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+    @And("I click on eTKT Not Sync tab in Gate - All passenger list screen")
+    public void iClickOnETKTNotSyncTabInGateAllPassengerListScreen() {
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on eTKT Not Sync tab in Gate - All passenger list screen");
+            maeGUI_2.ClickOnETKTNotSyncTabInGateAllPassengerListScreen(logInfo);
+            logInfo.pass("I click on eTKT Not Sync tab in Gate - All passenger list screen");
+
+        } catch (AssertionError | Exception exception) {
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+  public void SearchFlightInGatePage(ExtentTest logInfo, String flightnumber, String from, String date) {
+        try {
+            gl.waitForProfileLoad();
+            maeGUIObjects2.FLIGHT_NUMBER_GATE_MODULE.sendKeys(flightnumber);
+            gl.waitForProfileLoad();
+            logInfo.pass("I enter the flight number in the Gate page");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            maeGUIObjects2.FROM_CITY.sendKeys(Keys.CONTROL + "a");
+            maeGUIObjects2.FROM_CITY.sendKeys(Keys.DELETE);
+            gl.waitForProfileLoad();
+            maeGUIObjects2.FROM_CITY.sendKeys(from);
+            maeGUIObjects2.FROM_CITY.sendKeys(Keys.ENTER);
+            gl.waitForProfileLoad();
+            logInfo.pass("I enter the from city in the Gate page");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            try {
+                gl.waitForProfileLoad();
+                maeGUIObjects2.SEAT_MAP_DATE.sendKeys(date);
+                Pattern pattern = Pattern.compile("\\b\\d{2,3}\\b");
+                Matcher matcher = pattern.matcher(date);
+                String timeCode = null;
+                if (matcher.find()) {
+                    timeCode = matcher.group();
+                    System.out.println("Extracted time: " + timeCode);
+                } else {
+                    System.out.println("No matching time found.");
+                }
+                String dt = timeCode;
+                int days = Integer.parseInt(dt);
+
+                mPassengers.get(getDriverID()).get(0).setFirstSegDate(days);
+                date = gl.plusDaysFromToday(days);
+                maeGUIObjects2.SEAT_MAP_DATE.sendKeys(Keys.chord(Keys.CONTROL + "a" + Keys.BACK_SPACE));
+                maeGUIObjects2.SEAT_MAP_DATE.sendKeys(Keys.BACK_SPACE, date);
+                gl.waitForProfileLoad();
+                logInfo.pass("I Click on the Departure Date field and select the date from the date picker");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            } catch (AssertionError | Exception e) {
+                ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+                Assert.fail("This step failed.. so stopping...");
+            }
+
+            maeGUIObjects2.GATE_SEARCH_BUTTON.click();
+            gl.waitForProfileLoad();
+            logInfo.pass("I click on the search button in the Gate page");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+        } catch (AssertionError | Exception e) {
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            org.junit.Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+    public void ClickOnETKTNotSyncTabInGateAllPassengerListScreen(ExtentTest logInfo) {
+        try {
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            maeGUIObjects2.ETKT_NOT_SYNC_TAB.click();
+            gl.waitForProfileLoad();
+            logInfo.pass("I Click on the ETKT Not Sync Tab in Gate All Passenger List Screen");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+        } catch (AssertionError | Exception e) {
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            org.junit.Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+
+ @FindBy(xpath = "(//input[@name='Flight'])[1]")
+        public WebElement FLIGHT_NUMBER_GATE_MODULE;
+
+        @FindBy(xpath = "(//button[@type='submit'])")
+        public WebElement GATE_SEARCH_BUTTON;
+
+        @FindBy(xpath = "//div[normalize-space()='eTKT Not Sync']")
+        public WebElement ETKT_NOT_SYNC_TAB;
+

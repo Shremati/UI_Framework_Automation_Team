@@ -1,0 +1,174 @@
+And I click on OKAY button in the confirmation popup
+And I click on Submit and Proceed to Pay using Waiver Option as "<Process>" and "<Reasoncode>"
+
+
+    @And("I click on Submit and Proceed to Pay using Waiver Option as {string} and {string}")
+    public void iClickOnSubmitAndProceedToPayUsingWaiverOptionAsAnd(String process, String reasonCode) {
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on Submit and Proceed to Pay using Waiver Option as "+process+" and "+reasonCode+" ");
+            maeGUI_2.ClickOnSubmitAndPayUsingWaiverOption(logInfo,process,reasonCode);
+            logInfo.pass("I click on Submit and Proceed to Pay using Waiver Option as "+process+" and "+reasonCode+" ");
+            logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
+
+        } catch (AssertionError | Exception e) {
+
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+
+@And("I click on OKAY button in the confirmation popup")
+    public void iClickOnOKAYButtonInTheConfirmationPopup() {
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on OKAY button in the confirmation popup");
+            maeGUI_2.iClickOnOKAYButtonInTheConfirmationPopup(logInfo);
+            logInfo.pass("I click on OKAY button in the confirmation popup");
+            logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
+
+        } catch (AssertionError | Exception e) {
+
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+
+  }
+
+public void ClickOnSubmitAndPayUsingWaiverOption(ExtentTest logInfo, String process, String reasonCode) {
+        try {
+            Passenger pax = mPassengers.get(getDriverID()).get(0);
+
+            gl.clickElement(maeGUIObjects.BAGGAGE_SUBMIT);
+            gl.waitProgress();
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+            gl.clickElement(maeGUIObjects.BAGGAGE_PROCEED_TO_PAY);
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            gl.waitProgress();
+            gl.waitForProfileLoad();
+            gl.waitTillElementVisible(maeGUIObjects2.PAYMENT_BUTTON);
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            logInfo.pass("I Change the Baggage Fee");
+            gl.scrollTo(maeGUIObjects2.PENCIL_ICON);
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            gl.clickElement(maeGUIObjects2.PENCIL_ICON);
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            maeGUIObjects2.BAGGAGE_FEE_EDIT_AREA.sendKeys(Keys.CONTROL + "a");
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            maeGUIObjects2.BAGGAGE_FEE_EDIT_AREA.sendKeys(Keys.DELETE);
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            gl.waitTillElementVisible(maeGUIObjects2.WAIVER_BUTTON);
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            logInfo.pass("I Select the Waiver Options and Reason Code");
+            gl.clickElement(maeGUIObjects2.WAIVER_PROCESS_DROPDOWN);
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            String optionToSelect = process;
+            for (WebElement option : maeGUIObjects2.OPTIONS_IN_WAIVER_DROPDOWN) {
+                if (option.getText().trim().equalsIgnoreCase(optionToSelect)) {
+                    option.click();
+                    break;
+                }
+            }
+
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            gl.clickElement(maeGUIObjects2.REASON_CODE_IN_WAIVER);
+            gl.waitForProfileLoad();
+            String Select_ReasonCode = reasonCode;
+            for (WebElement option : maeGUIObjects2.OPTIONS_IN_WAIVER_DROPDOWN) {
+                if (option.getText().trim().equalsIgnoreCase(Select_ReasonCode)) {
+                    option.click();
+                    break;
+
+                }
+            }
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            gl.clickElement(maeGUIObjects2.NEXT_BUTTON_IN_WAVIER_PROCESS);
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            gl.waitElementToBeClick(maeGUIObjects2.ISSUE_EMD);
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            gl.waitElementToBeClick(maeGUIObjects2.DONE_BUTTON);
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            Assert.assertTrue(maeGUIObjects2.BALANCE_DUE_AMOUNT.getText().contains("0.00  USD"));
+            gl.waitForProfileLoad();
+            gl.clickElement(maeGUIObjects.CLICK_CONTINUE_BUTTON);
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+        } catch (AssertionError | Exception e) {
+
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+
+  public void iClickOnOKAYButtonInTheConfirmationPopup(ExtentTest logInfo) {
+        try {
+            maeGUIObjects.CONFIRMATION_OK_BUTTON.click();
+            gl.waitProgress();
+            gl.waitForProfileLoad();
+            logInfo.pass("I click on OKAY button in the confirmation popup");
+
+        } catch (AssertionError | Exception e) {
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+
+
+@FindBy(xpath = "//button[@aria-label='Ok']")
+        public WebElement CONFIRMATION_OK_BUTTON;
+
+
+@FindBy(xpath = "//div[@translate='pssgui.payment']")
+        public WebElement PAYMENT_BUTTON;
+
+        @FindBy(xpath = "//i[@class='icon-edit ng-scope']")
+        public WebElement PENCIL_ICON;
+
+        @FindBy(xpath = "//input[@aria-label='baggage fee']")
+        public WebElement BAGGAGE_FEE_EDIT_AREA;
+
+        @FindBy(xpath = "//div[@translate='pssgui.waiver']")
+        public WebElement WAIVER_BUTTON;
+
+        @FindBy(xpath = "//md-select[@aria-label='waiver process']")
+        public WebElement WAIVER_PROCESS_DROPDOWN;
+
+        @FindBy(xpath = "//md-option//div[@class='md-text ng-binding']")
+        public List<WebElement> OPTIONS_IN_WAIVER_DROPDOWN;
+
+        @FindBy(xpath = "//md-select[@aria-label='waiver reason']")
+        public WebElement REASON_CODE_IN_WAIVER;
+
+        @FindBy(xpath = "//button[@translate='pssgui.next']")
+        public WebElement NEXT_BUTTON_IN_WAVIER_PROCESS;
+
+        @FindBy(xpath = "//button[@translate='pssgui.issue.emd']")
+        public WebElement ISSUE_EMD;
+
+        @FindBy(xpath = "//button[@translate='pssgui.done']")
+        public WebElement DONE_BUTTON;
+
+        @FindBy(xpath = "(//div[@class='pssgui-bold ng-binding flex pull-right'])[3]")
+        public WebElement BALANCE_DUE_AMOUNT;
+
+
+
+
+
+

@@ -1,0 +1,363 @@
+ And I select specific class "<COS>" for Return flight in Economy Class
+
+
+ @And("I select specific class {string} for Return flight in Economy Class")
+    public void iSelectSpecificClassForReturnFlightInEconomyClass(String cos) {
+
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select specific class " + cos + " for Return flight in Economy Class");
+            maeGUI_2.SelectSpecificSeatInEconomyClassReturnFlight(logInfo, cos);
+            logInfo.pass("I select specific class " + cos + " for Return flight in Economy Class");
+            logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
+
+        } catch (AssertionError | Exception e) {
+
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+
+ public void SelectSpecificSeatInEconomyClassReturnFlight(ExtentTest logInfo, String cos) {
+
+        for (int i = 2; i < maeGUIObjects.FLIGHTS_AVAILABLE.size(); i = i + 2) {
+            maeGUIObjects.FLIGHTS_AVAILABLE.get(i).click();
+            gl.waitProgress();
+            gl.waitForProfileLoad();
+        }
+
+        int maxSeats = 2;
+        int businessMax = 0;
+        boolean checkBusiness = mCheckBusinessClass.get(getDriverID()).equalsIgnoreCase("true");
+        boolean seatBooked = false;
+        Passenger pax = mPassengers.get(getDriverID()).get(0);
+        int a = pax.getSecondSegDate();
+        int segmentCount = maeGUIObjects.SEGMENT_FLIGHTS.size();
+        boolean flightNotFound = gl.existElement(maeGUIObjects.FLIGHT_NOT_FOUND);
+        boolean noMatchingFlightFound = gl.existElement(maeGUIObjects.NO_MATCHING_FLIGHT_FOUND);
+
+        if (segmentCount == 0 || (flightNotFound && noMatchingFlightFound)) {
+            maeGUI.getCaroselDateCounts(logInfo, a);
+        }
+
+        if (maeGUIObjects.CAROUSEL_NEXT_DATES.size() == 0) {
+            maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+            gl.waitProgress();
+        }
+
+        try {
+            Dates:
+            for (WebElement nextDate : maeGUIObjects.CAROUSEL_NEXT_DATES) {
+
+                FlightSegment:
+                for (WebElement segment : maeGUIObjects.SEGMENT_FLIGHTS) {
+                    WebElement flightNo = segment.findElement(By.xpath(".//div[@class='ng-binding']"));
+                    List<WebElement> codeShare = segment.findElements(By.xpath(".//div[@translate='pssgui.codeshare.flight']"));
+
+                    if (flightNo.getText().length() >= 5 &&
+                            (flightNo.getText().contains("CM") || flightNo.getText().contains("UA")) &&
+                            codeShare.size() != 1) {
+
+                        List<WebElement> seats = segment.findElements(By.xpath(".//span[contains(@class, 'small-box')]"));
+
+                        // Step 1: Check if business class check is required
+                        if (checkBusiness) {
+                            for (WebElement seat : seats) {
+                                String label = seat.getText();
+                                if (label.contains("C")) {
+                                    int count = label.length() == 2 ? Character.getNumericValue(label.charAt(1)) :
+                                            Character.getNumericValue(label.charAt(2));
+                                    if (count > businessMax) {
+                                        businessMax = count;
+                                    }
+                                }
+                            }
+                            if (businessMax < maxSeats) {
+                                continue; // skip this segment if business condition fails
+                            }
+                        }
+
+                        // Step 2: Search and book only seat from specified class
+                        for (WebElement seat : seats) {
+                            String label = seat.getText();
+
+                            if (label.contains(cos)) {
+                                int pcount = label.length() == 2 ?
+                                        Character.getNumericValue(label.charAt(1)) :
+                                        Character.getNumericValue(label.charAt(2));
+
+                                if (pcount >= maxSeats) {
+                                    gl.scrollToWebElement(seat);
+                                    seat.click();
+                                    gl.waitProgress();
+                                    if (gl.existElement(maeGUIObjects.FIRST_SEGMENT_DATE_ORDER_PAGE_1)) {
+                                        String date = maeGUIObjects.SECOND_SEGMENT_DATE_ORDER_PAGE.getText().trim();
+                                        pax.setsecondSegDateOrderPage(date);
+
+                                        if (maeGUIObjects.REMOVE_ICONS_AVAILABLE.size() >= 2) {
+                                            seatBooked = true;
+                                            logInfo.pass("Booked seat with fare class: " + cos + " (" + label + ")");
+                                            break Dates; // exit all loops
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                maeGUIObjects.CAROUSEL_RIGHT_ARROW.click();
+                nextDate.click();
+                gl.waitProgress();
+            }
+
+            // Final check after all loops
+            if (!seatBooked) {
+                logInfo.fail("No available seat found with fare class: " + cos);
+                Assert.fail("No seat found for fare class: " + cos);
+            }
+
+        } catch (AssertionError | Exception e) {
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("Seat selection failed: " + e.getMessage());
+        }
+
+    }
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+And I Verify Baggage allowance information for All Segments along with Price Quote
+
+
+@And("I Verify Baggage allowance information for All Segments along with Price Quote")
+    public void iVerifyBaggageAllowanceInformationForAllSegmentsAlongWithPriceQuote() {
+
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I Verify Baggage allowance information for All Segments along with Price Quote");
+            maeGUI_2.BaggageAllowanceInformationForAllSegmentsAlongWithPriceQuote(logInfo);
+            logInfo.pass("I Verify Baggage allowance information for All Segments along with Price Quote");
+            logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI_2.getDriver()), "Screenshot");
+
+        } catch (AssertionError | Exception e) {
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+
+public void BaggageAllowanceInformationForAllSegmentsAlongWithPriceQuote(ExtentTest logInfo) throws Exception {
+        try {
+            gl.waitForProfileLoad();
+
+            logInfo.info("The Fare Basis code is " + maeGUIObjects.QUOTE_TAB_FARE_CODE.getText());
+            JavascriptExecutor js = (JavascriptExecutor) getDriver();
+            js.executeScript("arguments[0].style.border='3px solid red'", maeGUIObjects.QUOTE_TAB_FARE_CODE);
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+            gl.scrollTo(maeGUIObjects.QUOTE_RESULT_FORWARD_ARROW);
+            logInfo.info("The administrative fees is " + maeGUIObjects2.QUOTE_TAB_SERVICE_FEES_1.getText());
+            js.executeScript("arguments[0].style.border='3px solid red'", maeGUIObjects2.QUOTE_TAB_SERVICE_FEES_1);
+            String serviceFee = maeGUIObjects2.QUOTE_TAB_SERVICE_FEES_1.getText().trim();
+            mPassengers.get(getDriverID()).get(0).setServiceFees(serviceFee);
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+
+            List<WebElement> passengerTypes = maeGUIObjects.QUOTE_RESULT_PASSENGER_TYPES;
+
+            for (int i = 0; i < passengerTypes.size(); i++) {
+
+                gl.clickElement(By.xpath("(//toggle-title[@translate='pssgui.quote.result']//preceding::i[1])[" + (i + 1) + "]"));
+                WebElement scroll = getDriver().findElement(By.xpath("(//div[contains(text(),'Ticket Taxes')])[1]"));
+                gl.scrollTo(scroll);
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+
+                if (passengerTypes.get(i).getText().contains("Adult")) {
+                    List<WebElement> adultCurrency = maeGUIObjects.QUOTE_RESULT_PASSENGER_TYPES_CURRENCY;
+                    List<WebElement> adultTaxAmount = maeGUIObjects.QUOTE_RESULT_PASSENGER_TYPES_TAX_AMOUNT;
+                    maeGUI.existingListAdult = mAdultTaxes.get(getDriverID());
+                    if (maeGUI.existingListAdult == null) {
+                        maeGUI.existingListAdult = new ArrayList<>();
+                    } else {
+                        maeGUI.existingListAdult.clear();
+                    }
+                    for (int j = 0; j < adultCurrency.size(); j++) {
+                        String currency = adultCurrency.get(j).getText().trim();
+                        String taxAmount = adultTaxAmount.get(j).getText().trim();
+                        String adultTax = currency + " " + taxAmount;
+                        maeGUI.existingListAdult.add(adultTax);
+                    }
+
+                    mAdultTaxes.put(getDriverID(), maeGUI.existingListAdult);
+
+                    gl.clickElement(By.xpath("(//toggle-title[@translate='pssgui.quote.result']//preceding::i[1])[" + (i + 1) + "]"));
+                    gl.waitProgress();
+                    logInfo.info("Adult taxes : " + mAdultTaxes.get(getDriverID()));
+                    gl.scrollTo(maeGUIObjects.BAGGAGE_RULES);
+
+                } else if (passengerTypes.get(i).getText().contains("Child")) {
+                    List<WebElement> adultCurrency = maeGUIObjects.QUOTE_RESULT_PASSENGER_TYPES_CURRENCY_CHILD;
+                    List<WebElement> adultTaxAmount = maeGUIObjects.QUOTE_RESULT_PASSENGER_TYPES_TAX_AMOUNT_CHILD;
+                    maeGUI.existingListChild = mChildTaxes.get(getDriverID());
+
+                    if (maeGUI.existingListChild == null) {
+                        maeGUI.existingListChild = new ArrayList<>(); // Creating the actual list object
+                    } else {
+                        maeGUI.existingListChild.clear();
+                    }
+
+                    for (int j = 0; j < adultCurrency.size(); j++) {
+                        String currency = adultCurrency.get(j).getText().trim();
+                        String taxAmount = adultTaxAmount.get(j).getText().trim();
+                        String childTax = taxAmount + " " + currency;
+
+                        maeGUI.existingListChild.add(childTax);
+                    }
+                    mChildTaxes.put(getDriverID(), maeGUI.existingListChild);
+                    gl.clickElement(By.xpath("(//toggle-title[@translate='pssgui.quote.result']//preceding::i[1])[" + (i + 1) + "]"));
+                    gl.waitProgress();
+                    logInfo.info("Child taxes : " + mChildTaxes.get(getDriverID()));
+                    gl.scrollTo(maeGUIObjects.BAGGAGE_RULES);
+                    gl.waitForProfileLoad();
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                } else if (passengerTypes.get(i).getText().contains("Infant traveler without Seat")) {
+
+                    List<WebElement> adultCurrency = maeGUIObjects.QUOTE_RESULT_PASSENGER_TYPES_CURRENCY_INFANT_TRAVELER_WITHOUT_SEAT;
+                    List<WebElement> adultTaxAmount = maeGUIObjects.QUOTE_RESULT_PASSENGER_TYPES_TAX_AMOUNT_INFANT_TRAVELER_WITHOUT_SEAT;
+
+                    maeGUI.existingListINF = mINFTaxes.get(getDriverID());
+
+                    if (maeGUI.existingListINF == null) {
+                        maeGUI.existingListINF = new ArrayList<>(); // Creating the actual list object
+                    } else {
+                        maeGUI.existingListINF.clear();
+                    }
+
+
+                    for (int j = 0; j < adultCurrency.size(); j++) {
+                        String currency = adultCurrency.get(j).getText().trim();
+                        String taxAmount = adultTaxAmount.get(j).getText().trim();
+                        String infTax = taxAmount + " " + currency;
+                        maeGUI.existingListINF.add(infTax);
+                    }
+                    mINFTaxes.put(getDriverID(), maeGUI.existingListINF);
+                    gl.clickElement(By.xpath("(//toggle-title[@translate='pssgui.quote.result']//preceding::i[1])[" + (i + 1) + "]"));
+                    gl.waitProgress();
+                    logInfo.info("INF taxes : " + mINFTaxes.get(getDriverID()));
+                    gl.scrollTo(maeGUIObjects.BAGGAGE_RULES);
+                    gl.waitForProfileLoad();
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                } else if (passengerTypes.get(i).getText().contains("Infant traveler with Seat")) {
+
+                    List<WebElement> adultCurrency = maeGUIObjects.QUOTE_RESULT_PASSENGER_TYPES_CURRENCY_INFANT_TRAVELER_WITH_SEAT;
+                    List<WebElement> adultTaxAmount = maeGUIObjects.QUOTE_RESULT_PASSENGER_TYPES_TAX_AMOUNT_INFANT_TRAVELER_WITH_SEAT;
+
+                    maeGUI.existingListINS = mAdultTaxes.get(getDriverID());
+                    if (maeGUI.existingListINS == null) {
+                        maeGUI.existingListINS = new ArrayList<>(); // Creating the actual list object
+                    } else {
+                        maeGUI.existingListINS.clear();
+                    }
+                    for (int j = 0; j < adultCurrency.size(); j++) {
+                        String currency = adultCurrency.get(j).getText().trim();
+                        String taxAmount = adultTaxAmount.get(j).getText().trim();
+                        String insTax = taxAmount + " " + currency;
+                        maeGUI.existingListINS.add(insTax);
+                    }
+                    mINSTaxes.put(getDriverID(), maeGUI.existingListINS);
+                    gl.clickElement(By.xpath("(//toggle-title[@translate='pssgui.quote.result']//preceding::i[1])[" + (i + 1) + "]"));
+                    gl.waitProgress();
+                    logInfo.info("INS taxes : " + mINSTaxes.get(getDriverID()));
+                    gl.scrollTo(maeGUIObjects.BAGGAGE_RULES);
+                    gl.waitForProfileLoad();
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                }
+
+            }
+
+            try {
+                gl.waitForProfileLoad();
+                gl.clickElement(maeGUIObjects2.BAGGAGE_RULES_FORWARD_ARROW);
+                logInfo.info("Validate Baggage rules section");
+                gl.waitForProfileLoad();
+                gl.scrollTo(maeGUIObjects.FARE_RULES_MANUAL_REISSUE);
+                gl.waitForProfileLoad();
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                gl.waitForProfileLoad();
+                gl.scrollTo(maeGUIObjects2.BAGGAGE_RULES_FORWARD_ARROW);
+                gl.waitForProfileLoad();
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            } catch (AssertionError | Exception e) {
+                ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+                Assert.fail("This step failed.. so stopping...");
+
+            }
+        } catch (AssertionError | Exception e) {
+
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
+        }
+
+
+    }
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+ And I try to click on Back button
+
+ @FindBy(xpath = "//button[contains(text(),'Back')]")
+        public WebElement HOME_PAGE_BACK_BUTTON;
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+And I select pricing option as best buy after clicking back button
+
+ @And("I select pricing option as best buy after clicking back button")
+    public void iSelectPricingOptionAsBestBuyAfterClickingBackButton() {
+
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select pricing option as Best Buy");
+            maeGUI.pricingOptionBestBuy(logInfo);
+            logInfo.pass("I select pricing option as Best Buy");
+            logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
+
+        } catch (AssertionError | Exception e) {
+
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+        System.out.println("Select pricing option as best buy");
+    }
+
+
+ public void pricingOptionBestBuy(ExtentTest logInfo) {
+        try {
+            gl.waitForProfileLoad();
+            maeGUIObjects.PRICING_OPTIONS.click();
+            gl.waitForProfileLoad();
+            maeGUIObjects.PRICE_AS_BESTBUY.click();
+        } catch (AssertionError | Exception e) {
+
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            Assert.fail("This step failed.. so stopping...");
+        }
+
+    }
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+  @FindBy(xpath = "(//toggle-title[@translate='pssgui.baggage.rules']//preceding::i[1])[\" + (i + 1) + \"]")
+        public WebElement BAGGAGE_RULES_FORWARD_ARROW;
+
+        @FindBy(xpath = "(//div[contains(@class,'pssgui-bold') and contains(normalize-space(),'USD')])[4]")
+        public WebElement QUOTE_TAB_SERVICE_FEES_1;

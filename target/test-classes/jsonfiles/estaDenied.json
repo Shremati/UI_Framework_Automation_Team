@@ -1,0 +1,15 @@
+[
+  {
+    "passenger":{
+      "surName":"LEWIS",
+      "givenName":"KEVIN",
+      "dob": "02.01.1955",
+      "gender1": "Male",
+      "email": "testone@testone.com",
+      "phoneType": "Home Phone",
+      "countryCode": "US",
+      "areaCode": "123",
+      "phoneNumber": "3456789999"
+    }
+  }
+]

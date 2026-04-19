@@ -1,0 +1,214 @@
+ And I click on Fee Service & Other Charges under Tools menu
+ And I select Mileage Auxiliary Display option under Fee Service & Other Charges
+ And I enter the mandatory fields with "<from>" and "<to>" and "<date>" and "<globalDirection>" for Mileage Auxiliary Display Option
+ And I click on Search button to view available Distance Information and Further additional Information
+ And I click on cancel to exit from the functionality
+
+ @And("I click on Fee Service & Other Charges under Tools menu")
+    public void iClickOnFeeServiceOtherChargesUnderToolsMenu() {
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on Fee Service & Other Charges under Tools menu");
+            maeGUI_2.ClickOnFeeServiceOtherChargesUnderToolsMenu(logInfo);
+            logInfo.pass("I click on Fee Service & Other Charges under Tools menu");
+
+        } catch (AssertionError | Exception exception) {
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+    @And("I select Mileage Auxiliary Display option under Fee Service & Other Charges")
+    public void iSelectMileageAuxiliaryDisplayOptionUnderFeeServiceOtherCharges() {
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I select Mileage Auxiliary Display option under Fee Service & Other Charges");
+            maeGUI_2.SelectMileageAuxiliaryDisplayOptionUnderFeeServiceOtherCharges(logInfo);
+            logInfo.pass("I select Mileage Auxiliary Display option under Fee Service & Other Charges");
+
+        } catch (AssertionError | Exception exception) {
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+    @And("I enter the mandatory fields with {string} and {string} and {string} and {string} for Mileage Auxiliary Display Option")
+    public void iEnterTheMandatoryFieldsWithAndAndAndForMileageAuxiliaryDisplayOption(String arg0, String arg1, String arg2, String arg3) {
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I enter the mandatory fields with " + arg0 + " and " + arg1 + " and " + arg2 + " and " + arg3 + " for Mileage Auxiliary Display Option");
+            maeGUI_2.EnterMandatoryFieldsForMileageAuxiliaryDisplayOption(logInfo, arg0, arg1, arg2, arg3);
+            logInfo.pass("I enter the mandatory fields with " + arg0 + " and " + arg1 + " and " + arg2 + " and " + arg3 + " for Mileage Auxiliary Display Option");
+
+        } catch (AssertionError | Exception exception) {
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+    @And("I click on Search button to view available Distance Information and Further additional Information")
+    public void iClickOnSearchButtonToViewAvailableDistanceInformationAndFurtherAdditionalInformation() {
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on Search button to view available Distance Information and Further additional Information");
+            maeGUI_2.ClickOnSearchButtonToViewAvailableDistanceInformationAndFurtherAdditionalInformation(logInfo);
+            logInfo.pass("I click on Search button to view available Distance Information and Further additional Information");
+
+        } catch (AssertionError | Exception exception) {
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+    @And("I click on cancel to exit from the functionality")
+    public void iClickOnCancelToExitFromTheFunctionality() {
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on cancel to exit from the functionality");
+            maeGUI_2.ClickOnCancelToExitFromTheFunctionality(logInfo);
+            logInfo.pass("I click on cancel to exit from the functionality");
+
+        } catch (AssertionError | Exception exception) {
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+public void ClickOnFeeServiceOtherChargesUnderToolsMenu(ExtentTest logInfo) {
+        try {
+            gl.waitForProfileLoad();
+            maeGUIObjects2.FEE_SERVICE_OTHER_CHARGES_MENU.click();
+            gl.waitForProfileLoad();
+            logInfo.pass("I Click on the Fee Service Other Charges under Tools Menu");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+        } catch (AssertionError | Exception e) {
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            org.junit.Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+    public void SelectMileageAuxiliaryDisplayOptionUnderFeeServiceOtherCharges(ExtentTest logInfo) {
+        try {
+            gl.waitForProfileLoad();
+            gl.waitElementToBeClick(maeGUIObjects2.AUXILIARY_FARE_DROPDOWN);
+            gl.waitForProfileLoad();
+            logInfo.pass("I Click on Fee Service Other Charges in Auxiliary fare");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            gl.waitForProfileLoad();
+            maeGUIObjects2.MILEAGE_AUXILIARY_DISPLAY_OPTION.click();
+            gl.waitForProfileLoad();
+            logInfo.pass("I Select Mileage Auxiliary Display option under Fee Service Other Charges");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+        } catch (AssertionError | Exception e) {
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            org.junit.Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+    public void EnterMandatoryFieldsForMileageAuxiliaryDisplayOption(ExtentTest logInfo, String origin, String destination, String date, String globaldirection) {
+        try {
+            gl.waitForProfileLoad();
+            maeGUIObjects2.FROM_CITY.sendKeys(Keys.CONTROL + "a");
+            maeGUIObjects2.FROM_CITY.sendKeys(Keys.DELETE);
+            gl.waitForProfileLoad();
+            maeGUIObjects2.FROM_CITY.sendKeys(origin);
+            maeGUIObjects2.FROM_CITY.sendKeys(Keys.ENTER);
+            gl.waitForProfileLoad();
+            logInfo.pass("I Enter Origin in Mileage Auxiliary Display option");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            gl.waitForProfileLoad();
+            maeGUIObjects2.TO_CITY.sendKeys(destination);
+            maeGUIObjects2.TO_CITY.sendKeys(Keys.ENTER);
+            logInfo.pass("I Enter Destination in Mileage Auxiliary Display option");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            gl.waitForProfileLoad();
+            try {
+                maeGUIObjects2.FLIFO_DATE.sendKeys(date);
+                Pattern pattern = Pattern.compile("\\b\\d{2,3}\\b");
+                Matcher matcher = pattern.matcher(date);
+                String timeCode = null;
+                if (matcher.find()) {
+                    timeCode = matcher.group();
+                    System.out.println("Extracted time: " + timeCode);
+                } else {
+                    System.out.println("No matching time found.");
+                }
+                String dt = timeCode;
+                int days = Integer.parseInt(dt);
+
+                mPassengers.get(getDriverID()).get(0).setFirstSegDate(days);
+                date = gl.plusDaysFromToday(days);
+                maeGUIObjects2.FLIFO_DATE.sendKeys(Keys.chord(Keys.CONTROL + "a" + Keys.BACK_SPACE));
+                maeGUIObjects2.FLIFO_DATE.sendKeys(Keys.BACK_SPACE, date);
+                gl.waitForProfileLoad();
+                logInfo.pass("I Click on the Departure Date field and select the date from the date picker");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            } catch (AssertionError | Exception e) {
+                ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+                Assert.fail("This step failed.. so stopping...");
+            }
+            gl.waitForProfileLoad();
+            maeGUIObjects2.GLOBAL_DIRECTION_INPUT.sendKeys(globaldirection);
+            logInfo.pass("I Enter global direction input in Mileage Auxiliary Display option");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+        } catch (AssertionError | Exception e) {
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            org.junit.Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+    public void ClickOnSearchButtonToViewAvailableDistanceInformationAndFurtherAdditionalInformation(ExtentTest logInfo) {
+        try {
+            gl.waitForProfileLoad();
+            maeGUIObjects2.FLF_SEARCH_BUTTON.click();
+            gl.waitForProfileLoad();
+            logInfo.pass("I Click on the Search button to view available distance information and further additional information");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            JavascriptExecutor js = (JavascriptExecutor) getDriver();
+            js.executeScript("document.body.style.zoom='67%'");
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            js.executeScript("document.body.style.zoom='100%'");
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+
+        } catch (AssertionError | Exception e) {
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            org.junit.Assert.fail("This step failed.. so stopping...");
+        }
+
+
+    }
+
+    public void ClickOnCancelToExitFromTheFunctionality(ExtentTest logInfo) {
+        try {
+            gl.waitForProfileLoad();
+            maeGUIObjects2.CLOSE_AUXILIARY_FARE_BUTTON.click();
+            gl.waitForProfileLoad();
+            logInfo.pass("I Click on Cancel to exit from the functionality");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+        } catch (AssertionError | Exception e) {
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            org.junit.Assert.fail("This step failed.. so stopping...");
+        }
+
+    }
+
+
+
+---------------------------------------------------------------------------------------------------------
+
+ @FindBy(xpath = "//div[normalize-space()='Fee Services & Other Charges']")
+        public WebElement FEE_SERVICE_OTHER_CHARGES_MENU;
+
+        @FindBy(xpath = "//md-select[@placeholder='Please select an option...']")
+        public WebElement AUXILIARY_FARE_DROPDOWN;
+
+        @FindBy(xpath = "//div[normalize-space()='Mileage auxiliary display']")
+        public WebElement MILEAGE_AUXILIARY_DISPLAY_OPTION;
+
+        @FindBy(xpath = "//input[@aria-label='Global Direction']")
+        public WebElement GLOBAL_DIRECTION_INPUT;
+
+        @FindBy(xpath = "//button[@ng-click='auxiliaryFare.closeDialog()']")
+        public WebElement CLOSE_AUXILIARY_FARE_BUTTON;

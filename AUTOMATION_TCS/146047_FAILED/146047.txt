@@ -1,0 +1,134 @@
+And I make the payment using Dinners Club with instalment option as "<count>"
+
+ @And("I make the payment using Dinners Club with instalment option as {string}")
+    public void iMakeThePaymentUsingDinnersClubWithInstalmentOptionAs(String arg0) {
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I make the payment using Dinners Club with instalment option as " + arg0);
+            maeGUI_2.makePaymentUsingDinnersClubWithInstalmentOptionAs(logInfo, arg0);
+            logInfo.pass("I make the payment using Dinners Club with instalment option as " + arg0);
+            logInfo.addScreenCaptureFromBase64String(getBase64(maeGUI.getDriver()), "Screenshot");
+
+        } catch (AssertionError | Exception e) {
+
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+
+ public void makePaymentUsingDinnersClubWithInstalmentOptionAs(ExtentTest logInfo, String count) {
+            try {
+                logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("Then"), "I make the payment through Diners Club");
+
+                gl.clickWebElement(maeGUIObjects.PAYMENT_TYPE_OF_PAYMANT.get(maeGUIObjects.PAYMENT_TYPE_OF_PAYMANT.size() - 1));
+                gl.clickWebElement(maeGUIObjects.PAYMENT_TYPE_CREDITCARD.get(maeGUIObjects.PAYMENT_TYPE_CREDITCARD.size() - 1));
+                gl.waitForProfileLoad();
+
+                gl.clickWebElement(maeGUIObjects.PAYMENT_SUB_TYPE.get(maeGUIObjects.PAYMENT_SUB_TYPE.size() - 1));
+                gl.waitForProfileLoad();
+                gl.clickWebElement(maeGUIObjects.PAYMENT_WITH_DINERS_OPTION.get(maeGUIObjects.PAYMENT_WITH_DINERS_OPTION.size() - 1));
+                gl.waitForProfileLoad();
+                logInfo.pass("I make the payment through Diners Club");
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+            } catch (AssertionError | Exception e) {
+
+                ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+                Assert.fail("This step failed.. so stopping...");
+            }
+
+            try {
+
+                logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("Then"), "I enter the Diners Club card details.");
+
+                int index = maeGUIObjects.INPUT_CREDITCARD_NUMBER.size() - 1;
+                gl.scrollTo(maeGUIObjects.INPUT_CREDITCARD_NUMBER.get(index));
+                gl.inputText(maeGUIObjects.INPUT_CREDITCARD_NUMBER.get(index), "36700102000000");
+                maeGUIObjects.INPUT_CREDITCARD_NUMBER.get(index).clear();
+                gl.inputText(maeGUIObjects.INPUT_CREDITCARD_NUMBER.get(index), "36700102000000");
+
+                gl.inputText(maeGUIObjects.INPUT_CREDITCARD_EXPIRY_DATE.get(index), "062026");
+                gl.waitForProfileLoad();
+                maeGUIObjects2.INPUT_CREDITCARD_CVV.get(index).sendKeys("654");
+
+                gl.waitForProfileLoad();
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                if (gl.existElement(maeGUIObjects.INPUT_CARD_HOLDER_NAME) && maeGUIObjects.INPUT_CARD_HOLDER_NAME.get(index).isDisplayed())
+                    gl.inputText(maeGUIObjects.INPUT_CARD_HOLDER_NAME.get(index), "JAK Test");
+
+                gl.waitForProfileLoad();
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+                JavascriptExecutor js = (JavascriptExecutor) getDriver();
+                js.executeScript(
+                        "arguments[0].click();",
+                        maeGUIObjects2.INSTALLMENT_DROPDOWN);
+                gl.waitForProfileLoad();
+
+                for (WebElement option : maeGUIObjects2.INSTALLMENT_DROPDOWN_OPTIONS) {
+                    if (option.getText().trim().contains(count)) {
+                        option.click();
+                        break;
+                    }
+                }
+                gl.waitForProfileLoad();
+                logInfo.pass("I select the instalment option as :" + count);
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                gl.waitForProfileLoad();
+                if (gl.existElement(maeGUIObjects.INPUT_PURCHASER_FIRST_NAME) && maeGUIObjects.INPUT_PURCHASER_FIRST_NAME.get(index).isDisplayed())
+                    gl.inputText(maeGUIObjects.INPUT_PURCHASER_FIRST_NAME.get(index), "FNTest");
+
+                if (gl.existElement(maeGUIObjects.INPUT_PURCHASER_LAST_NAME) && maeGUIObjects.INPUT_PURCHASER_LAST_NAME.get(index).isDisplayed())
+                    gl.inputText(maeGUIObjects.INPUT_PURCHASER_LAST_NAME.get(index), "LNTest");
+
+                if (gl.existElement(maeGUIObjects.INPUT_PURCHASER_EMAIL) && maeGUIObjects.INPUT_PURCHASER_EMAIL.get(index).isDisplayed())
+                    gl.inputText(maeGUIObjects.INPUT_PURCHASER_EMAIL.get(index), "testone@testone.com");
+
+                if (gl.existElement(maeGUIObjects.INPUT_PURCHASER_PHONE) && maeGUIObjects.INPUT_PURCHASER_PHONE.get(index).isDisplayed())
+                    gl.inputText(maeGUIObjects.INPUT_PURCHASER_PHONE.get(index), "12345678");
+
+                if (gl.existElement(maeGUIObjects.INPUT_PURCHASER_ADDRESS1) && maeGUIObjects.INPUT_PURCHASER_ADDRESS1.get(index).isDisplayed())
+                    gl.inputText(maeGUIObjects.INPUT_PURCHASER_ADDRESS1.get(index), "207 South Washington");
+
+                if (gl.existElement(maeGUIObjects.INPUT_PURCHASER_CITY) && maeGUIObjects.INPUT_PURCHASER_CITY.get(index).isDisplayed())
+                    gl.inputText(maeGUIObjects.INPUT_PURCHASER_CITY.get(index), "Naperville");
+
+                if (gl.existElement(maeGUIObjects.INPUT_PURCHASER_STATE) && maeGUIObjects.INPUT_PURCHASER_STATE.get(index).isDisplayed())
+                    gl.inputText(maeGUIObjects.INPUT_PURCHASER_STATE.get(index), "IL");
+
+                if (gl.existElement(maeGUIObjects.INPUT_PURCHASER_ZIP) && maeGUIObjects.INPUT_PURCHASER_ZIP.get(index).isDisplayed())
+                    gl.inputText(maeGUIObjects.INPUT_PURCHASER_ZIP.get(index), "60540");
+
+                if (gl.existElement(maeGUIObjects.INPUT_PURCHASER_COUNTRY) && maeGUIObjects.INPUT_PURCHASER_COUNTRY.get(index).isDisplayed()) {
+                    gl.inputText(maeGUIObjects.INPUT_PURCHASER_COUNTRY.get(index), "US");
+
+                    gl.waitForProfileLoad();
+                    maeGUIObjects.INPUT_PURCHASER_COUNTRY.get(index).sendKeys(Keys.ENTER);
+                }
+
+                logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                if (gl.existElement(maeGUIObjects.ADD_ANOTHER_PAYMENT_BUTTON1)) {
+                    gl.clickButton(maeGUIObjects.ADD_ANOTHER_PAYMENT_BUTTON);
+                } else {
+                    maeGUIObjects.PAYMENT_PAY_BUTTON.click();
+                    gl.waitForElementAfterReload(getDriver(), maeGUIObjects.CLOSE_ICON, PAGE_LOAD_TIMEOUT);
+                    logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+                }
+                logInfo.pass("I enter the Dines club card details.");
+            } catch (AssertionError | Exception e) {
+
+                ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+                Assert.fail("This step failed.. so stopping...");
+            }
+
+        }
+
+
+
+
+ @FindBy(xpath = "//md-select[@aria-label='Installments']")
+            public WebElement INSTALLMENT_DROPDOWN;
+
+            @FindBy(xpath = "(//md-content[@class='_md'])[3]//md-option//div")
+            public List<WebElement> INSTALLMENT_DROPDOWN_OPTIONS;

@@ -1,0 +1,100 @@
+And I click on Biosecurity Chatbot in GUI application
+
+@And("I click on Biosecurity Chatbot in GUI application")
+    public void iClickOnBiosecurityChatbotInGUIApplication() {
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I click on Biosecurity Chatbot in GUI application");
+            maeGUI_2.ClickOnBiosecurityChatbotInGUIApplication(logInfo);
+            logInfo.pass("I click on Biosecurity Chatbot in GUI application");
+
+        } catch (AssertionError | Exception exception) {
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+
+    }
+
+
+public void ClickOnBiosecurityChatbotInGUIApplication(ExtentTest logInfo) {
+        try {
+            maeGUIObjects2.BIOSCURITY_CHATBOT.click();
+            gl.waitForProfileLoad();
+            logInfo.pass("I click on BIOSECURITY CHATBOT");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+        } catch (AssertionError | Exception e) {
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            org.junit.Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+And I enter the "<country name>" in the Chatbot
+
+
+@And("I enter the {string} in the Chatbot")
+    public void iEnterTheInTheChatbot(String arg0) {
+        try {
+            logInfo = ExtentReportListener.getExtent().createNode(new GherkinKeyword("And"), "I enter the " + arg0 + " in the Chatbot");
+            maeGUI_2.EnterTextInChatbot(logInfo, arg0);
+            logInfo.pass("I enter the " + arg0 + " in the Chatbot");
+
+        } catch (AssertionError | Exception exception) {
+            logInfo.fail("This step failed.. so stopping...");
+            Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+
+ public void EnterTextInChatbot(ExtentTest logInfo, String countryName) {
+        try {
+            gl.waitForProfileLoad();
+            maeGUIObjects2.TYPE_AREA_CHATBOT.sendKeys(countryName);
+            gl.waitForProfileLoad();
+            logInfo.pass("I enter the " + countryName + " in the Chatbot");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            maeGUIObjects2.CHATBOT_SUBMIT_BUTTON.click();
+            gl.waitForProfileLoad();
+            logInfo.pass("I click on the Submit button in Chatbot");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            gl.waitTillElementVisible(maeGUIObjects2.CHATBOT_CLOSE_BUTTON);
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            gl.scrollTo(maeGUIObjects2.CHATBOT_LAST_UPDATED_TEXT);
+            gl.waitForProfileLoad();
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+            maeGUIObjects2.CLOSE_CHATBOT_BUTTON.click();
+            gl.waitForProfileLoad();
+            logInfo.pass("I click on the close button in Chatbot");
+            logInfo.addScreenCaptureFromBase64String(getBase64(getDriver()), "Screenshot");
+
+        } catch (AssertionError | Exception e) {
+            ExtentReportListener.testStepHandle("FAIL", getDriver(), logInfo, e);
+            org.junit.Assert.fail("This step failed.. so stopping...");
+        }
+    }
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+  @FindBy(xpath = "//i[@class='material-icons chat']")
+        public WebElement BIOSCURITY_CHATBOT;
+
+        @FindBy(xpath = "//textarea[@placeholder='Airport code, city or country name']")
+        public WebElement TYPE_AREA_CHATBOT;
+
+        @FindBy(xpath = "//button[@type='submit']")
+        public WebElement CHATBOT_SUBMIT_BUTTON;
+
+        @FindBy(xpath = "//i[@class='icon-close']")
+        public WebElement CHATBOT_CLOSE_BUTTON;
+
+        @FindBy(xpath = "//div[contains(@class,'biosecurity-chatbot')]//*[contains(text(),'Última actualización')]")
+        public WebElement CHATBOT_LAST_UPDATED_TEXT;
+
+        @FindBy(xpath = "//i[@class='icon-close']")
+        public WebElement CLOSE_CHATBOT_BUTTON;
